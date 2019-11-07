@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+html, body{
+  height: 100%;
+}
+
+app-content-main {
+  grid-column: 4 / 13;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+
+}
+
+app-home{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+app-home-auth{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+
+
+/*app-header {
+  background-color: #1a252b;
+}*/

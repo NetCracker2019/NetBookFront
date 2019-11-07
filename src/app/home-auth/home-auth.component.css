@@ -1,0 +1,6 @@
+app-headerauth {
+  background-color: #1a252b;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column: 1 / 13;
+}

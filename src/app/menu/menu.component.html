@@ -1,0 +1,8 @@
+<div class="menu">
+  <div class="container">
+    <ul class="nav" routerLinkActive="active">
+      <!--<li *ngFor="let i of Menu" class="menu_list"> <a class="link" [routerLink]="[{ outlets: { 'menu': [i.url] } }]"> {{i.name}} </a> </li>-->
+      <li *ngFor="let i of Menu" class="menu_list"> <a class="link" [routerLink]="[i.url]"> {{i.name}} </a></li>
+    </ul>
+  </div>
+</div>

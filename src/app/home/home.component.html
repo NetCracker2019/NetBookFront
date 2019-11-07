@@ -1,0 +1,19 @@
+
+<!--<a [routerLink]="['/login']">Login</a>-->
+<!--<a [routerLink]="['/register']">Registration</a>-->
+
+
+<app-header></app-header>
+<div class="menu">
+    <div class="container">
+      <ul class="nav" routerLinkActive="active">
+        <li class="menu_list"><a href="#" class="link" [routerLink]="['announcement']"> Головна сторінка </a></li>
+        <li class="menu_list"><a href="#" class="link" [routerLink]="['books']" > Книги </a></li>
+      </ul>
+    </div>
+  <!--<a [routerLink]="['announcement']">LOGO (Вместо этого должно быть лого)</a>
+  <button> <a [routerLink]="['books']">Books</a> </button>-->
+</div>
+
+
+<router-outlet></router-outlet>
