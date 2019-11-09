@@ -29,6 +29,7 @@ import { ContentMainComponent } from './content-main/content-main.component';
 import { ContentRecommendationsComponent } from './content-recommendations/content-recommendations.component';
 import {ContentAchievementsComponent} from "./content-achievements/content-achievements.component";
 import { HeaderauthComponent } from './headerauth/headerauth.component';
+import { AlertComponent } from './alert/alert.component';
 
 
 
@@ -79,7 +80,8 @@ const appRoutes: Routes = [
     ContentMainComponent,
     ContentRecommendationsComponent,
     ContentAchievementsComponent,
-    HeaderauthComponent
+    HeaderauthComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

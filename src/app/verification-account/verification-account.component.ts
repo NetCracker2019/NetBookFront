@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../_services/user.service";
+import {AlertService} from '../_services/alert.service';
 
 @Component({
   selector: 'app-verification-account',
@@ -16,7 +17,8 @@ export class VerificationAccountComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private userService: UserService,
-              private router: Router) { }
+              private router: Router,
+              private alertService: AlertService) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -28,12 +30,12 @@ export class VerificationAccountComponent implements OnInit {
     this.userService.confirmUserAccountRequest(this.token)
       .subscribe(
         data => {
-          //this.alertService.success('Registration successful', true);
+          this.alertService.success('Registration successful', true);
           this.router.navigate(['/login']);
           console.log(data);
         },
         error => {
-          //this.alertService.error(error);
+          this.alertService.error(error);
 
           if (error.error instanceof Error) {
             console.log('Client-side error occured.');

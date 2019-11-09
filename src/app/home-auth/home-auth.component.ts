@@ -17,11 +17,11 @@ export class HomeAuthComponent implements OnInit {
 
   ngOnInit() {
 
-    this.loading = true;
-    this.userService.getAll().pipe(first()).subscribe(users => {
-      this.loading = false;
-      this.users = users;
-    });
+    // this.loading = true;
+    // this.userService.getAll().pipe(first()).subscribe(users => {
+    //   this.loading = false;
+    //   this.users = users;
+    // });
 
   }
 
