@@ -6,7 +6,8 @@ import {User} from "../_models";
 
 
 
-const users: User[] = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }];
+const users: User[] = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User', city: 'Kiev', country: 'Ukraine', role: 'admin', sex: 'man',
+status: 'nice dude'}];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {

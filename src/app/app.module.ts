@@ -30,6 +30,7 @@ import { ContentRecommendationsComponent } from './content-recommendations/conte
 import {ContentAchievementsComponent} from "./content-achievements/content-achievements.component";
 import { HeaderauthComponent } from './headerauth/headerauth.component';
 import { AlertComponent } from './alert/alert.component';
+import { VerificationAdminComponent } from './verification-admin/verification-admin.component';
 
 
 
@@ -54,7 +55,8 @@ const appRoutes: Routes = [
   { path: 'login', component: AuthorizationComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
-  { path: 'verification-account', component: VerificationAccountComponent },
+  { path: 'verification-account', component: VerificationAccountComponent},
+  { path: 'verification-admin', component: VerificationAdminComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: 'home/announcement' }
@@ -81,7 +83,8 @@ const appRoutes: Routes = [
     ContentRecommendationsComponent,
     ContentAchievementsComponent,
     HeaderauthComponent,
-    AlertComponent
+    AlertComponent,
+    VerificationAdminComponent
   ],
   imports: [
     BrowserModule,

@@ -23,6 +23,11 @@ export class UserService {
     return this.http.post(`${environment.apiUrl}/register`, body);
   }
 
+  registerAdmin(user: User, token: string) {
+    const body = {login: user.firstName, password: user.password, email: user.username, name: user.lastName, role: "ROLE_ADMIN"};
+    return this.http.post(`${environment.apiUrl}/verification-admin?token=` + token, body );
+  }
+
   confirmUserAccountRequest(token: string) {
     return this.http.get(`${environment.apiUrl}/verification-account?token=` + token);
   }
