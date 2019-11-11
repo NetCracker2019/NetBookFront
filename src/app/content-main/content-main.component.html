@@ -17,26 +17,26 @@
       <form>
         <select>
           <option>Все месяцы</option>
-          <option>2018</option>
-          <option>2017</option>
-          <option>2016</option>
-          <option>2015</option>
+          <option>Сентябрь</option>
+          <option>Октябрь</option>
+          <option>Ноябрь</option>
+          <option>Декабрь</option>
         </select>
       </form>
     </div>
   </div>
   <div class="blog-books">
-    <div class="test" *ngFor="let book of Books">
+    <div class="test" *ngFor="let book of books">
       <a href="#" class="blog-item">
         <div class="book-image-grid">
-          <img src="{{book.img}}" alt="Example" class="book-logo">
+          <img src="../../assets/img/{{book.image_path}}" alt="Example" class="book-logo">
         </div>
         <div class="book-item-content" >
-          <h3>{{book.name}}</h3>
-          <p>Автор: {{book.author}} </p>
-          <p>Жанр: {{book.genre}}</p>
-          <p>Дата выпуска: {{book.date}}</p>
-          <p>Язык книги: {{book.language}}</p>
+          <h3>{{book.title}}</h3>
+          <p>Описание: {{book.description}} </p>
+          <!--<p>Жанр: {{book.genre}}</p>-->
+          <!--<p>Дата выпуска: {{book.date}}</p>-->
+          <!--<p>Язык книги: {{book.language}}</p>-->
         </div>
       </a>
     </div>
