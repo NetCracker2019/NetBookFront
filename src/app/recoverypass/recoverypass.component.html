@@ -1,0 +1,31 @@
+<div class="picture">
+  <div class="recovery-form">
+
+      <h2>Recovery password</h2>
+      <div class="card-body">
+        <form [formGroup]="recoveryForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <input type="password" formControlName="passwordFirst" class="form-control" placeholder="New password" [ngClass]="{ 'is-invalid': submitted && f.passwordFirst.errors }" />
+            <div *ngIf="submitted && f.passwordFirst.errors" class="invalid-feedback">
+              <div *ngIf="f.passwordFirst.errors.required" class="help-block">Password is required!</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="password" formControlName="passwordSecond" class="form-control" placeholder="Repaet new password" [ngClass]="{ 'is-invalid': submitted && f.passwordSecond.errors }" />
+            <div *ngIf="submitted && f.passwordSecond.errors" class="invalid-feedback">
+              <div *ngIf="f.passwordSecond.errors.required" class="help-block">Confirm password is required!</div>
+            </div>
+          </div>
+          <button [disabled]="loading" class="button">
+            Recovery
+          </button>
+          <button class="button gray">
+            <a  [routerLink]="['/']">To home</a>
+          </button>
+          <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+        </form>
+      </div>
+    </div>
+
+</div>
+

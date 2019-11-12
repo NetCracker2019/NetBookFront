@@ -31,6 +31,8 @@ import {ContentAchievementsComponent} from "./content-achievements/content-achie
 import { HeaderauthComponent } from './headerauth/headerauth.component';
 import { AlertComponent } from './alert/alert.component';
 import { VerificationAdminComponent } from './verification-admin/verification-admin.component';
+import { RecoverypassComponent } from './recoverypass/recoverypass.component';
+import { RecoverypassrequestComponent } from './recoverypassrequest/recoverypassrequest.component';
 
 
 
@@ -57,7 +59,8 @@ const appRoutes: Routes = [
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
   { path: 'verification-account', component: VerificationAccountComponent},
   { path: 'verification-admin', component: VerificationAdminComponent },
-
+  { path: 'recovery-password', component: RecoverypassComponent },
+  { path: 'recovery-password-request', component: RecoverypassrequestComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: 'home/announcement' }
 ];
@@ -84,7 +87,9 @@ const appRoutes: Routes = [
     ContentAchievementsComponent,
     HeaderauthComponent,
     AlertComponent,
-    VerificationAdminComponent
+    VerificationAdminComponent,
+    RecoverypassComponent,
+    RecoverypassrequestComponent
   ],
   imports: [
     BrowserModule,
