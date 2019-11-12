@@ -5,25 +5,29 @@ html, body{
 }
 
 app-content-main {
-  grid-column: 4 / 13;
+  grid-column: 2 / 5;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
-
+  border-left: solid;
+  border-color: #1a252b;
 }
+
+app-content-book {
+  grid-column: 2 / 5;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-left: solid;
+  border-color: #1a252b;
+}
+
 
 app-home{
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 
 app-home-auth{
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
-
-
-
-/*app-header {
-  background-color: #1a252b;
-}*/

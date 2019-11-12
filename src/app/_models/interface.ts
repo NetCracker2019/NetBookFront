@@ -5,7 +5,7 @@ export interface  Kniga {
      imagePath: string;
      release_date: string;
      language: string;
-     pagess: number;
+     pages: number;
      approved: boolean;
    /* public img: string;
     public author: string;

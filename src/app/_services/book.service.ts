@@ -21,8 +21,8 @@ export class BookService {
   }
 
   addBook(kniga: Kniga) {
-    const body = {idbook: kniga.idbook, title: kniga.title, like: kniga.like, imagePath: kniga.imagePath,
-      release_date: kniga.release_date, language: kniga.language, pagess: kniga.pagess, approved: kniga.approved};
+    const body = {title: kniga.title, like: kniga.like, imagePath: kniga.imagePath,
+      release_date: kniga.release_date, language: kniga.language, pages: kniga.pages, approved: kniga.approved};
     return this.http.post(`${environment.apiUrl}/home/books/addBook`, body);
   }
 }

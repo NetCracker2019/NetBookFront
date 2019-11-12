@@ -1,15 +1,6 @@
-/*.content {
-  grid-column: 3 / 13;
-  background: #F7F7F7;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 10px;
-}*/
-app-content-main {
-  grid-column: 5 / 9;
-}
 .year-grid{
   grid-column: 1 / 2;
+  margin-left: 20px;
 }
 
 .month-grid{
@@ -59,7 +50,8 @@ app-content-main {
   grid-column: 1 / 3;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  background: #F7F7F7;
+  background: #fff;
+
 }
 
 .blog-item{
@@ -72,6 +64,7 @@ app-content-main {
   overflow: hidden;
   color: #333;
   padding: 10px;
+  margin: 10px;
 }
 
 
@@ -108,7 +101,6 @@ app-content-main {
 .book-item-content h3 {
   font-size: 20px;
   padding-bottom: 5px;
-  /*line-height: 1.5;
-  */margin: 0;
+  margin: 0;
   transition: color .25s ease;
 }
