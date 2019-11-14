@@ -34,7 +34,7 @@ jobs:
           key: *cache_key
       - run:
           name: test-lib
-          command: npm run test cg-components -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+          command: npm run test netBook -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
   build-lib:
     <<: *job_defaults
@@ -44,7 +44,7 @@ jobs:
           key: *cache_key
       - run:
           name: build-lib
-          command: npm run build cg-components --prod
+          command: npm run build netBook --prod
       - save_cache:
           key: *dist_key
           paths:
