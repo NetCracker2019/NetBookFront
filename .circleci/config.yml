@@ -7,7 +7,7 @@ job_defaults: &job_defaults
       CHROME_BIN: /usr/bin/google-chrome
   working_directory: ~/cg-front-end
 
-cache_key: &cache_key cg-front-end-{{ .Branch }}-{{ checksum “package-lock.json” }}
+cache_key: &cache_key cg-front-end-{{ .Branch }}-{{ checksum ”package-lock.json” }}
 dist_key: &dist_key cg-front-end-dist-{{ .Revision }}
 
 jobs:
