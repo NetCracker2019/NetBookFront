@@ -1,4 +1,4 @@
-export interface  Kniga {
+export interface  Book {
      idbook: number;
      title: string;
      like: number;
@@ -18,6 +18,21 @@ export interface Announcement {
   title: string;
   description: string;
   image_path: string;
+}
+
+export interface User {
+  id: number;
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  sex: string;
+  country: string;
+  city: string;
+  status: string;
+  role: string;
+  token?: string;
 }
 
 
