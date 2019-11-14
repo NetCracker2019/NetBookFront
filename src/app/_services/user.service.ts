@@ -19,12 +19,12 @@ export class UserService {
   }
 
   register(user: User) {
-    const body = {login: user.firstName, password: user.password, email: user.username, name: user.lastName, role: "ROLE_CLIENT"};
+    const body = {login: user.firstName, password: user.password, email: user.email, name: user.lastName, role: "ROLE_CLIENT"};
     return this.http.post(`${environment.apiUrl}/user-service/register/user`, body);
   }
 
   registerAdmin(user: User, token: string) {
-    const body = {login: user.firstName, password: user.password, email: user.username, name: user.lastName, role: "ROLE_ADMIN"};
+    const body = {login: user.firstName, password: user.password, email: user.email, name: user.lastName, role: "ROLE_ADMIN"};
     return this.http.post(`${environment.apiUrl}/user-service/register/admin?token=` + token, body );
   }
 
