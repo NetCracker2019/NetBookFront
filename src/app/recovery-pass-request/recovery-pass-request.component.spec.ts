@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecoverypassrequestComponent } from './recoverypassrequest.component';
+import { RecoveryPassRequestComponent } from './recovery-pass-request.component';
 
-describe('RecoverypassrequestComponent', () => {
-  let component: RecoverypassrequestComponent;
-  let fixture: ComponentFixture<RecoverypassrequestComponent>;
+describe('RecoveryPassRequestComponent', () => {
+  let component: RecoveryPassRequestComponent;
+  let fixture: ComponentFixture<RecoveryPassRequestComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecoverypassrequestComponent ]
+      declarations: [ RecoveryPassRequestComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecoverypassrequestComponent);
+    fixture = TestBed.createComponent(RecoveryPassRequestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
