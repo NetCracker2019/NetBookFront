@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
-import {Announcement, Kniga} from '../_models/interface';
+import {Announcement, Book} from '../_models/interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +12,17 @@ export class BookService {
   constructor(private http: HttpClient) { }
 
 
-  getAnnouncmentList(): Observable<Announcement[]> {
+  getAnnouncementList(): Observable<Announcement[]> {
     return this.http.get<Announcement[]>(`${environment.apiUrl}/home/announcement`);
   }
 
-  getBookList(): Observable<Kniga[]> {
-    return this.http.get<Kniga[]>(`${environment.apiUrl}/home/books`);
+  getBookList(): Observable<Book[]> {
+    return this.http.get<Book[]>(`${environment.apiUrl}/home/books`);
   }
 
-  addBook(kniga: Kniga) {
-    const body = {title: kniga.title, like: kniga.like, imagePath: kniga.imagePath,
-      release_date: kniga.release_date, language: kniga.language, pages: kniga.pages, approved: kniga.approved};
+  addBook(book: Book) {
+    const body = {title: book.title, like: book.like, imagePath: book.imagePath,
+      release_date: book.release_date, language: book.language, pages: book.pages, approved: book.approved};
     return this.http.post(`${environment.apiUrl}/home/books/addBook`, body);
   }
 }

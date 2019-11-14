@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import {User} from "./_models";
-import {Router} from "@angular/router";
-import {AuthenticationService} from "./_services/authentication.service";
+import {Router} from '@angular/router';
+import {AuthenticationService} from './_services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +15,7 @@ export class AppComponent {
     // private router: Router,
     // private authenticationService: AuthenticationService
   ) {
-    //this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    // this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   // logout() {
