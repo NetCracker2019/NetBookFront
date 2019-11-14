@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
-import { User} from "../_models";
+import {User} from '../_models/interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -20,7 +20,7 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  loginuser(username: string, password: string) {
+  login(username: string, password: string) {
     const body = {login: username, password: password};
     return this.http.post<any>(`${environment.apiUrl}/signin`, body)
       .pipe(map(user => {
