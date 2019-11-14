@@ -1,0 +1,78 @@
+version: 2
+
+job_defaults: &job_defaults
+  docker:
+  - image: circleci/node:latest
+    environment:
+      CHROME_BIN: /usr/bin/google-chrome
+  working_directory: ~/netBook
+
+cache_key: &cache_key netBook-{{ .Branch }}-{{ checksum "package-lock.json" }}
+dist_key: &dist_key netBook-dist-{{ .Revision }}
+
+jobs:
+
+  npm-install:
+    <<: *job_defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - run:
+          name: npm-install
+          command: npm ci
+      - save_cache:
+          key: *cache_key
+          paths:
+            - node_modules
+
+  test-lib:
+    <<: *job_defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - run:
+          name: test-lib
+          command: npm run test netBook -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+
+  build-lib:
+    <<: *job_defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - run:
+          name: build-lib
+          command: npm run build netBook --prod
+      - save_cache:
+          key: *dist_key
+          paths:
+              - dist
+
+  test-app:
+    <<: *job_defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: *cache_key
+      - restore_cache:
+          key: *dist_key
+      - run:
+          name: test-app
+          command: npm run test fmvmd-client-front-end -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+
+workflows:
+  version: 2
+  build-test-release:
+    jobs:
+      - npm-install
+      - test-lib:
+          requires:
+            - npm-install
+      - build-lib:
+          requires:
+            - test-lib
+      - test-app:
+          requires:
+            - build-lib
