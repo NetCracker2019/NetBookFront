@@ -6,11 +6,11 @@ import {first} from "rxjs/operators";
 import {AlertService} from "../_services/alert.service";
 
 @Component({
-  selector: 'app-recoverypassrequest',
-  templateUrl: './recoverypassrequest.component.html',
-  styleUrls: ['./recoverypassrequest.component.css']
+  selector: 'app-recovery-pass-request',
+  templateUrl: './recovery-pass-request.component.html',
+  styleUrls: ['./recovery-pass-request.component.css']
 })
-export class RecoverypassrequestComponent implements OnInit {
+export class RecoveryPassRequestComponent implements OnInit {
 
 
   recoveryForm: FormGroup;
@@ -52,7 +52,7 @@ export class RecoverypassrequestComponent implements OnInit {
     }
 
     this.loading = true;
-    this.userService.recoverypassrequest(this.f.email.value)
+    this.userService.recoveryPassRequest(this.f.email.value)
       .pipe(first())
       .subscribe(
         data => {

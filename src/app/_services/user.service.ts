@@ -32,11 +32,11 @@ export class UserService {
     return this.http.get(`${environment.apiUrl}/verification-account?token=` + token);
   }
 
-  recoverypass(token: string, pass: string) {
+  recoveryPass(token: string, pass: string) {
     return this.http.get(`${environment.apiUrl}/recovery-pass?token=` + token + `&pass=` + pass);
   }
 
-  recoverypassrequest(email: string) {
+  recoveryPassRequest(email: string) {
     return this.http.get(`${environment.apiUrl}/recovery-pass-request?email=` + email);
   }
 
