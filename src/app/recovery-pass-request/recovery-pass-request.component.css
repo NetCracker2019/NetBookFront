@@ -19,7 +19,7 @@
   opacity: .96;
 }
 
-.login-form textarea {
+.recovery-form textarea {
   border: none;
   padding: 15px 20px;
   width: 100%;
@@ -29,7 +29,7 @@
   transition: background-color .25s ease;
 }
 
-.login-form input {
+.recovery-form input {
   background-color: #3e4d55;border: none;
   padding: 15px 20px;
   width: 100%;
@@ -40,17 +40,17 @@
 
 }
 
-.login-form  input:focus{
+.recovery-form  input:focus{
   background-color: #EDEDED;
   color: #000;
 }
 
-.login-form  textarea:focus{
+.recovery-form  textarea:focus{
   background-color: #EDEDED;
   color: #000;
 }
 
-.login-form {
+.recovery-form {
   margin: 0 auto;
   width: 25%;
   z-index: 1;
@@ -58,7 +58,7 @@
   /*background-color: #293A43;*/
 }
 
-.login-form h2 {
+.recovery-form h2 {
   text-align: center;
   font-size: 40px;
   /*margin: 20px 0;*/
@@ -121,11 +121,6 @@
   color: #f49355;
 }
 
-<<<<<<< HEAD
 /*.invalid-feedback{
   color: #fff;
 }*/
-=======
-input.ng-touched.ng-invalid {border:solid red 2px;}
-input.ng-touched.ng-valid {border:solid green 2px;}
->>>>>>> master

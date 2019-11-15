@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Kniga} from '../_models/interface';
+
+import {Book} from '../_models/interface';
+
 import {BookService} from '../_services/book.service';
 import {Router} from '@angular/router';
 import {AlertService} from '../_services/alert.service';
@@ -10,9 +12,10 @@ import {AlertService} from '../_services/alert.service';
   styleUrls: ['./content-book.component.css']
 })
 export class ContentBookComponent implements OnInit {
-  knigas: Kniga[];
-  model: any = {};
-  constructor(private knigaService: BookService,
+  books: Book[];
+  bookModel: Book;
+  constructor(private bookService: BookService,
+
               private router: Router,
               private alertService: AlertService) { }
 
@@ -21,10 +24,10 @@ export class ContentBookComponent implements OnInit {
   }
 
   reloadData() {
-    this.knigaService.getBookList().subscribe(kniga => { console.log(kniga); this.knigas = kniga; });
+    this.bookService.getBookList().subscribe(book => { console.log(book); this.books = book; });
   }
-  addKniga() {
-    this.knigaService.addBook(this.model)
+  addBookComponent() {
+    this.bookService.addBook(this.bookModel)
       .subscribe(
         data => {
           this.alertService.success('Add successful', true);

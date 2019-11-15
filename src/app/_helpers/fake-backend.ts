@@ -2,11 +2,14 @@
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
-import {User} from "../_models";
+import {User} from '../_models/interface';
 
 
 
-const users: User[] = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User', city: 'Kiev', country: 'Ukraine', role: 'admin', sex: 'man',
+
+const users: User[] = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User', email: 'lo@l',
+  city: 'Kiev', country: 'Ukraine', role: 'admin', sex: 'man',
+
 status: 'nice dude'}];
 
 @Injectable()

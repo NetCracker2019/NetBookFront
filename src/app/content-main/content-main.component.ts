@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {Book} from "../_models/Book";
 import {BookService} from '../_services/book.service';
 import {Announcement} from '../_models/interface';
 
@@ -20,14 +19,15 @@ export class ContentMainComponent implements OnInit {
   // ];
   books: Announcement[];
 
-  constructor(private knigaService: BookService) { }
+  constructor(private bookService: BookService) { }
+
 
   ngOnInit() {
     this.reloadData();
   }
 
   reloadData() {
-    this.knigaService.getAnnouncmentList().subscribe(data => { console.log(data); this.books = data; });
+    this.bookService.getAnnouncementList().subscribe(data => { console.log(data); this.books = data; });
   }
 
 }

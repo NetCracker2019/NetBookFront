@@ -1,0 +1,25 @@
+<div class="picture">
+  <div class="recovery-form">
+
+      <h2>Recovery password</h2>
+      <div class="card-body">
+        <form [formGroup]="recoveryForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <input type="test" formControlName="email" class="form-control" placeholder="Enter your email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required" class="help-block">*Email is required!</div>
+            </div>
+          </div>
+          <button [disabled]="loading" class="button">
+            Sent email
+          </button>
+          <button class="button gray">
+            <a  [routerLink]="['/']">To home</a>
+          </button>
+          <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+        </form>
+      </div>
+    </div>
+
+</div>
+

@@ -1,11 +1,12 @@
-export interface  Kniga {
+export interface  Book {
+
      idbook: number;
      title: string;
      like: number;
      imagePath: string;
      release_date: string;
      language: string;
-     pagess: number;
+     pages: number;
      approved: boolean;
    /* public img: string;
     public author: string;
@@ -19,5 +20,21 @@ export interface Announcement {
   description: string;
   image_path: string;
 }
+
+export interface User {
+  id: number;
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  sex: string;
+  country: string;
+  city: string;
+  status: string;
+  role: string;
+  token?: string;
+}
+
 
 
