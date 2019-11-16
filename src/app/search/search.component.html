@@ -1,0 +1,8 @@
+<div *ngIf="books">
+  <ul class="books">
+    <li *ngFor="let book of books">
+      <h3>{{book.title}}</h3>
+      <p>Количество страниц: {{book.pages}}</p>
+    </li>
+  </ul>
+</div>

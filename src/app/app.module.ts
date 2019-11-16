@@ -33,6 +33,7 @@ import { AlertComponent } from './alert/alert.component';
 import { VerificationAdminComponent } from './verification-admin/verification-admin.component';
 import { RecoveryPassComponent } from './recovery-pass/recovery-pass.component';
 import { RecoveryPassRequestComponent } from './recovery-pass-request/recovery-pass-request.component';
+import { SearchComponent } from './search/search.component';
 
 
 
@@ -47,7 +48,8 @@ const componentRoutes: Routes = [
 
 const componentNotAllRoutes: Routes = [
   { path: 'books', component: ContentBookComponent},
-  { path: 'announcement', component: ContentMainComponent}
+  { path: 'announcement', component: ContentMainComponent},
+  { path: 'search', component: SearchComponent},
 ];
 
 
@@ -89,7 +91,8 @@ const appRoutes: Routes = [
     AlertComponent,
     VerificationAdminComponent,
     RecoveryPassComponent,
-    RecoveryPassRequestComponent
+    RecoveryPassRequestComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
