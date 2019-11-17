@@ -35,4 +35,15 @@ export interface User {
   token?: string;
 }
 
-
+export interface NewModelBook {
+  bookId: number;
+  title: string;
+  authors: string[];
+  likes: number;
+  imagePath: string;
+  releaseDate: string;
+  language: string;
+  pages: number;
+  genres: string[];
+  description: string;
+}

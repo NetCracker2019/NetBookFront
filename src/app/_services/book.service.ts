@@ -2,7 +2,7 @@ import {EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
-import {Announcement, Book} from '../_models/interface';
+import {Announcement, Book, NewModelBook} from '../_models/interface';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class BookService {
     return this.http.post(`${environment.apiUrl}/home/books/addBook`, body);
   }
 
-  searchBookByTitle(title: string): Observable<Book[]> {
-    return this.http.get<Book[]>(`${environment.apiUrl}/home/find-books?title=${title}`);
+  searchBookByTitle(title: string): Observable<NewModelBook[]> {
+    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/home/find-books?title=${title}`);
   }
 }
