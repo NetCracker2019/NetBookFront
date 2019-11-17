@@ -33,6 +33,7 @@ import { AlertComponent } from './alert/alert.component';
 import { VerificationAdminComponent } from './verification-admin/verification-admin.component';
 import { RecoveryPassComponent } from './recovery-pass/recovery-pass.component';
 import { RecoveryPassRequestComponent } from './recovery-pass-request/recovery-pass-request.component';
+import { SuperadminRequest } from './superadmin-request/superadmin-request.component';
 
 
 
@@ -43,11 +44,13 @@ const componentRoutes: Routes = [
   { path: 'recommendations', component: ContentRecommendationsComponent},
   { path: 'chat', component: ContentChatComponent},
   { path: 'achievements', component: ContentAchievementsComponent},
+  { path: 'superadmin-request', component: SuperadminRequest},
 ];
 
 const componentNotAllRoutes: Routes = [
   { path: 'books', component: ContentBookComponent},
-  { path: 'announcement', component: ContentMainComponent}
+  { path: 'announcement', component: ContentMainComponent},
+  { path: 'superadmin-request', component: SuperadminRequest},
 ];
 
 
@@ -89,7 +92,8 @@ const appRoutes: Routes = [
     AlertComponent,
     VerificationAdminComponent,
     RecoveryPassComponent,
-    RecoveryPassRequestComponent
+    RecoveryPassRequestComponent,
+    SuperadminRequest
   ],
   imports: [
     BrowserModule,
