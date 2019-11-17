@@ -9,12 +9,8 @@ import {Announcement, Book, NewModelBook, Review} from '../_models/interface';
 })
 export class BookService {
   @Output() searchEvent = new EventEmitter<string>();
-  transferBookList$: Observable<NewModelBook[]>;
-  private bookListAsSubject = new Subject<NewModelBook[]>();
 
-  constructor(private http: HttpClient) {
-    this.transferBookList$ = this.bookListAsSubject.asObservable();
-  }
+  constructor(private http: HttpClient) {}
 
   search(title: string) {
     this.searchEvent.emit(title);
@@ -46,10 +42,5 @@ export class BookService {
   }
   getBookById(id: number): Observable<NewModelBook> {
     return this.http.get<NewModelBook>(`${environment.apiUrl}/home/find-book-by-id?id=${id}`);
-  }
-
-  transferBookList(data){
-    console.log('Books in transfer: ', data);
-    this.bookListAsSubject.next(data);
   }
 }

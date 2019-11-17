@@ -26,6 +26,6 @@ export class SearchComponent implements OnInit {
 
   getBooks() {
     this.bookService.searchBookByTitle(this.title)
-      .subscribe(books => { console.log( books) ; this.books = books; this.bookService.transferBookList(books); });
+      .subscribe(books => { console.log( books) ; this.books = books; });
   }
 }
