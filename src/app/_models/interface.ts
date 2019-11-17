@@ -42,8 +42,19 @@ export interface NewModelBook {
   likes: number;
   imagePath: string;
   releaseDate: string;
-  language: string;
+  lang: string;
   pages: number;
   genres: string[];
   description: string;
+}
+
+export interface Review {
+  reviewId: number;
+  userId: number;
+  bookId: number;
+  userName: string;
+  userAvatarPath: string;
+  reviewText: string;
+  rating: number;
+  approved: boolean;
 }

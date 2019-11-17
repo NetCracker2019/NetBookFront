@@ -95,7 +95,8 @@ const appRoutes: Routes = [
     VerificationAdminComponent,
     RecoveryPassComponent,
     RecoveryPassRequestComponent,
-    SearchComponent
+    SearchComponent,
+    ContentBookDetailsComponent
   ],
   imports: [
     BrowserModule,

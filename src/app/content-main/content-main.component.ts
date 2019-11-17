@@ -15,10 +15,11 @@ export class ContentMainComponent implements OnInit {
 
   ngOnInit() {
     this.reloadData();
+    console.log(this.books);
   }
 
   reloadData() {
-    this.bookService.getAnnouncementList().subscribe(data => { console.log(data); this.books = data; });
+    this.bookService.getAnnouncementList().subscribe(data => { this.books = data; });
   }
 
 }

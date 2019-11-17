@@ -1,16 +1,20 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {environment} from '../../environments/environment';
-import {Announcement, Book, NewModelBook} from '../_models/interface';
+import {Announcement, Book, NewModelBook, Review} from '../_models/interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
   @Output() searchEvent = new EventEmitter<string>();
+  transferBookList$: Observable<NewModelBook[]>;
+  private bookListAsSubject = new Subject<NewModelBook[]>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.transferBookList$ = this.bookListAsSubject.asObservable();
+  }
 
   search(title: string) {
     this.searchEvent.emit(title);
@@ -23,6 +27,10 @@ export class BookService {
   getBookList(): Observable<Book[]> {
     return this.http.get<Book[]>(`${environment.apiUrl}/home/books`);
   }
+  getNewBookList(): Observable<NewModelBook[]> {
+    console.log('Books in service: ', this.http.get<NewModelBook[]>(`${environment.apiUrl}/home/view-books`));
+    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/home/view-books`);
+  }
 
   addBook(book: Book) {
     const body = {title: book.title, like: book.like, imagePath: book.imagePath,
@@ -32,5 +40,16 @@ export class BookService {
 
   searchBookByTitle(title: string): Observable<NewModelBook[]> {
     return this.http.get<NewModelBook[]>(`${environment.apiUrl}/home/find-books?title=${title}`);
+  }
+  getBookReviews(id: number): Observable<Review[]> {
+    return this.http.get<Review[]>(`${environment.apiUrl}/home/search/${id}`);
+  }
+  getBookById(id: number): Observable<NewModelBook> {
+    return this.http.get<NewModelBook>(`${environment.apiUrl}/home/find-book-by-id?id=${id}`);
+  }
+
+  transferBookList(data){
+    console.log('Books in transfer: ', data);
+    this.bookListAsSubject.next(data);
   }
 }
