@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {Announcement, Book} from '../_models/interface';
 
@@ -8,12 +8,13 @@ import {Announcement, Book} from '../_models/interface';
   providedIn: 'root'
 })
 export class BookService {
-  @Output() searchEvent = new EventEmitter<string>();
+  private titleSource = new BehaviorSubject<string>('');
+  currentTitle = this.titleSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
-  search(title: string) {
-    this.searchEvent.emit(title);
+  changeTitle(title: string) {
+    this.titleSource.next(title);
   }
 
   getAnnouncementList(): Observable<Announcement[]> {

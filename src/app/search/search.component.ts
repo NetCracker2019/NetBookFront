@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {BookService} from '../_services/book.service';
 import {Book} from '../_models/interface';
 
@@ -14,16 +14,11 @@ export class SearchComponent implements OnInit {
   constructor(private bookService: BookService) { }
 
   ngOnInit() {
-    this.bookService.searchEvent
-      .subscribe((data: string) => {
-        console.log('Event message from Component Header: ' + data);
-        this.title = data;
-        this.getBooks();
-      });
+    this.bookService.currentTitle.subscribe(title => { this.title = title; this.getBooks(title); });
   }
 
-  getBooks() {
-    this.bookService.searchBookByTitle(this.title)
+  getBooks(title: string) {
+    this.bookService.searchBookByTitle(title)
       .subscribe(books => { console.log(books) ; this.books = books; });
   }
 }

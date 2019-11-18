@@ -11,17 +11,14 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private bookService: BookService,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
 
-  search(title: string) {
-    title = title.trim();
-    if (!title) {
-      return;
-    }
+  newTitle(title: string) {
     this.router.navigate(['/home/search']);
-    this.bookService.search(title);
+    this.bookService.changeTitle(title);
   }
 }
