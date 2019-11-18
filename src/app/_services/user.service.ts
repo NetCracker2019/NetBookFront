@@ -42,9 +42,6 @@ export class UserService {
     return this.http.get(`${environment.apiUrl}/user-service/recovery/password?email=` + email);
 
   }
-
-
-
 }
 
 

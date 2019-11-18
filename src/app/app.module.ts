@@ -33,9 +33,8 @@ import { AlertComponent } from './alert/alert.component';
 import { VerificationAdminComponent } from './verification-admin/verification-admin.component';
 import { RecoveryPassComponent } from './recovery-pass/recovery-pass.component';
 import { RecoveryPassRequestComponent } from './recovery-pass-request/recovery-pass-request.component';
-
+import { SuperadminRequest } from './superadmin-request/superadmin-request.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
 import { SearchComponent } from './search/search.component';
 import {ContentBookDetailsComponent} from './content-book-details/content-book-details.component';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
@@ -53,6 +52,7 @@ const componentRoutes: Routes = [
   { path: 'recommendations', component: ContentRecommendationsComponent},
   { path: 'chat', component: ContentChatComponent},
   { path: 'achievements', component: ContentAchievementsComponent},
+  { path: 'superadmin-request', component: SuperadminRequest},
   { path: 'announcement', component: ContentMainComponent},
   { path: 'newAnnouncement', component: AddAnnouncementComponent},
 ];
@@ -60,6 +60,7 @@ const componentRoutes: Routes = [
 const componentNotAllRoutes: Routes = [
   { path: 'books', component: ContentBookComponent},
   { path: 'announcement', component: ContentMainComponent},
+  { path: 'superadmin-request', component: SuperadminRequest},
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
@@ -106,6 +107,7 @@ const appRoutes: Routes = [
     VerificationAdminComponent,
     RecoveryPassComponent,
     RecoveryPassRequestComponent,
+    SuperadminRequest,
     SearchComponent,
     ContentBookDetailsComponent,
     AddAnnouncementComponent
