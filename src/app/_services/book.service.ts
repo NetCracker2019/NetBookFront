@@ -52,9 +52,15 @@ export class BookService {
   }
 
   addBook(book: Book) {
-    const body = {title: book.title, author: book.author, genre: book.genre, imagePath: book.imagePath,
-      release_date: book.release_date, language: book.language, pages: book.pages, description: book.description};
+    const body = {title: book.title, author: book.authors, genre: book.genres, imagePath: book.imagePath,
+      release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description};
     return this.http.post(`${environment.apiUrl}/book-service/home/books/addBook`, body);
+  }
+
+  addAnnouncement(book: Book) {
+    const body = {title: book.title, author: book.authors, genre: book.genres, imagePath: book.imagePath,
+      release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description};
+    return this.http.post(`${environment.apiUrl}/book-service/home/books/addAnnouncement`, body);
   }
 
   searchBookByTitle(title: string): Observable<NewModelBook[]> {

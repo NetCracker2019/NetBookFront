@@ -15,8 +15,6 @@ export class ContentBookComponent implements OnInit {
   books: Book[];
   bookModel: Book = {} as Book;
   constructor(private bookService: BookService,
-
-              private router: Router,
               private alertService: AlertService) { }
 
   ngOnInit() {

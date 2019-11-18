@@ -1,11 +1,11 @@
 export interface  Book {
-  idbook: number;
+  bookId: number;
   title: string;
-  author: string;
-  genre: string;
-  like: number;
+  authors: Array<string>;
+  genres: Array<string>;
+  likes: number;
   imagePath: string;
-  release_date: string;
+  releaseDate: string;
   language: string;
   pages: number;
   description: string;
