@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {User} from "../_models";
+import {User} from "../_models/interface";
 import { environment } from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {throwError} from 'rxjs';
@@ -19,28 +19,50 @@ export class UserService {
   }
 
   register(user: User) {
-    const body = {login: user.firstName, password: user.password, email: user.username, name: user.lastName, role: "ROLE_CLIENT"};
-    return this.http.post(`${environment.apiUrl}/user-service/register/user`, body);
+    return this.http.post(`${environment.apiUrl}/user-service/register/user`, user);
   }
 
   registerAdmin(user: User, token: string) {
-    const body = {login: user.firstName, password: user.password, email: user.username, name: user.lastName, role: "ROLE_ADMIN"};
-    return this.http.post(`${environment.apiUrl}/user-service/register/admin?token=` + token, body );
+    
+    return this.http.post(`${environment.apiUrl}/user-service/register/admin?token=` + token, user );
   }
 
   confirmUserAccountRequest(token: string) {
-    return this.http.get(`${environment.apiUrl}/user-service/verification/user?token=` + token);
+    return this.http.put(`${environment.apiUrl}/user-service/verification/user?token=` + token, token);//
   }
 
   recoveryPass(token: string, pass: string) {
-    return this.http.get(`${environment.apiUrl}/user-service/change/password?token=` + token + `&pass=` + pass);
+    return this.http.put(`${environment.apiUrl}/user-service/change/password?token=` + token + `&pass=` + pass, token);/////
   }
 
   recoveryPassRequest(email: string) {
-    return this.http.get(`${environment.apiUrl}/user-service/recovery/password?email=` + email);
+    return this.http.post(`${environment.apiUrl}/user-service/recovery/password?email=` + email, email);//
   }
 
+  getUser(login: string) {
+    return this.http.get(`${environment.apiUrl}/profile/` + login);
+  }
 
+  getAchievement(login: string) {
+    return this.http.get(`${environment.apiUrl}/profile/` + login + `/get-achievement`);
+  }
+
+  getFriends(login: string, cnt: number, offset: number) {
+    return this.http.get(`${environment.apiUrl}/profile/` + login + `/friends?cnt=` + cnt + `&offset=` + offset);
+  }
+  getFavouriteBooks(login: string, cnt: number, offset: number) {
+    return this.http.get(`${environment.apiUrl}/profile/` + login + `/favourite-books?cnt=` + cnt + `&offset=` + offset);
+  }
+  getReadingBooks(login: string, cnt: number, offset: number) {
+    return this.http.get(`${environment.apiUrl}/profile/` + login + `/reading-books?cnt=` + cnt + `&offset=` + offset);
+  }
+  getReadBooks(login: string, cnt: number, offset: number) {
+    return this.http.get(`${environment.apiUrl}/profile/` + login + `/read-books?cnt=` + cnt + `&offset=` + offset);
+  }
+
+  edit(user: User) {
+    return this.http.put(`${environment.apiUrl}/profile/` + user.username + `/edit`, user );
+  }
 
 }
 

@@ -33,12 +33,14 @@ import { AlertComponent } from './alert/alert.component';
 import { VerificationAdminComponent } from './verification-admin/verification-admin.component';
 import { RecoveryPassComponent } from './recovery-pass/recovery-pass.component';
 import { RecoveryPassRequestComponent } from './recovery-pass-request/recovery-pass-request.component';
+import { ContentEditProfileComponent } from './content-edit-profile/content-edit-profile.component';
 
 
 
 const componentRoutes: Routes = [
   { path: 'books', component: ContentBookComponent},
-  { path: 'profile', component: ContentProfileComponent},
+  { path: 'profile/:login', component: ContentProfileComponent},
+  { path: 'profile/:login/edit', component: ContentEditProfileComponent},
   { path: 'friends', component: ContentFriendsComponent},
   { path: 'recommendations', component: ContentRecommendationsComponent},
   { path: 'chat', component: ContentChatComponent},
@@ -47,6 +49,7 @@ const componentRoutes: Routes = [
 
 const componentNotAllRoutes: Routes = [
   { path: 'books', component: ContentBookComponent},
+  
   { path: 'announcement', component: ContentMainComponent}
 ];
 
@@ -60,6 +63,8 @@ const appRoutes: Routes = [
   { path: 'verification-account', component: VerificationAccountComponent},
   { path: 'verification-admin', component: VerificationAdminComponent },
   { path: 'recovery-password', component: RecoveryPassComponent },
+  
+  
   { path: 'recovery-password-request', component: RecoveryPassRequestComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: 'home/announcement' }
@@ -89,7 +94,8 @@ const appRoutes: Routes = [
     AlertComponent,
     VerificationAdminComponent,
     RecoveryPassComponent,
-    RecoveryPassRequestComponent
+    RecoveryPassRequestComponent,
+    ContentEditProfileComponent
   ],
   imports: [
     BrowserModule,

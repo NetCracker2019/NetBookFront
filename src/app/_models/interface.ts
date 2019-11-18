@@ -31,8 +31,23 @@ export interface User {
   country: string;
   city: string;
   status: string;
+  regDate: Date;
+  avatarFilePath: string;
   role: string;
   token?: string;
 }
 
+export interface Achievement {
+  cntBook: number;
+  title: string;
+  description: string;
+  image_path: string;
+}
+
+export interface ShortBookDescription {
+  likes: number;
+  title: string;
+  authors: string[];
+  image_path: string;
+}
 
