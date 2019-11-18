@@ -1,12 +1,15 @@
 export interface  Book {
-     idbook: number;
-     title: string;
-     like: number;
-     imagePath: string;
-     release_date: string;
-     language: string;
-     pages: number;
-     approved: boolean;
+  idbook: number;
+  title: string;
+  author: string;
+  genre: string;
+  like: number;
+  imagePath: string;
+  release_date: string;
+  language: string;
+  pages: number;
+  description: string;
+  approved: boolean;
    /* public img: string;
     public author: string;
     public genre: string;
@@ -18,6 +21,8 @@ export interface Announcement {
   title: string;
   description: string;
   image_path: string;
+  totalCount: number;
+
 }
 
 export interface User {
@@ -36,3 +41,35 @@ export interface User {
 }
 
 
+export interface Menu {
+  name: string;
+  url: string;
+}
+
+
+
+
+export interface NewModelBook {
+  bookId: number;
+  title: string;
+  authors: string[];
+  likes: number;
+  imagePath: string;
+  releaseDate: string;
+  lang: string;
+  pages: number;
+  genres: string[];
+  description: string;
+}
+
+
+export interface Review {
+  reviewId: number;
+  userId: number;
+  bookId: number;
+  userName: string;
+  userAvatarPath: string;
+  reviewText: string;
+  rating: number;
+  approved: boolean;
+}

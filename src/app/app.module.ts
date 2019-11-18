@@ -34,6 +34,10 @@ import { VerificationAdminComponent } from './verification-admin/verification-ad
 import { RecoveryPassComponent } from './recovery-pass/recovery-pass.component';
 import { RecoveryPassRequestComponent } from './recovery-pass-request/recovery-pass-request.component';
 import { SuperadminRequest } from './superadmin-request/superadmin-request.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { SearchComponent } from './search/search.component';
+import {ContentBookDetailsComponent} from './content-book-details/content-book-details.component';
+
 
 
 
@@ -51,6 +55,9 @@ const componentNotAllRoutes: Routes = [
   { path: 'books', component: ContentBookComponent},
   { path: 'announcement', component: ContentMainComponent},
   { path: 'superadmin-request', component: SuperadminRequest},
+  { path: 'search', component: SearchComponent},
+  { path: 'search/:bookId', component: ContentBookDetailsComponent},
+  { path: 'announcement/:bookId', component: ContentBookDetailsComponent}
 ];
 
 
@@ -62,6 +69,7 @@ const appRoutes: Routes = [
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
   { path: 'verification-account', component: VerificationAccountComponent},
   { path: 'verification-admin', component: VerificationAdminComponent },
+
   { path: 'recovery-password', component: RecoveryPassComponent },
   { path: 'recovery-password-request', component: RecoveryPassRequestComponent },
   // otherwise redirect to home
@@ -93,13 +101,16 @@ const appRoutes: Routes = [
     VerificationAdminComponent,
     RecoveryPassComponent,
     RecoveryPassRequestComponent,
-    SuperadminRequest
+    SuperadminRequest,
+    SearchComponent,
+    ContentBookDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
@@ -110,7 +121,6 @@ const appRoutes: Routes = [
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    //fakeBackendProvider,
     AlertService],
 
   bootstrap: [AppComponent]

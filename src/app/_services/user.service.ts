@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {User} from "../_models/interface";
+import {HttpClient, HttpParams} from '@angular/common/http';
+
+import {User} from '../_models/interface';
+
 import { environment } from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {throwError} from 'rxjs';
@@ -38,15 +40,8 @@ export class UserService {
 
   recoveryPassRequest(email: string) {
     return this.http.get(`${environment.apiUrl}/user-service/recovery/password?email=` + email);
+
   }
-
-  superadminRequest(email: string) {
-    const body = {email: email};
-    return this.http.post(`${environment.apiUrl}/user-service/send-admin-reg-mail`, body);
-  }
-
-
-
 }
 
 

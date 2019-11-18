@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:1337'
+ apiUrl: 'https://netbooksfront.herokuapp.com'
+//apiUrl: 'http://localhost:8080'
 };
 
 /*

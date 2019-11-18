@@ -6,6 +6,7 @@
     </div>-->
       <h2>Authorization</h2>
       <div class="card-body">
+
         <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
 
 
@@ -33,6 +34,7 @@
             <a  [routerLink]="['/home/announcement']">Back</a>
           </button>
           <!--<div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>-->
+
         </form>
       </div>
     </div>

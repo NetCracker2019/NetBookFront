@@ -1,7 +1,5 @@
 import { Component} from '@angular/core';
 import { environment } from '../../environments/environment';
-import {UserService} from '../_services/user.service';
-import {AlertService} from '../_services/alert.service';
 import {Router} from '@angular/router';
 
 @Component({

@@ -23,6 +23,11 @@
   margin: 1.5%;
 }
 
+label {
+  position: relative;
+  width: 400px;
+  margin: 0 auto;
+}
 
 .button{
   display: inline-block;
