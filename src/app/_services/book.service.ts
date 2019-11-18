@@ -4,7 +4,6 @@ import {Observable, Subject} from 'rxjs';
 import {environment} from '../../environments/environment';
 
 
-import {Announcement, Book} from '../_models/interface';
 import {map} from "rxjs/operators";
 
 
