@@ -4,10 +4,10 @@
   </div>
   <div class="search">
     <div class="d1">
-      <form>
-        <input type="text" placeholder="Искать здесь...">
-        <button type="submit"></button>
-      </form>
+      <label>
+        <input #title type="text" placeholder="Enter book title or author name" />
+        <button (click)="search(title.value)"></button>
+      </label>
     </div>
   </div>
   <div class="buttons-grid" id="buttons-grid">

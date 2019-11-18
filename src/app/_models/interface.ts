@@ -38,6 +38,7 @@ export interface User {
   token?: string;
 }
 
+
 export interface Menu {
   name: string;
   url: string;
@@ -46,3 +47,27 @@ export interface Menu {
 
 
 
+export interface NewModelBook {
+  bookId: number;
+  title: string;
+  authors: string[];
+  likes: number;
+  imagePath: string;
+  releaseDate: string;
+  lang: string;
+  pages: number;
+  genres: string[];
+  description: string;
+}
+
+
+export interface Review {
+  reviewId: number;
+  userId: number;
+  bookId: number;
+  userName: string;
+  userAvatarPath: string;
+  reviewText: string;
+  rating: number;
+  approved: boolean;
+}

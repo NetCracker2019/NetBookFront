@@ -15,6 +15,7 @@ import {Announcement} from '../_models/interface';
 export class ContentMainComponent implements OnInit {
 
 
+
   // Books = [
   //   new Book (0,"../../assets/img/Harry.jpg","Potniy Harry i filosovskiy kamen", "Граевский Александр Моисеевич", "Советская классическая проза, Военная проза","03.11.1999", "Russian"),
   //   new Book (1,"../../assets/img/Harry.jpg","Potniy Harry i filosovskiy kamen", "Граевский Александр Моисеевич", "Советская классическая проза, Военная проза","03.11.1999", "Russian"),
@@ -32,8 +33,12 @@ export class ContentMainComponent implements OnInit {
     this.loadPage();
   }
 
+  books: Announcement[];
+
+
 
   ngOnInit() {
+
    // this.reloadData();
   }
   onPageChanged(pageNumber) {
@@ -57,6 +62,14 @@ export class ContentMainComponent implements OnInit {
         this.books = data;
         // this.collectionSize = data.length;
       });
+
+    this.reloadData();
+    console.log(this.books);
+  }
+
+  reloadData() {
+    this.bookService.getAnnouncementList().subscribe(data => { this.books = data; });
+
   }
 
 }
