@@ -1,13 +1,15 @@
 export interface  Book {
-
-     idbook: number;
-     title: string;
-     like: number;
-     imagePath: string;
-     release_date: string;
-     language: string;
-     pages: number;
-     approved: boolean;
+  idbook: number;
+  title: string;
+  author: string;
+  genre: string;
+  like: number;
+  imagePath: string;
+  release_date: string;
+  language: string;
+  pages: number;
+  description: string;
+  approved: boolean;
    /* public img: string;
     public author: string;
     public genre: string;

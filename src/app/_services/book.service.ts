@@ -52,8 +52,8 @@ export class BookService {
   }
 
   addBook(book: Book) {
-    const body = {title: book.title, like: book.like, imagePath: book.imagePath,
-      release_date: book.release_date, language: book.language, pages: book.pages, approved: book.approved};
+    const body = {title: book.title, author: book.author, genre: book.genre, imagePath: book.imagePath,
+      release_date: book.release_date, language: book.language, pages: book.pages, description: book.description};
     return this.http.post(`${environment.apiUrl}/book-service/home/books/addBook`, body);
   }
 
