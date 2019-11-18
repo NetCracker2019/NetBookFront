@@ -19,6 +19,8 @@ export interface Announcement {
   title: string;
   description: string;
   image_path: string;
+  totalCount: number;
+
 }
 
 export interface User {
@@ -35,6 +37,12 @@ export interface User {
   role: string;
   token?: string;
 }
+
+export interface Menu {
+  name: string;
+  url: string;
+}
+
 
 
 

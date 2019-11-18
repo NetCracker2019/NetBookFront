@@ -113,9 +113,6 @@
 .help-block{
   color: #f49355;
 }
-<<<<<<< HEAD
-=======
 
 input.ng-touched.ng-invalid {border:solid red 2px;}
 input.ng-touched.ng-valid {border:solid green 2px;}
->>>>>>> master

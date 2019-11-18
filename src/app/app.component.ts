@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
-<<<<<<< HEAD
-import {User} from "./_models";
-import {Router} from "@angular/router";
-import {AuthenticationService} from "./_services/authentication.service";
-=======
 import {Router} from '@angular/router';
 import {AuthenticationService} from './_services/authentication.service';
->>>>>>> master
 
 @Component({
   selector: 'app-root',
@@ -21,11 +15,8 @@ export class AppComponent {
     // private router: Router,
     // private authenticationService: AuthenticationService
   ) {
-<<<<<<< HEAD
-    //this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-=======
     // this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
->>>>>>> master
+
   }
 
   // logout() {

@@ -6,20 +6,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-<<<<<<< HEAD
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { RegistrationComponent } from './registration/registration.component';
-import { AuthorizationComponent } from './authorization/authorization.component';
-import { HomeComponent } from './home/home.component';
-import {RouterModule, Routes} from "@angular/router";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import { HomeAuthComponent } from './home-auth/home-auth.component';
-import {JwtInterceptor} from "./_helpers/jwt.interceptor";
-import {ErrorInterceptor} from "./_helpers/error.interceptor";
-import {AuthGuard} from "./_helpers/auth.guard";
-import {fakeBackendProvider} from "./_helpers/fake-backend";
-import {AlertService} from "./_services/alert.service";
-=======
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RegistrationComponent } from './registration/registration.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
@@ -32,7 +18,6 @@ import {ErrorInterceptor} from './_helpers/error.interceptor';
 import {AuthGuard} from './_helpers/auth.guard';
 import {fakeBackendProvider} from './_helpers/fake-backend';
 import {AlertService} from './_services/alert.service';
->>>>>>> master
 import { VerificationAccountComponent } from './verification-account/verification-account.component';
 import { ContentBookComponent } from './content-book/content-book.component';
 import { ContentChatComponent } from './content-chat/content-chat.component';
@@ -42,19 +27,13 @@ import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
 import { ContentMainComponent } from './content-main/content-main.component';
 import { ContentRecommendationsComponent } from './content-recommendations/content-recommendations.component';
-<<<<<<< HEAD
-import {ContentAchievementsComponent} from "./content-achievements/content-achievements.component";
-import { HeaderauthComponent } from './headerauth/headerauth.component';
-import { AlertComponent } from './alert/alert.component';
-import { VerificationAdminComponent } from './verification-admin/verification-admin.component';
-=======
 import {ContentAchievementsComponent} from './content-achievements/content-achievements.component';
 import { HeaderauthComponent } from './headerauth/headerauth.component';
 import { AlertComponent } from './alert/alert.component';
 import { VerificationAdminComponent } from './verification-admin/verification-admin.component';
 import { RecoveryPassComponent } from './recovery-pass/recovery-pass.component';
 import { RecoveryPassRequestComponent } from './recovery-pass-request/recovery-pass-request.component';
->>>>>>> master
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -81,12 +60,9 @@ const appRoutes: Routes = [
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
   { path: 'verification-account', component: VerificationAccountComponent},
   { path: 'verification-admin', component: VerificationAdminComponent },
-<<<<<<< HEAD
 
-=======
   { path: 'recovery-password', component: RecoveryPassComponent },
   { path: 'recovery-password-request', component: RecoveryPassRequestComponent },
->>>>>>> master
   // otherwise redirect to home
   { path: '**', redirectTo: 'home/announcement' }
 ];
@@ -113,19 +89,16 @@ const appRoutes: Routes = [
     ContentAchievementsComponent,
     HeaderauthComponent,
     AlertComponent,
-<<<<<<< HEAD
-    VerificationAdminComponent
-=======
     VerificationAdminComponent,
     RecoveryPassComponent,
     RecoveryPassRequestComponent
->>>>>>> master
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
@@ -136,11 +109,7 @@ const appRoutes: Routes = [
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-<<<<<<< HEAD
-    fakeBackendProvider,
-=======
     //fakeBackendProvider,
->>>>>>> master
     AlertService],
 
   bootstrap: [AppComponent]
