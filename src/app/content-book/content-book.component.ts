@@ -13,7 +13,7 @@ import {AlertService} from '../_services/alert.service';
 })
 export class ContentBookComponent implements OnInit {
   books: Book[];
-  bookModel: Book;
+  bookModel: Book = {} as Book;
   constructor(private bookService: BookService,
 
               private router: Router,
@@ -37,6 +37,13 @@ export class ContentBookComponent implements OnInit {
           this.alertService.error(error);
           console.log(error);
         });
+  }
+
+  openForm() {
+    document.getElementById('myForm').style.display = 'block';
+  }
+  closeForm() {
+    document.getElementById('myForm').style.display = 'none';
   }
 
 }
