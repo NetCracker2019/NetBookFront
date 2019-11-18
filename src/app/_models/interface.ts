@@ -1,4 +1,5 @@
 export interface  Book {
+
      idbook: number;
      title: string;
      like: number;
@@ -18,6 +19,8 @@ export interface Announcement {
   title: string;
   description: string;
   image_path: string;
+  totalCount: number;
+
 }
 
 export interface User {
@@ -35,6 +38,15 @@ export interface User {
   token?: string;
 }
 
+
+export interface Menu {
+  name: string;
+  url: string;
+}
+
+
+
+
 export interface NewModelBook {
   bookId: number;
   title: string;
@@ -47,6 +59,7 @@ export interface NewModelBook {
   genres: string[];
   description: string;
 }
+
 
 export interface Review {
   reviewId: number;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Menu} from '../_models/Menu';
+import {Menu} from '../_models/interface';
 
 @Component({
   selector: 'app-menu',
@@ -9,15 +9,25 @@ import {Menu} from '../_models/Menu';
 export class MenuComponent implements OnInit {
 
 
-  Menu = [
-    new Menu('Головна сторінка', 'announcement'),
-    new Menu('Книги', 'books'),
-    new Menu('Мой профиль', 'profile'),
-    new Menu('Друзья', 'friends'),
-    new Menu('Рекомендации', 'recommendations'),
-    new Menu('Чат', 'chat'),
-    new Menu('Ачивки', 'achievements'),
-  ];
+  Menu: Menu[] = [
+    {name: 'Главная страница', url: 'announcement'},
+    {name: 'Книги', url: 'books'},
+    {name: 'Мой профиль', url: 'profile'},
+    {name: 'Друзья', url: 'friends'},
+    {name: 'Рекомендации', url: 'recommendations'},
+    {name: 'Чат', url: 'chat'},
+    {name: 'Достижения', url: 'achievements'},
+    ];
+
+  // Menu = [
+  //   new Menu('Головна сторінка', 'announcement'),
+  //   new Menu('Книги', 'books'),
+  //   new Menu('Мой профиль', 'profile'),
+  //   new Menu('Друзья', 'friends'),
+  //   new Menu('Рекомендации', 'recommendations'),
+  //   new Menu('Чат', 'chat'),
+  //   new Menu('Ачивки', 'achievements'),
+  // ];
 
 
   constructor() { }
