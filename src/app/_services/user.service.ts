@@ -40,6 +40,11 @@ export class UserService {
     return this.http.get(`${environment.apiUrl}/user-service/recovery/password?email=` + email);
   }
 
+  superadminRequest(email: string) {
+    const body = {email: email};
+    return this.http.post(`${environment.apiUrl}/user-service/send-admin-reg-mail`, body);
+  }
+
 
 
 }

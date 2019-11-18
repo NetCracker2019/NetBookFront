@@ -1,12 +1,17 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { environment } from '../../environments/environment';
+import {UserService} from '../_services/user.service';
+import {AlertService} from '../_services/alert.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'superadmin-request',
   templateUrl: './superadmin-request.component.html',
   styleUrls: ['./sa-styles.css']
 })
-export class SuperadminRequest {
+
+export class SuperadminRequest{
+
 	onSubmit(event: any) {
 	 const adminMail = event.target.adminMail.value;
 	 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -16,9 +21,7 @@ export class SuperadminRequest {
 	 });
    fetch(`${environment.apiUrl}/user-service/send-admin-reg-mail`, {
   	method: 'POST',
-  	mode: 'no-cors',
   	headers: headers,
-  	credentials: 'include',
   	body: JSON.stringify(adminMail)
    })
    .catch(error => console.warn(error))
