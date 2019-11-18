@@ -38,8 +38,12 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { SearchComponent } from './search/search.component';
 import {ContentBookDetailsComponent} from './content-book-details/content-book-details.component';
+import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
 
 
+// const componentAnnouncement: Routes = [
+//   { path: 'newAnnouncement', component: AddAnnouncementComponent}
+//   ];
 
 
 const componentRoutes: Routes = [
@@ -49,6 +53,8 @@ const componentRoutes: Routes = [
   { path: 'recommendations', component: ContentRecommendationsComponent},
   { path: 'chat', component: ContentChatComponent},
   { path: 'achievements', component: ContentAchievementsComponent},
+  { path: 'announcement', component: ContentMainComponent},
+  { path: 'newAnnouncement', component: AddAnnouncementComponent},
 ];
 
 const componentNotAllRoutes: Routes = [
@@ -56,7 +62,7 @@ const componentNotAllRoutes: Routes = [
   { path: 'announcement', component: ContentMainComponent},
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
-  { path: 'announcement/:bookId', component: ContentBookDetailsComponent}
+  { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
 ];
 
 
@@ -101,7 +107,8 @@ const appRoutes: Routes = [
     RecoveryPassComponent,
     RecoveryPassRequestComponent,
     SearchComponent,
-    ContentBookDetailsComponent
+    ContentBookDetailsComponent,
+    AddAnnouncementComponent
   ],
   imports: [
     BrowserModule,
