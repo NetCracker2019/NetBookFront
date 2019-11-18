@@ -3,6 +3,7 @@
 
 module.exports = function (config) {
   config.set({
+    captureConsole: true,
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
@@ -27,7 +28,7 @@ module.exports = function (config) {
     customLaunchers: {
        ChromeHeadlessCI: {
            base: 'ChromeHeadless',
-          flags: ['–no-sandbox', '–disable-setuid-sandbox', '–disable-gpu']
+          flags: ['ï¿½no-sandbox', 'ï¿½disable-setuid-sandbox', 'ï¿½disable-gpu']
        }
     },
     reporters: ['progress', 'kjhtml'],
