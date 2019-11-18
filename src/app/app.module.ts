@@ -34,8 +34,10 @@ import { VerificationAdminComponent } from './verification-admin/verification-ad
 import { RecoveryPassComponent } from './recovery-pass/recovery-pass.component';
 import { RecoveryPassRequestComponent } from './recovery-pass-request/recovery-pass-request.component';
 import { SuperadminRequest } from './superadmin-request/superadmin-request.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { SearchComponent } from './search/search.component';
 import {ContentBookDetailsComponent} from './content-book-details/content-book-details.component';
+
 
 
 
@@ -67,6 +69,7 @@ const appRoutes: Routes = [
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
   { path: 'verification-account', component: VerificationAccountComponent},
   { path: 'verification-admin', component: VerificationAdminComponent },
+
   { path: 'recovery-password', component: RecoveryPassComponent },
   { path: 'recovery-password-request', component: RecoveryPassRequestComponent },
   // otherwise redirect to home
@@ -107,6 +110,7 @@ const appRoutes: Routes = [
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),

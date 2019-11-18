@@ -25,6 +25,7 @@ app-content-book {
 app-home{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+
 }
 
 app-home-auth{

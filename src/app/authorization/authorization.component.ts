@@ -26,10 +26,11 @@ export class AuthorizationComponent implements OnInit {
     ],
     userPassword: [
       { type: 'required', message: 'Password is required' },
-      { type: 'minlength', message: 'Password must be at least 5 characters long' },
+      { type: 'minlength', message: 'Password must be at least 2 characters long' },
       { type: 'maxlength', message: 'Your password cannot be more than 15 characters long' }
     ],
   };
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,12 +53,13 @@ export class AuthorizationComponent implements OnInit {
       ]),
       userPassword: new FormControl('', [
         Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(50)])
+        Validators.minLength(2),
+        Validators.maxLength(15)])
     });
   }
 
   ngOnInit() {
+
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/homeath';
   }
@@ -66,15 +68,17 @@ export class AuthorizationComponent implements OnInit {
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
+
   login() {
+
     this.submitted = true;
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     }
-
     this.loading = true;
+
     this.authenticationService.login(this.f.userName.value, this.f.userPassword.value)
       .pipe(first())
       .subscribe(
