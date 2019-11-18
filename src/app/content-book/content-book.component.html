@@ -80,12 +80,12 @@
 
     <div class="form-group">
       <label for="author" class="label-group" required>Author(-s)*</label>
-      <input type="text" class="input-group" id="author" [(ngModel)]="bookModel.author" name="author">
+      <input type="text" class="input-group" id="author" [(ngModel)]="bookModel.authors" name="author">
     </div>
 
     <div class="form-group">
       <label for="genre" class="label-group" required>Genre*</label>
-      <input type="text" class="input-group" id="genre" [(ngModel)]="bookModel.genre" name="genre">
+      <input type="text" class="input-group" id="genre" [(ngModel)]="bookModel.genres" name="genre">
     </div>
 
     <div class="form-group">
@@ -95,7 +95,7 @@
 
     <div class="form-group">
       <label for="release_date" class="label-group" required>Date*</label>
-      <input type="text" class="input-group" id="release_date" [(ngModel)]="bookModel.release_date" name="release_date">
+      <input type="text" class="input-group" id="release_date" [(ngModel)]="bookModel.releaseDate" name="release_date">
     </div>
 
     <div class="form-group">
@@ -129,10 +129,10 @@
       </div>
       <div class="book-item-content" >
         <h3>{{book.title}}</h3>
-        <p>Автор: {{book.author}} </p>
-        <p>Жанр: {{book.genre}}</p>
-        <p>Дата выпуска: {{book.release_date}}</p>
-        <p>Лайки: {{book.like}}</p>
+        <p>Автор: {{book.authors}} </p>
+        <p>Жанр: {{book.genres}}</p>
+        <p>Дата выпуска: {{book.releaseDate}}</p>
+        <p>Лайки: {{book.likes}}</p>
         <p>Язык книги: {{book.language}}</p>
         <p>Страницы: {{book.pages}}</p>
         <p>Описание: {{book.description}}</p>

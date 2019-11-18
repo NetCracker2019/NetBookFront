@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 
 
@@ -14,12 +14,13 @@ import {Announcement, Book, NewModelBook, Review} from '../_models/interface';
   providedIn: 'root'
 })
 export class BookService {
-  @Output() searchEvent = new EventEmitter<string>();
+  private titleSource = new BehaviorSubject<string>('');
+  currentTitle = this.titleSource.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  search(title: string) {
-    this.searchEvent.emit(title);
+  changeTitle(title: string) {
+    this.titleSource.next(title);
   }
 
 
@@ -52,18 +53,24 @@ export class BookService {
   }
 
   addBook(book: Book) {
-    const body = {title: book.title, author: book.author, genre: book.genre, imagePath: book.imagePath,
-      release_date: book.release_date, language: book.language, pages: book.pages, description: book.description};
+    const body = {title: book.title, author: book.authors, genre: book.genres, imagePath: book.imagePath,
+      release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description};
     return this.http.post(`${environment.apiUrl}/book-service/home/books/addBook`, body);
   }
 
+  addAnnouncement(book: Book) {
+    const body = {title: book.title, author: book.authors, genre: book.genres, imagePath: book.imagePath,
+      release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description};
+    return this.http.post(`${environment.apiUrl}/book-service/home/books/addAnnouncement`, body);
+  }
+
   searchBookByTitle(title: string): Observable<NewModelBook[]> {
-    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/home/find-books?title=${title}`);
+    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/find-books?title=${title}`);
   }
   getBookReviews(id: number): Observable<Review[]> {
-    return this.http.get<Review[]>(`${environment.apiUrl}/home/search/${id}`);
+    return this.http.get<Review[]>(`${environment.apiUrl}/book-service/home/search/${id}`);
   }
   getBookById(id: number): Observable<NewModelBook> {
-    return this.http.get<NewModelBook>(`${environment.apiUrl}/home/find-book-by-id?id=${id}`);
+    return this.http.get<NewModelBook>(`${environment.apiUrl}/book-service/home/find-book-by-id?id=${id}`);
   }
 }
