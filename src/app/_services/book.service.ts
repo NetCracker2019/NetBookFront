@@ -59,12 +59,12 @@ export class BookService {
   }
 
   searchBookByTitle(title: string): Observable<NewModelBook[]> {
-    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/home/find-books?title=${title}`);
+    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/find-books?title=${title}`);
   }
   getBookReviews(id: number): Observable<Review[]> {
-    return this.http.get<Review[]>(`${environment.apiUrl}/home/search/${id}`);
+    return this.http.get<Review[]>(`${environment.apiUrl}/book-service/home/search/${id}`);
   }
   getBookById(id: number): Observable<NewModelBook> {
-    return this.http.get<NewModelBook>(`${environment.apiUrl}/home/find-book-by-id?id=${id}`);
+    return this.http.get<NewModelBook>(`${environment.apiUrl}/book-service/home/find-book-by-id?id=${id}`);
   }
 }
