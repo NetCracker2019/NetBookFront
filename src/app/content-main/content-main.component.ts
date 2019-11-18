@@ -33,7 +33,7 @@ export class ContentMainComponent implements OnInit {
     this.loadPage();
   }
 
-  books: Announcement[];
+  // books: Announcement[];
 
 
 
@@ -68,7 +68,7 @@ export class ContentMainComponent implements OnInit {
   }
 
   reloadData() {
-    this.bookService.getAnnouncementList().subscribe(data => { this.books = data; });
+    this.bookService.getAnnouncementListPeace(this.page, this.booksPerPage).subscribe(data => { this.books = data; });
 
   }
 
