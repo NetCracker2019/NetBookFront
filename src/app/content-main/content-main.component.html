@@ -41,4 +41,6 @@
       </a>
     </div>
   </div>
+  <ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [pageSize]="booksPerPage" [(page)]="page" [boundaryLinks]="true" (pageChange)="onPageChanged($event)"></ngb-pagination>
+
 

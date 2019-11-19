@@ -4,10 +4,10 @@
   </div>
   <div class="search">
     <div class="d1">
-      <form>
-        <input type="text" placeholder="Искать здесь...">
-        <button type="submit"></button>
-      </form>
+      <label>
+        <input #title type="text" placeholder="Enter book title or author name" />
+        <button (click)="newTitle(title.value)"></button>
+      </label>
     </div>
   </div>
   <div class="buttons-grid" id="buttons-grid">
@@ -15,7 +15,9 @@
     <div class="header-buttons">
       <button class="button button-gray" ><a [routerLink]="['/register']">Registration</a></button>
       <button class="button " ><a [routerLink]="['/login']">Login</a></button>
-      <button class="button button-gray" ><a [routerLink]="['/recovery-password-request']">Recovery password</a></button>
+      <button class="button button-gray sa-button " ><a [routerLink]="['superadmin-request']" >Send SA</a></button>
+      <button class="button button-gray password-rec-button" ><a [routerLink]="['/recovery-password-request']">Recovery password</a></button>
+r
 
       <!--<button class="button" (click)="openForm2()">Register</button>-->
       <!--<button class="button button-gray" (click)="openForm()">Login</button>-->

@@ -10,6 +10,7 @@ import {User} from '../_models/interface';
 const users: User[] = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User', email: 'lo@l', city: 'Kiev', country: 'Ukraine', role: 'admin', sex: 'man',
 status: 'nice dude', regDate: new Date(), avatarFilePath: 'string'}];
 
+
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

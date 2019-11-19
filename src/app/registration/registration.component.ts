@@ -40,12 +40,11 @@ export class RegistrationComponent implements OnInit {
     ],
   };
 
-
-
   constructor(private userService: UserService,
               private router: Router,
               private alertService: AlertService
   ) {
+
     this.registerForm = new FormGroup({
 
       userName: new FormControl('', [
@@ -104,6 +103,9 @@ export class RegistrationComponent implements OnInit {
   //
   //       });
   // }
+
+
+
   register() {
     this.model.firstName = this.registerForm.controls.userName.value;
     this.model.lastName = this.registerForm.controls.userSurname.value;

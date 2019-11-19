@@ -51,7 +51,6 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   background: #fff;
-
 }
 
 .blog-item{
@@ -103,4 +102,7 @@
   padding-bottom: 5px;
   margin: 0;
   transition: color .25s ease;
+}
+.d-flex{
+  grid-column: 1/5;
 }
