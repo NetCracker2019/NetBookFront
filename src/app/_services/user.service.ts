@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {User} from "../_models/interface";
+
+import {HttpClient, HttpParams} from '@angular/common/http';
+
+import {User} from '../_models/interface';
+
+
 import { environment } from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {throwError} from 'rxjs';
@@ -19,12 +23,13 @@ export class UserService {
   }
 
   register(user: User) {
+
     return this.http.post(`${environment.apiUrl}/user-service/register/user`, user);
   }
-
   registerAdmin(user: User, token: string) {
-    
+    user.role = "ROLE_ADMIN";
     return this.http.post(`${environment.apiUrl}/user-service/register/admin?token=` + token, user );
+
   }
 
   confirmUserAccountRequest(token: string) {
@@ -68,6 +73,7 @@ export class UserService {
     return this.http.get(`${environment.apiUrl}/find-persons/` + login + `?sought=` + sought + `&where=` +
       where + `&cnt=` + cnt + `&offset=` + offset);
   }
+
 
 }
 

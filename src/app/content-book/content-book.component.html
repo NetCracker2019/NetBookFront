@@ -1,19 +1,91 @@
-<div class="addForm">
+<!--<div class="addForm">
   <h2>Add book</h2>
   <form (ngSubmit)="addBookComponent()" #heroForm="ngForm">
-    <!--<div class="form-group">
+    &lt;!&ndash;<div class="form-group">
       <label for="bookid" class="label-group">Id</label>
       <input type="text" class="input-group" id="bookid" required [(ngModel)]="model.bookid" name="bookid" #bookid="ngModel">
-    </div>-->
+    </div>&ndash;&gt;
 
     <div class="form-group">
-      <label for="title" class="label-group">Title</label>
+      <label for="title" class="label-group" required>Title*</label>
       <input type="text" class="input-group" id="title" [(ngModel)]="bookModel.title" name="title">
     </div>
 
     <div class="form-group">
+      <label for="author" class="label-group" required>Author(-s)*</label>
+      <input type="text" class="input-group" id="author" [(ngModel)]="bookModel.author" name="author">
+    </div>
+
+    <div class="form-group">
+      <label for="genre" class="label-group" required>Genre*</label>
+      &lt;!&ndash;<p><input type="checkbox" class="input-group" name="a" value="1417"> 1417</p>
+      <p><input type="checkbox" class="input-group" name="a" value="1680" checked> 1680</p>
+      <p><input type="checkbox" class="input-group" name="a" value="1883" checked> 1883</p>
+      <p><input type="checkbox" class="input-group" name="a" value="1934"> 1934</p>
+      <p><input type="checkbox" class="input-group" name="a" value="2010"> 2010</p>&ndash;&gt;
+      <input type="text" class="input-group" id="genre" [(ngModel)]="bookModel.genre" name="genre">
+    </div>
+
+    &lt;!&ndash;<div class="form-group">
       <label for="like" class="label-group">Like</label>
       <input type="text" class="input-group" id="like" [(ngModel)]="bookModel.like" name="like">
+    </div>&ndash;&gt;
+
+    <div class="form-group">
+      <label for="imagePath" class="label-group">Image Path</label>
+      <input type="text" class="input-group" id="imagePath" [(ngModel)]="bookModel.imagePath" name="imagePath">
+    </div>
+
+    <div class="form-group">
+      <label for="release_date" class="label-group" required>Date*</label>
+      <input type="text" class="input-group" id="release_date" [(ngModel)]="bookModel.release_date" name="release_date">
+    </div>
+
+    <div class="form-group">
+      <label for="language" class="label-group" required>Language*</label>
+      <input type="text" class="input-group" id="language" [(ngModel)]="bookModel.language" name="language">
+    </div>
+
+    <div class="form-group">
+      <label for="pages" class="label-group" required>Pages*</label>
+      <input type="text" class="input-group" id="pages" [(ngModel)]="bookModel.pages" name="pages">
+    </div>
+
+    <div class="form-group">
+      <label for="description"  class="label-group">Description</label>
+      <input type="text" class="input-group" id="description" [(ngModel)]="bookModel.description" name="description">
+    </div>
+
+    &lt;!&ndash;<div class="form-group">
+      <label for="approved"  class="label-group">Approved</label>
+      <input type="text" class="input-group" id="approved" [(ngModel)]="bookModel.approved" name="approved">
+    </div>&ndash;&gt;
+    <div class="form-group">
+      <button type="submit" class="button">Add book</button>
+    </div>
+  </form>
+</div>-->
+
+<div class="picture-buttons">
+  <button class="button button-gray" (click)="openForm()">Add Book</button>
+</div>
+
+<div class="addForm-popup" id="myForm">
+  <form class="form-container" (ngSubmit)="addBookComponent()">
+    <h2>Write your data</h2>
+    <div class="form-group">
+      <label for="title" class="label-group" required>Title*</label>
+      <input type="text" class="input-group" id="title" [(ngModel)]="bookModel.title" name="title">
+    </div>
+
+    <div class="form-group">
+      <label for="author" class="label-group" required>Author(-s)*</label>
+      <input type="text" class="input-group" id="author" [(ngModel)]="bookModel.authors" name="author">
+    </div>
+
+    <div class="form-group">
+      <label for="genre" class="label-group" required>Genre*</label>
+      <input type="text" class="input-group" id="genre" [(ngModel)]="bookModel.genres" name="genre">
     </div>
 
     <div class="form-group">
@@ -22,31 +94,30 @@
     </div>
 
     <div class="form-group">
-      <label for="release_date" class="label-group">Date</label>
-      <input type="text" class="input-group" id="release_date" [(ngModel)]="bookModel.release_date" name="release_date">
+      <label for="release_date" class="label-group" required>Date*</label>
+      <input type="text" class="input-group" id="release_date" [(ngModel)]="bookModel.releaseDate" name="release_date">
     </div>
 
     <div class="form-group">
-      <label for="language" class="label-group">Language</label>
+      <label for="language" class="label-group" required>Language*</label>
       <input type="text" class="input-group" id="language" [(ngModel)]="bookModel.language" name="language">
     </div>
 
     <div class="form-group">
-      <label for="pages" class="label-group">Pages</label>
+      <label for="pages" class="label-group" required>Pages*</label>
       <input type="text" class="input-group" id="pages" [(ngModel)]="bookModel.pages" name="pages">
     </div>
 
     <div class="form-group">
-      <label for="approved"  class="label-group">Approved</label>
-      <input type="text" class="input-group" id="approved" [(ngModel)]="bookModel.approved" name="approved">
+      <label for="description"  class="label-group">Description</label>
+      <input type="text" class="input-group" id="description" [(ngModel)]="bookModel.description" name="description">
     </div>
     <div class="form-group">
       <button type="submit" class="button">Add book</button>
+      <button type="button" class="btn cancel" (click)="closeForm()">Close</button>
     </div>
   </form>
 </div>
-
-
 
 
 
@@ -58,13 +129,20 @@
       </div>
       <div class="book-item-content" >
         <h3>{{book.title}}</h3>
-        <!--<p>Автор: {{kniga.description}} </p>
-        <p>Жанр: {{kniga.genre}}</p>-->
-        <p>Дата выпуска: {{book.release_date}}</p>
-        <p>Лайки: {{book.like}}</p>
+        <p>Автор: {{book.authors}} </p>
+        <p>Жанр: {{book.genres}}</p>
+        <p>Дата выпуска: {{book.releaseDate}}</p>
+        <p>Лайки: {{book.likes}}</p>
         <p>Язык книги: {{book.language}}</p>
         <p>Страницы: {{book.pages}}</p>
+        <p>Описание: {{book.description}}</p>
+       <!-- <input placeholder={{book.title}}>-->
+      </div>
+      <div class="picture-buttons">
+        <button class="button button-gray">Delete</button>
+        <button class="button button-gray">Update</button>
       </div>
     </a>
+
   </div>
 </div>
