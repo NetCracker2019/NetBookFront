@@ -12,13 +12,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ContentProfileComponent implements OnInit {
 
 
-  private user: User = {} as User;
-  private friends: User[];
-  private favouriteBooks: ShortBookDescription[];
-  private readingBooks: ShortBookDescription[];
-  private readBooks: ShortBookDescription[];
-  private achievement: Achievement = {} as Achievement;		
-  private IsOwnProfile: boolean = false;
+  public user: User = {} as User;
+  public friends: User[];
+  public favouriteBooks: ShortBookDescription[];
+  public readingBooks: ShortBookDescription[];
+  public readBooks: ShortBookDescription[];
+  public achievement: Achievement = {} as Achievement;		
+  private isOwnProfile: boolean = false;
   private login: string;
 
   constructor(private userService: UserService,
