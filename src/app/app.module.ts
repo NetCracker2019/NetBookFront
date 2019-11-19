@@ -115,7 +115,7 @@ const appRoutes: Routes = [
     RecoveryPassComponent,
     RecoveryPassRequestComponent,
 
-    ContentEditProfileComponent
+    ContentEditProfileComponent,
 
     SuperadminRequest,
     SearchComponent,
