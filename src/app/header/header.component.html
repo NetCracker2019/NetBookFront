@@ -6,7 +6,7 @@
     <div class="d1">
       <label>
         <input #title type="text" placeholder="Enter book title or author name" />
-        <button (click)="search(title.value)"></button>
+        <button (click)="newTitle(title.value)"></button>
       </label>
     </div>
   </div>
@@ -17,6 +17,7 @@
       <button class="button " ><a [routerLink]="['/login']">Login</a></button>
       <button class="button button-gray sa-button " ><a [routerLink]="['superadmin-request']" >Send SA</a></button>
       <button class="button button-gray password-rec-button" ><a [routerLink]="['/recovery-password-request']">Recovery password</a></button>
+r
 
       <!--<button class="button" (click)="openForm2()">Register</button>-->
       <!--<button class="button button-gray" (click)="openForm()">Login</button>-->
