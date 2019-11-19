@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Menu} from '../_models/interface';
+import {AuthenticationService} from '../_services/authentication.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,16 +10,7 @@ import {Menu} from '../_models/interface';
 export class MenuComponent implements OnInit {
 
 
-  Menu: Menu[] = [
-    {name: 'Главная страница', url: 'announcement'},
-    {name: 'Книги', url: 'books'},
-    {name: 'Мой профиль', url: 'profile'},
-    {name: 'Друзья', url: 'friends'},
-    {name: 'Рекомендации', url: 'recommendations'},
-    {name: 'Чат', url: 'chat'},
-    {name: 'Достижения', url: 'achievements'},
-    {name: 'Добавить анонс', url: 'newAnnouncement'},
-    ];
+  
 
   // Menu = [
   //   new Menu('Головна сторінка', 'announcement'),
@@ -30,10 +22,22 @@ export class MenuComponent implements OnInit {
   //   new Menu('Ачивки', 'achievements'),
   // ];
 
-
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService) {
+   }
 
   ngOnInit() {
+
   }
+
+  Menu: Menu[] = [
+    {name: 'Главная страница', url: 'announcement'},
+    {name: 'Книги', url: 'books'},
+    {name: 'Мой профиль', url: 'profile/' + this.authenticationService.currentUserValue.username},
+    {name: 'Друзья', url: 'friends/' + this.authenticationService.currentUserValue.username},
+    {name: 'Рекомендации', url: 'recommendations'},
+    {name: 'Чат', url: 'chat'},
+    {name: 'Достижения', url: 'achievements'},
+    {name: 'Добавить анонс', url: 'newAnnouncement'},
+    ];
 
 }
