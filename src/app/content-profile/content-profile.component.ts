@@ -3,6 +3,8 @@ import {User, Achievement, ShortBookDescription} from '../_models/interface';
 import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-content-profile',
@@ -21,12 +23,16 @@ export class ContentProfileComponent implements OnInit {
   private isOwnProfile: boolean = false;
   private login: string;
 
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<User>;
+
   constructor(private userService: UserService,
    private activatedRoute: ActivatedRoute,
    private router: Router,
    private alertService: AlertService) {
-    
-    this.login = activatedRoute.snapshot.params['login'];
+
+   this.login = activatedRoute.snapshot.params['login'];
+   
   }
 
   ngOnInit() {
