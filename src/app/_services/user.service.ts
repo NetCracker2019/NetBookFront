@@ -26,7 +26,7 @@ export class UserService {
   }
 
   registerAdmin(user: User, token: string) {
-    const body = {login: user.firstName, password: user.password, email: user.email, name: user.lastName, role: "ROLE_ADMIN"};
+    const body = {login: user.username, password: user.password, email: user.email, name: user.lastName};
     return this.http.post(`${environment.apiUrl}/user-service/register/admin?token=` + token, body );
   }
 
