@@ -12,7 +12,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class ContentEditProfileComponent implements OnInit {
 
-  private user: User = {} as User;
+  public user: User = {} as User;
   private login: string;
 
   form: FormGroup;

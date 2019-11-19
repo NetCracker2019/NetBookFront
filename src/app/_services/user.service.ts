@@ -64,6 +64,11 @@ export class UserService {
     return this.http.put(`${environment.apiUrl}/profile/` + user.username + `/edit`, user );
   }
 
+  getPersons(login: string, sought: string, where: string, cnt: number, offset: number) {
+    return this.http.get(`${environment.apiUrl}/find-persons/` + login + `?sought=` + sought + `&where=` +
+      where + `&cnt=` + cnt + `&offset=` + offset);
+  }
+
 }
 
 
