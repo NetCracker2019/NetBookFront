@@ -54,7 +54,7 @@ export class AuthorizationComponent implements OnInit {
       userPassword: new FormControl('', [
         Validators.required,
         Validators.minLength(2),
-        Validators.maxLength(15)])
+        Validators.maxLength(60)])
     });
   }
 
