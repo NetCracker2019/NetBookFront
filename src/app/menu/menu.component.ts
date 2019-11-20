@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Menu} from '../_models/interface';
+import {AuthenticationService} from "../_services/authentication.service";
 
 @Component({
   selector: 'app-menu',
@@ -19,6 +20,8 @@ export class MenuComponent implements OnInit {
     {name: 'Достижения', url: 'achievements'},
     {name: 'Добавить анонс', url: 'newAnnouncement'},
     ];
+  role: number;
+  security: boolean;
 
   // Menu = [
   //   new Menu('Головна сторінка', 'announcement'),
@@ -31,7 +34,14 @@ export class MenuComponent implements OnInit {
   // ];
 
 
-  constructor() { }
+  constructor(role: AuthenticationService) {
+    this.role = role.role;
+    if (role as any === 4) {
+      this.security = false;
+    } else {
+      this.security = true;
+    }
+  }
 
   ngOnInit() {
   }

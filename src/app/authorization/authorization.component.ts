@@ -27,7 +27,7 @@ export class AuthorizationComponent implements OnInit {
     userPassword: [
       { type: 'required', message: 'Password is required' },
       { type: 'minlength', message: 'Password must be at least 2 characters long' },
-      { type: 'maxlength', message: 'Your password cannot be more than 15 characters long' }
+      { type: 'maxlength', message: 'Your password cannot be more than 60 characters long' }
     ],
   };
 
@@ -54,7 +54,7 @@ export class AuthorizationComponent implements OnInit {
       userPassword: new FormControl('', [
         Validators.required,
         Validators.minLength(2),
-        Validators.maxLength(15)])
+        Validators.maxLength(60)])
     });
   }
 
