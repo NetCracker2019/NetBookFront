@@ -34,11 +34,13 @@ import { VerificationAdminComponent } from './verification-admin/verification-ad
 import { RecoveryPassComponent } from './recovery-pass/recovery-pass.component';
 import { RecoveryPassRequestComponent } from './recovery-pass-request/recovery-pass-request.component';
 
+import { ContentEditProfileComponent } from './content-edit-profile/content-edit-profile.component';
+import { SuperadminRequest } from './superadmin-request/superadmin-request.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
 import { SearchComponent } from './search/search.component';
 import {ContentBookDetailsComponent} from './content-book-details/content-book-details.component';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
+
 
 
 // const componentAnnouncement: Routes = [
@@ -48,18 +50,22 @@ import { AddAnnouncementComponent } from './add-announcement/add-announcement.co
 
 const componentRoutes: Routes = [
   { path: 'books', component: ContentBookComponent},
-  { path: 'profile', component: ContentProfileComponent},
-  { path: 'friends', component: ContentFriendsComponent},
+  { path: 'profile/:login', component: ContentProfileComponent},
+  { path: 'profile/:login/edit', component: ContentEditProfileComponent},
+  { path: 'friends/:login', component: ContentFriendsComponent},
   { path: 'recommendations', component: ContentRecommendationsComponent},
   { path: 'chat', component: ContentChatComponent},
   { path: 'achievements', component: ContentAchievementsComponent},
+  { path: 'superadmin-request', component: SuperadminRequest},
   { path: 'announcement', component: ContentMainComponent},
   { path: 'newAnnouncement', component: AddAnnouncementComponent},
 ];
 
 const componentNotAllRoutes: Routes = [
   { path: 'books', component: ContentBookComponent},
+
   { path: 'announcement', component: ContentMainComponent},
+  { path: 'superadmin-request', component: SuperadminRequest},
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
@@ -76,6 +82,8 @@ const appRoutes: Routes = [
   { path: 'verification-admin', component: VerificationAdminComponent },
 
   { path: 'recovery-password', component: RecoveryPassComponent },
+  
+  
   { path: 'recovery-password-request', component: RecoveryPassRequestComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: 'home/announcement' }
@@ -106,9 +114,14 @@ const appRoutes: Routes = [
     VerificationAdminComponent,
     RecoveryPassComponent,
     RecoveryPassRequestComponent,
+
+    ContentEditProfileComponent,
+
+    SuperadminRequest,
     SearchComponent,
     ContentBookDetailsComponent,
     AddAnnouncementComponent
+
   ],
   imports: [
     BrowserModule,

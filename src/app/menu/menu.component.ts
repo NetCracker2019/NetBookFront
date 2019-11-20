@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Menu} from '../_models/interface';
-import {AuthenticationService} from "../_services/authentication.service";
+import {AuthenticationService} from '../_services/authentication.service';
+
 
 @Component({
   selector: 'app-menu',
@@ -9,19 +10,10 @@ import {AuthenticationService} from "../_services/authentication.service";
 })
 export class MenuComponent implements OnInit {
 
-
-  Menu: Menu[] = [
-    {name: 'Главная страница', url: 'announcement'},
-    {name: 'Книги', url: 'books'},
-    {name: 'Мой профиль', url: 'profile'},
-    {name: 'Друзья', url: 'friends'},
-    {name: 'Рекомендации', url: 'recommendations'},
-    {name: 'Чат', url: 'chat'},
-    {name: 'Достижения', url: 'achievements'},
-    {name: 'Добавить анонс', url: 'newAnnouncement'},
-    ];
   role: number;
   security: boolean;
+
+
 
   // Menu = [
   //   new Menu('Головна сторінка', 'announcement'),
@@ -33,17 +25,40 @@ export class MenuComponent implements OnInit {
   //   new Menu('Ачивки', 'achievements'),
   // ];
 
-
-  constructor(role: AuthenticationService) {
-    this.role = role.role;
-    if (role as any === 4) {
+// <<<<<<< HEAD
+//
+//   constructor(role: AuthenticationService) {
+//     this.role = role.role;
+//     if (role as any === 4) {
+//       this.security = false;
+//     } else {
+//       this.security = true;
+//     }
+//   }
+// =======
+  constructor(private authenticationService: AuthenticationService) {
+    this.role = authenticationService.role;
+    if (this.role === 4) {
       this.security = false;
     } else {
       this.security = true;
     }
-  }
+   }
+
 
   ngOnInit() {
+
   }
+
+  Menu: Menu[] = [
+    {name: 'Главная страница', url: 'announcement'},
+    {name: 'Книги', url: 'books'},
+    {name: 'Мой профиль', url: 'profile/' + this.authenticationService.currentUserValue.username},
+    {name: 'Друзья', url: 'friends/' + this.authenticationService.currentUserValue.username},
+    {name: 'Рекомендации', url: 'recommendations'},
+    {name: 'Чат', url: 'chat'},
+    {name: 'Достижения', url: 'achievements'},
+    {name: 'Добавить анонс', url: 'newAnnouncement'},
+    ];
 
 }

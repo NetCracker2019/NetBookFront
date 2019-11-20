@@ -26,8 +26,9 @@ export class AuthenticationService {
 
 
   login(username: string, password: string) {
-    const body = {login: username, password};
-    return this.http.post<any>(`${environment.apiUrl}/user-service/signin`, body , {headers})
+
+    const body = {username: username, password: password};
+    return this.http.post<any>(`${environment.apiUrl}/user-service/signin`, body)
 
       .pipe(map(user => {
         this.role = user['role']; ////////// ????????
