@@ -13,14 +13,14 @@ import {FormControl, FormGroup} from '@angular/forms';
 export class ContentFriendsComponent implements OnInit {
 
   public peoples: User[];
-  public achievement: Achievement = {} as Achievement;		
+  public achievement: Achievement;		
   private login: string;
   private sought: string;
   private page: number;
   private where: string;
 
   form: FormGroup;
-
+  //TODO fix error msg
   constructor(private userService: UserService,
    private activatedRoute: ActivatedRoute,
    private router: Router,

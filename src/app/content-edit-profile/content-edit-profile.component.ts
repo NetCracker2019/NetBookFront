@@ -53,7 +53,9 @@ export class ContentEditProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-  	
+  	if(this.authenticationService.currentUserValue.username != this.login){
+      this.router.navigate(['/homeath/profile/' + this.login]);
+    }
   	this.userService.getUser(this.login)
       .subscribe(
         (data : User) => {

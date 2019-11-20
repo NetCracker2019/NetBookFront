@@ -26,7 +26,7 @@
 				</div>
 			</div>
 			<div class="col-md-2">
-				<input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"
+				<input *ngIf="this.isOwnProfile" type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"
 				(click)="goEdit()"/>
 			</div>
 		</div>
@@ -40,8 +40,8 @@
 						{{ friend.username }}</a>
 					</div><br>
 					<div class="all-friends">
-						<a href="homeath/friends/{{ this.user.username }}">
-							Всі друзі
+						<a href="homeath/profile/{{ this.user.username }}/friends">
+							...всі друзі
 						</a>
 					</div>
 				</div>
@@ -118,6 +118,7 @@
 									</div>
 								</div>
 							</div>
+							<a href="homeath/profile/{{ this.user.username }}/favourite-books">Переглянути всі</a>
 						</div>
 					</div>
 				</div>
@@ -140,6 +141,7 @@
 									</div>
 								</div>
 							</div>
+							<a href="homeath/profile/{{ this.user.username }}/read-books">Переглянути всі</a>
 						</div>
 
 					</div>
@@ -164,6 +166,7 @@
 									</div>
 								</div>
 							</div>
+							<a href="homeath/profile/{{ this.user.username }}/reading-books">Переглянути всі</a>
 						</div>
 
 					</div>
