@@ -1,33 +1,25 @@
 <h1>Registration-admin</h1>
 
 <form name="form" (ngSubmit)="f.form.valid && registerAdmin()" #f="ngForm" novalidate>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+    <input type="text"   class="form-control" name="username" placeholder="login"  [(ngModel)]="model.username" #username="ngModel" required />
+    <div *ngIf="f.submitted && !username.valid" class="help-block">*First Name is required!</div>
+  </div>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+    <input type="text" class="form-control" name="lastName"  placeholder="Last Name" [(ngModel)]="model.lastName" #lastName="ngModel" required />
+    <div *ngIf="f.submitted && !lastName.valid" class="help-block">*Last Name is required!</div>
+  </div>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+    <input type="text" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email" #username="ngModel" required />
+    <div *ngIf="f.submitted && !username.valid" class="help-block">*Username is required!</div>
+  </div>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+    <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required />
+    <div *ngIf="f.submitted && !password.valid" class="help-block">*Password is required!</div>
+  </div>
   <div class="form-group">
-        <input type="text"   class="form-control" name="userName" placeholder="First Name" formControlName="userName" required />
-        <div *ngFor="let validation of accountValidationMessages.userName" class="error">
-          <div *ngIf="registerForm.get('userName').hasError(validation.type) && registerForm.controls['userName'].touched" class="help-block">{{validation.message}}</div>
-        </div>
-        </div>
-      <div class="form-group">
-        <input type="text" class="form-control" name="userSurname"  placeholder="Last Name" formControlName="userSurname" required />
-        <div *ngFor="let validation of accountValidationMessages.userSurname" class="error">
-          <div *ngIf="registerForm.get('userSurname').hasError(validation.type) && registerForm.controls['userSurname'].touched" class="help-block">{{validation.message}}</div>
-        </div>
-        </div>
-      <div class="form-group">
-        <input type="text" class="form-control" name="email" placeholder="Email" formControlName="userEmail" required />
-        <div *ngFor="let validation of accountValidationMessages.userEmail" class="error">
-          <div *ngIf="registerForm.get('userEmail').hasError(validation.type) && registerForm.controls['userEmail'].touched" class="help-block">{{validation.message}}</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <input type="password" class="form-control" name="userPassword" placeholder="Password" formControlName="userPassword" required />
-        <div *ngFor="let validation of accountValidationMessages.userPassword" class="error">
-          <div *ngIf="registerForm.get('userPassword').hasError(validation.type) && registerForm.controls['userPassword'].touched" class="help-block">{{validation.message}}</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <button [disabled]="registerForm.invalid" class="button">Register</button>
-        <!--<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />-->
-        <a [routerLink]="['/home/announcement']" class="button gray">Back</a>
-      </div>
+    <button [disabled]="loading" class="button">Register</button>
+    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+    <a [routerLink]="['/login']" class="button gray">Back</a>
+  </div>
 </form>

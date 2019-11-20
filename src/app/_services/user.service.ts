@@ -26,10 +26,9 @@ export class UserService {
     return this.http.post<Map<string, string>>(`${environment.apiUrl}/user-service/register/user`, user);
   }
   registerAdmin(user: User, token: string) {
-    user.role = "ROLE_ADMIN";
-    return this.http.post<Map<string, string>>(
-      `${environment.apiUrl}/user-service/register/admin?token=${token}`, user );
 
+    const body = {login: user.username, password: user.password, email: user.email, name: user.lastName};
+    return this.http.post(`${environment.apiUrl}/user-service/register/admin?token=` + token, body );
   }
 
   confirmUserAccountRequest(token: string) {
