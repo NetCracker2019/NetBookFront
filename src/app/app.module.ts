@@ -38,6 +38,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { SearchComponent } from './search/search.component';
 import {ContentBookDetailsComponent} from './content-book-details/content-book-details.component';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
+import { SuperadminModeratorRequest } from './superadmin-moderator-request/superadmin-moderator-request.component';
 
 
 // const componentAnnouncement: Routes = [
@@ -55,12 +56,14 @@ const componentRoutes: Routes = [
   { path: 'superadmin-request', component: SuperadminRequest},
   { path: 'announcement', component: ContentMainComponent},
   { path: 'newAnnouncement', component: AddAnnouncementComponent},
+  { path: 'superadmin-moderator-request', component: SuperadminModeratorRequest},
 ];
 
 const componentNotAllRoutes: Routes = [
   { path: 'books', component: ContentBookComponent},
   { path: 'announcement', component: ContentMainComponent},
   { path: 'superadmin-request', component: SuperadminRequest},
+  { path: 'superadmin-moderator-request', component: SuperadminModeratorRequest},
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
@@ -108,6 +111,7 @@ const appRoutes: Routes = [
     RecoveryPassComponent,
     RecoveryPassRequestComponent,
     SuperadminRequest,
+    SuperadminModeratorRequest,
     SearchComponent,
     ContentBookDetailsComponent,
     AddAnnouncementComponent
