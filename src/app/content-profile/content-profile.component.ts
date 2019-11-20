@@ -4,7 +4,7 @@ import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-
+import {AuthenticationService} from '../_services/authentication.service';
 
 @Component({
   selector: 'app-content-profile',
@@ -29,6 +29,7 @@ export class ContentProfileComponent implements OnInit {
   constructor(private userService: UserService,
    private activatedRoute: ActivatedRoute,
    private router: Router,
+   private authenticationService: AuthenticationService,
    private alertService: AlertService) {
 
    this.login = activatedRoute.snapshot.params['login'];
@@ -46,7 +47,10 @@ export class ContentProfileComponent implements OnInit {
           this.alertService.error(error);
           console.log(error);
         });
-
+    
+    if(this.authenticationService.currentUserValue.username == this.login){
+      this.isOwnProfile = true;
+    }
     this.userService.getAchievement(this.login)
       .subscribe(
         (data : Achievement) => {
