@@ -1,3 +1,15 @@
+<form>
+  <label>Genre</label>
+  <select [(ngModel)]="selectedGenre" name="genre">
+    <option value="all" selected>All</option>
+    <option *ngFor="let genre of genres" [value]="genre.genreName">
+      {{genre.genreName}}
+    </option>
+  </select>
+</form>
+
+<p>Selected genre: {{selectedGenre}}</p>
+
 <div *ngIf="books">
   <ul class="books">
     <li *ngFor="let book of books" >
@@ -14,17 +26,3 @@
     </li>
   </ul>
 </div>
-<!--<div class="blog-books">-->
-<!--  <div class="books" *ngFor="let book of books">-->
-<!--    <a class="blog-item"  [routerLink]="[book.bookId]">-->
-<!--      <div class="book-image-grid">-->
-<!--        <img src="../../assets/img/{{book.imagePath}}" alt="Example" class="book-logo">-->
-<!--      </div>-->
-<!--      <div class="book-item-content" >-->
-<!--        <h3>{{book.title}} - {{book.authors}}</h3>&ndash;&gt;-->
-<!--        <p>Likes: {{book.likes}}</p>-->
-<!--        <p>Description: {{book.description}} </p>-->
-<!--      </div>-->
-<!--    </a>-->
-<!--  </div>-->
-<!--</div>-->

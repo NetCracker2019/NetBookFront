@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BookService} from '../_services/book.service';
-import {NewModelBook} from '../_models/interface';
+import {Genre, NewModelBook} from '../_models/interface';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -10,6 +10,8 @@ import {Subscription} from 'rxjs';
 })
 export class SearchComponent implements OnInit, OnDestroy {
   subscriptionOnTitle: Subscription;
+  genres: Genre[];
+  selectedGenre = 'all';
   books: NewModelBook[] = [];
   title: string;
 
@@ -17,15 +19,18 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptionOnTitle = this.bookService.currentTitle
-      .subscribe(title => { this.title = title; this.getBooks(title); });
+      .subscribe(title => { this.title = title; this.getBooks(title, this.selectedGenre); });
+
+    this.bookService.getGenres()
+      .subscribe(genres => { this.genres = genres; console.log(genres); });
   }
 
   ngOnDestroy(): void {
     this.subscriptionOnTitle.unsubscribe();
   }
 
-  getBooks(title: string) {
-    this.bookService.searchBookByTitle(title)
+  getBooks(title: string, genre: string) {
+    this.bookService.searchBookByTitle(title, genre)
       .subscribe(books => { console.log(books) ; this.books = books; });
   }
 }

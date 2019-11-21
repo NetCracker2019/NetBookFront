@@ -1,13 +1,13 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 
 
-import {map} from "rxjs/operators";
+import {map} from 'rxjs/operators';
 
 
-import {Announcement, Book, NewModelBook, Review} from '../_models/interface';
+import {Announcement, Book, Genre, NewModelBook, Review} from '../_models/interface';
 
 
 @Injectable({
@@ -58,13 +58,22 @@ export class BookService {
     return this.http.post(`${environment.apiUrl}/book-service/home/books/addBook`, body);
   }
 
-  searchBookByTitle(title: string): Observable<NewModelBook[]> {
-    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/find-books?title=${title}`);
+  searchBookByTitle(title: string, genre: string): Observable<NewModelBook[]> {
+    if (genre === 'all') {
+      return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/find-books?title=${title}`);
+    }
+    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/filter-books?title=${title}&genre=${genre}`);
   }
+
   getBookReviews(id: number): Observable<Review[]> {
     return this.http.get<Review[]>(`${environment.apiUrl}/book-service/home/search/${id}`);
   }
+
   getBookById(id: number): Observable<NewModelBook> {
     return this.http.get<NewModelBook>(`${environment.apiUrl}/book-service/home/find-book-by-id?id=${id}`);
+  }
+
+  getGenres(): Observable<Genre[]> {
+    return this.http.get<Genre[]>(`${environment.apiUrl}/book-service/genres`);
   }
 }
