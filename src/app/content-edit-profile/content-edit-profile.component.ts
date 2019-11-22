@@ -68,7 +68,10 @@ export class ContentEditProfileComponent implements OnInit {
       .subscribe(
         (data : User) => {
           this.user = data;
-        }
+        },
+        (error) => {
+          this.alertService.error("Не вдалося завантажити інформацію");
+        });
   }
 
   handleFileInput(files: FileList) {
