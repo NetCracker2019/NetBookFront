@@ -58,11 +58,14 @@ export class BookService {
     return this.http.post(`${environment.apiUrl}/book-service/home/books/addBook`, body);
   }
 
-  searchBookByTitle(title: string, genre: string): Observable<NewModelBook[]> {
-    if (genre === 'all') {
+  searchBookByTitle(title: string, genre: string, author: string): Observable<NewModelBook[]> {
+    if (genre === 'all' && author === '') {
       return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/find-books?title=${title}`);
+    } else if (genre !== 'all' && author === '') {
+      return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/filter-books-genre?title=${title}&genre=${genre}`);
+    } else if (genre === 'all' && author !== '') {
+      return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/filter-books-author?title=${title}&author=${author}`);
     }
-    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/filter-books?title=${title}&genre=${genre}`);
   }
 
   getBookReviews(id: number): Observable<Review[]> {

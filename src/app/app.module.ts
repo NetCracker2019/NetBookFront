@@ -38,6 +38,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { SearchComponent } from './search/search.component';
 import {ContentBookDetailsComponent} from './content-book-details/content-book-details.component';
+import {MatAutocompleteModule, MatDatepickerModule, MatFormFieldModule, MatInputModule} from '@angular/material';
 
 
 
@@ -114,7 +115,11 @@ const appRoutes: Routes = [
     ModalModule.forRoot(),
     HttpClientModule,
     RouterModule.forRoot(
-      appRoutes)
+      appRoutes),
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatInputModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -8,7 +8,31 @@
   </select>
 </form>
 
+<form>
+  <input type="text" placeholder="author" [formControl]="control" [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let author of filteredAuthors | async" [value]="author.fullName">
+      {{author.fullName}}
+    </mat-option>
+  </mat-autocomplete>
+</form>
+
+<!--
+<mat-form-field>
+  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerFrom" placeholder="Announcement date from" [formControl]="date">
+  <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+  <mat-datepicker #pickerFrom></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field>
+  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerTo" placeholder="Announcement date to" [formControl]="date">
+  <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+  <mat-datepicker #pickerTo></mat-datepicker>
+</mat-form-field>
+-->
+
 <p>Selected genre: {{selectedGenre}}</p>
+<p>Selected author: {{control.value}}</p>
 
 <div *ngIf="books">
   <ul class="books">

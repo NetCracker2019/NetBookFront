@@ -77,3 +77,8 @@ export interface Genre {
   genreId: number;
   genreName: string;
 }
+
+export interface Author {
+  authorId: number;
+  fullName: string;
+}
