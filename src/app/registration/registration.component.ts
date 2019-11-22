@@ -107,8 +107,8 @@ export class RegistrationComponent implements OnInit {
 
 
   register() {
-    this.model.firstName = this.registerForm.controls.userName.value;
-    this.model.lastName = this.registerForm.controls.userSurname.value;
+    this.model.username = this.registerForm.controls.userName.value;
+    this.model.firstName = this.registerForm.controls.userSurname.value;
     this.model.email = this.registerForm.controls.userEmail.value;
     this.model.password = this.registerForm.controls.userPassword.value;
     this.userService.register(this.model)
