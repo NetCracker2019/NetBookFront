@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 
 import {User, Achievement, ShortBookDescription} from '../_models/interface';
 import {AuthenticationService} from '../_services/authentication.service';
@@ -79,7 +79,29 @@ export class UserService {
     return this.http.get<User[]>(`${environment.apiUrl}/find-persons/${login}?sought=${sought}&where=${
       where}&cnt=${cnt}&offset=${offset}`);
   }
+  getCountOfPersons(login: string, sought: string, where: string) {
+    return this.http.get<number>(
+      `${environment.apiUrl}/find-persons/${login}/collection-size?sought=${sought}&where=${where}`);
+  }
+  addFriend(ownLogin:string, friendLogin: string) {
+    return this.http.post<void>(
+      `${environment.apiUrl}/profile/add-friend/${ownLogin}/${friendLogin}`, friendLogin);
+  }
+  isFriend(ownLogin:string, friendLogin: string) {
+    return this.http.get<boolean>(
+      `${environment.apiUrl}/profile/is-friend/${ownLogin}/${friendLogin}`);
+  }
+  deleteFriend(ownLogin:string, friendLogin: string) {
+    return this.http.delete<void>(
+      `${environment.apiUrl}/profile/delete-friend/${ownLogin}/${friendLogin}`);
+  }
 
+  postFile(fileToUpload: File, fileName: string): Observable<boolean> {
+    const formData: FormData = new FormData();
+    formData.append('file', fileToUpload);
+    formData.append('name', fileName);
+    return this.http.post<boolean>(`${environment.apiUrl}/files/upload/`, formData);
+  }
 
 }
 
