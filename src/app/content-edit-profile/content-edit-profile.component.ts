@@ -68,12 +68,7 @@ export class ContentEditProfileComponent implements OnInit {
       .subscribe(
         (data : User) => {
           this.user = data;
-        },
-        (error) => {
-          this.alertService.error(error);
-          console.log(error);
-        });
-      this.router.navigate(['/homeath/profile/' + this.login]);
+        }
   }
 
   handleFileInput(files: FileList) {
@@ -112,7 +107,6 @@ export class ContentEditProfileComponent implements OnInit {
         },
         (error) => {
           this.alertService.error("От халепа");
-          console.log(error);
         });
   }
   goBack(){
