@@ -39,9 +39,11 @@ import { SuperadminRequest } from './superadmin-request/superadmin-request.compo
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { SearchComponent } from './search/search.component';
 import {ContentBookDetailsComponent} from './content-book-details/content-book-details.component';
+import {MatAutocompleteModule, MatDatepickerModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {MatNativeDateModule} from '@angular/material/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
 import { SuperadminModeratorRequest } from './superadmin-moderator-request/superadmin-moderator-request.component';
-
 
 
 // const componentAnnouncement: Routes = [
@@ -138,7 +140,13 @@ const appRoutes: Routes = [
     ModalModule.forRoot(),
     HttpClientModule,
     RouterModule.forRoot(
-      appRoutes)
+      appRoutes),
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

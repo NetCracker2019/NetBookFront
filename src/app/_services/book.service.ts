@@ -1,13 +1,13 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 
 
-import {map} from "rxjs/operators";
+import {map} from 'rxjs/operators';
 
 
-import {Announcement, Book, NewModelBook, Review} from '../_models/interface';
+import {Announcement, Book, Genre, NewModelBook, Review} from '../_models/interface';
 
 
 @Injectable({
@@ -57,20 +57,42 @@ export class BookService {
       release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description};
     return this.http.post(`${environment.apiUrl}/book-service/home/books/addBook`, body);
   }
-
+  
+  searchBookByTitle(title: string, genre: string, author: string, dateFrom: Date, dateTo: Date): Observable<NewModelBook[]> {
+    if (dateFrom < dateTo) {
+      const formattedDateFrom = dateFrom.toISOString().substring(0, 10);
+      const formattedDateTo = dateTo.toISOString().substring(0, 10);
+      if (genre === 'all' && author === '') {
+        return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
+          `/filter-books?title=${title}&from=${formattedDateFrom}&to=${formattedDateTo}`);
+      } else if (genre !== 'all' && author === '') {
+        return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
+          `/filter-books-genre?title=${title}&genre=${genre}&from=${formattedDateFrom}&to=${formattedDateTo}`);
+      } else if (genre === 'all' && author !== '') {
+        return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
+          `/filter-books-author?title=${title}&author=${author}&from=${formattedDateFrom}&to=${formattedDateTo}`);
+      } else {
+        return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
+          `/filter-books-author-genre?title=${title}&author=${author}&genre=${genre}&from=${formattedDateFrom}&to=${formattedDateTo}`);
+      }
+    }
+  }
+  
   addAnnouncement(book: Book) {
     const body = {title: book.title, author: book.authors, genre: book.genres, imagePath: book.imagePath,
       release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description};
     return this.http.post(`${environment.apiUrl}/book-service/home/books/addAnnouncement`, body);
   }
 
-  searchBookByTitle(title: string): Observable<NewModelBook[]> {
-    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/find-books?title=${title}`);
-  }
   getBookReviews(id: number): Observable<Review[]> {
     return this.http.get<Review[]>(`${environment.apiUrl}/book-service/home/search/${id}`);
   }
+
   getBookById(id: number): Observable<NewModelBook> {
     return this.http.get<NewModelBook>(`${environment.apiUrl}/book-service/home/find-book-by-id?id=${id}`);
+  }
+
+  getGenres(): Observable<Genre[]> {
+    return this.http.get<Genre[]>(`${environment.apiUrl}/book-service/genres`);
   }
 }

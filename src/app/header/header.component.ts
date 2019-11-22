@@ -18,6 +18,10 @@ export class HeaderComponent implements OnInit {
   }
 
   newTitle(title: string) {
+    title = title.trim();
+    if (!title) {
+      return;
+    }
     this.router.navigate(['/home/search']);
     this.bookService.changeTitle(title);
   }
