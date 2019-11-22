@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-md-4">
 				<div class="profile-img">
-					<img src="{{ this.user.avatarFilePath }}" alt="no image"/>
+					<img src="{{ this.getPhoto(this.user.avatarFilePath) }}" alt="no image"/>
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -25,17 +25,26 @@
 					</ul>
 				</div>
 			</div>
-			<div class="col-md-2">
-				<input *ngIf="this.isOwnProfile" type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"
+			<div class="col-md-2" *ngIf="this.isOwnProfile">
+				<input  type="submit" class="profile-edit-btn" name="btnAddMore" value="Редаугвати"
 				(click)="goEdit()"/>
 			</div>
+			<div class="col-md-2" *ngIf="!this.isOwnProfile && !this.isFriend">
+				<input  type="submit" class="profile-edit-btn" name="btnAddMore" value="Додати до друзів"
+				(click)="addFriend()"/>
+			</div>
+			<div class="col-md-2" *ngIf="!this.isOwnProfile && this.isFriend">
+				<input  type="submit" class="profile-edit-btn" name="btnAddMore" value="Видалити з друзів"
+				(click)="deleteFriend()"/>
+			</div>
+
 		</div>
 		<div class="row">
 			<div class="col-md-4">
 				<div class="friends">
 					<p>Друзі</p>
 					<div *ngFor="let friend of this.friends"> 
-						<img src="{{ friend.avatarFilePath }}" alt="no"/>
+						<img src="{{ this.getPhoto(friend.avatarFilePath) }}" alt="no"/>
 						<a href="homeath/profile/{{ friend.username }}">
 						{{ friend.username }}</a>
 					</div><br>
@@ -103,11 +112,11 @@
 				<!-- ------------------------------------------------------------------->
 				<div class="panel">
 					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/favourite-books">Улюблені книги</a></div>
-					<div class="panel-body">
+					<div class="panel-body" >
 						<div class="row">	
-							<div class="col-md-4" *ngFor="let book of this.favouriteBooks">
+							<div class="col-md-4"  *ngFor="let book of this.favouriteBooks">
 								<div class="thumbnail">
-									<img alt="no img" src="{{ book.image_path}}">
+									<img alt="no img" src="{{ this.getPhoto(book.image_path) }}">
 									<div class="caption">
 										<a href="books/{{ book.title }}">
 										{{ book.title  }}</a>
@@ -118,9 +127,9 @@
 									</div>
 								</div>
 							</div>
-							<a href="homeath/profile/{{ this.user.username }}/favourite-books">Переглянути всі</a>
 						</div>
 					</div>
+					<a *ngIf="this.favouriteBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/reading-books">...переглянути всі</a>
 				</div>
 				<br><br>
 
@@ -130,7 +139,7 @@
 						<div class="row">	
 							<div class="col-md-4" *ngFor="let book of this.readBooks">
 								<div class="thumbnail">
-									<img alt="no img" src="{{ book.image_path}}">
+									<img alt="no img" src="{{ this.getPhoto(book.image_path)}}">
 									<div class="caption">
 										<a href="books/{{ book.title }}">
 										{{ book.title  }}</a>
@@ -141,21 +150,23 @@
 									</div>
 								</div>
 							</div>
-							<a href="homeath/profile/{{ this.user.username }}/read-books">Переглянути всі</a>
 						</div>
 
 					</div>
-
+					<a *ngIf="this.favouriteBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/reading-books">...переглянути всі</a>	
 				</div>
 				<br><br>
 
 				<div class="panel">
-					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/reading-books">Читаються</a></div>
+					<div class="panel-heading">
+						<a href="homeath/profile/{{ this.user.username }}/reading-books">Читаються</a>
+						
+					</div>
 					<div class="panel-body">
 						<div class="row">	
 							<div class="col-md-4" *ngFor="let book of this.readingBooks">
 								<div class="thumbnail">
-									<img alt="no img" src="{{ book.image_path}}">
+									<img alt="no img" src="{{ this.getPhoto(book.image_path) }}">
 									<div class="caption">
 										<a href="books/{{ book.title }}">
 										{{ book.title  }}</a>
@@ -166,11 +177,9 @@
 									</div>
 								</div>
 							</div>
-							<a href="homeath/profile/{{ this.user.username }}/reading-books">Переглянути всі</a>
 						</div>
-
 					</div>
-
+					<a *ngIf="this.favouriteBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/reading-books">...переглянути всі</a>
 				</div>
 				<br><br>
 

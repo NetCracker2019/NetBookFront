@@ -1,15 +1,15 @@
 <h4 class="text-left pl-3 mt-3">Друзі</h4><br>
 <section class="search-sec">
     <div class="container">
-        <form action="#" method="post" [formGroup]="form" name="form" novalidate="novalidate">
+        <form action="#" method="post" novalidate="novalidate">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="col-lg-6 col-md-3 col-sm-12 p-0">
-                            <input type="text" class="form-control search-slt" placeholder="Шукати" formControlName="sought">
+                            <input (input)="onSearchChange($event.target.value)" type="text" class="form-control search-slt" placeholder="Шукати" >
                         </div>
                           <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                            <select class="form-control search-slt" id="exampleFormControlSelect1" formControlName="where">
+                            <select (input)="onWhereChange($event.target.value)" class="form-control search-slt" id="exampleFormControlSelect1">
                                 <option value="frineds">Шукати в</option>
                                 <option value="friends">Друзях</option>
                                 <option value="all">Людях</option>
@@ -30,7 +30,7 @@
         <div class="row">   
             <div class="col-md-4" *ngFor="let people of this.peoples">
                 <div class="thumbnail">
-                    <img alt="no img" src="{{ people.avatarFilePath }}">
+                    <img alt="no img" src="{{ this.getPhoto(people.avatarFilePath) }}">
                     <div class="caption">
                         <a href="homeath/profile/{{ people.username }}">
                         {{ people.username }}</a>
@@ -44,3 +44,4 @@
     </div>
 </div>
 <br><br>
+<ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [pageSize]=6 [(page)]="page" [boundaryLinks]="true" (pageChange)="onPageChanged($event)"></ngb-pagination>

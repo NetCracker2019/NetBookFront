@@ -47,7 +47,7 @@ body{
 .profile-edit-btn{
     border: none;
     border-radius: 1.5rem;
-    width: 70%;
+    width: 95%;
     padding: 2%;
     font-weight: 600;
     color: #6c757d;
@@ -132,6 +132,10 @@ body{
 }
 .panel-heading a{
     color: #333;
+}
+.right-align{
+    color: #333;
+     padding-left: 69%;
 }
 .panel-body{
     padding: 15px;

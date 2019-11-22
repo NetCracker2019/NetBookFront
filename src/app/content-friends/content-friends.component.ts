@@ -4,6 +4,8 @@ import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import {FormControl, FormGroup} from '@angular/forms';
+import {AuthenticationService} from '../_services/authentication.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-content-friends',
@@ -12,56 +14,65 @@ import {FormControl, FormGroup} from '@angular/forms';
 })
 export class ContentFriendsComponent implements OnInit {
 
-  public peoples: User[];
-  public achievement: Achievement;		
+  public peoples: User[];	
   private login: string;
-  private sought: string;
-  private page: number;
-  private where: string;
+  private sought: string = "";
+  public page: number = 1;
+  private where: string = "friends";
+  public collectionSize: number = 0;
 
-  form: FormGroup;
-  //TODO fix error msg
   constructor(private userService: UserService,
    private activatedRoute: ActivatedRoute,
    private router: Router,
+   private authenticationService: AuthenticationService,
    private alertService: AlertService) {
     
     this.login = activatedRoute.snapshot.params['login'];
-    this.form = new FormGroup({
-      sought: new FormControl(),
-      where: new FormControl()
-  		});
+    this.authenticationService.refreshToken();
 	}
 
   ngOnInit() {
-  	this.activatedRoute.queryParams.subscribe(params => {
-      this.sought = params['sought'];
-      this.page = params['page'];
-      this.where = params['where'];
-      });
+    this.getCountOfPersons();
+    this.getPersons();
+  }
+  onSearchChange(searchValue: string) {  
+    this.page = 1;
+    this.sought = searchValue;
+    this.getCountOfPersons();
+    this.getPersons();
+  }
+  onWhereChange(whereValue: string) {  
+    this.page = 1;
+    this.where = whereValue;
+    this.getCountOfPersons();
+    this.getPersons();
+  }
+  onPageChanged(pageNumber: number) {
+    this.page = pageNumber;
+    this.getPersons();
+  }
 
-  	if(this.sought == null) this.sought = "";
-  	if(this.page == null) this.page = 1;
-  	if(this.where == null) this.where = "friends";
-
-
-
-    this.userService.getPersons(this.login, this.sought, this.where, 10, this.page - 1)
+  getPersons(){
+    this.userService.getPersons(this.login, this.sought, this.where, 6, this.page - 1)
       .subscribe(
         (data : User[]) => {
           this.peoples = data;
-        },
-        (error) => {
-          this.alertService.error(error);
-          console.log(error);
         });
-
+  }
+  getCountOfPersons(){
+    this.userService.getCountOfPersons(this.login, this.sought, this.where)
+      .subscribe(
+        (data : number) => {
+          console.log(data);
+          this.collectionSize = data;
+        });
   }
   find(){
-  	console.log(this.activatedRoute);
-    this.router.navigate(['homeath/friends/' + this.login + '?sought=' + this.form.controls.sought.value
-     + '&where=' + this.form.controls.where.value + '&page=1']);
-
+    this.getCountOfPersons();
+    this.getPersons();
+  }
+  getPhoto(imageName: string) {
+        return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 
 }
