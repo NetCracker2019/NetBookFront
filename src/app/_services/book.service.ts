@@ -53,11 +53,11 @@ export class BookService {
   }
 
   addBook(book: Book) {
-    const body = {title: book.title, author: book.author, genre: book.genre, imagePath: book.imagePath,
-      release_date: book.release_date, language: book.language, pages: book.pages, description: book.description};
+    const body = {title: book.title, author: book.authors, genre: book.genres, imagePath: book.imagePath,
+      release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description};
     return this.http.post(`${environment.apiUrl}/book-service/home/books/addBook`, body);
   }
-
+  
   searchBookByTitle(title: string, genre: string, author: string, dateFrom: Date, dateTo: Date): Observable<NewModelBook[]> {
     if (dateFrom < dateTo) {
       const formattedDateFrom = dateFrom.toISOString().substring(0, 10);
@@ -76,6 +76,12 @@ export class BookService {
           `/filter-books-author-genre?title=${title}&author=${author}&genre=${genre}&from=${formattedDateFrom}&to=${formattedDateTo}`);
       }
     }
+  }
+  
+  addAnnouncement(book: Book) {
+    const body = {title: book.title, author: book.authors, genre: book.genres, imagePath: book.imagePath,
+      release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description};
+    return this.http.post(`${environment.apiUrl}/book-service/home/books/addAnnouncement`, body);
   }
 
   getBookReviews(id: number): Observable<Review[]> {

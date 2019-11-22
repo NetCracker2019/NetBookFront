@@ -2,15 +2,15 @@
 
 <form name="form" (ngSubmit)="f.form.valid && registerAdmin()" #f="ngForm" novalidate>
   <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-    <input type="text"   class="form-control" name="firstName" placeholder="First Name"  [(ngModel)]="model.firstName" #firstName="ngModel" required />
-    <div *ngIf="f.submitted && !firstName.valid" class="help-block">*First Name is required!</div>
+    <input type="text"   class="form-control" name="username" placeholder="login"  [(ngModel)]="model.username" #username="ngModel" required />
+    <div *ngIf="f.submitted && !username.valid" class="help-block">*First Name is required!</div>
   </div>
   <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
     <input type="text" class="form-control" name="lastName"  placeholder="Last Name" [(ngModel)]="model.lastName" #lastName="ngModel" required />
     <div *ngIf="f.submitted && !lastName.valid" class="help-block">*Last Name is required!</div>
   </div>
   <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-    <input type="text" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.username" #username="ngModel" required />
+    <input type="text" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email" #username="ngModel" required />
     <div *ngIf="f.submitted && !username.valid" class="help-block">*Username is required!</div>
   </div>
   <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">

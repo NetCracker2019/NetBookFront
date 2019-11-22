@@ -1,31 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-
 import {Book} from '../_models/interface';
-
 import {BookService} from '../_services/book.service';
-import {Router} from '@angular/router';
 import {AlertService} from '../_services/alert.service';
 
 @Component({
-  selector: 'app-content-book',
-  templateUrl: './content-book.component.html',
-  styleUrls: ['./content-book.component.css']
+  selector: 'app-add-announcement',
+  templateUrl: './add-announcement.component.html',
+  styleUrls: ['./add-announcement.component.css']
 })
-export class ContentBookComponent implements OnInit {
-  books: Book[];
+export class AddAnnouncementComponent implements OnInit {
   bookModel: Book = {} as Book;
+
   constructor(private bookService: BookService,
               private alertService: AlertService) { }
 
   ngOnInit() {
-    this.reloadData();
   }
 
-  reloadData() {
-    this.bookService.getBookList().subscribe(book => { console.log(book); this.books = book; });
-  }
   addBookComponent() {
-    this.bookService.addBook(this.bookModel)
+    this.bookService.addAnnouncement(this.bookModel)
       .subscribe(
         data => {
           this.alertService.success('Add successful', true);
@@ -35,13 +28,6 @@ export class ContentBookComponent implements OnInit {
           this.alertService.error(error);
           console.log(error);
         });
-  }
-
-  openForm() {
-    document.getElementById('myForm').style.display = 'block';
-  }
-  closeForm() {
-    document.getElementById('myForm').style.display = 'none';
   }
 
 }

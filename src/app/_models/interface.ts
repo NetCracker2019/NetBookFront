@@ -1,11 +1,11 @@
 export interface  Book {
-  idbook: number;
+  bookId: number;
   title: string;
-  author: string;
-  genre: string;
-  like: number;
+  authors: Array<string>;
+  genres: Array<string>;
+  likes: number;
   imagePath: string;
-  release_date: string;
+  releaseDate: string;
   language: string;
   pages: number;
   description: string;
@@ -36,10 +36,25 @@ export interface User {
   country: string;
   city: string;
   status: string;
+  regDate: Date;
+  avatarFilePath: string;
   role: string;
   token?: string;
 }
 
+export interface Achievement {
+  cntBook: number;
+  title: string;
+  description: string;
+  image_path: string;
+}
+
+export interface ShortBookDescription {
+  likes: number;
+  title: string;
+  authors: string[];
+  image_path: string;
+}
 
 export interface Menu {
   name: string;
