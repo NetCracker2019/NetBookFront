@@ -17,22 +17,17 @@
   </mat-autocomplete>
 </form>
 
-<!--
 <mat-form-field>
-  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerFrom" placeholder="Announcement date from" [formControl]="date">
+  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerFrom" placeholder="Announcement date from" [formControl]="dateFrom">
   <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
   <mat-datepicker #pickerFrom></mat-datepicker>
 </mat-form-field>
 
 <mat-form-field>
-  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerTo" placeholder="Announcement date to" [formControl]="date">
+  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerTo" placeholder="Announcement date to" [formControl]="dateTo">
   <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
   <mat-datepicker #pickerTo></mat-datepicker>
 </mat-form-field>
--->
-
-<p>Selected genre: {{selectedGenre}}</p>
-<p>Selected author: {{control.value}}</p>
 
 <div *ngIf="books">
   <ul class="books">

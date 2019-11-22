@@ -13,9 +13,10 @@ import {AuthorService} from '../_services/author.service';
 })
 export class SearchComponent implements OnInit, OnDestroy {
   control = new FormControl('');
-  date = new FormControl(new Date());
-  minDate = new Date(2000, 0, 1);
+  minDate = new Date(1800, 0, 1);
   maxDate = new Date(2020, 0, 1);
+  dateFrom = new FormControl(this.minDate);
+  dateTo = new FormControl(this.maxDate);
   subscriptionOnTitle: Subscription;
   genres: Genre[];
   selectedGenre = 'all';
@@ -31,7 +32,10 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptionOnTitle = this.bookService.currentTitle
-      .subscribe(title => { this.title = title; this.getBooks(title, this.selectedGenre, this.control.value); });
+      .subscribe(title => {
+        this.title = title;
+        this.getBooks(title, this.selectedGenre, this.control.value, this.dateFrom.value, this.dateTo.value);
+      });
 
     this.bookService.getGenres()
       .subscribe(genres => { this.genres = genres; console.log(genres); });
@@ -54,8 +58,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.subscriptionOnTitle.unsubscribe();
   }
 
-  getBooks(title: string, genre: string, author: string) {
-    this.bookService.searchBookByTitle(title, genre, author)
+  getBooks(title: string, genre: string, author: string, dateFrom: Date, dateTo: Date) {
+    this.bookService.searchBookByTitle(title, genre, author, dateFrom, dateTo)
       .subscribe(books => { console.log(books) ; this.books = books; });
   }
 }

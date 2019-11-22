@@ -58,13 +58,23 @@ export class BookService {
     return this.http.post(`${environment.apiUrl}/book-service/home/books/addBook`, body);
   }
 
-  searchBookByTitle(title: string, genre: string, author: string): Observable<NewModelBook[]> {
-    if (genre === 'all' && author === '') {
-      return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/find-books?title=${title}`);
-    } else if (genre !== 'all' && author === '') {
-      return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/filter-books-genre?title=${title}&genre=${genre}`);
-    } else if (genre === 'all' && author !== '') {
-      return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/filter-books-author?title=${title}&author=${author}`);
+  searchBookByTitle(title: string, genre: string, author: string, dateFrom: Date, dateTo: Date): Observable<NewModelBook[]> {
+    if (dateFrom < dateTo) {
+      const formattedDateFrom = dateFrom.toISOString().substring(0, 10);
+      const formattedDateTo = dateTo.toISOString().substring(0, 10);
+      if (genre === 'all' && author === '') {
+        return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
+          `/filter-books?title=${title}&from=${formattedDateFrom}&to=${formattedDateTo}`);
+      } else if (genre !== 'all' && author === '') {
+        return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
+          `/filter-books-genre?title=${title}&genre=${genre}&from=${formattedDateFrom}&to=${formattedDateTo}`);
+      } else if (genre === 'all' && author !== '') {
+        return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
+          `/filter-books-author?title=${title}&author=${author}&from=${formattedDateFrom}&to=${formattedDateTo}`);
+      } else {
+        return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
+          `/filter-books-author-genre?title=${title}&author=${author}&genre=${genre}&from=${formattedDateFrom}&to=${formattedDateTo}`);
+      }
     }
   }
 
