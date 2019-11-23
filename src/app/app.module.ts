@@ -63,11 +63,13 @@ const componentRoutes: Routes = [
   { path: 'announcement', component: ContentMainComponent},
   { path: 'newAnnouncement', component: AddAnnouncementComponent},
   { path: 'superadmin-moderator-request', component: SuperadminModeratorRequest},
+  { path: 'search', component: SearchComponent},
+  { path: 'search/:bookId', component: ContentBookDetailsComponent},
+  { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
 ];
 
 const componentNotAllRoutes: Routes = [
   { path: 'books', component: ContentBookComponent},
-
   { path: 'announcement', component: ContentMainComponent},
   { path: 'superadmin-request', component: SuperadminRequest},
   { path: 'superadmin-moderator-request', component: SuperadminModeratorRequest},

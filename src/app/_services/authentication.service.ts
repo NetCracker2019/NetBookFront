@@ -26,7 +26,7 @@ export class AuthenticationService {
   login(username: string, password: string) {
 
     const body = {username: username, password: password};
-    return this.http.post<User>(`${environment.apiUrl}/user-service/signin`, body)
+    return this.http.post<any>(`${environment.apiUrl}/user-service/signin`, body)
 
       .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -35,16 +35,15 @@ export class AuthenticationService {
         return user;
       }));
   }
-
   refreshToken() {
     return this.http.get<any>(`${environment.apiUrl}/user-service/refresh-token`)
-    .subscribe(
+      .subscribe(
         (data : User) => {
           localStorage.removeItem('currentUser');
           localStorage.setItem('currentUser', JSON.stringify(data));
           this.currentUserSubject.next(data);
         });
-   
+
   }
 
   logoutuser() {

@@ -29,7 +29,7 @@
     <div class="test" *ngFor="let book of books">
       <a href="#" class="blog-item">
         <div class="book-image-grid">
-          <img src="../../assets/img/{{book.image_path}}" alt="Example" class="book-logo">
+          <img src="{{book.image_path}}" alt="Example" class="book-logo">
         </div>
         <div class="book-item-content" >
           <h3>{{book.title}}</h3>

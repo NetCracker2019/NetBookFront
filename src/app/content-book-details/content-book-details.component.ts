@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {BookService} from '../_services/book.service';
-import {Book, NewModelBook, Review} from '../_models/interface';
+import {Announcement, Book, NewModelBook, Review} from '../_models/interface';
 
 @Component({
   selector: 'app-content-book-details',
@@ -12,6 +12,10 @@ export class ContentBookDetailsComponent implements OnInit {
   // books: NewModelBook[];
   book: NewModelBook;
   reviews: Review[];
+  collectionSize = 7;
+  offset = 0;
+  public count = 2;
+  public finish = false;
 
   constructor(private route: ActivatedRoute, private bookService: BookService) {
   }
@@ -22,19 +26,31 @@ export class ContentBookDetailsComponent implements OnInit {
       const bookId = +params.get('bookId');
       console.log(bookId);
       this.getBook(bookId);
-      this.getReviews(bookId);
+      this.bookService.countBooks().subscribe(data => {this.collectionSize = data as number; });
+      this.bookService.getPeaceOfReview(bookId, this.count, this.offset).subscribe(data => {
+        console.log(data);
+        this.reviews = data;
+      });
     });
+
+    this.offset += this.count;
   }
 
   getBook(id: number) {
     this.bookService.getBookById(id).subscribe(data => {this.book = data; });
     console.log('Books from det comp:', this.book);
   }
-  getReviews(id: number) {
-    this.bookService.getBookReviews(id).subscribe(data2 => {
-      console.log(data2);
-      this.reviews = data2;
-    });
+  getNewPeaceOfReviews() {
+      this.bookService.getPeaceOfReview(this.book.bookId, this.count, this.offset).subscribe(data => {
+        console.log(data);
+        this.reviews = this.reviews.concat(data);
+      });
+      if (this.offset <= this.collectionSize) {
+        this.offset += this.count;
+      } else { this.finish = true; }
+      console.log(this.offset);
   }
+
+
 
 }

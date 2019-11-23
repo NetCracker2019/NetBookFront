@@ -1,22 +1,85 @@
-.books {
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
-  width: 50em;
+
+.book-logo {
+  width: 300px
+}
+.item-book{
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 5px;
+  display: grid;
+  width: 1000px;
+  text-decoration: none;
+  overflow: hidden;
+  padding: 20px;
+  margin: 10px;
 }
 
-.books li {
-  position: relative;
-  cursor: pointer;
-  background-color: #EEE;
-  margin: .5em;
-  padding: .3em 0;
-  height: 15em;
-  border-radius: 4px;
+
+.book-content{
+  grid-column: 2 / 3;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 2px;
+  align-content: normal;
 }
 
-.books li:hover {
-  color: #646d73;
-  background-color: #DDD;
-  left: .1em;
+.book-content h3 {
+  font-size: 25px;
+  padding-bottom: 50px;
+  margin: 0;
+}
+.reviews {
+  padding-left: 100px;
+}
+.review-item {
+  display: grid;
+  grid-template-columns: 130px 700px;
+  padding-left: 2px;
+}
+.user-logo {
+  grid-column-start: 1;
+  grid-column-end: 1;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  border-radius: 80%;
+  -moz-border-radius: 80%;
+  -webkit-border-radius: 80%;
+  border-style: solid;
+  border-color: antiquewhite;
+  height: 100px;
+  width: 100px;
+}
+.review-blog {
+  display: grid;
+  grid-template-columns: 300px 250px;
+  padding-bottom: 20px;
+}
+.review-content {
+  display: grid;
+  grid-template-columns: 150px 100px;
+}
+.review-title {
+  grid-column: 1;
+  padding-left: 50px;
+}
+.button-write-review {
+  grid-column: 2;
+}
+.review-text {
+  font-size: 15px;
+  color: #4B5A65;
+  padding-left: 20px;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 2;
+}
+.rating {
+  grid-column: 2;
+}
+.user-name {
+  grid-column: 1;
+}
+.paging-button {
+  position: absolute;
+  padding-left: 100px;
 }

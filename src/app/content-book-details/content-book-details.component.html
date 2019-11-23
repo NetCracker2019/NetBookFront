@@ -1,23 +1,40 @@
 <div class="item-book" *ngIf="book">
-  <img src="../../assets/img/{{book.imagePath}}" alt="Example" class="book-logo">
-    <h3>{{book.title}} - {{book.authors}}</h3>-->
+  <div class="book-logo"><img src="{{book.imagePath}}" alt="Example"></div>
+  <div class="book-content">
+    <h3>{{book.title}} - {{book.authors}}</h3>
     <p>Likes: {{book.likes}}</p>
     <p>Publish date: {{book.releaseDate}}</p>
-    <p>Description: {{book.description}} </p>
     <p>Genres: {{book.genres}}</p>
-    <p>Language: {{book.lang}}</p>
+    <p>{{book.imagePath}}</p>
+<!--    <p>Language: {{book.langua}}</p>-->
     <p>Pages: {{book.pages}}</p>
-  <p>
-  </p>
-  <h2 class="review-title">Reviews</h2>
-  <div class="reviews" *ngFor = "let review of reviews">
-    <div class="user-image-grid">
-      <img src="../../assets/img/{{review.userAvatarPath}}" class="user-logo">
+    <p>Description: {{book.description}} </p>
+    <button class="button-add-book-to-profile">Додати книгу</button>
+  </div>
+
+</div>
+
+<div class="review-blog">
+  <div class="review-title"><h2>Reviews</h2></div>
+  <div class="button-write-review"><button>Написати рецензію</button></div>
+</div>
+
+<div class="reviews" *ngFor="let review of reviews">
+  <div class="review-item">
+    <div class="user-image">
+      <img src="{{review.userAvatarPath}}" class="user-logo">
     </div>
-    <div class="review-item" >
-      <h4 class="user-name">{{review.userName}}</h4>
-      <p >{{review.rating}}</p>
-      <p class="review-text"> {{review.reviewText}}</p>
+    <div class="review-content">
+      <div class="user-name"><h4>{{review.userName}}</h4></div>
+      <div class="rating"><h5>{{review.rating}}</h5></div>
+      <div class="review-text"> {{review.reviewText}}</div>
     </div>
   </div>
 </div>
+<div *ngIf="finish; then up else down"></div>
+<ng-template #down><button class="paging-button" (click)="getNewPeaceOfReviews()"><img src="https://ru.freepik.com/free-icon/upload_970882.htm#page=1&query=arrows&position=42"></button></ng-template>
+<ng-template #up><button class="paging-button" (click)="getNewPeaceOfReviews()"><img src="https://ru.freepik.com/free-icon/download_970883.htm#page=1&query=arrows&position=7"></button></ng-template>
+
+<!--<ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [pageSize]="count"-->
+<!--                [(page)]="offset" [boundaryLinks]="false" (pageChange)="getNewPeaceOfReviews($event)"></ngb-pagination>-->
+
