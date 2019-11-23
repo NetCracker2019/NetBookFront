@@ -53,13 +53,14 @@ export class ContentBookDetailsComponent implements OnInit {
         this.finish = true;
       }
       console.log(this.offset);
+      console.log(this.finish);
     } else {
-      this.finish = false;
       this.bookService.getPeaceOfReview(this.book.bookId, this.count, 0).subscribe(data => {
         console.log(data);
         this.reviews = data;
       });
       this.offset = 2;
+      this.finish = false;
     }
   }
 }
