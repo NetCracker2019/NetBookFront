@@ -2,7 +2,11 @@
   <div class="book-logo"><img src="{{book.imagePath}}" alt="Example"></div>
   <div class="book-content">
     <h3>{{book.title}} - {{book.authors}}</h3>
-    <p>Likes: {{book.likes}}</p>
+    <div class="like-book-content">
+<!--      <div class="like-img-book"><img src="../../assets/img/like_img.jpeg"/></div>-->
+      <div class="like-num"><p>Likes: {{book.likes}}</p></div>
+    </div>
+
     <p>Publish date: {{book.releaseDate}}</p>
     <p>Genres: {{book.genres}}</p>
     <p>{{book.imagePath}}</p>
@@ -26,14 +30,19 @@
     </div>
     <div class="review-content">
       <div class="user-name"><h4>{{review.userName}}</h4></div>
-      <div class="rating"><h5>{{review.rating}}</h5></div>
+      <div class="rating">
+        <div class="like-img-review">
+          <img src="../../assets/img/like_img.jpeg"/>
+        </div>
+        <h5>{{review.rating}}</h5>
+      </div>
       <div class="review-text"> {{review.reviewText}}</div>
     </div>
   </div>
 </div>
 <div *ngIf="finish; then up else down"></div>
-<ng-template #down><button class="paging-button" (click)="getNewPeaceOfReviews()"><img src="https://ru.freepik.com/free-icon/upload_970882.htm#page=1&query=arrows&position=42"></button></ng-template>
-<ng-template #up><button class="paging-button" (click)="getNewPeaceOfReviews()"><img src="https://ru.freepik.com/free-icon/download_970883.htm#page=1&query=arrows&position=7"></button></ng-template>
+<ng-template #up><input type="image" class="paging-button" (click)="getNewPeaceOfReviews()" src="../../assets/img/upArrow.png" alt="Ще"/></ng-template>
+<ng-template #down><input type="image" class="paging-button" (click)="getNewPeaceOfReviews()" src="../../assets/img/130907.png" alt="Ще"/></ng-template>
 
 <!--<ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [pageSize]="count"-->
 <!--                [(page)]="offset" [boundaryLinks]="false" (pageChange)="getNewPeaceOfReviews($event)"></ngb-pagination>-->

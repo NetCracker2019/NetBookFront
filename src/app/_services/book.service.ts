@@ -101,4 +101,7 @@ export class BookService {
   countBooks() {
     return this.http.get(`${environment.apiUrl}/book-service/home/books/amount`);
   }
+  countReviews(){
+    return this.http.get(`${environment.apiUrl}/book-service/count-reviews`);
+  }
 }
