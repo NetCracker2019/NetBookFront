@@ -26,7 +26,7 @@
 <div class="reviews" *ngFor="let review of reviews">
   <div class="review-item">
     <div class="user-image">
-      <img src="{{review.userAvatarPath}}" class="user-logo">
+      <img src="{{review.userAvatarPath}}" class="user-logo" alt="{{review.userName[0]}}">
     </div>
     <div class="review-content">
       <div class="user-name"><h4>{{review.userName}}</h4></div>
