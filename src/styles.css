@@ -34,3 +34,6 @@ app-home-auth{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

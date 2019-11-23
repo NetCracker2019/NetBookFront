@@ -1,22 +1,132 @@
-.books {
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
-  width: 50em;
+
+.book-logo {
+  width: 300px;
+  height: 450px;
+}
+.item-book{
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 5px;
+  display: grid;
+  width: 800px;
+  text-decoration: none;
+  overflow: hidden;
+  padding: 20px;
+  margin: 10px;
 }
 
-.books li {
-  position: relative;
-  cursor: pointer;
-  background-color: #EEE;
-  margin: .5em;
-  padding: .3em 0;
-  height: 15em;
-  border-radius: 4px;
+
+.book-content{
+  grid-column: 2 / 3;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 2px;
 }
 
-.books li:hover {
-  color: #646d73;
-  background-color: #DDD;
-  left: .1em;
+.book-content h3 {
+  font-size: 25px;
+  padding-bottom: 50px;
+  margin: 0;
 }
+/*.like-book-content {*/
+/*  display: grid;*/
+/*  grid-template-columns: 40px 30px;*/
+/*}*/
+/*.like-img-book {*/
+/*  grid-column: 1;*/
+/*  height: 25px;*/
+/*  width: 35px;*/
+/*}*/
+/*.like-img-book img {*/
+/*  height: 25px;*/
+/*  width: 35px;*/
+/*}*/
+/*.like-num {*/
+/*  grid-column: 2;*/
+/*}*/
+
+.button-add-book-to-profile {
+  background-color: palegreen;
+  border-radius: 10px;
+  height: 60px;
+  width: 250px;
+
+}
+.reviews {
+  padding-left: 100px;
+}
+.review-item {
+  display: grid;
+  grid-template-columns: 130px 700px;
+  padding-left: 2px;
+}
+.user-logo {
+  grid-column-start: 1;
+  grid-column-end: 1;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  border-radius: 80%;
+  -moz-border-radius: 80%;
+  -webkit-border-radius: 80%;
+  border-style: solid;
+  border-color: antiquewhite;
+  height: 100px;
+  width: 100px;
+}
+.review-blog {
+  display: grid;
+  grid-template-columns: 300px 250px;
+  padding-bottom: 20px;
+}
+.review-content {
+  display: grid;
+  grid-template-columns: 160px 100px;
+}
+.review-title {
+  grid-column: 1;
+  padding-left: 50px;
+}
+.button-write-review button{
+  grid-column: 2;
+  border-radius: 10px;
+  background-color: skyblue;
+  height: 40px;
+  width: 190px;
+}
+.review-text {
+  font-size: 15px;
+  color: #4B5A65;
+  padding-left: 20px;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 2;
+}
+.rating {
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: 40px 20px;
+}
+.like-img-review {
+  grid-column: 1;
+  margin-bottom: 20px;
+
+}
+.like-img-review img{
+  height: 25px;
+  width: 35px;
+}
+.rating h5{
+  padding-left: 10px;
+  grid-column: 2;
+}
+.user-name {
+  grid-column: 1;
+}
+.paging-button {
+  outline: none;
+  margin-left: 220px;
+  height: 30px;
+  width: 60px;
+}
+
+
