@@ -79,7 +79,7 @@
 }
 .review-content {
   display: grid;
-  grid-template-columns: 120px 100px;
+  grid-template-columns: 160px 100px;
 }
 .review-title {
   grid-column: 1;
@@ -116,6 +116,7 @@
   width: 35px;
 }
 .rating h5{
+  padding-left: 10px;
   grid-column: 2;
 }
 .user-name {
