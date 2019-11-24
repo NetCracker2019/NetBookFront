@@ -1,0 +1,13 @@
+<h1>List of unapproved announcement</h1>
+<div class="content">
+  <div *ngFor="let book of books">
+    <p>Title: {{book.title}}</p>
+    <p>Author's: {{book.authors}}</p>
+    <p>Genre's: {{book.genres}}</p>
+    <p>Release date: {{book.releaseDate}}</p>
+    <p>Description: {{book.description}}</p>
+    <img src="{{book.imagePath}}">
+    <button (click)="save(book)">Save</button>
+    <button (click)="cancel(book)">Delete</button>
+  </div>
+</div>

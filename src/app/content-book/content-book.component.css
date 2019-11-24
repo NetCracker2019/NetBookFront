@@ -104,7 +104,6 @@
 .addForm-popup{
   /*grid-column: 1 / 4;*/
   display: none;
-  position: fixed;
   margin-left: 15%;
   margin-right: 15%;
   margin-top: 5%;

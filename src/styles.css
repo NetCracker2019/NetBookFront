@@ -23,6 +23,11 @@ app-content-book {
   border-color: #1a252b;
 }
 
+app-content-approve {
+  display: grid;
+  grid-column: 2 / 5;
+}
+
 
 app-home{
   display: grid;
@@ -32,7 +37,12 @@ app-home{
 
 app-home-auth{
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 0.2fr 1fr 1fr 1fr;
+}
+
+
+router-outlet {
+  grid-row: 3;
 }
 
 html, body { height: 100%; }

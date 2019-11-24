@@ -43,6 +43,9 @@ import {MatAutocompleteModule, MatDatepickerModule, MatFormFieldModule, MatInput
 import {MatNativeDateModule} from '@angular/material/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
+
+import { ContentApproveComponent } from './content-approve/content-approve.component';
+
 import { SuperadminModeratorRequest } from './superadmin-moderator-request/superadmin-moderator-request.component';
 
 
@@ -62,6 +65,7 @@ const componentRoutes: Routes = [
   { path: 'superadmin-request', component: SuperadminRequest},
   { path: 'announcement', component: ContentMainComponent},
   { path: 'newAnnouncement', component: AddAnnouncementComponent},
+  { path: 'approve', component: ContentApproveComponent},
   { path: 'superadmin-moderator-request', component: SuperadminModeratorRequest},
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
@@ -89,8 +93,8 @@ const appRoutes: Routes = [
   { path: 'verification-admin', component: VerificationAdminComponent },
 
   { path: 'recovery-password', component: RecoveryPassComponent },
-  
-  
+
+
   { path: 'recovery-password-request', component: RecoveryPassRequestComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: 'home/announcement' }
@@ -121,14 +125,13 @@ const appRoutes: Routes = [
     VerificationAdminComponent,
     RecoveryPassComponent,
     RecoveryPassRequestComponent,
-
     ContentEditProfileComponent,
-
     SuperadminRequest,
     SuperadminModeratorRequest,
     SearchComponent,
     ContentBookDetailsComponent,
-    AddAnnouncementComponent
+    AddAnnouncementComponent,
+    ContentApproveComponent
 
   ],
   imports: [
@@ -137,6 +140,9 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
