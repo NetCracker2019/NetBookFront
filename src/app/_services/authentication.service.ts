@@ -16,8 +16,6 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
-    console.log(this.currentUserSubject.value);
-    console.log(this.currentUserSubject);
   }
 
   public get currentUserValue(): User {
@@ -39,9 +37,17 @@ export class AuthenticationService {
         return user;
       }));
   }
-  // getUserRole() {
-  //   return this.role;
-  // }
+
+  refreshToken() {
+    return this.http.get<any>(`${environment.apiUrl}/user-service/refresh-token`)
+      .subscribe(
+        (data: User) => {
+          localStorage.removeItem('currentUser');
+          localStorage.setItem('currentUser', JSON.stringify(data));
+          this.currentUserSubject.next(data);
+        });
+
+  }
 
   logoutuser() {
     // remove user from local storage to log user out

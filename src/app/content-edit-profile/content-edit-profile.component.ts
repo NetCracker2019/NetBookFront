@@ -4,6 +4,10 @@ import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthenticationService} from '../_services/authentication.service';
+import { v4 as uuid } from 'uuid';
+import {Observable} from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-content-edit-profile',
@@ -14,6 +18,8 @@ export class ContentEditProfileComponent implements OnInit {
 
   public user: User = {} as User;
   private login: string;
+  private fileToUpload: File = null;
+  private fileName: string;
 
   form: FormGroup;
   profileValidationMessages = {
@@ -29,6 +35,7 @@ export class ContentEditProfileComponent implements OnInit {
   constructor(private userService: UserService,
    private activatedRoute: ActivatedRoute,
    private router: Router,
+   private authenticationService: AuthenticationService,
    private alertService: AlertService) {
     
     this.login = activatedRoute.snapshot.params['login'];
@@ -50,23 +57,32 @@ export class ContentEditProfileComponent implements OnInit {
       status: new FormControl(),
       sex: new FormControl()
     });
+    this.authenticationService.refreshToken();
   }
 
   ngOnInit() {
-  	
+  	if(this.authenticationService.currentUserValue.username != this.login){
+      this.router.navigate(['/homeath/profile/' + this.login]);
+    }
   	this.userService.getUser(this.login)
       .subscribe(
         (data : User) => {
           this.user = data;
         },
         (error) => {
-          this.alertService.error(error);
-          console.log(error);
+          this.alertService.error("Не вдалося завантажити інформацію");
         });
-
-    
-
   }
+
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+  }
+
+
+  getPhoto(imageName: string) {
+        return `${environment.apiUrl}/files/download?filename=${imageName}`;
+  }
+
   edit() {
     this.user.firstName = this.form.controls.firstName.value;
     this.user.country = this.form.controls.country.value;
@@ -75,8 +91,16 @@ export class ContentEditProfileComponent implements OnInit {
     this.user.email = this.form.controls.email.value;
     this.user.password = this.form.controls.password.value;
     this.user.status = this.form.controls.status.value;
-    this.user.avatarFilePath = this.form.controls.avatarFilePath.value;
-    console.log(this.user);
+    if(this.fileToUpload != null){
+      this.fileName = uuid();
+    }
+    this.user.avatarFilePath = this.fileName;
+
+    this.userService.postFile(this.fileToUpload, this.fileName).subscribe(data => {
+      }, error => {
+        this.alertService.error("От халепа");
+      });
+
     this.userService.edit(this.user)
       .subscribe(
         data => {
@@ -85,8 +109,7 @@ export class ContentEditProfileComponent implements OnInit {
           console.log(data);
         },
         (error) => {
-          this.alertService.error(error);
-          console.log(error);
+          this.alertService.error("От халепа");
         });
   }
   goBack(){

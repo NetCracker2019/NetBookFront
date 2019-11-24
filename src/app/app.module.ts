@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,10 +39,14 @@ import { SuperadminRequest } from './superadmin-request/superadmin-request.compo
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { SearchComponent } from './search/search.component';
 import {ContentBookDetailsComponent} from './content-book-details/content-book-details.component';
+import {MatAutocompleteModule, MatDatepickerModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {MatNativeDateModule} from '@angular/material/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
-import { ContentApproveComponent } from './content-approve/content-approve.component';
-import {MatFormFieldModule, MatInputModule} from "@angular/material";
 
+import { ContentApproveComponent } from './content-approve/content-approve.component';
+
+import { SuperadminModeratorRequest } from './superadmin-moderator-request/superadmin-moderator-request.component';
 
 
 // const componentAnnouncement: Routes = [
@@ -63,13 +66,17 @@ const componentRoutes: Routes = [
   { path: 'announcement', component: ContentMainComponent},
   { path: 'newAnnouncement', component: AddAnnouncementComponent},
   { path: 'approve', component: ContentApproveComponent},
+  { path: 'superadmin-moderator-request', component: SuperadminModeratorRequest},
+  { path: 'search', component: SearchComponent},
+  { path: 'search/:bookId', component: ContentBookDetailsComponent},
+  { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
 ];
 
 const componentNotAllRoutes: Routes = [
   { path: 'books', component: ContentBookComponent},
-
   { path: 'announcement', component: ContentMainComponent},
   { path: 'superadmin-request', component: SuperadminRequest},
+  { path: 'superadmin-moderator-request', component: SuperadminModeratorRequest},
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
@@ -120,6 +127,7 @@ const appRoutes: Routes = [
     RecoveryPassRequestComponent,
     ContentEditProfileComponent,
     SuperadminRequest,
+    SuperadminModeratorRequest,
     SearchComponent,
     ContentBookDetailsComponent,
     AddAnnouncementComponent,
@@ -140,7 +148,13 @@ const appRoutes: Routes = [
     ModalModule.forRoot(),
     HttpClientModule,
     RouterModule.forRoot(
-      appRoutes)
+      appRoutes),
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

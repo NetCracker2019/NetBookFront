@@ -188,17 +188,11 @@
   <div class="test" *ngFor="let book of books">
     <a href="#" class="blog-item">
       <div class="book-image-grid">
-        <img src="../../assets/img/{{book.imagePath}}" alt="Example" class="book-logo">
+        <img src="{{book.imagePath}}" alt="Example" class="book-logo">
       </div>
       <div class="book-item-content" >
-        <h3>{{book.title}}</h3>
-        <p>Автор: {{book.authors}} </p>
-        <p>Жанр: {{book.genres}}</p>
-        <p>Дата выпуска: {{book.releaseDate}}</p>
-        <p>Лайки: {{book.likes}}</p>
-        <p>Язык книги: {{book.language}}</p>
-        <p>Страницы: {{book.pages}}</p>
-        <p>Описание: {{book.description}}</p>
+        <h3>{{book.title}}-{{book.authors}}</h3>
+        <p>Жанри: {{book.genres}}</p>
        <!-- <input placeholder={{book.title}}>-->
       </div>
       <div class="picture-buttons">
