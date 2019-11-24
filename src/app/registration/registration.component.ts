@@ -20,12 +20,12 @@ export class RegistrationComponent implements OnInit {
   accountValidationMessages = {
     userName: [
       { type: 'required', message: 'Username is required' },
-      { type: 'minlength', message: 'Username must be at least 4 characters long' },
+      { type: 'minlength', message: 'Username must be at least 2 characters long' },
       { type: 'maxlength', message: 'Username cannot be more than 15 characters long' },
     ],
     userSurname: [
       { type: 'required', message: 'Username is required' },
-      { type: 'minlength', message: 'Username must be at least 4 characters long' },
+      { type: 'minlength', message: 'Username must be at least 2 characters long' },
       { type: 'maxlength', message: 'Username cannot be more than 15 characters long' },
       { type: 'pattern', message: 'Your username must contain only numbers and letters' }
     ],
@@ -49,7 +49,7 @@ export class RegistrationComponent implements OnInit {
 
       userName: new FormControl('', [
         Validators.required,
-        Validators.minLength(4),
+        Validators.minLength(2),
         Validators.maxLength(15)
       ]),
       userEmail: new FormControl('', [
@@ -60,7 +60,7 @@ export class RegistrationComponent implements OnInit {
       ]),
       userSurname: new FormControl('', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(2),
         Validators.maxLength(15)]),
       userPassword: new FormControl('', [
         Validators.required,

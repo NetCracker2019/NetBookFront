@@ -16,7 +16,7 @@ export class ContentMainComponent implements OnInit {
   books: Announcement[] = [] as Announcement[];
   collectionSize: number;
   page: number;
-  public booksPerPage = 2;
+  public booksPerPage = 4;
 
   constructor(private bookService: BookService) {
     this.page = 1;

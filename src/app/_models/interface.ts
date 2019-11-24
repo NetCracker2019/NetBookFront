@@ -18,11 +18,36 @@ export interface  Book {
 }
 
 export interface Announcement {
+  announcmentId: number;
   title: string;
   description: string;
   image_path: string;
+  releaseDate: string;
   totalCount: number;
 
+}
+export interface ViewAnnouncement {
+  announcmentId: number;
+  releaseDate: string;
+  title: string;
+  description: string;
+  imagePath: string;
+  authors: Array<string>;
+  genres: Array<string>;
+}
+
+export class Author {
+  id: number;
+  name: string;
+}
+
+export interface Data {
+  name: string;
+}
+
+export interface Genre {
+  genreId: number;
+  genreName: string;
 }
 
 export interface User {

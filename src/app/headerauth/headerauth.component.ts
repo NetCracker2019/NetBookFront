@@ -15,11 +15,12 @@ export class HeaderauthComponent implements OnInit {
 
 
 
-  currentUser: User;
+  currentUser: string;
 
   constructor(private router: Router,
               private authenticationService: AuthenticationService) {
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    // this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.currentUser = this.authenticationService.currentUserValue.username;
   }
 
   ngOnInit() {
@@ -29,7 +30,7 @@ export class HeaderauthComponent implements OnInit {
 
   logout() {
     this.authenticationService.logoutuser();
-    this.router.navigate(['/login']);
+    this.router.navigate(['home/announcement']);
   }
 
 }

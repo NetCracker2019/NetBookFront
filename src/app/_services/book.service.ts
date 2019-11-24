@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 
@@ -7,8 +7,13 @@ import {environment} from '../../environments/environment';
 import {map} from "rxjs/operators";
 
 
-import {Announcement, Book, NewModelBook, Review} from '../_models/interface';
+import {Announcement, Book, Data, Genre, NewModelBook, Review} from '../_models/interface';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -47,15 +52,25 @@ export class BookService {
   getBookList(): Observable<Book[]> {
     return this.http.get<Book[]>(`${environment.apiUrl}/book-service/home/books`);
   }
+  getGenreList(): Observable<Genre[]> {
+    return this.http.get<Genre[]>(`${environment.apiUrl}/book-service/genres`);
+  }
   getNewBookList(): Observable<NewModelBook[]> {
     console.log('Books in service: ', this.http.get<NewModelBook[]>(`${environment.apiUrl}/home/view-books`));
     return this.http.get<NewModelBook[]>(`${environment.apiUrl}/home/view-books`);
   }
 
-  addBook(book: Book) {
-    const body = {title: book.title, author: book.authors, genre: book.genres, imagePath: book.imagePath,
+  addBook(book: Book, selectedOrderIds, authors, value) {
+    let authorArray: Data[] = [];
+    for (let i = 0; i < authors.length; i++) {
+      authorArray.push(authors[i].name);
+    }
+    console.log(authorArray);
+    const test = selectedOrderIds.toString();
+    const body = {title: book.title, authors: authorArray, genres: selectedOrderIds, imagePath: book.imagePath,
       release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description};
-    return this.http.post(`${environment.apiUrl}/book-service/home/books/addBook`, body);
+    console.log(body);
+    return this.http.post(`${environment.apiUrl}/book-service/home/books/addBook?value=${value}`, body);
   }
 
   addAnnouncement(book: Book) {

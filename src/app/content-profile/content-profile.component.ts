@@ -32,14 +32,13 @@ export class ContentProfileComponent implements OnInit {
    private alertService: AlertService) {
 
    this.login = activatedRoute.snapshot.params['login'];
-   
+
   }
 
   ngOnInit() {
-  	
-  	this.userService.getUser(this.login)
+    this.userService.getUser(this.login)
       .subscribe(
-        (data : User) => {
+        (data: User) => {
           this.user = data;
         },
         (error) => {
@@ -49,7 +48,7 @@ export class ContentProfileComponent implements OnInit {
 
     this.userService.getAchievement(this.login)
       .subscribe(
-        (data : Achievement) => {
+        (data: Achievement) => {
           this.achievement = data;
         },
         (error) => {
@@ -59,7 +58,7 @@ export class ContentProfileComponent implements OnInit {
 
     this.userService.getFriends(this.login, 4, 0)
       .subscribe(
-        (data : User[]) => {
+        (data: User[]) => {
           this.friends = data;
         },
         (error) => {
@@ -69,7 +68,7 @@ export class ContentProfileComponent implements OnInit {
 
     this.userService.getFavouriteBooks(this.login, 3, 0)
       .subscribe(
-        (data : ShortBookDescription[]) => {
+        (data: ShortBookDescription[]) => {
           this.favouriteBooks = data;
         },
         (error) => {
@@ -79,7 +78,7 @@ export class ContentProfileComponent implements OnInit {
 
     this.userService.getReadingBooks(this.login, 3, 0)
       .subscribe(
-        (data : ShortBookDescription[]) => {
+        (data: ShortBookDescription[]) => {
           this.readingBooks = data;
         },
         (error) => {
@@ -89,7 +88,7 @@ export class ContentProfileComponent implements OnInit {
 
     this.userService.getReadBooks(this.login, 3, 0)
       .subscribe(
-        (data : ShortBookDescription[]) => {
+        (data: ShortBookDescription[]) => {
           this.readBooks = data;
         },
         (error) => {
@@ -98,7 +97,7 @@ export class ContentProfileComponent implements OnInit {
         });
 
   }
-  goEdit(){
+  goEdit() {
     this.router.navigate(['/homeath/profile/' + this.login + '/edit']);
   }
 

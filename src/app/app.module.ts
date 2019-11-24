@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,6 +41,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { SearchComponent } from './search/search.component';
 import {ContentBookDetailsComponent} from './content-book-details/content-book-details.component';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
+import { ContentApproveComponent } from './content-approve/content-approve.component';
+import {MatFormFieldModule, MatInputModule} from "@angular/material";
 
 
 
@@ -59,6 +62,7 @@ const componentRoutes: Routes = [
   { path: 'superadmin-request', component: SuperadminRequest},
   { path: 'announcement', component: ContentMainComponent},
   { path: 'newAnnouncement', component: AddAnnouncementComponent},
+  { path: 'approve', component: ContentApproveComponent},
 ];
 
 const componentNotAllRoutes: Routes = [
@@ -82,8 +86,8 @@ const appRoutes: Routes = [
   { path: 'verification-admin', component: VerificationAdminComponent },
 
   { path: 'recovery-password', component: RecoveryPassComponent },
-  
-  
+
+
   { path: 'recovery-password-request', component: RecoveryPassRequestComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: 'home/announcement' }
@@ -114,13 +118,12 @@ const appRoutes: Routes = [
     VerificationAdminComponent,
     RecoveryPassComponent,
     RecoveryPassRequestComponent,
-
     ContentEditProfileComponent,
-
     SuperadminRequest,
     SearchComponent,
     ContentBookDetailsComponent,
-    AddAnnouncementComponent
+    AddAnnouncementComponent,
+    ContentApproveComponent
 
   ],
   imports: [
@@ -129,6 +132,9 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
