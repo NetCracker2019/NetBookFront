@@ -38,11 +38,9 @@ export class MenuComponent implements OnInit {
 // =======
   constructor(private authenticationService: AuthenticationService) {
     this.role = authenticationService.role;
-    if (this.role === 4) {
-      this.security = false;
-    } else {
-      this.security = true;
-    }
+    console.log(this.role);
+    this.security = this.role != 4;
+    console.log(this.security);
    }
 
 
@@ -58,7 +56,6 @@ export class MenuComponent implements OnInit {
     {name: 'Рекомендации', url: 'recommendations'},
     {name: 'Чат', url: 'chat'},
     {name: 'Достижения', url: 'achievements'},
-    {name: 'Добавить анонс', url: 'newAnnouncement'},
-    ];
+    {name: 'Добавить анонс', url: 'newAnnouncement'}];
 
 }
