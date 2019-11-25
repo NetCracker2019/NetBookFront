@@ -38,11 +38,8 @@ export class MenuComponent implements OnInit {
 // =======
   constructor(private authenticationService: AuthenticationService) {
     this.role = authenticationService.role;
-    if (this.role === 4) {
-      this.security = false;
-    } else {
-      this.security = true;
-    }
+    this.security = this.role != 4;
+    console.log(this.security);
    }
 
 

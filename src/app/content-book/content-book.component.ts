@@ -16,6 +16,10 @@ import {map, startWith} from 'rxjs/operators';
 })
 export class ContentBookComponent implements OnInit {
 
+  collectionSize: number;
+  page: number;
+  public booksPerPage = 4;
+
   books: Book[];
   bookModel: Book = {} as Book;
   form: FormGroup;
@@ -27,11 +31,33 @@ export class ContentBookComponent implements OnInit {
   constructor(private bookService: BookService,
               private alertService: AlertService,
               private formBuilder: FormBuilder) {
+    this.page = 1;
+    this.loadPage();
+
     this.form = this.formBuilder.group({
       orders: new FormArray([])
     });
 
   }
+
+  onPageChanged(pageNumber) {
+    this.loadPage();
+  }
+
+  loadPage() {
+    this.bookService.getAmountOfBook()
+      .subscribe(data => {
+        console.log(data);
+        this.collectionSize = data as number;
+      });
+    this.bookService.getBookListPeace(this.page, this.booksPerPage)
+      .subscribe(data => {
+        console.log(data);
+        this.books = data;
+      });
+    console.log(this.books);
+  }
+
   private addCheckboxes() {
       this.ordersData.forEach((o, i) => {
         const control = new FormControl(i === 0); // if first item set to true, else false
