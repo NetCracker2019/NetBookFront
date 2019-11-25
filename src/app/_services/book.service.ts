@@ -43,7 +43,7 @@ export class BookService {
     return this.http.get<Genre[]>(`${environment.apiUrl}/book-service/genres`);
   }
   getNewBookList(): Observable<NewModelBook[]> {
-    console.log('Books in service: ', this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/view-books`));
+    console.log('Books in service: ', this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/view-books`));
     return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/view-books`);
   }
 
@@ -85,10 +85,10 @@ export class BookService {
     }
   }
   getPeaceOfFoundBook(title: string, count: number, booksPerPage: number): Observable<NewModelBook[]> {
-    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/find-books?title=${title}`);
+    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/find-books?title=${title}`);
   }
   getPeaceOfReview(id: number, count: number, offset: number): Observable<Review[]> {
-    return this.http.get<Review[]>(`${environment.apiUrl}/book-service/home/search/${id}?count=${count}&offset=${offset}`);
+    return this.http.get<Review[]>(`${environment.apiUrl}/book-service/search/${id}?count=${count}&offset=${offset}`);
   }
   addReviewForUserBook(review: Review) {
     const body = {reviewId: null,
@@ -120,16 +120,16 @@ export class BookService {
   }
 
   getBookReviews(id: number): Observable<Review[]> {
-    return this.http.get<Review[]>(`${environment.apiUrl}/book-service/home/search/${id}`);
+    return this.http.get<Review[]>(`${environment.apiUrl}/book-service/search/${id}`);
   }
   getBookById(id: number): Observable<NewModelBook> {
-    return this.http.get<NewModelBook>(`${environment.apiUrl}/book-service/home/find-book-id?id=${id}`);
+    return this.http.get<NewModelBook>(`${environment.apiUrl}/book-service/find-book-id?id=${id}`);
   }
   getGenres(): Observable<Genre[]> {
     return this.http.get<Genre[]>(`${environment.apiUrl}/book-service/genres`);
   }
   countBooks() {
-    return this.http.get(`${environment.apiUrl}/book-service/home/books/amount`);
+    return this.http.get(`${environment.apiUrl}/book-service/books/amount`);
   }
   countReviews() {
     return this.http.get(`${environment.apiUrl}/book-service/count-reviews`);

@@ -45,13 +45,17 @@ export class ContentBookDetailsComponent implements OnInit {
       this.bookService.countReviews().subscribe(data => {
         this.collectionSize = data as number;
       });
-      this.bookService.checkBookInProfile(this.currentUser.username, bookId).subscribe(data => {
-        this.added = data as boolean;
-      });
+      if (this.currentUser) {
+        this.checkBookInProfile(this.currentUser.username, bookId);
+      }
     });
     this.offset += this.count;
   }
-
+  checkBookInProfile(userName: string, bookId: number) {
+    this.bookService.checkBookInProfile(userName, bookId).subscribe(data => {
+      this.added = data as boolean;
+    });
+  }
   getBook(id: number) {
     this.bookService.getBookById(id).subscribe(data => {
       this.book = data;
