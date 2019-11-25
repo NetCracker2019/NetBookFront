@@ -63,7 +63,12 @@ export class BookService {
       release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description};
     return this.http.post(`${environment.apiUrl}/book-service/home/books/addAnnouncement`, body);
   }
-  searchBookByTitle(title: string, genre: string, author: string, dateFrom: Date, dateTo: Date): Observable<NewModelBook[]> {
+
+  searchBookByTitle(title: string): Observable<NewModelBook[]> {
+    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/find-books?title=${title}`);
+  }
+
+  searchBookAdvanced(title: string, genre: string, author: string, dateFrom: Date, dateTo: Date): Observable<NewModelBook[]> {
     if (dateFrom < dateTo) {
       const formattedDateFrom = dateFrom.toISOString().substring(0, 10);
       const formattedDateTo = dateTo.toISOString().substring(0, 10);
@@ -82,6 +87,15 @@ export class BookService {
       }
     }
   }
+
+  getMinDateRelease(): Observable<Date> {
+    return this.http.get<Date>(`${environment.apiUrl}/book-service/min-date-release`);
+  }
+
+  getMaxDateRelease(): Observable<Date> {
+    return this.http.get<Date>(`${environment.apiUrl}/book-service/max-date-release`);
+  }
+
   getPeaceOfFoundBook(title: string, count: number, booksPerPage: number): Observable<NewModelBook[]> {
     return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/home/find-books?title=${title}`);
   }

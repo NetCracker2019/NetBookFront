@@ -1,33 +1,45 @@
-<form>
-  <label>Genre</label>
-  <select [(ngModel)]="selectedGenre" name="genre">
-    <option value="all" selected>All</option>
-    <option *ngFor="let genre of genres" [value]="genre.genreName">
-      {{genre.genreName}}
-    </option>
-  </select>
-</form>
+<button (click)="advanced()">advanced search</button>
 
-<form>
-  <input type="text" placeholder="author" [formControl]="control" [matAutocomplete]="auto">
-  <mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let author of filteredAuthors | async" [value]="author.fullName">
-      {{author.fullName}}
-    </mat-option>
-  </mat-autocomplete>
-</form>
+<div id="collapseExample" [ngbCollapse]="isCollapsed">
+  <div class="card">
+    <div class="card-body">
+      <form>
+        <label>Genre</label>
+        <select [(ngModel)]="selectedGenre" name="genre">
+          <option value="all" selected>All</option>
+          <option *ngFor="let genre of genres" [value]="genre.genreName">
+            {{genre.genreName}}
+          </option>
+        </select>
+      </form>
 
-<mat-form-field>
-  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerFrom" placeholder="Announcement date from" [formControl]="dateFrom">
-  <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-  <mat-datepicker #pickerFrom></mat-datepicker>
-</mat-form-field>
+      <form>
+        <input type="text" placeholder="author" [formControl]="control" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let author of filteredAuthors | async" [value]="author.fullName">
+            {{author.fullName}}
+          </mat-option>
+        </mat-autocomplete>
+      </form>
 
-<mat-form-field>
-  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerTo" placeholder="Announcement date to" [formControl]="dateTo">
-  <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-  <mat-datepicker #pickerTo></mat-datepicker>
-</mat-form-field>
+      <div *ngIf="dateFrom">
+        <mat-form-field>
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerFrom" placeholder="Announcement date from" [formControl]="dateFrom">
+          <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFrom></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="dateTo">
+        <mat-form-field>
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerTo" placeholder="Announcement date to" [formControl]="dateTo">
+          <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+          <mat-datepicker #pickerTo></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div *ngIf="books">
   <ul class="books">
