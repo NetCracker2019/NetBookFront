@@ -25,6 +25,9 @@ export class SearchComponent implements OnInit, OnDestroy {
   filteredAuthors: Observable<Author[]>;
   books: NewModelBook[] = [];
   title: string;
+  page = 1;
+  booksPerPage = 2;
+  collectionSize: number;
 
   constructor(
     private bookService: BookService,
@@ -75,10 +78,27 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   getBooks(title: string) {
     if (this.dateFrom === undefined || this.dateTo === undefined) {
-      this.bookService.searchBookByTitle(title)
+      this.bookService.getAmountOfSearchResult(title)
+        .subscribe(amount => { this.collectionSize = amount; console.log(amount); });
+      this.bookService.searchBookByTitle(title, this.booksPerPage, this.page)
         .subscribe(books => { console.log(books) ; this.books = books; });
     } else {
-      this.bookService.searchBookAdvanced(title, this.selectedGenre, this.control.value, this.dateFrom.value, this.dateTo.value)
+      this.bookService.getAmountOfAdvancedSearchResult(title, this.selectedGenre, this.control.value, this.dateFrom.value,
+        this.dateTo.value)
+        .subscribe(amount => this.collectionSize = amount);
+      this.bookService.searchBookAdvanced(title, this.selectedGenre, this.control.value,
+        this.dateFrom.value, this.dateTo.value, this.booksPerPage, this.page)
+        .subscribe(books => { console.log(books) ; this.books = books; });
+    }
+  }
+
+  onPageChanged() {
+    if (this.dateFrom === undefined || this.dateTo === undefined) {
+      this.bookService.searchBookByTitle(this.title, this.booksPerPage, this.page)
+        .subscribe(books => { console.log(books) ; this.books = books; });
+    } else {
+      this.bookService.searchBookAdvanced(this.title, this.selectedGenre, this.control.value,
+        this.dateFrom.value, this.dateTo.value, this.booksPerPage, this.page)
         .subscribe(books => { console.log(books) ; this.books = books; });
     }
   }

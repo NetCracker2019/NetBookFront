@@ -57,3 +57,5 @@
     </li>
   </ul>
 </div>
+
+<ngb-pagination [collectionSize]="collectionSize" [pageSize]="booksPerPage" [(page)]="page" [boundaryLinks]="true" (pageChange)="onPageChanged()"></ngb-pagination>
