@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../_services/authentication.service';
 import {first} from 'rxjs/operators';
 import {User} from '../_models/interface';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-authorization',
@@ -27,7 +28,7 @@ export class AuthorizationComponent implements OnInit {
     userPassword: [
       { type: 'required', message: 'Password is required' },
       { type: 'minlength', message: 'Password must be at least 2 characters long' },
-      { type: 'maxlength', message: 'Your password cannot be more than 60 characters long' }
+      { type: 'maxlength', message: 'Your password cannot be more than 15 characters long' }
     ],
   };
 
@@ -36,9 +37,8 @@ export class AuthorizationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService
-
-  ) {
+    private authenticationService: AuthenticationService,
+    private location: Location) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/homeath']);
@@ -84,11 +84,15 @@ export class AuthorizationComponent implements OnInit {
       .subscribe(
         data => {
           this.router.navigate([this.returnUrl]);
+          // this.location.back();
         },
         error => {
           this.error = error;
           this.loading = false;
         });
+  }
+  goBack(): void {
+    this.location.back();
   }
 
 }

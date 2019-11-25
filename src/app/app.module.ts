@@ -44,11 +44,9 @@ import {MatAutocompleteModule, MatDatepickerModule, MatFormFieldModule, MatInput
 import {MatNativeDateModule} from '@angular/material/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
-
-import { ContentApproveComponent } from './content-approve/content-approve.component';
-
 import { SuperadminModeratorRequest } from './superadmin-moderator-request/superadmin-moderator-request.component';
-
+import { ContentApproveComponent } from './content-approve/content-approve.component';
+import {AuthForAddSthGuard} from './_helpers/auth-for-add-sth.guard';
 
 // const componentAnnouncement: Routes = [
 //   { path: 'newAnnouncement', component: AddAnnouncementComponent}
@@ -87,15 +85,13 @@ const componentNotAllRoutes: Routes = [
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent, children: componentNotAllRoutes },
-  { path: 'login', component: AuthorizationComponent },
+  { path: 'login', component: AuthorizationComponent , canActivate: [AuthForAddSthGuard]},
   { path: 'register', component: RegistrationComponent },
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
   { path: 'verification-account', component: VerificationAccountComponent},
   { path: 'verification-admin', component: VerificationAdminComponent },
 
   { path: 'recovery-password', component: RecoveryPassComponent },
-
-
   { path: 'recovery-password-request', component: RecoveryPassRequestComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: 'home/announcement' }
