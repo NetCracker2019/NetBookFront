@@ -27,7 +27,8 @@
             <!--Login-->
           <!--</button>-->
           <button class="button gray">
-            <a  [routerLink]="['/home/announcement']">Back</a>
+            <a (click)="goBack()">Back</a>
+<!--            <a  [routerLink]="['/home/announcement']">Back</a>-->
           </button>
           <!--<div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>-->
 

@@ -16,6 +16,7 @@ import { HomeAuthComponent } from './home-auth/home-auth.component';
 import {JwtInterceptor} from './_helpers/jwt.interceptor';
 import {ErrorInterceptor} from './_helpers/error.interceptor';
 import {AuthGuard} from './_helpers/auth.guard';
+import {AuthForAddSthGuard} from './_helpers/auth-for-add-sth.guard';
 import {fakeBackendProvider} from './_helpers/fake-backend';
 import {AlertService} from './_services/alert.service';
 import { VerificationAccountComponent } from './verification-account/verification-account.component';
@@ -82,15 +83,13 @@ const componentNotAllRoutes: Routes = [
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent, children: componentNotAllRoutes },
-  { path: 'login', component: AuthorizationComponent },
+  { path: 'login', component: AuthorizationComponent, canActivate: [AuthForAddSthGuard]},
   { path: 'register', component: RegistrationComponent },
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
   { path: 'verification-account', component: VerificationAccountComponent},
   { path: 'verification-admin', component: VerificationAdminComponent },
 
   { path: 'recovery-password', component: RecoveryPassComponent },
-  
-  
   { path: 'recovery-password-request', component: RecoveryPassRequestComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: 'home/announcement' }

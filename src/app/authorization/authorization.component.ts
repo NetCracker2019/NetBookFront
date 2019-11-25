@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../_services/authentication.service';
 import {first} from 'rxjs/operators';
 import {User} from '../_models/interface';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-authorization',
@@ -20,14 +21,14 @@ export class AuthorizationComponent implements OnInit {
   error = '';
   accountValidationMessages = {
     userName: [
-      { type: 'required', message: 'Username is required' },
-      { type: 'minlength', message: 'Username must be at least 4 characters long' },
-      { type: 'maxlength', message: 'Username cannot be more than 15 characters long' },
+      {type: 'required', message: 'Username is required'},
+      {type: 'minlength', message: 'Username must be at least 4 characters long'},
+      {type: 'maxlength', message: 'Username cannot be more than 15 characters long'},
     ],
     userPassword: [
-      { type: 'required', message: 'Password is required' },
-      { type: 'minlength', message: 'Password must be at least 2 characters long' },
-      { type: 'maxlength', message: 'Your password cannot be more than 15 characters long' }
+      {type: 'required', message: 'Password is required'},
+      {type: 'minlength', message: 'Password must be at least 2 characters long'},
+      {type: 'maxlength', message: 'Your password cannot be more than 15 characters long'}
     ],
   };
 
@@ -36,9 +37,8 @@ export class AuthorizationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService
-
-  ) {
+    private authenticationService: AuthenticationService,
+    private location: Location) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/homeath']);
@@ -66,7 +66,9 @@ export class AuthorizationComponent implements OnInit {
 
 
   // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
+  get f() {
+    return this.loginForm.controls;
+  }
 
 
   login() {
@@ -84,11 +86,17 @@ export class AuthorizationComponent implements OnInit {
       .subscribe(
         data => {
           this.router.navigate([this.returnUrl]);
+          // this.location.back();
         },
         error => {
           this.error = error;
           this.loading = false;
         });
   }
+
+  goBack(): void {
+    this.location.back();
+  }
+
 
 }
