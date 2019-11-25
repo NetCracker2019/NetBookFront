@@ -43,11 +43,11 @@ export class BookService {
 
 
   getBookListPeace(page: number, booksPerPage: number): Observable<Book[]> {
-    return this.http.get<Book[]>(`${environment.apiUrl}/book-service/home/bookListPeace?page=` + page
+    return this.http.get<Book[]>(`${environment.apiUrl}/book-service/bookListPeace?page=` + page
       + `&booksPerPage=` + booksPerPage);
   }
   getAmountOfBook() {
-    return this.http.get(`${environment.apiUrl}/book-service/home/amountOfBook`);
+    return this.http.get(`${environment.apiUrl}/book-service/amountOfBook`);
   }
 
   
