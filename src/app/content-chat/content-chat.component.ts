@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { EventInput } from '@fullcalendar/core';
@@ -11,6 +12,7 @@ import {BookService} from "../_services/book.service";
   styleUrls: ['./content-chat.component.css']
 })
 export class ContentChatComponent implements OnInit {
+
   calendarPlugins = [dayGridPlugin];
   calendarEvents: EventInput[] = [
     // { title: 'Test', date: '2019-11-11', url: '/home' },
@@ -20,10 +22,8 @@ export class ContentChatComponent implements OnInit {
 
   constructor(private bookService: BookService) {
     this.showAll();
-  }
 
-  ngOnInit() {
-  }
+  
 
   showPersonalize() {
     this.value = 'personalize';
@@ -36,5 +36,6 @@ export class ContentChatComponent implements OnInit {
     this.bookService.getCalendarAnnouncement(this.value)
       .subscribe(data => { console.log(data); this.calendarEvents = data; });
   }
+
 
 }
