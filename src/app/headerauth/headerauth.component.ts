@@ -17,13 +17,15 @@ export class HeaderauthComponent implements OnInit {
 
 
   currentUser: string;
+  currentRole: string;
 
   constructor(private router: Router,
               private authenticationService: AuthenticationService,
               private bookService: BookService) {
     // this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.currentUser = this.authenticationService.currentUserValue.username;
-
+    this.currentRole = this.authenticationService.currentUserValue.role;
+    console.log(this.currentRole)
   }
 
   ngOnInit() {
