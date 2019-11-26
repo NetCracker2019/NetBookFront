@@ -29,11 +29,17 @@ export class ContentApproveComponent implements OnInit {
   save(book) {
     this.approveService.confirmAnnouncement(book)
       .subscribe(text => this.text = text);
+    window.location.reload();
   }
 
   cancel(book) {
     this.approveService.cancelAnnouncement(book)
       .subscribe(text => this.text = text);
+    window.location.reload();
+  }
+
+  showPersonalize() {
+
   }
 
 }

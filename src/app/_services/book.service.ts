@@ -29,6 +29,10 @@ export class BookService {
     this.titleSource.next(title);
   }
 
+  getCalendarAnnouncement(value: string): Observable<Event[]> {
+    return this.http.get<Event[]>(`${environment.apiUrl}/book-service/calendar-announcement?value=${value}`);
+  }
+
   getAnnouncementListPeace(page: number, booksPerPage: number): Observable<Announcement[]> {
     return this.http.get<Announcement[]>(`${environment.apiUrl}/book-service/announcementListPeace?page=` + page
       + `&booksPerPage=` + booksPerPage);
@@ -36,6 +40,22 @@ export class BookService {
   getAmountOfAnnouncement() {
     return this.http.get(`${environment.apiUrl}/book-service/amountOfAnnouncement`);
   }
+
+
+  getBookListPeace(page: number, booksPerPage: number): Observable<Book[]> {
+    return this.http.get<Book[]>(`${environment.apiUrl}/book-service/bookListPeace?page=` + page
+      + `&booksPerPage=` + booksPerPage);
+  }
+  getAmountOfBook() {
+    return this.http.get(`${environment.apiUrl}/book-service/amountOfBook`);
+  }
+
+  
+  
+  
+  
+  
+  
   getBookList(): Observable<Book[]> {
     return this.http.get<Book[]>(`${environment.apiUrl}/book-service/books`);
   }
@@ -47,7 +67,7 @@ export class BookService {
     return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/view-books`);
   }
 
-  addBook(book: Book, selectedOrderIds, authors, value) {
+  addBook(book: Book, selectedOrderIds, authors, value: string) {
     let authorArray: Data[] = [];
     for (let i = 0; i < authors.length; i++) {
       authorArray.push(authors[i].name);

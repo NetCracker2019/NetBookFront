@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -139,6 +140,7 @@ const appRoutes: Routes = [
     MatInputModule,
     MatFormFieldModule,
     MatAutocompleteModule,
+    FullCalendarModule, // for FullCalendar!
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),

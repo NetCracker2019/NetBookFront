@@ -1,9 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 html, body{
   height: 100%;
+}
+
+app-content-chat {
+  grid-column: 2 / 5;
 }
 
 app-content-main {

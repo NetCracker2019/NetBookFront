@@ -17,6 +17,12 @@ export interface  Book {
     public language: string;*/
 }
 
+export interface Event {
+  title: string;
+  date: string;
+  url: string;
+}
+
 export interface Announcement {
   announcmentId: number;
   title: string;
