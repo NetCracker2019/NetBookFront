@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 
 import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 
-import {User, Achievement, ShortBookDescription} from '../_models/interface';
+import {User, Achievement, ShortBookDescription, Message} from '../_models/interface';
 import {AuthenticationService} from '../_services/authentication.service';
 
 import { environment } from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {throwError} from 'rxjs';
-
 import {catchError, map} from 'rxjs/operators';
 
 @Injectable({
@@ -59,17 +58,17 @@ export class UserService {
   getFriends(login: string, cnt: number, offset: number) {
     return this.http.get< User[]>(`${environment.apiUrl}/profile/${login}/friends?cnt=${cnt}&offset=${offset}`);
   }
-  getFavouriteBooks(login: string, cnt: number, offset: number) {
+  getFavouriteBooks(login: string, sought: string, cnt: number, offset: number) {
     return this.http.get<ShortBookDescription[]>(
-      `${environment.apiUrl}/profile/${login}/favourite-books?cnt=${cnt}&offset=${offset}`);
+      `${environment.apiUrl}/profile/${login}/favourite-books?cnt=${cnt}&offset=${offset}&sought=${sought}`);
   }
-  getReadingBooks(login: string, cnt: number, offset: number) {
+  getReadingBooks(login: string, sought: string, cnt: number, offset: number) {
     return this.http.get<ShortBookDescription[]>(
-      `${environment.apiUrl}/profile/${login}/reading-books?cnt=${cnt}&offset=${offset}`);
+      `${environment.apiUrl}/profile/${login}/reading-books?cnt=${cnt}&offset=${offset}&sought=${sought}`);
   }
-  getReadBooks(login: string, cnt: number, offset: number) {
+  getReadBooks(login: string, sought: string, cnt: number, offset: number) {
     return this.http.get<ShortBookDescription[]>(
-      `${environment.apiUrl}/profile/${login}/read-books?cnt=${cnt}&offset=${offset}`);
+      `${environment.apiUrl}/profile/${login}/read-books?cnt=${cnt}&offset=${offset}&sought=${sought}`);
   }
 
   edit(user: User) {
@@ -96,6 +95,10 @@ export class UserService {
     return this.http.delete<void>(
       `${environment.apiUrl}/profile/delete-friend/${ownLogin}/${friendLogin}`);
   }
+  updateUserBookList(login:string, bookId: number, reading: boolean, favourite: boolean, remove: boolean) {
+    return this.http.put<void>(
+      `${environment.apiUrl}/profile/${login}/${bookId}?reading=${reading}&favourite=${favourite}&remove=${remove}`, reading);
+  }
 
   postFile(fileToUpload: File, fileName: string): Observable<boolean> {
     const formData: FormData = new FormData();
@@ -103,7 +106,6 @@ export class UserService {
     formData.append('name', fileName);
     return this.http.post<boolean>(`${environment.apiUrl}/files/upload/`, formData);
   }
-
 }
 
 

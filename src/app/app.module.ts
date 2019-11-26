@@ -6,6 +6,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ToastrModule } from 'ngx-toastr';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RegistrationComponent } from './registration/registration.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
@@ -40,7 +41,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { SearchComponent } from './search/search.component';
 import {ContentBookDetailsComponent} from './content-book-details/content-book-details.component';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
-
+import { ContentProfileBookListComponent } from './content-profile-book-list/content-profile-book-list.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 // const componentAnnouncement: Routes = [
@@ -51,6 +53,7 @@ import { AddAnnouncementComponent } from './add-announcement/add-announcement.co
 const componentRoutes: Routes = [
   { path: 'books', component: ContentBookComponent},
   { path: 'profile/:login', component: ContentProfileComponent},
+  { path: 'profile/:login/book-list', component: ContentProfileBookListComponent},
   { path: 'profile/:login/edit', component: ContentEditProfileComponent},
   { path: 'friends/:login', component: ContentFriendsComponent},
   { path: 'recommendations', component: ContentRecommendationsComponent},
@@ -63,7 +66,6 @@ const componentRoutes: Routes = [
 
 const componentNotAllRoutes: Routes = [
   { path: 'books', component: ContentBookComponent},
-
   { path: 'announcement', component: ContentMainComponent},
   { path: 'superadmin-request', component: SuperadminRequest},
   { path: 'search', component: SearchComponent},
@@ -114,16 +116,16 @@ const appRoutes: Routes = [
     VerificationAdminComponent,
     RecoveryPassComponent,
     RecoveryPassRequestComponent,
-
     ContentEditProfileComponent,
-
     SuperadminRequest,
     SearchComponent,
     ContentBookDetailsComponent,
-    AddAnnouncementComponent
+    AddAnnouncementComponent,
+    ContentProfileBookListComponent
 
   ],
   imports: [
+    InfiniteScrollModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -133,6 +135,7 @@ const appRoutes: Routes = [
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     HttpClientModule,
+    ToastrModule.forRoot({ timeOut: 3000 }),
     RouterModule.forRoot(
       appRoutes)
   ],

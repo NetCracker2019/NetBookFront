@@ -6,7 +6,10 @@ export const environment = {
   production: false,
 
   //apiUrl: 'https://netbooksback.herokuapp.com'
-  apiUrl: 'http://localhost:8080'
+  apiUrl: 'http://localhost:8080',
+
+  webSocket: 'ws://localhost:8080/end-point'
+  //webSocket: 'ws://netbooksback.herokuapp.com'
 };
 
 /*

@@ -70,10 +70,8 @@ export class ContentEditProfileComponent implements OnInit {
           this.user = data;
         },
         (error) => {
-          this.alertService.error(error);
-          console.log(error);
+          this.alertService.error("Не вдалося завантажити інформацію");
         });
-      this.router.navigate(['/homeath/profile/' + this.login]);
   }
 
   handleFileInput(files: FileList) {
@@ -108,11 +106,9 @@ export class ContentEditProfileComponent implements OnInit {
         data => {
           this.alertService.success('Successful', true);
           this.router.navigate(['/homeath/profile/' + this.login]);
-          console.log(data);
         },
         (error) => {
           this.alertService.error("От халепа");
-          console.log(error);
         });
   }
   goBack(){

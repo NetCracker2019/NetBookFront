@@ -59,19 +59,19 @@ export class ContentProfileComponent implements OnInit {
           this.friends = data;
         });
 
-    this.userService.getFavouriteBooks(this.login, 3, 0)
+    this.userService.getFavouriteBooks(this.login, "", 3, 0)
       .subscribe(
         (data : ShortBookDescription[]) => {
           this.favouriteBooks = data;
         });
 
-    this.userService.getReadingBooks(this.login, 3, 0)
+    this.userService.getReadingBooks(this.login, "", 3, 0)
       .subscribe(
         (data : ShortBookDescription[]) => {
           this.readingBooks = data;
         });
 
-    this.userService.getReadBooks(this.login, 3, 0)
+    this.userService.getReadBooks(this.login, "", 3, 0)
       .subscribe(
         (data : ShortBookDescription[]) => {
           this.readBooks = data;
@@ -86,8 +86,8 @@ export class ContentProfileComponent implements OnInit {
       .subscribe(
         data => {
           this.alertService.success(this.login + 'додано до друзів');
+          window.location.reload();
         });
-    window.location.reload();
   }
   isFriendFunction(){
     this.userService.isFriend(this.authenticationService.currentUserValue.username, this.login)
@@ -101,8 +101,9 @@ export class ContentProfileComponent implements OnInit {
       .subscribe(
         data => {
           this.alertService.success(this.login + 'видалено з друзів');
+          window.location.reload();
         });
-    window.location.reload();
+    
   }
 
   getPhoto(imageName: string) {

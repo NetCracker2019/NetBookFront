@@ -37,7 +37,6 @@
 				<input  type="submit" class="profile-edit-btn" name="btnAddMore" value="Видалити з друзів"
 				(click)="deleteFriend()"/>
 			</div>
-
 		</div>
 		<div class="row">
 			<div class="col-md-4">
@@ -111,7 +110,7 @@
 				</div>
 				<!-- ------------------------------------------------------------------->
 				<div class="panel">
-					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/favourite-books">Улюблені книги</a></div>
+					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/book-list">Улюблені книги</a></div>
 					<div class="panel-body" >
 						<div class="row">	
 							<div class="col-md-4"  *ngFor="let book of this.favouriteBooks">
@@ -134,7 +133,7 @@
 				<br><br>
 
 				<div class="panel">
-					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/read-books">Прочитані книги</a></div>
+					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/book-list">Прочитані книги</a></div>
 					<div class="panel-body">
 						<div class="row">	
 							<div class="col-md-4" *ngFor="let book of this.readBooks">
@@ -159,7 +158,7 @@
 
 				<div class="panel">
 					<div class="panel-heading">
-						<a href="homeath/profile/{{ this.user.username }}/reading-books">Читаються</a>
+						<a href="homeath/profile/{{ this.user.username }}/book-list">Читаються</a>
 						
 					</div>
 					<div class="panel-body">
