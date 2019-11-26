@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
 import {Router} from '@angular/router';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {User} from '../_models/interface';
 
 
@@ -20,12 +20,12 @@ export class RegistrationComponent implements OnInit {
   accountValidationMessages = {
     userName: [
       { type: 'required', message: 'Username is required' },
-      { type: 'minlength', message: 'Username must be at least 4 characters long' },
+      { type: 'minlength', message: 'Username must be at least 2 characters long' },
       { type: 'maxlength', message: 'Username cannot be more than 15 characters long' },
     ],
     userSurname: [
       { type: 'required', message: 'Username is required' },
-      { type: 'minlength', message: 'Username must be at least 4 characters long' },
+      { type: 'minlength', message: 'Username must be at least 2 characters long' },
       { type: 'maxlength', message: 'Username cannot be more than 15 characters long' },
       { type: 'pattern', message: 'Your username must contain only numbers and letters' }
     ],
@@ -49,7 +49,7 @@ export class RegistrationComponent implements OnInit {
 
       userName: new FormControl('', [
         Validators.required,
-        Validators.minLength(4),
+        Validators.minLength(2),
         Validators.maxLength(15)
       ]),
       userEmail: new FormControl('', [
@@ -60,7 +60,7 @@ export class RegistrationComponent implements OnInit {
       ]),
       userSurname: new FormControl('', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(2),
         Validators.maxLength(15)]),
       userPassword: new FormControl('', [
         Validators.required,
@@ -104,11 +104,27 @@ export class RegistrationComponent implements OnInit {
   //       });
   // }
 
+  getValidationMessage(controlName: string) {
+    const controlErrors: ValidationErrors = this.registerForm.get(controlName).errors;
+    let error = null;
+    if (controlErrors != null) {
+      for (const controlError in controlErrors) {
+        if (controlErrors[controlError]) {
+
+          error = this.accountValidationMessages[controlName].find((valMsg) => {
+            return valMsg.type === controlError;
+          });
+          break;
+        }
+      }
+    }
+    return error;
+  }
 
 
   register() {
-    this.model.firstName = this.registerForm.controls.userName.value;
-    this.model.lastName = this.registerForm.controls.userSurname.value;
+    this.model.username = this.registerForm.controls.userName.value;
+    this.model.firstName = this.registerForm.controls.userSurname.value;
     this.model.email = this.registerForm.controls.userEmail.value;
     this.model.password = this.registerForm.controls.userPassword.value;
     this.userService.register(this.model)

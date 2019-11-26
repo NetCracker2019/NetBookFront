@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Menu} from '../_models/interface';
 import {AuthenticationService} from '../_services/authentication.service';
 
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -9,8 +10,10 @@ import {AuthenticationService} from '../_services/authentication.service';
 })
 export class MenuComponent implements OnInit {
 
+  role: number;
+  security: boolean;
 
-  
+
 
   // Menu = [
   //   new Menu('Головна сторінка', 'announcement'),
@@ -22,8 +25,23 @@ export class MenuComponent implements OnInit {
   //   new Menu('Ачивки', 'achievements'),
   // ];
 
+// <<<<<<< HEAD
+//
+//   constructor(role: AuthenticationService) {
+//     this.role = role.role;
+//     if (role as any === 4) {
+//       this.security = false;
+//     } else {
+//       this.security = true;
+//     }
+//   }
+// =======
   constructor(private authenticationService: AuthenticationService) {
+    this.role = authenticationService.role;
+    this.security = this.role != 4;
+    console.log(this.security);
    }
+
 
   ngOnInit() {
 
@@ -37,7 +55,6 @@ export class MenuComponent implements OnInit {
     {name: 'Рекомендации', url: 'recommendations'},
     {name: 'Чат', url: 'chat'},
     {name: 'Достижения', url: 'achievements'},
-    {name: 'Добавить анонс', url: 'newAnnouncement'},
-    ];
+    {name: 'Добавить анонс', url: 'newAnnouncement'}];
 
 }

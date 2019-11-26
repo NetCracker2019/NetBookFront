@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,9 +41,18 @@ import { SuperadminRequest } from './superadmin-request/superadmin-request.compo
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { SearchComponent } from './search/search.component';
 import {ContentBookDetailsComponent} from './content-book-details/content-book-details.component';
+import {MatAutocompleteModule, MatDatepickerModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {MatNativeDateModule} from '@angular/material/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
+
 import { ContentProfileBookListComponent } from './content-profile-book-list/content-profile-book-list.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
+
+import { SuperadminModeratorRequest } from './superadmin-moderator-request/superadmin-moderator-request.component';
+import { ContentApproveComponent } from './content-approve/content-approve.component';
+import {AuthForAddSthGuard} from './_helpers/auth-for-add-sth.guard';
 
 
 // const componentAnnouncement: Routes = [
@@ -62,12 +72,18 @@ const componentRoutes: Routes = [
   { path: 'superadmin-request', component: SuperadminRequest},
   { path: 'announcement', component: ContentMainComponent},
   { path: 'newAnnouncement', component: AddAnnouncementComponent},
+  { path: 'approve', component: ContentApproveComponent},
+  { path: 'superadmin-moderator-request', component: SuperadminModeratorRequest},
+  { path: 'search', component: SearchComponent},
+  { path: 'search/:bookId', component: ContentBookDetailsComponent},
+  { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
 ];
 
 const componentNotAllRoutes: Routes = [
   { path: 'books', component: ContentBookComponent},
   { path: 'announcement', component: ContentMainComponent},
   { path: 'superadmin-request', component: SuperadminRequest},
+  { path: 'superadmin-moderator-request', component: SuperadminModeratorRequest},
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
@@ -77,15 +93,13 @@ const componentNotAllRoutes: Routes = [
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent, children: componentNotAllRoutes },
-  { path: 'login', component: AuthorizationComponent },
+  { path: 'login', component: AuthorizationComponent , canActivate: [AuthForAddSthGuard]},
   { path: 'register', component: RegistrationComponent },
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
   { path: 'verification-account', component: VerificationAccountComponent},
   { path: 'verification-admin', component: VerificationAdminComponent },
 
   { path: 'recovery-password', component: RecoveryPassComponent },
-  
-  
   { path: 'recovery-password-request', component: RecoveryPassRequestComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: 'home/announcement' }
@@ -118,10 +132,15 @@ const appRoutes: Routes = [
     RecoveryPassRequestComponent,
     ContentEditProfileComponent,
     SuperadminRequest,
+    SuperadminModeratorRequest,
     SearchComponent,
     ContentBookDetailsComponent,
     AddAnnouncementComponent,
-    ContentProfileBookListComponent
+
+    ContentProfileBookListComponent,
+
+    ContentApproveComponent
+
 
   ],
   imports: [
@@ -131,13 +150,23 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    FullCalendarModule, // for FullCalendar!
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     HttpClientModule,
     ToastrModule.forRoot({ timeOut: 3000 }),
     RouterModule.forRoot(
-      appRoutes)
+      appRoutes),
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

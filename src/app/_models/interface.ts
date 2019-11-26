@@ -17,12 +17,42 @@ export interface  Book {
     public language: string;*/
 }
 
+export interface Event {
+  title: string;
+  date: string;
+  url: string;
+}
+
 export interface Announcement {
+  announcmentId: number;
   title: string;
   description: string;
   image_path: string;
+  releaseDate: string;
   totalCount: number;
+}
+export interface ViewAnnouncement {
+  announcmentId: number;
+  releaseDate: string;
+  title: string;
+  description: string;
+  imagePath: string;
+  authors: Array<string>;
+  genres: Array<string>;
+}
 
+export class Author {
+  id: number;
+  name: string;
+}
+
+export interface Data {
+  name: string;
+}
+
+export interface Genre {
+  genreId: number;
+  genreName: string;
 }
 
 export interface User {
@@ -71,7 +101,6 @@ export interface NewModelBook {
   likes: number;
   imagePath: string;
   releaseDate: string;
-  lang: string;
   pages: number;
   genres: string[];
   description: string;
@@ -88,9 +117,22 @@ export interface Review {
   rating: number;
   approved: boolean;
 }
+
 export interface Message {
   message: string,
   fromName: string,
   toName: string,
   dateTimeSend: Date;
 }
+
+
+export interface Genre {
+  genreId: number;
+  genreName: string;
+}
+
+export interface Author {
+  authorId: number;
+  fullName: string;
+}
+
