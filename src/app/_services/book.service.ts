@@ -85,25 +85,68 @@ export class BookService {
       release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description};
     return this.http.post(`${environment.apiUrl}/book-service/books/addAnnouncement`, body);
   }
-  searchBookByTitle(title: string, genre: string, author: string, dateFrom: Date, dateTo: Date): Observable<NewModelBook[]> {
+
+  searchBookByTitle(title: string, pageSize: number, page: number): Observable<NewModelBook[]> {
+    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/find-books?title=${title}&size=${pageSize}&page=${page}`);
+  }
+
+  getAmountOfSearchResult(title: string): Observable<number> {
+    return this.http.get<number>(`${environment.apiUrl}/book-service/amount-of-search-result?title=${title}`);
+  }
+
+  searchBookAdvanced(title: string, genre: string, author: string,
+                     dateFrom: Date, dateTo: Date, pageSize: number, page: number): Observable<NewModelBook[]> {
     if (dateFrom < dateTo) {
       const formattedDateFrom = dateFrom.toISOString().substring(0, 10);
       const formattedDateTo = dateTo.toISOString().substring(0, 10);
       if (genre === 'all' && author === '') {
         return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
-          `/filter-books?title=${title}&from=${formattedDateFrom}&to=${formattedDateTo}`);
+          `/filter-books?title=${title}&from=${formattedDateFrom}&to=${formattedDateTo}&size=${pageSize}&page=${page}`);
       } else if (genre !== 'all' && author === '') {
         return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
-          `/filter-books-genre?title=${title}&genre=${genre}&from=${formattedDateFrom}&to=${formattedDateTo}`);
+          `/filter-books-genre?title=${title}&genre=${genre}` +
+          `&from=${formattedDateFrom}&to=${formattedDateTo}&size=${pageSize}&page=${page}`);
       } else if (genre === 'all' && author !== '') {
         return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
-          `/filter-books-author?title=${title}&author=${author}&from=${formattedDateFrom}&to=${formattedDateTo}`);
+          `/filter-books-author?title=${title}&author=${author}` +
+          `&from=${formattedDateFrom}&to=${formattedDateTo}&size=${pageSize}&page=${page}`);
       } else {
         return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
-          `/filter-books-author-genre?title=${title}&author=${author}&genre=${genre}&from=${formattedDateFrom}&to=${formattedDateTo}`);
+          `/filter-books-author-genre?title=${title}&author=${author}&genre=${genre}` +
+          `&from=${formattedDateFrom}&to=${formattedDateTo}&size=${pageSize}&page=${page}`);
       }
     }
   }
+
+  getAmountOfAdvancedSearchResult(title: string, genre: string, author: string, dateFrom: Date, dateTo: Date): Observable<number> {
+    if (dateFrom < dateTo) {
+      const formattedDateFrom = dateFrom.toISOString().substring(0, 10);
+      const formattedDateTo = dateTo.toISOString().substring(0, 10);
+      if (genre === 'all' && author === '') {
+        return this.http.get<number>(`${environment.apiUrl}/book-service` +
+          `/amount-filter-books?title=${title}&from=${formattedDateFrom}&to=${formattedDateTo}`);
+      } else if (genre !== 'all' && author === '') {
+        return this.http.get<number>(`${environment.apiUrl}/book-service` +
+          `/amount-filter-books-genre?title=${title}&genre=${genre}&from=${formattedDateFrom}&to=${formattedDateTo}`);
+      } else if (genre === 'all' && author !== '') {
+        return this.http.get<number>(`${environment.apiUrl}/book-service` +
+          `/amount-filter-books-author?title=${title}&author=${author}&from=${formattedDateFrom}&to=${formattedDateTo}`);
+      } else {
+        return this.http.get<number>(`${environment.apiUrl}/book-service` +
+          `/amount-filter-books-author-genre?title=${title}&author=${author}&genre=${genre}` +
+          `&from=${formattedDateFrom}&to=${formattedDateTo}`);
+      }
+    }
+  }
+
+  getMinDateRelease(): Observable<Date> {
+    return this.http.get<Date>(`${environment.apiUrl}/book-service/min-date-release`);
+  }
+
+  getMaxDateRelease(): Observable<Date> {
+    return this.http.get<Date>(`${environment.apiUrl}/book-service/max-date-release`);
+  }
+
   getPeaceOfFoundBook(title: string, count: number, booksPerPage: number): Observable<NewModelBook[]> {
     return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/find-books?title=${title}`);
   }
