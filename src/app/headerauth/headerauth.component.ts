@@ -25,7 +25,6 @@ export class HeaderauthComponent implements OnInit {
     // this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.currentUser = this.authenticationService.currentUserValue.username;
     this.currentRole = this.authenticationService.currentUserValue.role;
-    console.log(this.currentRole)
   }
 
   ngOnInit() {
