@@ -9,6 +9,7 @@ html, body{
   height: 100%;
 }
 
+/*
 app-content-chat {
   grid-column: 2 / 5;
 }
@@ -54,3 +55,4 @@ router-outlet {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+*/

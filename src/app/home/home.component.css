@@ -1,11 +1,32 @@
-app-header {
+.link {
+  text-decoration: none;
+  display: block;
+  font-size: 18px;
+  color: #000;
+  padding: 20px 30px;
+  position: relative;
+  transition: .3s linear;
+}
+
+.link:after {
+  position: absolute;
+  color: white;
+  transition: .2s linear;
+}
+
+.link:hover {
+  background: #434c5a;
+  color: white;
+}
+
+/*app-header {
   grid-column: 1 / 5;
   background-color: #1a252b;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-}
+}*/
 
-.menu {
+/*.menu {
   grid-column: 1 / 2;
   background-color: #657387;
 
@@ -54,4 +75,4 @@ app-header {
 
 .router{
   grid-row: 3;
-}
+}*/
