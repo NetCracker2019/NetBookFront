@@ -45,7 +45,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
 import { SuperadminModeratorRequest } from './superadmin-moderator-request/superadmin-moderator-request.component';
 import { ContentApproveComponent } from './content-approve/content-approve.component';
-import {AuthForAddSthGuard} from './_helpers/auth-for-add-sth.guard';
+//import {AuthForAddSthGuard} from './_helpers/auth-for-add-sth.guard';
+import {NotificationComponent} from './notifications/notification.component';
 
 // const componentAnnouncement: Routes = [
 //   { path: 'newAnnouncement', component: AddAnnouncementComponent}
@@ -68,6 +69,7 @@ const componentRoutes: Routes = [
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
+  { path: 'notification/:userId', component: NotificationComponent}
 ];
 
 const componentNotAllRoutes: Routes = [
@@ -78,18 +80,19 @@ const componentNotAllRoutes: Routes = [
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
+  { path: 'notification/:userId', component: NotificationComponent}
 ];
 
 
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent, children: componentNotAllRoutes },
-  { path: 'login', component: AuthorizationComponent , canActivate: [AuthForAddSthGuard]},
+  { path: 'login', component: AuthorizationComponent /*, canActivate: [AuthForAddSthGuard]*/},
   { path: 'register', component: RegistrationComponent },
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
   { path: 'verification-account', component: VerificationAccountComponent},
   { path: 'verification-admin', component: VerificationAdminComponent },
-
+  {path: 'notifications', component: NotificationComponent, canActivate: [AuthGuard]},
   { path: 'recovery-password', component: RecoveryPassComponent },
   { path: 'recovery-password-request', component: RecoveryPassRequestComponent },
   // otherwise redirect to home
@@ -127,8 +130,8 @@ const appRoutes: Routes = [
     SearchComponent,
     ContentBookDetailsComponent,
     AddAnnouncementComponent,
-    ContentApproveComponent
-
+    ContentApproveComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,

@@ -56,6 +56,7 @@ export class MenuComponent implements OnInit {
     {name: 'Рекомендации', url: 'recommendations'},
     {name: 'Чат', url: 'chat'},
     {name: 'Достижения', url: 'achievements'},
-    {name: 'Добавить анонс', url: 'newAnnouncement'}];
+    {name: 'Добавить анонс', url: 'newAnnouncement'},
+    {name: 'Уведомления', url: 'notifications'}];
 
 }

@@ -85,6 +85,15 @@ export interface Menu {
   url: string;
 }
 
+export  interface Notification {
+  userId: number;
+  notifName: string;
+  notifTitle: string;
+  notifText: string;
+  notifDate: Date;
+  isRead: boolean;
+}
+
 
 
 

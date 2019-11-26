@@ -33,10 +33,10 @@ export class UserService {
 
   confirmUserAccountRequest(token: string) {
     return this.http.put<Map<string, string>>(
-      `${environment.apiUrl}/user-service/verification/user?token=${token}`, token);//
+      `${environment.apiUrl}/user-service/verification/user?token=${token}`, token); //
   }
 
-  //change password 
+  //change password
   recoveryPass(token: string, pass: string) {
     return this.http.put<Map<string, string>>(
       `${environment.apiUrl}/user-service/change/password?token=${token}&pass=${pass}`, token);//
