@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,7 +45,8 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
 import { SuperadminModeratorRequest } from './superadmin-moderator-request/superadmin-moderator-request.component';
-
+import { ContentApproveComponent } from './content-approve/content-approve.component';
+import {AuthForAddSthGuard} from './_helpers/auth-for-add-sth.guard';
 
 // const componentAnnouncement: Routes = [
 //   { path: 'newAnnouncement', component: AddAnnouncementComponent}
@@ -62,6 +64,7 @@ const componentRoutes: Routes = [
   { path: 'superadmin-request', component: SuperadminRequest},
   { path: 'announcement', component: ContentMainComponent},
   { path: 'newAnnouncement', component: AddAnnouncementComponent},
+  { path: 'approve', component: ContentApproveComponent},
   { path: 'superadmin-moderator-request', component: SuperadminModeratorRequest},
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
@@ -82,15 +85,13 @@ const componentNotAllRoutes: Routes = [
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent, children: componentNotAllRoutes },
-  { path: 'login', component: AuthorizationComponent },
+  { path: 'login', component: AuthorizationComponent , canActivate: [AuthForAddSthGuard]},
   { path: 'register', component: RegistrationComponent },
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
   { path: 'verification-account', component: VerificationAccountComponent},
   { path: 'verification-admin', component: VerificationAdminComponent },
 
   { path: 'recovery-password', component: RecoveryPassComponent },
-  
-  
   { path: 'recovery-password-request', component: RecoveryPassRequestComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: 'home/announcement' }
@@ -121,14 +122,13 @@ const appRoutes: Routes = [
     VerificationAdminComponent,
     RecoveryPassComponent,
     RecoveryPassRequestComponent,
-
     ContentEditProfileComponent,
-
     SuperadminRequest,
     SuperadminModeratorRequest,
     SearchComponent,
     ContentBookDetailsComponent,
-    AddAnnouncementComponent
+    AddAnnouncementComponent,
+    ContentApproveComponent
 
   ],
   imports: [
@@ -137,6 +137,10 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    FullCalendarModule, // for FullCalendar!
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),

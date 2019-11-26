@@ -51,13 +51,25 @@
   width: 250px;
 
 }
+.button-remove-book-from-profile {
+  background-color: tomato;
+  border-radius: 10px;
+  height: 60px;
+  width: 250px;
+
+}
 .reviews {
   padding-left: 100px;
 }
+.write-review {
+  padding-left: 100px;
+}
+
 .review-item {
   display: grid;
   grid-template-columns: 130px 700px;
   padding-left: 2px;
+  padding-top: 10px;
 }
 .user-logo {
   grid-column-start: 1;
@@ -81,6 +93,25 @@
   display: grid;
   grid-template-columns: 160px 100px;
 }
+.add-cancel-buttons{
+  display: grid;
+  grid-template-columns: 100px 100px;
+  padding-left: 130px;
+}
+.add-button {
+  grid-column: 1;
+  background-color: green;
+  border-radius: 10px;
+  height: 40px;
+  width: 100px;
+}
+.cancel-button {
+  grid-column: 2;
+  background-color: red;
+  border-radius: 10px;
+  height: 40px;
+  width: 100px;
+}
 .review-title {
   grid-column: 1;
   padding-left: 50px;
@@ -96,6 +127,14 @@
   font-size: 15px;
   color: #4B5A65;
   padding-left: 20px;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 2;
+}
+.review-textarea {
+  font-size: 15px;
+  color: #4B5A65;
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 2;

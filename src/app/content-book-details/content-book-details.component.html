@@ -13,20 +13,39 @@
 <!--    <p>Language: {{book.langua}}</p>-->
     <p>Pages: {{book.pages}}</p>
     <p>Description: {{book.description}} </p>
-    <button class="button-add-book-to-profile">Додати книгу</button>
+    <div *ngIf="added; then remove else add"></div>
+    <ng-template #add><button class="button-add-book-to-profile" (click)="addBookToProfile()" >Додати книгу</button></ng-template>
+    <ng-template #remove><button class="button-remove-book-from-profile" (click)="removeBookFromProfile()" >Видалити книгу</button></ng-template>
+
   </div>
 
 </div>
 
 <div class="review-blog">
   <div class="review-title"><h2>Reviews</h2></div>
-  <div class="button-write-review"><button>Написати рецензію</button></div>
+  <div class="button-write-review" (click)="writeReview()" routerLink="/login"><button>Написати рецензію</button></div>
+</div>
+
+<div *ngIf="writeReviewFlag" class="write-review">
+  <div class="review-item">
+    <div class="user-image">
+      <img src="{{currentUser.avatarFilePath}}" class="user-logo" alt="{{currentUser.username[0]}}">
+    </div>
+    <div class="review-content">
+      <div class="user-name"><h4>{{currentUser.username}}</h4></div>
+      <div class="review-textarea"><textarea [(ngModel)]="reviewText" rows="4" cols="50" name="text" placeholder="Введіть текст..."></textarea></div>
+    </div>
+    <div class="add-cancel-buttons">
+      <button class="add-button" (click)="addReview(reviewText)">Додати</button>
+      <button class="cancel-button" (click)="cancelReview()">Відмінити</button>
+    </div>
+  </div>
 </div>
 
 <div class="reviews" *ngFor="let review of reviews">
   <div class="review-item">
     <div class="user-image">
-      <img src="{{review.userAvatarPath}}" class="user-logo">
+      <img src="{{review.userAvatarPath}}" class="user-logo" alt="{{review.userName[0]}}">
     </div>
     <div class="review-content">
       <div class="user-name"><h4>{{review.userName}}</h4></div>

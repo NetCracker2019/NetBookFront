@@ -1,1 +1,13 @@
-<p>content-chat works!</p>
+<button (click)="showPersonalize()">Персонализированный</button>
+<button (click)="showAll()">Полный</button>
+<full-calendar
+  defaultView="dayGridMonth"
+  [header]="{
+        left: 'prev,next',
+        center: 'title',
+        right: 'today'
+      }"
+  [plugins]="calendarPlugins"
+  [weekends]="false"
+  [events]="calendarEvents"
+></full-calendar>

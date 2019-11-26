@@ -12,7 +12,7 @@ const headers = new HttpHeaders({'Content-Type': 'application/json'});
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-
+  role: number;
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
@@ -29,16 +29,18 @@ export class AuthenticationService {
     return this.http.post<any>(`${environment.apiUrl}/user-service/signin`, body)
 
       .pipe(map(user => {
+        this.role = user['role']; ////////// ????????
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
         return user;
       }));
   }
+
   refreshToken() {
     return this.http.get<any>(`${environment.apiUrl}/user-service/refresh-token`)
       .subscribe(
-        (data : User) => {
+        (data: User) => {
           localStorage.removeItem('currentUser');
           localStorage.setItem('currentUser', JSON.stringify(data));
           this.currentUserSubject.next(data);
