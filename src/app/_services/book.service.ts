@@ -50,12 +50,6 @@ export class BookService {
     return this.http.get(`${environment.apiUrl}/book-service/amountOfBook`);
   }
 
-  
-  
-  
-  
-  
-  
   getBookList(): Observable<Book[]> {
     return this.http.get<Book[]>(`${environment.apiUrl}/book-service/books`);
   }
@@ -166,19 +160,19 @@ export class BookService {
     // return this.http.post(`${environment.apiUrl}/book-service/add-review-user-book?userId=1&bookId=4&reviewText=erge`);
     return this.http.post<Review>(`${environment.apiUrl}/book-service/add-review-user-book`, body);
   }
-  addBookToProfile(userName: string, bookId: number) {
+  addBookToProfile(userName: string, bookId: number): Observable<boolean> {
     const body = {username: userName, bookId: bookId};
-    return this.http.post<Map<string, string>>(
+    return this.http.post<boolean>(
       `${environment.apiUrl}/book-service/add-book-profile?userName=${userName}&bookId=${bookId}`, body);
     // return this.http.get(`${environment.apiUrl}/book-service/add-book-profile?userName=${userName}&bookId=${bookId}`);
   }
-  removeBookFromProfile(userName: string, bookId: number) {
+  removeBookFromProfile(userName: string, bookId: number): Observable<boolean> {
     const body = {username: userName, bookId: bookId};
-    return this.http.post<Map<string, string>>(
+    return this.http.post<boolean>(
       `${environment.apiUrl}/book-service/remove-book-profile?userName=${userName}&bookId=${bookId}`, body);
     // return this.http.get(`${environment.apiUrl}/book-service/add-book-profile?userName=${userName}&bookId=${bookId}`);
   }
-  checkBookInProfile(userName: string, bookId: number) {
+  checkBookInProfile(userName: string, bookId: number): Observable<boolean> {
     return this.http.get<boolean>(`${environment.apiUrl}/book-service/check-book-profile?userName=${userName}&bookId=${bookId}`);
   }
 
@@ -191,10 +185,10 @@ export class BookService {
   getGenres(): Observable<Genre[]> {
     return this.http.get<Genre[]>(`${environment.apiUrl}/book-service/genres`);
   }
-  countBooks() {
-    return this.http.get(`${environment.apiUrl}/book-service/books/amount`);
+  countBooks(): Observable<number> {
+    return this.http.get<number>(`${environment.apiUrl}/book-service/books/amount`);
   }
-  countReviews() {
-    return this.http.get(`${environment.apiUrl}/book-service/count-reviews`);
+  countReviews(): Observable<number> {
+    return this.http.get<number>(`${environment.apiUrl}/book-service/count-reviews`);
   }
 }

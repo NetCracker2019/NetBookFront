@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FullCalendarComponent } from '@fullcalendar/angular';
-import { EventInput } from '@fullcalendar/core';
+import {Component, OnInit} from '@angular/core';
+import {FullCalendarComponent} from '@fullcalendar/angular';
+import {EventInput} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import {BookService} from "../_services/book.service";
+import {BookService} from '../_services/book.service';
 
 
 @Component({
@@ -11,6 +11,7 @@ import {BookService} from "../_services/book.service";
   styleUrls: ['./content-chat.component.css']
 })
 export class ContentChatComponent implements OnInit {
+
   calendarPlugins = [dayGridPlugin];
   calendarEvents: EventInput[] = [
     // { title: 'Test', date: '2019-11-11', url: '/home' },
@@ -19,22 +20,29 @@ export class ContentChatComponent implements OnInit {
   value: string;
 
   constructor(private bookService: BookService) {
-    this.showAll();
-  }
-
-  ngOnInit() {
   }
 
   showPersonalize() {
     this.value = 'personalize';
     this.bookService.getCalendarAnnouncement(this.value)
-      .subscribe(data => { console.log(data); this.calendarEvents = data; });
+      .subscribe(data => {
+        console.log(data);
+        this.calendarEvents = data;
+      });
   }
 
   showAll() {
     this.value = 'all';
     this.bookService.getCalendarAnnouncement(this.value)
-      .subscribe(data => { console.log(data); this.calendarEvents = data; });
+      .subscribe(data => {
+        console.log(data);
+        this.calendarEvents = data;
+      });
   }
+
+  ngOnInit(): void {
+    this.showAll();
+  }
+
 
 }
