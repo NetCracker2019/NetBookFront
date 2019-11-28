@@ -5,12 +5,14 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import {BookService} from "../_services/book.service";
 
 
+
 @Component({
   selector: 'app-content-chat',
   templateUrl: './content-chat.component.html',
   styleUrls: ['./content-chat.component.css']
 })
 export class ContentChatComponent implements OnInit {
+
   calendarPlugins = [dayGridPlugin];
   calendarEvents: EventInput[] = [
     // { title: 'Test', date: '2019-11-11', url: '/home' },
@@ -23,8 +25,9 @@ export class ContentChatComponent implements OnInit {
   }
 
   ngOnInit() {
+  	
   }
-
+ 
   showPersonalize() {
     this.value = 'personalize';
     this.bookService.getCalendarAnnouncement(this.value)

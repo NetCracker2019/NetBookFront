@@ -80,19 +80,19 @@ export interface Achievement {
 }
 
 export interface ShortBookDescription {
-  likes: number;
+  bookId: number;
   title: string;
   authors: string[];
   image_path: string;
+  favourite: boolean;
+  reading: boolean;
+  remove: boolean;
 }
 
 export interface Menu {
   name: string;
   url: string;
 }
-
-
-
 
 export interface NewModelBook {
   bookId: number;
@@ -117,6 +117,12 @@ export interface Review {
   rating: number;
   approved: boolean;
 }
+export interface Message {
+  message: string,
+  fromName: string,
+  toName: string,
+  dateTimeSend: Date;
+}
 
 export interface Genre {
   genreId: number;
@@ -127,3 +133,4 @@ export interface Author {
   authorId: number;
   fullName: string;
 }
+

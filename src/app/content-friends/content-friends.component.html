@@ -44,4 +44,12 @@
     </div>
 </div>
 <br><br>
+<!--
 <ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [pageSize]=6 [(page)]="page" [boundaryLinks]="true" (pageChange)="onPageChanged($event)"></ngb-pagination>
+-->
+<div
+  infiniteScroll
+  [infiniteScrollDistance]="6"
+  [infiniteScrollThrottle]="1"
+  (scrolled)="onPageChanged()">
+</div>
