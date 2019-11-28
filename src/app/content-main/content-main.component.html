@@ -1,5 +1,77 @@
+<div class="container p-4">
+  <div class="row">
+    <div class="col-6">
+      <div class="year-grid">
+        <div class="box">
+          <form>
+            <label>Years:</label>
+            <select>
+              <option>2019</option>
+              <option>2018</option>
+              <option>2017</option>
+              <option>2016</option>
+              <option>2015</option>
+            </select>
+          </form>
+        </div>
+      </div>
+    </div>
 
-  <div class="year-grid">
+    <div class="col-6">
+      <div class="month-grid">
+        <div class="box">
+          <form>
+            <label>Genre:</label>
+            <select [(ngModel)]="selectedGenre" name="genre">
+              <option value="all" selected>All</option>
+              <option *ngFor="let genre of genres" [value]="genre.genreName">
+                {{genre.genreName}}
+              </option>
+            </select>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row p-4">
+    <div class="test col-md-6" *ngFor="let book of books">
+      <a href="#" class="blog-item m-2">
+        <div class="container blog-item-color">
+          <div class="row">
+            <div class="col-6">
+              <div class="book-image-grid">
+                <img src="../../assets/img/{{book.image_path}}" alt="Example" class="book-logo">
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="book-item-content">
+                <h3>{{book.title}}</h3>
+                <p>Описание: {{book.description}} </p>
+                <!--<p>Жанр: {{book.genre}}</p>-->
+                <!--<p>Дата выпуска: {{book.date}}</p>-->
+                <!--<p>Язык книги: {{book.language}}</p>-->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--<div class="book-image-grid">
+          <img src="../../assets/img/{{book.image_path}}" alt="Example" class="book-logo">
+        </div>-->
+        <!--<div class="book-item-content" >
+          <h3>{{book.title}}</h3>
+          <p>Описание: {{book.description}} </p>
+          &lt;!&ndash;<p>Жанр: {{book.genre}}</p>&ndash;&gt;
+          &lt;!&ndash;<p>Дата выпуска: {{book.date}}</p>&ndash;&gt;
+          &lt;!&ndash;<p>Язык книги: {{book.language}}</p>&ndash;&gt;
+        </div>-->
+      </a>
+    </div>
+  </div>
+  <ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [pageSize]="booksPerPage" [(page)]="page" [boundaryLinks]="true" (pageChange)="onPageChanged($event)"></ngb-pagination>
+</div>
+  <!--<div class="year-grid">
     <div class="box">
       <form>
         <select>
@@ -29,18 +101,18 @@
     <div class="test" *ngFor="let book of books">
       <a href="#" class="blog-item">
         <div class="book-image-grid">
-          <img src="../../assets/img/{{book.image_path}}" alt="Example" class="book-logo">
+          <img src="{{book.image_path}}" alt="Example" class="book-logo">
         </div>
         <div class="book-item-content" >
           <h3>{{book.title}}</h3>
           <p>Описание: {{book.description}} </p>
-          <!--<p>Жанр: {{book.genre}}</p>-->
-          <!--<p>Дата выпуска: {{book.date}}</p>-->
-          <!--<p>Язык книги: {{book.language}}</p>-->
+          &lt;!&ndash;<p>Жанр: {{book.genre}}</p>&ndash;&gt;
+          &lt;!&ndash;<p>Дата выпуска: {{book.date}}</p>&ndash;&gt;
+          &lt;!&ndash;<p>Язык книги: {{book.language}}</p>&ndash;&gt;
         </div>
       </a>
     </div>
   </div>
   <ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [pageSize]="booksPerPage" [(page)]="page" [boundaryLinks]="true" (pageChange)="onPageChanged($event)"></ngb-pagination>
-
+-->
 

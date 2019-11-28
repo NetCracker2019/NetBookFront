@@ -33,14 +33,14 @@ export class ContentProfileComponent implements OnInit {
    private alertService: AlertService) {
 
    this.login = activatedRoute.snapshot.params['login'];
-   this.authenticationService.refreshToken();
-   this.isFriendFunction();
+    this.authenticationService.refreshToken();
+    this.isFriendFunction();
   }
 
   ngOnInit() {
-  	this.userService.getUser(this.login)
+    this.userService.getUser(this.login)
       .subscribe(
-        (data : User) => {
+        (data: User) => {
           this.user = data;
         });
     
@@ -49,36 +49,36 @@ export class ContentProfileComponent implements OnInit {
     }
     this.userService.getAchievement(this.login)
       .subscribe(
-        (data : Achievement) => {
+        (data: Achievement) => {
           this.achievement = data;
         });
 
     this.userService.getFriends(this.login, 4, 0)
       .subscribe(
-        (data : User[]) => {
+        (data: User[]) => {
           this.friends = data;
         });
 
     this.userService.getFavouriteBooks(this.login, "", 3, 0)
       .subscribe(
-        (data : ShortBookDescription[]) => {
+        (data: ShortBookDescription[]) => {
           this.favouriteBooks = data;
         });
 
     this.userService.getReadingBooks(this.login, "", 3, 0)
       .subscribe(
-        (data : ShortBookDescription[]) => {
+        (data: ShortBookDescription[]) => {
           this.readingBooks = data;
         });
 
     this.userService.getReadBooks(this.login, "", 3, 0)
       .subscribe(
-        (data : ShortBookDescription[]) => {
+        (data: ShortBookDescription[]) => {
           this.readBooks = data;
         });
 
   }
-  goEdit(){
+  goEdit() {
     this.router.navigate(['/homeath/profile/' + this.login + '/edit']);
   }
   addFriend(){

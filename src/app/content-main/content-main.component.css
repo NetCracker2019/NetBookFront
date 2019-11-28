@@ -1,4 +1,20 @@
-.year-grid{
+.book-logo{
+  border-style: solid;
+  border-color: black;
+  width: 90%;
+}
+
+.blog-item{
+  text-decoration: none;
+  background-color: #EDEDED;
+  transition: background-color .25s ease;
+  overflow: hidden;
+  color: #333;
+  /*  padding: 10px;
+    margin: 10px;*/
+}
+
+/*.year-grid{
   grid-column: 1 / 2;
   margin-left: 20px;
 }
@@ -64,6 +80,8 @@
   color: #333;
   padding: 10px;
   margin: 10px;
+  height: 300px;
+  width: 600px;
 }
 
 
@@ -105,4 +123,4 @@
 }
 .d-flex{
   grid-column: 1/5;
-}
+}*/

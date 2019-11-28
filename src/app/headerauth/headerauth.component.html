@@ -5,20 +5,25 @@
   </div>
   <div class="search">
     <div class="d1">
-      <form>
-        <input type="text" placeholder="Искать здесь...">
-        <button type="submit"></button>
-      </form>
+      <label>
+        <input #title type="text" placeholder="Enter book title or author name" />
+        <button (click)="newTitle(title.value)"></button>
+      </label>
     </div>
   </div>
   <div class="buttons-grid" id="buttons-grid">
     <div class="header-buttons">
 
       <div class="hello-user">
-        <p>Welcome, User</p>
+        <p>Welcome, {{currentUser}}</p>
       </div>
       <div class="close-button">
-        <button class="button button-gray" ><a [routerLink]="['superadmin-request']" >Send SA</a></button>
+        <button class="button button-gray" *ngIf="this.currentRole === '1'; else unset" >
+          <a [routerLink]="['superadmin-request']" >Admin reg</a>
+        </button>
+        <button class="button button-gray" *ngIf="this.currentRole === '1'; else unset" >
+          <a [routerLink]="['superadmin-moderator-request']" >Moder reg</a>
+          </button>
         <button class="button button-gray"><a (click)="logout()">Logout</a></button>
       </div>
 
