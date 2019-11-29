@@ -119,6 +119,12 @@ export interface Review {
   rating: number;
   approved: boolean;
 }
+export interface Message {
+  message: string,
+  fromName: string,
+  toName: string,
+  dateTimeSend: Date;
+}
 
 export interface Message {
   message: string;
