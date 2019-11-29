@@ -61,7 +61,7 @@ import {AuthForAddSthGuard} from './_helpers/auth-for-add-sth.guard';
 
 
 const componentRoutes: Routes = [
-  { path: 'books', component: ContentBookComponent},
+  { path: 'announcements', component: ContentBookComponent},
   { path: 'profile/:login', component: ContentProfileComponent},
   { path: 'profile/:login/book-list', component: ContentProfileBookListComponent},
   { path: 'profile/:login/edit', component: ContentEditProfileComponent},
@@ -80,7 +80,7 @@ const componentRoutes: Routes = [
 ];
 
 const componentNotAllRoutes: Routes = [
-  { path: 'books', component: ContentBookComponent},
+  { path: 'announcements', component: ContentBookComponent},
   { path: 'announcement', component: ContentMainComponent},
   { path: 'superadmin-request', component: SuperadminRequest},
   { path: 'superadmin-moderator-request', component: SuperadminModeratorRequest},

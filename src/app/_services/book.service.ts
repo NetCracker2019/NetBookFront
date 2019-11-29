@@ -188,7 +188,7 @@ export class BookService {
   countBooks(): Observable<number> {
     return this.http.get<number>(`${environment.apiUrl}/book-service/books/amount`);
   }
-  countReviews(): Observable<number> {
-    return this.http.get<number>(`${environment.apiUrl}/book-service/count-reviews`);
+  countReviews(approved: boolean): Observable<number> {
+    return this.http.get<number>(`${environment.apiUrl}/book-service/count-reviews?approved=${approved}`);
   }
 }

@@ -12,7 +12,7 @@ import {ToastrModule, ToastrService} from 'ngx-toastr';
   styleUrls: ['./content-book-details.component.css']
 })
 export class ContentBookDetailsComponent implements OnInit {
-  // books: NewModelBook[];
+  // announcements: NewModelBook[];
   book: NewModelBook;
   reviews: Review[];
   collectionSize;
@@ -33,7 +33,7 @@ export class ContentBookDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.authenticationService.currentUserValue;
-    // this.bookService.transferBookList$.subscribe((data: NewModelBook[]) => { this.books = data; });
+    // this.bookService.transferBookList$.subscribe((data: NewModelBook[]) => { this.announcements = data; });
     this.route.paramMap.subscribe(params => {
       const bookId = +params.get('bookId');
       console.log(bookId);
@@ -44,7 +44,7 @@ export class ContentBookDetailsComponent implements OnInit {
       this.bookService.getPeaceOfReview(bookId, this.count, this.offset).subscribe(data => {
         this.reviews = data;
       });
-      this.bookService.countReviews().subscribe(data => {
+      this.bookService.countReviews(true).subscribe(data => {
         this.collectionSize = data;
       });
       if (this.currentUser) {
@@ -76,8 +76,6 @@ export class ContentBookDetailsComponent implements OnInit {
       } else {
         this.finish = true;
       }
-      console.log(this.offset);
-      console.log(this.finish);
     } else {
       this.bookService.getPeaceOfReview(this.book.bookId, this.count, 0).subscribe(data => {
         console.log(data);

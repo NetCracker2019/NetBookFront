@@ -113,15 +113,17 @@ export interface Review {
   bookId: number;
   userName: string;
   userAvatarPath: string;
+  title: string;
+  authors: string[];
   reviewText: string;
   rating: number;
   approved: boolean;
 }
 
 export interface Message {
-  message: string,
-  fromName: string,
-  toName: string,
+  message: string;
+  fromName: string;
+  toName: string;
   dateTimeSend: Date;
 }
 
