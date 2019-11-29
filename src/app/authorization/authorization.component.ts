@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../_services/authentication.service';
 import {first} from 'rxjs/operators';
@@ -68,6 +68,22 @@ export class AuthorizationComponent implements OnInit {
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
+  getValidationMessage(controlName: string) {
+    const controlErrors: ValidationErrors = this.loginForm.get(controlName).errors;
+    let error = null;
+    if (controlErrors != null) {
+      for (const controlError in controlErrors) {
+        if (controlErrors[controlError]) {
+
+          error = this.accountValidationMessages[controlName].find((valMsg) => {
+            return valMsg.type === controlError;
+          });
+          break;
+        }
+      }
+    }
+    return error;
+  }
 
   login() {
 

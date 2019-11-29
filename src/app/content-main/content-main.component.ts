@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BookService} from '../_services/book.service';
-import {Announcement} from '../_models/interface';
+import {Announcement, Genre} from '../_models/interface';
 
 
 
@@ -17,6 +17,7 @@ export class ContentMainComponent implements OnInit {
   collectionSize: number;
   page: number;
   public booksPerPage = 4;
+  genres: Genre[];
 
   constructor(private bookService: BookService) {
     this.page = 1;
@@ -25,6 +26,8 @@ export class ContentMainComponent implements OnInit {
 
 
   ngOnInit() {
+    this.bookService.getGenres()
+      .subscribe(genres => { this.genres = genres; console.log(genres); });
 
    // this.reloadData();
   }

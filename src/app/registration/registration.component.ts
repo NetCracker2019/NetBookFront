@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
 import {Router} from '@angular/router';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {User} from '../_models/interface';
 
 
@@ -104,6 +104,22 @@ export class RegistrationComponent implements OnInit {
   //       });
   // }
 
+  getValidationMessage(controlName: string) {
+    const controlErrors: ValidationErrors = this.registerForm.get(controlName).errors;
+    let error = null;
+    if (controlErrors != null) {
+      for (const controlError in controlErrors) {
+        if (controlErrors[controlError]) {
+
+          error = this.accountValidationMessages[controlName].find((valMsg) => {
+            return valMsg.type === controlError;
+          });
+          break;
+        }
+      }
+    }
+    return error;
+  }
 
 
   register() {

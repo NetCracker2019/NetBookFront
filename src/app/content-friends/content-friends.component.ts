@@ -14,7 +14,7 @@ import { environment } from '../../environments/environment';
 })
 export class ContentFriendsComponent implements OnInit {
 
-  public peoples: User[];	
+  public peoples: User[] = [];	
   private login: string;
   private sought: string = "";
   public page: number = 1;
@@ -32,23 +32,22 @@ export class ContentFriendsComponent implements OnInit {
 	}
 
   ngOnInit() {
-    this.getCountOfPersons();
     this.getPersons();
   }
   onSearchChange(searchValue: string) {  
     this.page = 1;
     this.sought = searchValue;
-    this.getCountOfPersons();
+    this.peoples = [];
     this.getPersons();
   }
   onWhereChange(whereValue: string) {  
     this.page = 1;
     this.where = whereValue;
-    this.getCountOfPersons();
+    this.peoples = [];
     this.getPersons();
   }
-  onPageChanged(pageNumber: number) {
-    this.page = pageNumber;
+  onPageChanged() {
+    this.page = this.page + 1;
     this.getPersons();
   }
 
@@ -56,23 +55,14 @@ export class ContentFriendsComponent implements OnInit {
     this.userService.getPersons(this.login, this.sought, this.where, 6, this.page - 1)
       .subscribe(
         (data : User[]) => {
-          this.peoples = data;
-        });
-  }
-  getCountOfPersons(){
-    this.userService.getCountOfPersons(this.login, this.sought, this.where)
-      .subscribe(
-        (data : number) => {
-          console.log(data);
-          this.collectionSize = data;
+          this.peoples = this.peoples.concat(data);
         });
   }
   find(){
-    this.getCountOfPersons();
     this.getPersons();
   }
   getPhoto(imageName: string) {
-        return `${environment.apiUrl}/files/download?filename=${imageName}`;
+    return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 
 }

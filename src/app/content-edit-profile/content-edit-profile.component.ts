@@ -106,7 +106,6 @@ export class ContentEditProfileComponent implements OnInit {
         data => {
           this.alertService.success('Successful', true);
           this.router.navigate(['/homeath/profile/' + this.login]);
-          console.log(data);
         },
         (error) => {
           this.alertService.error("От халепа");
