@@ -41,12 +41,12 @@
   border-bottom-right-radius: 4px;
 }
 
-.reviews {
-  display: grid;
-  padding-left: 100px;
-  grid-template-columns: 1fr 1fr;
+/*.reviews {*/
+/*  display: grid;*/
+/*  padding-left: 100px;*/
+/*  grid-template-columns: 1fr 1fr;*/
 
-}
+/*}*/
 
 .review-item {
   display: grid;
@@ -70,14 +70,14 @@
 }
 
 
-.confirm-review {
+.confirm {
   grid-column: 1;
   background-color: green;
   border-radius: 10px;
   height: 40px;
   width: 100px;
 }
-.cancel-review {
+.cancel {
   grid-column: 2;
   background-color: red;
   border-radius: 10px;

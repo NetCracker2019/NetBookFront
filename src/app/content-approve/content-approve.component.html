@@ -25,43 +25,60 @@
       <div class="sorting">
         <form>
           <label>Sort by: </label>
-          <select>
-            <option>User Name</option>
-            <option>Date</option>
-            <option>Book Title</option>
+          <select name="sortingBy" [(ngModel)]="sortingBy" (ngModelChange)="sort($event)" >
+            <option value="username" name="username" selected>User Name</option>
+            <option value="date" name="date">Date</option>
+            <option value="title" name="title">Book Title</option>
           </select>
         </form>
       </div>
     </div>
   </div>
 </div>
-<div *ngIf="announcements" class="announcement-content">
-  <div *ngFor="let announce of announcements">
-    <p>Title: {{announce.title}}</p>
-    <p>Author's: {{announce.authors}}</p>
-    <p>Genre's: {{announce.genres}}</p>
-    <p>Release date: {{announce.releaseDate}}</p>
-    <p>Description: {{announce.description}}</p>
-    <img src="{{announce.imagePath}}">
-    <button (click)="confirmAnnouncement(announce)">Confirm</button>
-    <button (click)="cancelAnnouncement(announce)">Cancel</button>
+<div *ngIf="announcements" class="announcements container">
+  <div class="row">
+    <div class="col-md-6" *ngFor="let announce of announcements">
+      <div class="container announcement-item">
+        <div class="row">
+          <div class="col-4">
+            <img src="{{announce.imagePath}}">
+          </div>
+
+          <div class="col-6">
+            <div class="announcement-item-content">
+              <p>Title: {{announce.title}}</p>
+              <p>Author(s): {{announce.authors}}</p>
+              <p>Genres: {{announce.genres}}</p>
+              <p>Release date: {{announce.releaseDate}}</p>
+              <p>Description: {{announce.description}}</p>
+              <button class="confirm" (click)="confirmAnnouncement(announce)">Confirm</button>
+              <button class="cancel" (click)="cancelAnnouncement(announce)">Cancel</button>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<div *ngIf="reviews" class="reviews">
-  <div *ngFor="let review of reviews">
-    <div class="review-item">
-      <div class="user-image">
-        <img src="{{review.userAvatarPath}}" class="user-logo" alt="{{review.userName[0]}}">
+<div *ngIf="reviews" class="reviews container">
+  <div class="row">
+    <div class="test col-md-6" *ngFor="let review of reviews">
+      <div class="review-item">
+        <div class="user-image">
+          <img src="{{review.userAvatarPath}}" class="user-logo" alt="{{review.userName[0]}}">
+        </div>
+        <div class="review-content">
+          <h5>Review </h5>
+          <p>Book: {{review.title}}</p>
+          <p>Author(s): {{review.authors}}</p>
+          <p>User: {{review.userName}}</p>
+          <p>Text: {{review.reviewText}}</p>
+        </div>
+        <button class="confirm" (click)="confirmReview(review)">Confirm</button>
+        <button class="cancel" (click)="cancelReview(review)">Cancel</button>
       </div>
-      <div class="review-content">
-        <h5>Review </h5>
-        <p>Book: {{review.title}}</p>
-        <p>Author(s): {{review.authors}}</p>
-        <p>User: {{review.userName}}</p>
-        <p>Text: {{review.reviewText}}</p>
-      </div>
-      <button class="confirm-review" (click)="confirmReview(review)">Confirm</button>
-      <button class="cancel-review" (click)="cancelReview(review)">Cancel</button>
     </div>
   </div>
 </div>

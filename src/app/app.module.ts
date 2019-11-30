@@ -136,6 +136,7 @@ const appRoutes: Routes = [
 
   ],
   imports: [
+    InfiniteScrollModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

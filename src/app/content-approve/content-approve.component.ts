@@ -17,6 +17,7 @@ export class ContentApproveComponent implements OnInit {
   reviewPage = 0;
   collectionSize: number;
   book: NewModelBook;
+  sortingBy: string;
 
   constructor(private approveService: ApproveService,
               private bookService: BookService,
@@ -25,6 +26,52 @@ export class ContentApproveComponent implements OnInit {
 
   ngOnInit() {
     this.loadAnnouncements();
+  }
+
+  sort(event) {
+    if (this.sortingBy === 'date') {
+      this.announcements.sort((object1, object2) => {
+        if (object1.releaseDate > object2.releaseDate) {
+          return 1;
+        }
+        if (object1.releaseDate < object2.releaseDate) {
+          return -1;
+        }
+        return 0;
+      });
+    }
+    if (this.sortingBy === 'username') {
+      this.reviews.sort((object1, object2) => {
+        if (object1.userName > object2.userName) {
+          return 1;
+        }
+        if (object1.userName < object2.userName) {
+          return -1;
+        }
+        return 0;
+      });
+    }
+    if (this.sortingBy === 'title') {
+      this.reviews.sort((object1, object2) => {
+        if (object1.title > object2.title) {
+          return 1;
+        }
+        if (object1.title < object2.title) {
+          return -1;
+        }
+        return 0;
+      });
+      this.announcements.sort((object1, object2) => {
+        if (object1.title > object2.title) {
+          return 1;
+        }
+        if (object1.title < object2.title) {
+          return -1;
+        }
+        return 0;
+      });
+    }
+    // window.location.reload();
   }
 
   loadAnnouncements() {
@@ -62,14 +109,6 @@ export class ContentApproveComponent implements OnInit {
       this.reviews = data;
     });
   }
-  getBookById(bookId): NewModelBook {
-    this.bookService.getBookById(bookId).subscribe(data => { this.book = data; });
-    return this.book;
-  }
-  getBookAuthorsById(bookId): string[] {
-    // this.bookService.getBookById(bookId).subscribe(data => { this.book = data; });
-    return this.book.authors;
-  }
 
   confirmReview(review) {
     this.approveService.confirmReview(review.reviewId)
@@ -97,5 +136,6 @@ export class ContentApproveComponent implements OnInit {
         }
       });
   }
+
 
 }
