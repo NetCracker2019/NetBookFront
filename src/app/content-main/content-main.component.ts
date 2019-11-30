@@ -41,9 +41,9 @@ export class ContentMainComponent implements OnInit {
         console.log(data);
         this.collectionSize = data as number;
       });
-    // this.bookService.getAnnouncementList(this.page, this.booksPerPage)
+    // this.bookService.getAnnouncementList(this.reviewPage, this.booksPerPage)
     //   .subscribe(data => {
-    //     this.books = data.rows;
+    //     this.announcements = data.rows;
     //     this.collectionSize = data.totalCount;
     //   });
     this.bookService.getAnnouncementListPeace(this.page, this.booksPerPage)
@@ -58,7 +58,7 @@ export class ContentMainComponent implements OnInit {
   }
 
   // reloadData() {
-  //   this.bookService.getAnnouncementListPeace(this.page, this.booksPerPage).subscribe(data => { this.books = data; });
+  //   this.bookService.getAnnouncementListPeace(this.reviewPage, this.booksPerPage).subscribe(data => { this.announcements = data; });
   //
   // }
 
