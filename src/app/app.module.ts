@@ -153,7 +153,7 @@ const appRoutes: Routes = [
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     HttpClientModule,
-    ToastrModule.forRoot({ timeOut: 3000 }),
+    ToastrModule.forRoot(),
     RouterModule.forRoot(
       appRoutes),
     MatAutocompleteModule,

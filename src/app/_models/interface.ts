@@ -83,10 +83,24 @@ export interface ShortBookDescription {
   bookId: number;
   title: string;
   authors: string[];
-  image_path: string;
+  likes: number;
+  imagePath: string;
+  releaseDate: string;
   favourite: boolean;
   reading: boolean;
-  remove: boolean;
+  read: boolean;
+  checked: boolean;
+}
+export interface SearchParams {
+  reading: boolean;
+  read: boolean;
+  favourite: boolean;
+  notSet: boolean;
+  sortBy: string;
+  order: string;
+  sought: string;
+  page: number;
+  size: number;
 }
 
 export interface Menu {
