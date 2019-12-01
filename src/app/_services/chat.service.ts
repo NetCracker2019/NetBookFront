@@ -25,7 +25,6 @@ export class ChatService {
   }
 
   createNewChat(chatName: string, members: string[]){
-    console.log(JSON.stringify(members) );
     return this.http.post<void>(`${environment.apiUrl}/chat/create/${chatName}`,members);
   }
   
@@ -38,7 +37,7 @@ export class ChatService {
   }
 
   addFriendsToChat(chatName: string, members: string[]){
-    console.log(JSON.stringify(members));
+    //console.log(JSON.stringify(members));
     return this.http.put<void>(`${environment.apiUrl}/chat/${chatName}/add-members`, members);
   }
 }

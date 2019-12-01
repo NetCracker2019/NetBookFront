@@ -4,7 +4,8 @@ import {AlertService} from '../_services/alert.service';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {User} from '../_models/interface';
-
+import { environment } from '../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registration',
@@ -42,8 +43,8 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private userService: UserService,
               private router: Router,
-              private alertService: AlertService
-  ) {
+              private alertService: AlertService,
+              private toastr: ToastrService) {
 
     this.registerForm = new FormGroup({
 
@@ -130,13 +131,12 @@ export class RegistrationComponent implements OnInit {
     this.userService.register(this.model)
       .subscribe(
         data => {
-          this.alertService.success('Registration successful', true);
+          this.toastr.success(`Registration successful`);
           this.router.navigate(['/login']);
           console.log(data);
         },
-        (error) => {
-          this.alertService.error(error);
-          console.log(error);
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
         });
   }
 
