@@ -127,6 +127,8 @@ export interface Review {
   bookId: number;
   userName: string;
   userAvatarPath: string;
+  title: string;
+  authors: string[];
   reviewText: string;
   rating: number;
   approved: boolean;
@@ -137,6 +139,14 @@ export interface Message {
   toName: string,
   dateTimeSend: Date;
 }
+
+export interface Message {
+  message: string;
+  fromName: string;
+  toName: string;
+  dateTimeSend: Date;
+}
+
 
 export interface Genre {
   genreId: number;

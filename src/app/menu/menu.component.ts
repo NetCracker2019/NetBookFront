@@ -17,7 +17,7 @@ export class MenuComponent implements OnInit {
 
   // Menu = [
   //   new Menu('Головна сторінка', 'announcement'),
-  //   new Menu('Книги', 'books'),
+  //   new Menu('Книги', 'announcements'),
   //   new Menu('Мой профиль', 'profile'),
   //   new Menu('Друзья', 'friends'),
   //   new Menu('Рекомендации', 'recommendations'),
@@ -49,7 +49,7 @@ export class MenuComponent implements OnInit {
 
   Menu: Menu[] = [
     {name: 'Главная страница', url: 'announcement'},
-    {name: 'Книги', url: 'books'},
+    {name: 'Книги', url: 'announcements'},
     {name: 'Мой профиль', url: 'profile/' + this.authenticationService.currentUserValue.username},
     {name: 'Друзья', url: 'friends/' + this.authenticationService.currentUserValue.username},
     {name: 'Рекомендации', url: 'recommendations'},

@@ -86,7 +86,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return Observable.throw('Username "' + newUser.username + '" is already taken');
       }
 
-      // save new user
+      // confirmAnnouncement new user
       newUser.id = users.length + 1;
       users.push(newUser);
       localStorage.setItem('users', JSON.stringify(users));

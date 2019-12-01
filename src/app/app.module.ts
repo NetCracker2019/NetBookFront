@@ -7,7 +7,6 @@ import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ToastrModule } from 'ngx-toastr';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RegistrationComponent } from './registration/registration.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
@@ -45,14 +44,13 @@ import {MatAutocompleteModule, MatDatepickerModule, MatFormFieldModule, MatInput
 import {MatNativeDateModule} from '@angular/material/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
-
-import { ContentProfileBookListComponent } from './content-profile-book-list/content-profile-book-list.component';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-
 import { SuperadminModeratorRequest } from './superadmin-moderator-request/superadmin-moderator-request.component';
 import { ContentApproveComponent } from './content-approve/content-approve.component';
 import {AuthForAddSthGuard} from './_helpers/auth-for-add-sth.guard';
+import {ContentProfileBookListComponent} from './content-profile-book-list/content-profile-book-list.component';
+import {ToastrModule} from 'ngx-toastr';
 
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 // const componentAnnouncement: Routes = [
 //   { path: 'newAnnouncement', component: AddAnnouncementComponent}
 //   ];
@@ -61,7 +59,6 @@ import {AuthForAddSthGuard} from './_helpers/auth-for-add-sth.guard';
 const componentRoutes: Routes = [
   { path: 'books', component: ContentBookComponent},
   { path: 'profile/:login', component: ContentProfileComponent},
-  { path: 'profile/:login/book-list', component: ContentProfileBookListComponent},
   { path: 'profile/:login/edit', component: ContentEditProfileComponent},
   { path: 'friends/:login', component: ContentFriendsComponent},
   { path: 'recommendations', component: ContentRecommendationsComponent},
@@ -134,8 +131,8 @@ const appRoutes: Routes = [
     SearchComponent,
     ContentBookDetailsComponent,
     AddAnnouncementComponent,
-    ContentProfileBookListComponent,
-    ContentApproveComponent
+    ContentApproveComponent,
+    ContentProfileBookListComponent
 
   ],
   imports: [
