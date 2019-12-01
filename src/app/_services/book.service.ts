@@ -155,7 +155,7 @@ export class BookService {
       userAvatarPath: null,
       reviewText: review.reviewText,
       rating: 0,
-      approved: false};
+      approved: review.approved};
     console.log(body);
     // return this.http.post(`${environment.apiUrl}/book-service/add-review-user-book?userId=1&bookId=4&reviewText=erge`);
     return this.http.post<Review>(`${environment.apiUrl}/book-service/add-review-user-book`, body);
