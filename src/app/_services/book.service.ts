@@ -7,7 +7,7 @@ import {environment} from '../../environments/environment';
 import {map} from 'rxjs/operators';
 
 
-import {Announcement, Author, Book, Data, Genre, NewModelBook, Review} from '../_models/interface';
+import {Announcement, Author, Book, Data, Genre, NewModelBook, Review, Event} from '../_models/interface';
 
 
 const httpOptions = {
@@ -29,12 +29,13 @@ export class BookService {
     this.titleSource.next(title);
   }
 
-  getCalendarAnnouncement(value: string): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.apiUrl}/book-service/calendar-announcement?value=${value}`);
+  getCalendarAnnouncement(value: string, userName: string): Observable<Event[]> {
+    console.log(userName);
+    return this.http.get<Event[]>(`${environment.apiUrl}/book-service/calendar-announcement?value=${value}` + `&userName=` + userName);
   }
 
-  getAnnouncementListPeace(page: number, booksPerPage: number): Observable<Announcement[]> {
-    return this.http.get<Announcement[]>(`${environment.apiUrl}/book-service/announcementListPeace?page=` + page
+  getAnnouncementListPeace(page: number, booksPerPage: number): Observable<Book[]> {
+    return this.http.get<Book[]>(`${environment.apiUrl}/book-service/announcementListPeace?page=` + page
       + `&booksPerPage=` + booksPerPage);
   }
   getAmountOfAnnouncement() {

@@ -24,7 +24,7 @@ export class ContentChatComponent implements OnInit, OnDestroy {
   subscription: SubscriptionLike;
 
   constructor(private bookService: BookService) {
-    this.showAll();
+    // this.showAll();
   }
 
   ngOnDestroy() {
@@ -38,16 +38,16 @@ export class ContentChatComponent implements OnInit, OnDestroy {
   	
   }
  
-  showPersonalize() {
-    this.value = 'personalize';
-    this.subscription = this.bookService.getCalendarAnnouncement(this.value)
-      .subscribe(data => { console.log(data); this.calendarEvents = data; });
-  }
-
-  showAll() {
-    this.value = 'all';
-    this.bookService.getCalendarAnnouncement(this.value)
-      .subscribe(data => { console.log(data); this.calendarEvents = data; });
-  }
+  // showPersonalize() {
+  //   this.value = 'personalize';
+  //   this.subscription = this.bookService.getCalendarAnnouncement(this.value)
+  //     .subscribe(data => { console.log(data); this.calendarEvents = data; });
+  // }
+  //
+  // showAll() {
+  //   this.value = 'all';
+  //   this.bookService.getCalendarAnnouncement(this.value)
+  //     .subscribe(data => { console.log(data); this.calendarEvents = data; });
+  // }
 
 }
