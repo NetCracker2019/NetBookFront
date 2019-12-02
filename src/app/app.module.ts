@@ -51,6 +51,7 @@ import {ContentProfileBookListComponent} from './content-profile-book-list/conte
 import {ToastrModule} from 'ngx-toastr';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 // const componentAnnouncement: Routes = [
 //   { path: 'newAnnouncement', component: AddAnnouncementComponent}
 //   ];
@@ -132,7 +133,8 @@ const appRoutes: Routes = [
     ContentBookDetailsComponent,
     AddAnnouncementComponent,
     ContentApproveComponent,
-    ContentProfileBookListComponent
+    ContentProfileBookListComponent,
+    LoadingSpinnerComponent
 
   ],
   imports: [

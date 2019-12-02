@@ -144,3 +144,7 @@ export interface Author {
   fullName: string;
 }
 
+export interface Page {
+  content: NewModelBook[];
+  totalElements: number;
+}
