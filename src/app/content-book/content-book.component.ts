@@ -58,54 +58,56 @@ export class ContentBookComponent implements OnInit {
     console.log(this.books);
   }
 
-  private addCheckboxes() {
-      this.ordersData.forEach((o, i) => {
-        const control = new FormControl(i === 0); // if first item set to true, else false
-        (this.form.controls.orders as FormArray).push(control);
-      });
-  }
+  // private addCheckboxes() {
+  //     this.ordersData.forEach((o, i) => {
+  //       const control = new FormControl(i === 0); // if first item set to true, else false
+  //       (this.form.controls.orders as FormArray).push(control);
+  //     });
+  // }
 
   ngOnInit() {
     this.reloadData();
     // this.dataarray.push(this.author);
   }
 
-  addForm() {
-    // this.author = new Author();
-    // this.dataarray.push(this.author);
-  }
-  removeForm(i) {
-    this.dataarray.splice(i);
-  }
+  // addForm() {
+  //   // this.author = new Author();
+  //   // this.dataarray.push(this.author);
+  // }
+  // removeForm(i) {
+  //   this.dataarray.splice(i);
+  // }
 
   reloadData() {
     this.bookService.getBookList().subscribe(book => { console.log(book); this.books = book; });
-    this.bookService.getGenreList().subscribe(genres => {console.log(genres); this.ordersData = genres; this.addCheckboxes(); });
+    this.bookService.getGenreList().subscribe(genres => {console.log(genres); this.ordersData = genres;
+   // this.addCheckboxes();
+    });
   }
-  addBookComponent() {
-    const selectedOrderIds = this.form.value.orders
-      .map((v, i) => v ? this.ordersData[i].genreName : null)
-      .filter(v => v !== null);
-    console.log(selectedOrderIds);
-
-
-    this.bookService.addBook(this.bookModel, selectedOrderIds, selectedOrderIds)
-      .subscribe(
-        data => {
-          this.alertService.success('Add successful', true);
-          console.log(data);
-        },
-        (error) => {
-          this.alertService.error(error);
-          console.log(error);
-        });
-  }
-
-  openForm() {
-    document.getElementById('myForm').style.display = 'block';
-  }
-  closeForm() {
-    document.getElementById('myForm').style.display = 'none';
-  }
+  // addBookComponent() {
+  //   const selectedOrderIds = this.form.value.orders
+  //     .map((v, i) => v ? this.ordersData[i].genreName : null)
+  //     .filter(v => v !== null);
+  //   console.log(selectedOrderIds);
+  //
+  //
+  //   this.bookService.addBook(this.bookModel, selectedOrderIds, selectedOrderIds)
+  //     .subscribe(
+  //       data => {
+  //         this.alertService.success('Add successful', true);
+  //         console.log(data);
+  //       },
+  //       (error) => {
+  //         this.alertService.error(error);
+  //         console.log(error);
+  //       });
+  // }
+  //
+  // openForm() {
+  //   document.getElementById('myForm').style.display = 'block';
+  // }
+  // closeForm() {
+  //   document.getElementById('myForm').style.display = 'none';
+  // }
 
 }
