@@ -72,6 +72,7 @@ const componentRoutes: Routes = [
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
+  { path: 'achievements', component: ContentAchievementsComponent}
 ];
 
 const componentNotAllRoutes: Routes = [
@@ -132,7 +133,7 @@ const appRoutes: Routes = [
     ContentBookDetailsComponent,
     AddAnnouncementComponent,
     ContentApproveComponent,
-    ContentProfileBookListComponent
+    ContentProfileBookListComponent,
 
   ],
   imports: [

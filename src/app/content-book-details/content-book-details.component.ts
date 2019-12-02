@@ -23,6 +23,8 @@ export class ContentBookDetailsComponent implements OnInit {
   currentUser: User;
   reviewText: string;
   added = false;
+  likedBook = false;
+  likedReview = false;
 
   constructor(private route: ActivatedRoute,
               private bookService: BookService,
@@ -139,5 +141,18 @@ export class ContentBookDetailsComponent implements OnInit {
         console.log(data);
         this.added = false;
       });
+  }
+
+  likeBook() {
+    if (!this.likedBook) {
+      this.bookService.likeBook(this.book.bookId).subscribe(data => { console.log(data); });
+      this.likedBook = true;
+    }
+  }
+  likeReview(reviewId: number) {
+    if (!this.likedReview) {
+      this.bookService.likeReview(reviewId).subscribe(data => { console.log(data); });
+      this.likedReview = true;
+    }
   }
 }
