@@ -4,6 +4,7 @@ import {BookService} from '../_services/book.service';
 import {Announcement, Book, NewModelBook, Review, User} from '../_models/interface';
 import {AuthenticationService} from '../_services/authentication.service';
 import {AlertService} from '../_services/alert.service';
+import {ToastrModule, ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-content-book-details',
@@ -11,7 +12,7 @@ import {AlertService} from '../_services/alert.service';
   styleUrls: ['./content-book-details.component.css']
 })
 export class ContentBookDetailsComponent implements OnInit {
-  // books: NewModelBook[];
+  // announcements: NewModelBook[];
   book: NewModelBook;
   reviews: Review[];
   collectionSize;
@@ -26,24 +27,25 @@ export class ContentBookDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private bookService: BookService,
               private authenticationService: AuthenticationService,
-              private alertService: AlertService) {
+              private alertService: AlertService,
+              private toastr: ToastrService) {
   }
 
   ngOnInit() {
     this.currentUser = this.authenticationService.currentUserValue;
-    // this.bookService.transferBookList$.subscribe((data: NewModelBook[]) => { this.books = data; });
+    // this.bookService.transferBookList$.subscribe((data: NewModelBook[]) => { this.announcements = data; });
     this.route.paramMap.subscribe(params => {
       const bookId = +params.get('bookId');
       console.log(bookId);
       this.getBook(bookId);
       this.bookService.countBooks().subscribe(data => {
-        this.collectionSize = data as number;
+        this.collectionSize = data;
       });
       this.bookService.getPeaceOfReview(bookId, this.count, this.offset).subscribe(data => {
         this.reviews = data;
       });
-      this.bookService.countReviews().subscribe(data => {
-        this.collectionSize = data as number;
+      this.bookService.countReviews(true).subscribe(data => {
+        this.collectionSize = data;
       });
       if (this.currentUser) {
         this.checkBookInProfile(this.currentUser.username, bookId);
@@ -53,7 +55,7 @@ export class ContentBookDetailsComponent implements OnInit {
   }
   checkBookInProfile(userName: string, bookId: number) {
     this.bookService.checkBookInProfile(userName, bookId).subscribe(data => {
-      this.added = data as boolean;
+      this.added = data;
     });
   }
   getBook(id: number) {
@@ -74,8 +76,6 @@ export class ContentBookDetailsComponent implements OnInit {
       } else {
         this.finish = true;
       }
-      console.log(this.offset);
-      console.log(this.finish);
     } else {
       this.bookService.getPeaceOfReview(this.book.bookId, this.count, 0).subscribe(data => {
         console.log(data);
@@ -97,15 +97,21 @@ export class ContentBookDetailsComponent implements OnInit {
     review.bookId = this.book.bookId;
     review.userName = this.currentUser.username;
     review.reviewText = this.reviewText.trim();
+    if (this.authenticationService.role != 4) {
+      review.approved = true;
+    } else {
+      review.approved = false;
+    }
 
     this.bookService.addReviewForUserBook(review).subscribe(
       data => {
-        this.alertService.success('Рецензія відправлена на підтвердження модератору.', true);
-        console.log(data);
-      },
-      (error) => {
-        this.alertService.error(error);
-        console.log(error);
+        if (data) {
+          this.toastr.success('The review is sent to moderator confirmation.');
+          // this.alertService.success('Рецензія відправлена на підтвердження модератору.', true);
+          console.log(data);
+        } else {
+          this.toastr.success('The review can not be added(');
+        }
       });
 
     this.writeReviewFlag = false;
@@ -118,12 +124,12 @@ export class ContentBookDetailsComponent implements OnInit {
   addBookToProfile() {
     this.bookService.addBookToProfile(this.currentUser.username, this.book.bookId).subscribe(
       data => {
-        console.log(data);
-        this.added = true;
-      },
-      (error) => {
-        this.alertService.error(error);
-        console.log(error);
+        if (data) {
+          this.toastr.success('The book is added to profile.');
+          this.added = true;
+        } else {
+          this.toastr.error('The book is not added to profile(');
+        }
       });
   }
 
@@ -132,10 +138,6 @@ export class ContentBookDetailsComponent implements OnInit {
       data => {
         console.log(data);
         this.added = false;
-      },
-      (error) => {
-        this.alertService.error(error);
-        console.log(error);
       });
   }
 }

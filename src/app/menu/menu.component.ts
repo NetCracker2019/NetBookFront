@@ -17,7 +17,7 @@ export class MenuComponent implements OnInit {
 
   // Menu = [
   //   new Menu('Головна сторінка', 'announcement'),
-  //   new Menu('Книги', 'books'),
+  //   new Menu('Книги', 'announcements'),
   //   new Menu('Мой профиль', 'profile'),
   //   new Menu('Друзья', 'friends'),
   //   new Menu('Рекомендации', 'recommendations'),
@@ -25,7 +25,7 @@ export class MenuComponent implements OnInit {
   //   new Menu('Ачивки', 'achievements'),
   // ];
 
-// <<<<<<< HEAD
+
 //
 //   constructor(role: AuthenticationService) {
 //     this.role = role.role;
@@ -35,7 +35,7 @@ export class MenuComponent implements OnInit {
 //       this.security = true;
 //     }
 //   }
-// =======
+
   constructor(private authenticationService: AuthenticationService) {
     this.role = authenticationService.role;
     this.security = this.role != 4;
@@ -48,6 +48,7 @@ export class MenuComponent implements OnInit {
   }
 
   Menu: Menu[] = [
+
     {name: 'Main page', url: 'announcement'},
     {name: 'Books', url: 'books'},
     {name: 'My profile', url: 'profile/' + this.authenticationService.currentUserValue.username},
@@ -56,5 +57,6 @@ export class MenuComponent implements OnInit {
     {name: 'Chat', url: 'chat'},
     {name: 'Achievements', url: 'achievements'},
     {name: 'Add book/announcement', url: 'newAnnouncement'}];
+
 
 }

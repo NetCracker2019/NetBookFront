@@ -97,8 +97,8 @@
       </form>
     </div>
   </div>
-  <div class="blog-books">
-    <div class="test" *ngFor="let book of books">
+  <div class="blog-announcements">
+    <div class="test" *ngFor="let book of announcements">
       <a href="#" class="blog-item">
         <div class="book-image-grid">
           <img src="{{book.image_path}}" alt="Example" class="book-logo">
@@ -113,6 +113,6 @@
       </a>
     </div>
   </div>
-  <ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [pageSize]="booksPerPage" [(page)]="page" [boundaryLinks]="true" (pageChange)="onPageChanged($event)"></ngb-pagination>
+  <ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [pageSize]="booksPerPage" [(reviewPage)]="reviewPage" [boundaryLinks]="true" (pageChange)="onPageChanged($event)"></ngb-pagination>
 -->
 

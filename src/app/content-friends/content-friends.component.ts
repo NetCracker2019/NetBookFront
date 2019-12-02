@@ -17,9 +17,9 @@ export class ContentFriendsComponent implements OnInit {
 
   public peoples: User[] = [];
   private login: string;
-  private sought: string = "";
+  private sought: string = '';
   public page: number = 1;
-  private where: string = "friends";
+  private where: string = 'friends';
   public collectionSize: number = 6;
   public endOfFriends: boolean = false;
 
@@ -56,7 +56,7 @@ export class ContentFriendsComponent implements OnInit {
     this.getPersons();
   }
 
-  getPersons(){
+  getPersons() {
     this.userService.getPersons(this.login, this.sought, this.where, this.collectionSize, this.page - 1)
       .subscribe(
         (data : User[]) => {
@@ -67,12 +67,12 @@ export class ContentFriendsComponent implements OnInit {
           this.toastr.error(`${environment.errorMessage}`);
         });
   }
-  find(){
+  find() {
     this.getPersons();
   }
   getPhoto(imageName: string) {
     return `https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg`;
-    //return `${environment.apiUrl}/files/download?filename=${imageName}`;
+    // return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 
 }

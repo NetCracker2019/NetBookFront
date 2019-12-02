@@ -14,7 +14,7 @@
 					<h6>
 						"{{ this.user.status }}"
 					</h6>
-					<p title="{{ this.achievement.description }}" class="proile-rating">Досягнення :
+					<p title="{{ this.achievement.description }}" class="proile-rating">Achievements :
 						{{ this.achievement.title }}
 						<img src="{{ this.achievement.image_path }}"/>
 					</p>
@@ -26,30 +26,35 @@
 				</div>
 			</div>
 			<div class="col-md-2" *ngIf="this.isOwnProfile">
-				<input  type="submit" class="profile-edit-btn" name="btnAddMore" value="Редаугвати"
+				<input  type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit"
 				(click)="goEdit()"/>
 			</div>
-			<div class="col-md-2" *ngIf="!this.isOwnProfile && !this.isFriend">
-				<input  type="submit" class="profile-edit-btn" name="btnAddMore" value="Додати до друзів"
+			<div class="col-md-2" *ngIf="!this.isOwnProfile && this.isFriend == -1">
+				<input  type="submit" class="profile-edit-btn" name="btnAddMore" value="Add to friend"
 				(click)="addFriend()"/>
 			</div>
-			<div class="col-md-2" *ngIf="!this.isOwnProfile && this.isFriend">
-				<input  type="submit" class="profile-edit-btn" name="btnAddMore" value="Видалити з друзів"
+			<div class="col-md-2" *ngIf="!this.isOwnProfile && this.isFriend == 1">
+				<input  type="submit" class="profile-edit-btn" name="btnAddMore" value="Remove from friends"
 				(click)="deleteFriend()"/>
 			</div>
+			<div class="col-md-2" *ngIf="!this.isOwnProfile && this.isFriend == 0">
+				<input  type="submit" class="profile-edit-btn" name="btnAddMore" value="Unsubscribe"
+				(click)="deleteFriend()"/>
+			</div>
+
 		</div>
 		<div class="row">
 			<div class="col-md-4">
 				<div class="friends">
-					<p>Друзі</p>
+					<p>Friends</p>
 					<div *ngFor="let friend of this.friends"> 
 						<img src="{{ this.getPhoto(friend.avatarFilePath) }}" alt="no"/>
 						<a href="homeath/profile/{{ friend.username }}">
 						{{ friend.username }}</a>
 					</div><br>
-					<div class="all-friends">
+					<div class="all-friends" *ngIf="this.friends.length > 3">
 						<a href="homeath/profile/{{ this.user.username }}/friends">
-							...всі друзі
+							...all friends
 						</a>
 					</div>
 				</div>
@@ -59,7 +64,7 @@
 					<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 						<div class="row">
 							<div class="col-md-6">
-								<label>Ім'я</label>
+								<label>Name</label>
 							</div>
 							<div class="col-md-6">
 								<p>{{ this.user.firstName }}</p>
@@ -75,7 +80,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-6">
-								<label>Стать</label>
+								<label>Sex</label>
 							</div>
 							<div class="col-md-6">
 								<p>{{ this.user.sex }}</p>
@@ -83,7 +88,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-6">
-								<label>Країна</label>
+								<label>Country</label>
 							</div>
 							<div class="col-md-6">
 								<p>{{ this.user.country }}</p>
@@ -91,7 +96,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-6">
-								<label>Місто</label>
+								<label>City</label>
 							</div>
 							<div class="col-md-6">
 								<p>{{ this.user.city }}</p>
@@ -99,7 +104,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-6">
-								<label>На сайті з</label>
+								<label>Registered</label>
 							</div>
 							<div class="col-md-6">
 								<p>{{ this.user.regDate }}</p>
@@ -110,7 +115,7 @@
 				</div>
 				<!-- ------------------------------------------------------------------->
 				<div class="panel">
-					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/book-list">Улюблені книги</a></div>
+					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/book-list">Favourite books</a></div>
 					<div class="panel-body" >
 						<div class="row">	
 							<div class="col-md-4"  *ngFor="let book of this.favouriteBooks">
@@ -127,13 +132,14 @@
 								</div>
 							</div>
 						</div>
+						<a *ngIf="this.favouriteBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/book-list">...all favourite books</a>
 					</div>
-					<a *ngIf="this.favouriteBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/reading-books">...переглянути всі</a>
+					
 				</div>
 				<br><br>
 
 				<div class="panel">
-					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/book-list">Прочитані книги</a></div>
+					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/book-list">Read books</a></div>
 					<div class="panel-body">
 						<div class="row">	
 							<div class="col-md-4" *ngFor="let book of this.readBooks">
@@ -152,13 +158,13 @@
 						</div>
 
 					</div>
-					<a *ngIf="this.favouriteBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/reading-books">...переглянути всі</a>	
+					<a *ngIf="this.readBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/book-list">...all read books</a>	
 				</div>
 				<br><br>
 
 				<div class="panel">
 					<div class="panel-heading">
-						<a href="homeath/profile/{{ this.user.username }}/book-list">Читаються</a>
+						<a href="homeath/profile/{{ this.user.username }}/book-list">Reading books</a>
 						
 					</div>
 					<div class="panel-body">
@@ -178,7 +184,7 @@
 							</div>
 						</div>
 					</div>
-					<a *ngIf="this.favouriteBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/reading-books">...переглянути всі</a>
+					<a *ngIf="this.readingBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/book-list">...all reading books</a>
 				</div>
 				<br><br>
 

@@ -1,13 +1,86 @@
-<h1>List of unapproved announcement</h1>
-<div class="content">
-  <div *ngFor="let book of books">
-    <p>Title: {{book.title}}</p>
-    <p>Author's: {{book.authors}}</p>
-    <p>Genre's: {{book.genres}}</p>
-    <p>Release date: {{book.releaseDate}}</p>
-    <p>Description: {{book.description}}</p>
-    <img src="{{book.imagePath}}">
-    <button (click)="save(book)">Save</button>
-    <button (click)="cancel(book)">Delete</button>
+<!--<h1>List of unapproved announcement</h1>-->
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <div class="radio_buttons">
+        <div>
+          <input type="radio" name="option" id="radio1" value="announcements" (click)="loadAnnouncements()" checked/>
+          <label for="radio1">Announcement</label>
+        </div>
+        <div>
+          <input type="radio" name="option" id="radio2" value="reviews" (click)="loadReviews(1)"/>
+          <label for="radio2">Reviews</label>
+        </div>
+        <div>
+          <input type="radio" name="option" id="radio3" value="overviews"/>
+          <label for="radio3">Overviews</label>
+        </div>
+        <div>
+          <input type="radio" name="option" id="radio4" value="books"/>
+          <label for="radio4">Books</label>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="sorting">
+        <form>
+          <label>Sort by: </label>
+          <select name="sortingBy" [(ngModel)]="sortingBy" (ngModelChange)="sort($event)" >
+            <option value="username" name="username" selected>User Name</option>
+            <option value="date" name="date">Date</option>
+            <option value="title" name="title">Book Title</option>
+          </select>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
+<div *ngIf="announcements" class="announcements container">
+  <div class="row">
+    <div class="col-md-6" *ngFor="let announce of announcements">
+      <div class="container announcement-item">
+        <div class="row">
+          <div class="col-4">
+            <img src="{{announce.imagePath}}">
+          </div>
+
+          <div class="col-6">
+            <div class="announcement-item-content">
+              <p>Title: {{announce.title}}</p>
+              <p>Author(s): {{announce.authors}}</p>
+              <p>Genres: {{announce.genres}}</p>
+              <p>Release date: {{announce.releaseDate}}</p>
+              <p>Description: {{announce.description}}</p>
+              <button class="confirm" (click)="confirmAnnouncement(announce)">Confirm</button>
+              <button class="cancel" (click)="cancelAnnouncement(announce)">Cancel</button>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="reviews" class="reviews container">
+  <div class="row">
+    <div class="test col-md-6" *ngFor="let review of reviews">
+      <div class="review-item">
+        <div class="user-image">
+          <img src="{{review.userAvatarPath}}" class="user-logo" alt="{{review.userName[0]}}">
+        </div>
+        <div class="review-content">
+          <h5>Review </h5>
+          <p>Book: {{review.title}}</p>
+          <p>Author(s): {{review.authors}}</p>
+          <p>User: {{review.userName}}</p>
+          <p>Text: {{review.reviewText}}</p>
+        </div>
+        <button class="confirm" (click)="confirmReview(review)">Confirm</button>
+        <button class="cancel" (click)="cancelReview(review)">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [pageSize]="itemsPerPage"
+                [(page)]="reviewPage" [boundaryLinks]="true" (pageChange)="loadReviews($event)"></ngb-pagination>
