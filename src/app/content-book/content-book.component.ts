@@ -24,7 +24,7 @@ export class ContentBookComponent implements OnInit {
   bookModel: Book = {} as Book;
   form: FormGroup;
   ordersData: Genre[] = [];
-  author: Author = new Author();
+  // author: Author = new Author();
   dataarray: Data[] = [];
   value = 'book';
 
@@ -67,12 +67,12 @@ export class ContentBookComponent implements OnInit {
 
   ngOnInit() {
     this.reloadData();
-    this.dataarray.push(this.author);
+    // this.dataarray.push(this.author);
   }
 
   addForm() {
-    this.author = new Author();
-    this.dataarray.push(this.author);
+    // this.author = new Author();
+    // this.dataarray.push(this.author);
   }
   removeForm(i) {
     this.dataarray.splice(i);
@@ -89,7 +89,7 @@ export class ContentBookComponent implements OnInit {
     console.log(selectedOrderIds);
 
 
-    this.bookService.addBook(this.bookModel, selectedOrderIds, this.dataarray, this.value)
+    this.bookService.addBook(this.bookModel, selectedOrderIds, selectedOrderIds)
       .subscribe(
         data => {
           this.alertService.success('Add successful', true);

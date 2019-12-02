@@ -48,13 +48,13 @@ export class MenuComponent implements OnInit {
   }
 
   Menu: Menu[] = [
-    {name: 'Главная страница', url: 'announcement'},
-    {name: 'Книги', url: 'books'},
-    {name: 'Мой профиль', url: 'profile/' + this.authenticationService.currentUserValue.username},
-    {name: 'Друзья', url: 'friends/' + this.authenticationService.currentUserValue.username},
-    {name: 'Рекомендации', url: 'recommendations'},
-    {name: 'Чат', url: 'chat'},
-    {name: 'Достижения', url: 'achievements'},
-    {name: 'Добавить анонс', url: 'newAnnouncement'}];
+    {name: 'Main page', url: 'announcement'},
+    {name: 'Books', url: 'books'},
+    {name: 'My profile', url: 'profile/' + this.authenticationService.currentUserValue.username},
+    {name: 'Friends', url: 'friends/' + this.authenticationService.currentUserValue.username},
+    {name: 'Recommendation', url: 'recommendations'},
+    {name: 'Chat', url: 'chat'},
+    {name: 'Achievements', url: 'achievements'},
+    {name: 'Add book/announcement', url: 'newAnnouncement'}];
 
 }
