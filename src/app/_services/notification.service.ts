@@ -19,5 +19,8 @@ export class NotificationService {
   getAllNotifications(): Observable<Notification[]>{
     return this.http.get<Notification[]>(`${environment.apiUrl}/notifications`);
   }
+  markAllAsRead(){
+    return this.http.get(`${environment.apiUrl}/notifications/mark`);
+  }
 
 }

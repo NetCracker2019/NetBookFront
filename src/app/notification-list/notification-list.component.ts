@@ -8,11 +8,13 @@ import {Notification} from "../_models/interface";
   templateUrl: './notification-list.component.html',
   styleUrls: ['./notification-list.component.css']
 })
+
 export class NotificationListComponent implements OnInit {
 
   notifications: Notification[];
 
-  constructor(private notificationService:NotificationService) {
+
+  constructor(public notificationService: NotificationService) {
   }
 
   ngOnInit() {
@@ -20,6 +22,17 @@ export class NotificationListComponent implements OnInit {
 
       this.notifications = notifications
     })
+
   }
 
+  getNavigationLink(notification: Notification) {
+    switch (notification.notifTypeId) {
+      case 1 :
+        'friends';
+        break;
+
+
+    }
+
+  }
 }
