@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -45,9 +46,12 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
 import { SuperadminModeratorRequest } from './superadmin-moderator-request/superadmin-moderator-request.component';
 import { ContentApproveComponent } from './content-approve/content-approve.component';
-//import {AuthForAddSthGuard} from './_helpers/auth-for-add-sth.guard';
+import {AuthForAddSthGuard} from './_helpers/auth-for-add-sth.guard';
 import {NotificationComponent} from './notifications/notification.component';
+import {ContentProfileBookListComponent} from './content-profile-book-list/content-profile-book-list.component';
+import {ToastrModule} from 'ngx-toastr';
 
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 // const componentAnnouncement: Routes = [
 //   { path: 'newAnnouncement', component: AddAnnouncementComponent}
 //   ];
@@ -69,7 +73,8 @@ const componentRoutes: Routes = [
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
-  { path: 'notification/:userId', component: NotificationComponent}
+  { path: 'notification', component: NotificationComponent}
+  { path: 'achievements', component: ContentAchievementsComponent}
 ];
 
 const componentNotAllRoutes: Routes = [
@@ -80,14 +85,14 @@ const componentNotAllRoutes: Routes = [
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
-  { path: 'notification/:userId', component: NotificationComponent}
+  { path: 'notification', component: NotificationComponent}
 ];
 
 
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent, children: componentNotAllRoutes },
-  { path: 'login', component: AuthorizationComponent /*, canActivate: [AuthForAddSthGuard]*/},
+  { path: 'login', component: AuthorizationComponent , canActivate: [AuthForAddSthGuard]},
   { path: 'register', component: RegistrationComponent },
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
   { path: 'verification-account', component: VerificationAccountComponent},
@@ -132,8 +137,12 @@ const appRoutes: Routes = [
     AddAnnouncementComponent,
     ContentApproveComponent,
     NotificationComponent
+    ContentApproveComponent,
+    ContentProfileBookListComponent,
+
   ],
   imports: [
+    InfiniteScrollModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -142,10 +151,12 @@ const appRoutes: Routes = [
     MatInputModule,
     MatFormFieldModule,
     MatAutocompleteModule,
+    FullCalendarModule, // for FullCalendar!
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     HttpClientModule,
+    ToastrModule.forRoot(),
     RouterModule.forRoot(
       appRoutes),
     MatAutocompleteModule,

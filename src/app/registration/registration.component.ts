@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
 import {Router} from '@angular/router';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {User} from '../_models/interface';
-
+import { environment } from '../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registration',
@@ -42,8 +43,8 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private userService: UserService,
               private router: Router,
-              private alertService: AlertService
-  ) {
+              private alertService: AlertService,
+              private toastr: ToastrService) {
 
     this.registerForm = new FormGroup({
 
@@ -104,6 +105,22 @@ export class RegistrationComponent implements OnInit {
   //       });
   // }
 
+  getValidationMessage(controlName: string) {
+    const controlErrors: ValidationErrors = this.registerForm.get(controlName).errors;
+    let error = null;
+    if (controlErrors != null) {
+      for (const controlError in controlErrors) {
+        if (controlErrors[controlError]) {
+
+          error = this.accountValidationMessages[controlName].find((valMsg) => {
+            return valMsg.type === controlError;
+          });
+          break;
+        }
+      }
+    }
+    return error;
+  }
 
 
   register() {
@@ -114,13 +131,12 @@ export class RegistrationComponent implements OnInit {
     this.userService.register(this.model)
       .subscribe(
         data => {
-          this.alertService.success('Registration successful', true);
+          this.toastr.success(`Registration successful`);
           this.router.navigate(['/login']);
           console.log(data);
         },
-        (error) => {
-          this.alertService.error(error);
-          console.log(error);
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
         });
   }
 

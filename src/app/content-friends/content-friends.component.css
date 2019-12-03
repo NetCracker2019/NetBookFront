@@ -1,15 +1,12 @@
-/*search box css start here*/
 .search-sec{
     background: #334955;
     padding: 3%;
-    width: 80vw;
 }
 .search-slt{
     display: block;
     width: 100%;
     color: #55595c; 
     border: 1px solid #ccc;
-    height: 3vw;
     border-radius:0;
 }
 .btn{

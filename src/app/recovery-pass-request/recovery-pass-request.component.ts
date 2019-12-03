@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../_services/user.service";
 import {first} from "rxjs/operators";
 import {AlertService} from "../_services/alert.service";
+import { environment } from '../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-recovery-pass-request',
@@ -13,19 +15,19 @@ import {AlertService} from "../_services/alert.service";
 export class RecoveryPassRequestComponent implements OnInit {
 
 
-  recoveryForm: FormGroup;
-  loading = false;
-  submitted = false;
-  returnUrl: string;
-  error = '';
+  public recoveryForm: FormGroup;
+  public loading: boolean = false;
+  public submitted: boolean = false;
+  public returnUrl: string;
+  public error: string = '';
 
   constructor(
   	private userService: UserService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private alertService: AlertService	
-  ) {
+    private alertService: AlertService,
+    private toastr: ToastrService) {
 
   }
 
@@ -56,12 +58,11 @@ export class RecoveryPassRequestComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.alertService.success('Email was sent', true);	
+          this.toastr.success(`Email was sent`);	
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          this.error = error;
-          this.loading = false;
+          this.toastr.error(`${environment.errorMessage}`);
         });
   }
 

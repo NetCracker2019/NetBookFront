@@ -11,13 +11,14 @@ import {AuthenticationService} from '../_services/authentication.service';
 export class MenuComponent implements OnInit {
 
   role: number;
-  security: boolean;
+  securityApprove: boolean;
+  securityAchievement: boolean;
 
 
 
   // Menu = [
   //   new Menu('Головна сторінка', 'announcement'),
-  //   new Menu('Книги', 'books'),
+  //   new Menu('Книги', 'announcements'),
   //   new Menu('Мой профиль', 'profile'),
   //   new Menu('Друзья', 'friends'),
   //   new Menu('Рекомендации', 'recommendations'),
@@ -30,17 +31,17 @@ export class MenuComponent implements OnInit {
 //   constructor(role: AuthenticationService) {
 //     this.role = role.role;
 //     if (role as any === 4) {
-//       this.security = false;
+//       this.securityApprove = false;
 //     } else {
-//       this.security = true;
+//       this.securityApprove = true;
 //     }
 //   }
 // =======
   constructor(private authenticationService: AuthenticationService) {
     this.role = authenticationService.role;
-    console.log(this.role);
-    this.security = this.role != 4;
-    console.log(this.security);
+    this.securityApprove = this.role != 4;
+    this.securityAchievement = this.role == 1 || this.role == 2;
+    console.log(this.securityApprove);
    }
 
 
@@ -50,7 +51,7 @@ export class MenuComponent implements OnInit {
 
   Menu: Menu[] = [
     {name: 'Главная страница', url: 'announcement'},
-    {name: 'Книги', url: 'books'},
+    {name: 'Книги', url: 'announcements'},
     {name: 'Мой профиль', url: 'profile/' + this.authenticationService.currentUserValue.username},
     {name: 'Друзья', url: 'friends/' + this.authenticationService.currentUserValue.username},
     {name: 'Рекомендации', url: 'recommendations'},

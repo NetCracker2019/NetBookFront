@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../_services/authentication.service';
 import {first} from 'rxjs/operators';
 import {User} from '../_models/interface';
 import {Location} from '@angular/common';
+import { environment } from '../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-authorization',
@@ -38,7 +40,8 @@ export class AuthorizationComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private location: Location) {
+    private location: Location,
+    private toastr: ToastrService) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/homeath']);
@@ -68,6 +71,22 @@ export class AuthorizationComponent implements OnInit {
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
+  getValidationMessage(controlName: string) {
+    const controlErrors: ValidationErrors = this.loginForm.get(controlName).errors;
+    let error = null;
+    if (controlErrors != null) {
+      for (const controlError in controlErrors) {
+        if (controlErrors[controlError]) {
+
+          error = this.accountValidationMessages[controlName].find((valMsg) => {
+            return valMsg.type === controlError;
+          });
+          break;
+        }
+      }
+    }
+    return error;
+  }
 
   login() {
 
@@ -89,6 +108,7 @@ export class AuthorizationComponent implements OnInit {
         error => {
           this.error = error;
           this.loading = false;
+          this.toastr.error(`Invalid username/password supplied`);
         });
   }
   goBack(): void {

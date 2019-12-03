@@ -17,6 +17,12 @@ export interface  Book {
     public language: string;*/
 }
 
+export interface Event {
+  title: string;
+  date: string;
+  url: string;
+}
+
 export interface Announcement {
   announcmentId: number;
   title: string;
@@ -74,10 +80,27 @@ export interface Achievement {
 }
 
 export interface ShortBookDescription {
-  likes: number;
+  bookId: number;
   title: string;
   authors: string[];
-  image_path: string;
+  likes: number;
+  imagePath: string;
+  releaseDate: string;
+  favourite: boolean;
+  reading: boolean;
+  read: boolean;
+  checked: boolean;
+}
+export interface SearchParams {
+  reading: boolean;
+  read: boolean;
+  favourite: boolean;
+  notSet: boolean;
+  sortBy: string;
+  order: string;
+  sought: string;
+  page: number;
+  size: number;
 }
 
 export interface Menu {
@@ -116,10 +139,26 @@ export interface Review {
   bookId: number;
   userName: string;
   userAvatarPath: string;
+  title: string;
+  authors: string[];
   reviewText: string;
   rating: number;
   approved: boolean;
 }
+export interface Message {
+  message: string,
+  fromName: string,
+  toName: string,
+  dateTimeSend: Date;
+}
+
+export interface Message {
+  message: string;
+  fromName: string;
+  toName: string;
+  dateTimeSend: Date;
+}
+
 
 export interface Genre {
   genreId: number;
