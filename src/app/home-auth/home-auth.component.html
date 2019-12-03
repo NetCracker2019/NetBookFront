@@ -1,23 +1,16 @@
-
-
-
-
-
 <app-headerauth></app-headerauth>
-<app-menu></app-menu>
-<router-outlet></router-outlet>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-lg-2 p-0 menu-color">
+      <app-menu></app-menu>
+    </div>
 
+    <div class="col-sm-9 col-lg-10 p-0">
+      <router-outlet class="router"></router-outlet>
+    </div>
+  </div>
+</div>
 
-<!--<div class="card mt-4">-->
-  <!--<h4 class="card-header">You're logged in with Angular 8 & JWT!!</h4>-->
-  <!--<div class="card-body">-->
-    <!--<h6>Users from secure api end point</h6>-->
-    <!--<div *ngIf="loading" class="spinner-border spinner-border-sm"></div>-->
-    <!--<ul *ngIf="users">-->
-      <!--<li *ngFor="let user of users">{{user.firstName}} {{user.lastName}}</li>-->
-    <!--</ul>-->
-  <!--</div>-->
-<!--</div>-->
 
 
 
