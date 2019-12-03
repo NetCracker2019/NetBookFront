@@ -86,13 +86,13 @@ export class ContentApproveComponent implements OnInit {
   confirmAnnouncement(book) {
     this.approveService.confirmAnnouncement(book)
       .subscribe(text => this.text = text);
-    window.location.reload();
+    // window.location.reload();
   }
 
   cancelAnnouncement(book) {
     this.approveService.cancelAnnouncement(book)
       .subscribe(text => this.text = text);
-    window.location.reload();
+    // window.location.reload();
   }
 
   showPersonalize() {
@@ -111,7 +111,7 @@ export class ContentApproveComponent implements OnInit {
   }
 
   confirmReview(review) {
-    this.approveService.confirmReview(review.reviewId)
+    this.approveService.confirmReview(review.reviewId, review.userId)
       .subscribe(data => {
         if (data) {
           this.toastr.success('The review is confirmed.');
@@ -121,7 +121,7 @@ export class ContentApproveComponent implements OnInit {
           this.toastr.success('Something is wrong(');
         }
       });
-    window.location.reload();
+    // window.location.reload();
   }
 
   cancelReview(review) {

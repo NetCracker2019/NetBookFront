@@ -8,6 +8,7 @@ import {AuthenticationService} from '../_services/authentication.service';
 import { v4 as uuid } from 'uuid';
 import {Observable} from 'rxjs';
 import { environment } from '../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-content-edit-profile',
@@ -36,9 +37,12 @@ export class ContentEditProfileComponent implements OnInit {
    private activatedRoute: ActivatedRoute,
    private router: Router,
    private authenticationService: AuthenticationService,
-   private alertService: AlertService) {
-    
-    this.login = activatedRoute.snapshot.params['login'];
+   private alertService: AlertService,
+   private toastr: ToastrService) { 
+  }
+
+  ngOnInit() {
+    this.login = this.activatedRoute.snapshot.params['login'];
     this.form = new FormGroup({
 
       email: new FormControl('', [
@@ -50,6 +54,7 @@ export class ContentEditProfileComponent implements OnInit {
         Validators.minLength(5),
         Validators.maxLength(18)
       ]),
+      confirmPassword: new FormControl(),
       country: new FormControl(),
       city: new FormControl(),
       firstName: new FormControl(),
@@ -57,10 +62,8 @@ export class ContentEditProfileComponent implements OnInit {
       status: new FormControl(),
       sex: new FormControl()
     });
-    this.authenticationService.refreshToken();
-  }
 
-  ngOnInit() {
+    this.authenticationService.refreshToken();
   	if(this.authenticationService.currentUserValue.username != this.login){
       this.router.navigate(['/homeath/profile/' + this.login]);
     }
@@ -69,8 +72,8 @@ export class ContentEditProfileComponent implements OnInit {
         (data : User) => {
           this.user = data;
         },
-        (error) => {
-          this.alertService.error("Не вдалося завантажити інформацію");
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
         });
   }
 
@@ -80,7 +83,8 @@ export class ContentEditProfileComponent implements OnInit {
 
 
   getPhoto(imageName: string) {
-        return `${environment.apiUrl}/files/download?filename=${imageName}`;
+    //return `${environment.apiUrl}/files/download?filename=${imageName}`;
+    return 'https://i.dailymail.co.uk/1s/2019/04/18/10/12427172-0-image-a-20_1555581069374.jpg';
   }
 
   edit() {
@@ -91,26 +95,31 @@ export class ContentEditProfileComponent implements OnInit {
     this.user.email = this.form.controls.email.value;
     this.user.password = this.form.controls.password.value;
     this.user.status = this.form.controls.status.value;
-    if(this.fileToUpload != null){
+  
+    if( this.fileToUpload != null){
+      console.log("qwe");
       this.fileName = uuid();
-    }
-    this.user.avatarFilePath = this.fileName;
+      this.user.avatarFilePath = this.fileName;
 
-    this.userService.postFile(this.fileToUpload, this.fileName).subscribe(data => {
-      }, error => {
-        this.alertService.error("От халепа");
-      });
+      this.userService.postFile(this.fileToUpload, this.fileName).subscribe(data => {
+        },
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
+        });
+    }
+    
 
     this.userService.edit(this.user)
       .subscribe(
         data => {
-          this.alertService.success('Successful', true);
+          this.toastr.success(`Profile successfully updated`);
           this.router.navigate(['/homeath/profile/' + this.login]);
         },
-        (error) => {
-          this.alertService.error("От халепа");
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
         });
   }
+
   goBack(){
     this.router.navigate(['/homeath/profile/' + this.login]);
   }

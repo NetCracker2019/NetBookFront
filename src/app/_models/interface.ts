@@ -41,13 +41,13 @@ export interface ViewAnnouncement {
   genres: Array<string>;
 }
 
-export class Author {
-  id: number;
-  name: string;
-}
+// export class Author {
+//   id: number;
+//   name: string;
+// }
 
 export interface Data {
-  name: string;
+  fullName: string;
 }
 
 export interface Genre {
@@ -83,10 +83,24 @@ export interface ShortBookDescription {
   bookId: number;
   title: string;
   authors: string[];
-  image_path: string;
+  likes: number;
+  imagePath: string;
+  releaseDate: string;
   favourite: boolean;
   reading: boolean;
-  remove: boolean;
+  read: boolean;
+  checked: boolean;
+}
+export interface SearchParams {
+  reading: boolean;
+  read: boolean;
+  favourite: boolean;
+  notSet: boolean;
+  sortBy: string;
+  order: string;
+  sought: string;
+  page: number;
+  size: number;
 }
 
 export interface Menu {
@@ -120,9 +134,9 @@ export interface Review {
   approved: boolean;
 }
 export interface Message {
-  message: string,
-  fromName: string,
-  toName: string,
+  message: string;
+  fromName: string;
+  toName: string;
   dateTimeSend: Date;
 }
 

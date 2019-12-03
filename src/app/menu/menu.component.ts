@@ -11,7 +11,8 @@ import {AuthenticationService} from '../_services/authentication.service';
 export class MenuComponent implements OnInit {
 
   role: number;
-  security: boolean;
+  securityApprove: boolean;
+  securityAchievement: boolean;
 
 
 
@@ -25,21 +26,22 @@ export class MenuComponent implements OnInit {
   //   new Menu('Ачивки', 'achievements'),
   // ];
 
-// <<<<<<< HEAD
+
 //
 //   constructor(role: AuthenticationService) {
 //     this.role = role.role;
 //     if (role as any === 4) {
-//       this.security = false;
+//       this.securityApprove = false;
 //     } else {
-//       this.security = true;
+//       this.securityApprove = true;
 //     }
 //   }
-// =======
+
   constructor(private authenticationService: AuthenticationService) {
     this.role = authenticationService.role;
-    this.security = this.role != 4;
-    console.log(this.security);
+    this.securityApprove = this.role != 4;
+    this.securityAchievement = this.role == 1 || this.role == 2;
+    console.log(this.securityApprove);
    }
 
 
@@ -48,13 +50,16 @@ export class MenuComponent implements OnInit {
   }
 
   Menu: Menu[] = [
-    {name: 'Главная страница', url: 'announcement'},
-    {name: 'Книги', url: 'announcements'},
-    {name: 'Мой профиль', url: 'profile/' + this.authenticationService.currentUserValue.username},
-    {name: 'Друзья', url: 'friends/' + this.authenticationService.currentUserValue.username},
-    {name: 'Рекомендации', url: 'recommendations'},
-    {name: 'Чат', url: 'chat'},
-    {name: 'Достижения', url: 'achievements'},
-    {name: 'Добавить анонс', url: 'newAnnouncement'}];
+
+    {name: 'Main page', url: 'announcement'},
+    {name: 'Books', url: 'books'},
+    {name: 'My profile', url: 'profile/' + this.authenticationService.currentUserValue.username},
+    {name: 'Friends', url: 'friends/' + this.authenticationService.currentUserValue.username},
+    {name: 'Recommendation', url: 'recommendations'},
+    {name: 'Calendar', url: 'calendar'},
+    {name: 'Chat', url: 'chat'},
+    {name: 'Achievements', url: 'achievements'},
+    {name: 'Add book/announcement', url: 'newAnnouncement'}];
+
 
 }

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {User, ShortBookDescription} from '../_models/interface';
+import {User, ShortBookDescription, SearchParams} from '../_models/interface';
 import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import {FormControl, FormGroup} from '@angular/forms';
 import {AuthenticationService} from '../_services/authentication.service';
 import { environment } from '../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-content-profile-book-list',
@@ -15,100 +16,183 @@ import { environment } from '../../environments/environment';
 export class ContentProfileBookListComponent implements OnInit {
 
   private login: string;
-  private sought: string = "";
-  public page: number = 1;
-  private where: string = "read";
+  public searchParams: SearchParams = {
+    reading: true,
+    read: true,
+    favourite: true,
+    notSet: true,
+    sortBy: "title",
+    order: "asc",
+    sought: "",
+    page: 0,
+    size: 3
+  };
   public books: ShortBookDescription[] = [];
   public disableEdit: boolean = false;
+  public enableBathEdit: boolean = false;  
+  public visibleTitle: boolean = true;
+  public visibleAuthors: boolean = true;
+  public visibleLikes: boolean = true;
+  public visibleShelves: boolean = true;
+  public visibleDatePub: boolean = true;
+  public batchEditShelf: string = "read";
+  public endOfBooks: boolean = false;
 
   constructor(private userService: UserService,
    private activatedRoute: ActivatedRoute,
    private router: Router,
    private authenticationService: AuthenticationService,
-   private alertService: AlertService) {
-    
-    this.login = activatedRoute.snapshot.params['login'];
-    this.authenticationService.refreshToken();
-    if(this.login == this.authenticationService.currentUserValue.username){
-    	this.disableEdit = true;
-    }
-
-  }
+   private alertService: AlertService,
+   private toastr: ToastrService) {}
 
   ngOnInit() {
-    this.find();
+    this.login = this.activatedRoute.snapshot.params['login'];
+    this.authenticationService.refreshToken();
+    if(this.login == this.authenticationService.currentUserValue.username){
+      this.disableEdit = true;
+    }
+   this.getBookList();
 
   }
-  onSearchChange(searchValue: string) {  
-    this.page = 1;
-    this.books = [];
-    this.sought = searchValue;
-    this.find();
+  selectAll(){
+    for (let book of this.books) {
+      book.checked = true;
+    }
   }
-  onWhereChange(whereValue: string) {  
-    this.page = 1;
-    this.where = whereValue;
-    this.books = [];
-    this.find();
+  selectNone(){
+    for (let book of this.books) {
+      book.checked = false;
+    }
   }
-  onPageChanged() {
-    this.page++;
-    this.find();
-  }
-  onClick(bookIndex: number) {
-    //console.log(bookIndex);
-    //console.log(this.books[bookIndex].reading);
-    //console.log(this.books[bookIndex].favourite);
-    //console.log(this.books[bookIndex].remove);
-    this.updateBook(bookIndex);
-    this.page = 1;
-    //
-  }
-  onReadingChange(bookIndex: number, reading: boolean){
-  	this.books[bookIndex].reading = reading;
-  }
+  addBookBatchTo(shelf: string){
+    let booksId: number[] = [];
+    for (let book of this.books) {
+      if(book.checked){
+        booksId.push(book.bookId);
+      }
+    }
+    this.userService.addBookBatchTo(this.login, shelf, booksId)
+      .subscribe(
+        data => {
+          this.toastr.success(`Books successfully added into "${shelf}" shelf`);
+          this.books = [];
+          this.find();
+        },
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
+        });
 
-
-  getFavouriteBooks(){
-  	this.userService.getFavouriteBooks(this.login, this.sought, 3, this.page - 1)
+  }
+  removeBookBatchFrom(shelf: string){
+    let booksId: number[] = [];
+    for (let book of this.books) {
+      if(book.checked){
+        booksId.push(book.bookId);
+      }
+    }
+    this.userService.removeBookBatchFrom(this.login, shelf, booksId)
       .subscribe(
-        (data : ShortBookDescription[]) => {
-          this.books = this.books.concat(data);
+        data => {
+          this.toastr.success(`Books successfully removed from "${shelf}" shelf`);
+          this.books = [];
+          this.find();
+        },
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
         });
   }
-  getReadingBooks(){
-  	this.userService.getReadingBooks(this.login, this.sought, 3, this.page - 1)
-      .subscribe(
-        (data : ShortBookDescription[]) => {
-          this.books = this.books.concat(data);
+  removeBook(bookId: number){
+    if ( window.confirm("This will completely remove the selected books from your shelves.") ) {
+      let booksId: number[] = [];
+      booksId.push(bookId);
+      this.userService.removeBookBatch(this.login, booksId)
+        .subscribe(
+          data => {
+            this.toastr.success(`Book successfully removed from all shelves`);
+            this.books = [];
+            this.find();
+          },
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
+        });
+    }
+  }
+  removeBookBatch(){
+    if ( window.confirm("This will completely remove the selected books from your shelves.") ) {
+      let booksId: number[] = [];
+      for (let book of this.books) {
+        if(book.checked){
+          booksId.push(book.bookId);
+        }
+      }
+      this.userService.removeBookBatch(this.login, booksId)
+        .subscribe(
+          data => {
+            this.toastr.success(`Books successfully removed from all shelves`);
+            this.books = [];
+            this.find();
+          },
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
+        });
+    }
+    
+  }
+  changeBookShelfRead(book: ShortBookDescription){
+    book.reading = false;
+    let booksId: number[] = [];
+    booksId.push(book.bookId);
+    this.userService.addBookBatchTo(this.login, "read", booksId)
+      .subscribe(data => {},
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
         });
   }
-  getReadBooks(){
-  	this.userService.getReadBooks(this.login, this.sought, 3, this.page - 1)
-      .subscribe(
-        (data : ShortBookDescription[]) => {
-          this.books = this.books.concat(data);
+  changeBookShelfReading(book: ShortBookDescription){
+    book.read = false;
+    let booksId: number[] = [];
+    booksId.push(book.bookId);
+    this.userService.addBookBatchTo(this.login, "reading", booksId)
+      .subscribe(data => {},
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
         });
   }
+  changeBookShelfFavourite(book: ShortBookDescription){
+    let booksId: number[] = [];
+    booksId.push(book.bookId);
+    this.userService.addBookBatchTo(this.login, "favourite", booksId)
+      .subscribe(data => {},
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
+        });
+  }
+  onSearchChange(searchValue: string) {  ///
+    this.searchParams.sought = searchValue;///
+    this.find();///
+  }///
   find(){
-    if(this.where == "read") this.getReadBooks();
-    else if(this.where == "reading") this.getReadingBooks();
-    else this.getFavouriteBooks();
+    this.searchParams.page = 0;
+    this.endOfBooks = false;
+    this.books = [];
+    this.getBookList();
   }
-  updateBook(bookIndex: number){
-    console.log(this.books[bookIndex]);
-  	if(this.books[bookIndex].remove === undefined) this.books[bookIndex].remove = false;
-  	this.userService.updateUserBookList(
-  		this.login, this.books[bookIndex].bookId, this.books[bookIndex].reading,
-  		 this.books[bookIndex].favourite, this.books[bookIndex].remove)
+
+  getBookList(){
+  	this.userService.getBookList(this.login, this.searchParams)
       .subscribe(
-        (data) => {
-          this.alertService.success('Книга успішно оновлена', true);
-          window.location.reload();
+        (data : ShortBookDescription[]) => {
+          if(data.length < this.searchParams.size) this.endOfBooks = true;
+          this.books = this.books.concat(data);
+        },
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
         });
   }
-
-
+  onPageChanged(){
+    this.searchParams.page++;
+    this.getBookList();
+  }
   getPhoto(imageName: string) {
   		return 'https://i.dailymail.co.uk/1s/2019/04/18/10/12427172-0-image-a-20_1555581069374.jpg';
         //return `${environment.apiUrl}/files/download?filename=${imageName}`;

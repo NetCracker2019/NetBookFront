@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 
-import {User, Achievement, ShortBookDescription, Message} from '../_models/interface';
+import {User, Achievement, ShortBookDescription, Message, SearchParams} from '../_models/interface';
 import {AuthenticationService} from '../_services/authentication.service';
 
 import { environment } from '../../environments/environment';
@@ -87,7 +87,7 @@ export class UserService {
       `${environment.apiUrl}/profile/add-friend/${ownLogin}/${friendLogin}`, friendLogin);
   }
   isFriend(ownLogin:string, friendLogin: string) {
-    return this.http.get<boolean>(
+    return this.http.get<number>(
       `${environment.apiUrl}/profile/is-friend/${ownLogin}/${friendLogin}`);
   }
   deleteFriend(ownLogin:string, friendLogin: string) {
@@ -104,6 +104,25 @@ export class UserService {
     formData.append('file', fileToUpload);
     formData.append('name', fileName);
     return this.http.post<boolean>(`${environment.apiUrl}/files/upload/`, formData);
+  }
+  getBookList(login: string, params: SearchParams) {
+    return this.http.get<ShortBookDescription[]>(
+      `${environment.apiUrl}/profile/${login}/book-list?reading=${params.reading}&`+
+      `read=${params.read}&favourite=${params.favourite}&notset=${params.notSet}&`+
+      `sortby=${params.sortBy}&`+
+      `order=${params.order}&sought=${params.sought}&page=${params.page}&size=${params.size}`);
+  }
+  addBookBatchTo(login: string, shelf: string, booksId: number[]){
+    return this.http.put<void>(
+      `${environment.apiUrl}/profile/${login}/${shelf}/add-books`, booksId);
+  }
+  removeBookBatchFrom(login: string, shelf: string, booksId: number[]){
+    return this.http.put<void>(
+      `${environment.apiUrl}/profile/${login}/${shelf}/remove-books`, booksId);
+  }
+  removeBookBatch(login: string, booksId: number[]){
+    return this.http.delete<void>(
+      `${environment.apiUrl}/profile/${login}/remove-books?booksid=${booksId}`);
   }
 }
 
