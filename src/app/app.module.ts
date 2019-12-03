@@ -51,6 +51,7 @@ import {ContentProfileBookListComponent} from './content-profile-book-list/conte
 import {ToastrModule} from 'ngx-toastr';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ContentCalendarComponent } from './content-calendar/content-calendar.component';
 // const componentAnnouncement: Routes = [
 //   { path: 'newAnnouncement', component: AddAnnouncementComponent}
 //   ];
@@ -72,7 +73,9 @@ const componentRoutes: Routes = [
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
+  { path: 'calendar', component: ContentCalendarComponent},
   { path: 'achievements', component: ContentAchievementsComponent}
+
 ];
 
 const componentNotAllRoutes: Routes = [
@@ -134,6 +137,8 @@ const appRoutes: Routes = [
     AddAnnouncementComponent,
     ContentApproveComponent,
     ContentProfileBookListComponent,
+    ContentCalendarComponent,
+
 
   ],
   imports: [

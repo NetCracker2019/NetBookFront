@@ -17,22 +17,22 @@
       </div>
     </div>
 
-    <div class="col-6">
-      <div class="month-grid">
-        <div class="box">
-          <form>
-            <label>Genre:</label>
-            <select [(ngModel)]="selectedGenre" name="genre">
-              <option value="all" selected>All</option>
-              <option *ngFor="let genre of genres" [value]="genre.genreName">
-                {{genre.genreName}}
-              </option>
-            </select>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+    <!--<div class="col-6">-->
+      <!--<div class="month-grid">-->
+        <!--<div class="box">-->
+          <!--<form>-->
+            <!--<label>Genre:</label>-->
+            <!--<select [(ngModel)]="selectedGenre" name="genre">-->
+              <!--<option value="all" selected>All</option>-->
+              <!--<option *ngFor="let genre of genres" [value]="genre.genreName">-->
+                <!--{{genre.genreName}}-->
+              <!--</option>-->
+            <!--</select>-->
+          <!--</form>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
 
   <div class="row p-4">
     <div class="test col-md-6" *ngFor="let book of books">
@@ -41,7 +41,7 @@
           <div class="row">
             <div class="col-6">
               <div class="book-image-grid">
-                <img src="../../assets/img/{{book.image_path}}" alt="Example" class="book-logo">
+                <img src="../../assets/img/{{book.imagePath}}" alt="Example" class="book-logo">
               </div>
             </div>
 
@@ -49,7 +49,8 @@
               <div class="book-item-content">
                 <h3>{{book.title}}</h3>
                 <p>Описание: {{book.description}} </p>
-                <!--<p>Жанр: {{book.genre}}</p>-->
+                <p>Жанр: {{book.genres}}</p>
+                <p>Автор: {{book.authors}}</p>
                 <!--<p>Дата выпуска: {{book.date}}</p>-->
                 <!--<p>Язык книги: {{book.language}}</p>-->
               </div>

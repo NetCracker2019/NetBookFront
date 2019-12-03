@@ -7,7 +7,7 @@ import {environment} from '../../environments/environment';
 import {map} from 'rxjs/operators';
 
 
-import {Announcement, Book, Data, Genre, NewModelBook, Review} from '../_models/interface';
+import {Announcement, Author, Book, Data, Genre, NewModelBook, Review, Event} from '../_models/interface';
 
 
 const httpOptions = {
@@ -29,12 +29,13 @@ export class BookService {
     this.titleSource.next(title);
   }
 
-  getCalendarAnnouncement(value: string): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.apiUrl}/book-service/calendar-announcement?value=${value}`);
+  getCalendarAnnouncement(value: string, userName: string): Observable<Event[]> {
+    console.log(userName);
+    return this.http.get<Event[]>(`${environment.apiUrl}/book-service/calendar-announcement?value=${value}` + `&userName=` + userName);
   }
 
-  getAnnouncementListPeace(page: number, booksPerPage: number): Observable<Announcement[]> {
-    return this.http.get<Announcement[]>(`${environment.apiUrl}/book-service/announcementListPeace?page=` + page
+  getAnnouncementListPeace(page: number, booksPerPage: number): Observable<Book[]> {
+    return this.http.get<Book[]>(`${environment.apiUrl}/book-service/announcementListPeace?page=` + page
       + `&booksPerPage=` + booksPerPage);
   }
   getAmountOfAnnouncement() {
@@ -50,6 +51,7 @@ export class BookService {
     return this.http.get(`${environment.apiUrl}/book-service/amountOfBook`);
   }
 
+
   getBookList(): Observable<Book[]> {
     return this.http.get<Book[]>(`${environment.apiUrl}/book-service/books`);
   }
@@ -61,24 +63,22 @@ export class BookService {
     return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/view-books`);
   }
 
-  addBook(book: Book, selectedOrderIds, authors, value: string) {
+  addBook(book: Book, authors, userName: string) {
     let authorArray: Data[] = [];
     for (let i = 0; i < authors.length; i++) {
-      authorArray.push(authors[i].name);
+      authorArray.push(authors[i].fullName);
     }
-    console.log(authorArray);
-    const test = selectedOrderIds.toString();
-    const body = {title: book.title, authors: authorArray, genres: selectedOrderIds, imagePath: book.imagePath,
-      release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description};
+    const body = {title: book.title, authors: authorArray, genres: book.genres, imagePath: book.imagePath,
+      release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description, user: userName};
     console.log(body);
-    return this.http.post(`${environment.apiUrl}/book-service/books/addBook?value=${value}`, body);
+    return this.http.post(`${environment.apiUrl}/book-service/book`, body);
   }
 
-  addAnnouncement(book: Book) {
-    const body = {title: book.title, author: book.authors, genre: book.genres, imagePath: book.imagePath,
-      release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description};
-    return this.http.post(`${environment.apiUrl}/book-service/books/addAnnouncement`, body);
-  }
+  // addAnnouncement(book: Book) {
+  //   const body = {title: book.title, author: book.authors, genre: book.genres, imagePath: book.imagePath,
+  //     release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description};
+  //   return this.http.post(`${environment.apiUrl}/book-service/books/addAnnouncement`, body);
+  // }
 
   searchBookByTitle(title: string, pageSize: number, page: number): Observable<NewModelBook[]> {
     return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/find-books?title=${title}&size=${pageSize}&page=${page}`);
