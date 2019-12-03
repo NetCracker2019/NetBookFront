@@ -155,10 +155,18 @@ export class BookService {
       userAvatarPath: null,
       reviewText: review.reviewText,
       rating: 0,
-      approved: false};
+      approved: review.approved};
     console.log(body);
     // return this.http.post(`${environment.apiUrl}/book-service/add-review-user-book?userId=1&bookId=4&reviewText=erge`);
     return this.http.post<Review>(`${environment.apiUrl}/book-service/add-review-user-book`, body);
+  }
+  likeBook(bookId: number): Observable<boolean> {
+    const body = {bookId: bookId};
+    return this.http.put<boolean>(`${environment.apiUrl}/book-service/like-book?bookId=${bookId}`, body);
+  }
+  likeReview(reviewId: number): Observable<boolean> {
+    const body = {reviewId: reviewId};
+    return this.http.put<boolean>(`${environment.apiUrl}/book-service/like-review?reviewId=${reviewId}`, body);
   }
   addBookToProfile(userName: string, bookId: number): Observable<boolean> {
     const body = {username: userName, bookId: bookId};
@@ -168,8 +176,8 @@ export class BookService {
   }
   removeBookFromProfile(userName: string, bookId: number): Observable<boolean> {
     const body = {username: userName, bookId: bookId};
-    return this.http.post<boolean>(
-      `${environment.apiUrl}/book-service/remove-book-profile?userName=${userName}&bookId=${bookId}`, body);
+    return this.http.delete<boolean>(
+      `${environment.apiUrl}/book-service/remove-book-profile?userName=${userName}&bookId=${bookId}`);
     // return this.http.get(`${environment.apiUrl}/book-service/add-book-profile?userName=${userName}&bookId=${bookId}`);
   }
   checkBookInProfile(userName: string, bookId: number): Observable<boolean> {

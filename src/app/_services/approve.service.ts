@@ -49,9 +49,9 @@ export class ApproveService {
   }
 
 
-  confirmReview(reviewId: number): Observable<boolean> {
-    const body = {reviewId: reviewId};
-    return this.http.post<boolean>(`${environment.apiUrl}/approve-service/confirm-review?reviewId=${reviewId}`, body);
+  confirmReview(reviewId: number, userId:number): Observable<boolean> {
+    const body = {reviewId: reviewId, userId: userId};
+    return this.http.post<boolean>(`${environment.apiUrl}/approve-service/confirm-review?reviewId=${reviewId}&userId=${userId}`, body);
   }
 
   cancelReview(reviewId: number): Observable<boolean> {

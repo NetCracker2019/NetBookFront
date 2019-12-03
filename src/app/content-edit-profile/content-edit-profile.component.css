@@ -5,3 +5,21 @@
 .page-header {
     padding-left: 7%;
 } 
+.profile-img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;  
+    width: 50%;
+}
+.profile-img img{
+    width: 30vmin;
+    height: 30vmin;
+    object-fit: cover;
+    border-radius: 10%;
+}
+.img-container {
+	text-align: center;
+}
+.help-block {
+    color: red;
+}

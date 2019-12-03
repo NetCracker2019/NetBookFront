@@ -72,6 +72,7 @@ const componentRoutes: Routes = [
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
+  { path: 'achievements', component: ContentAchievementsComponent}
 ];
 
 const componentNotAllRoutes: Routes = [
@@ -132,10 +133,11 @@ const appRoutes: Routes = [
     ContentBookDetailsComponent,
     AddAnnouncementComponent,
     ContentApproveComponent,
-    ContentProfileBookListComponent
+    ContentProfileBookListComponent,
 
   ],
   imports: [
+    InfiniteScrollModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -149,7 +151,7 @@ const appRoutes: Routes = [
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     HttpClientModule,
-    ToastrModule.forRoot({ timeOut: 3000 }),
+    ToastrModule.forRoot(),
     RouterModule.forRoot(
       appRoutes),
     MatAutocompleteModule,

@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../_services/user.service";
 import {first} from "rxjs/operators";
 import {AlertService} from "../_services/alert.service";
+import { environment } from '../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-recovery-pass',
@@ -13,20 +15,20 @@ import {AlertService} from "../_services/alert.service";
 export class RecoveryPassComponent implements OnInit {
 
 
-  recoveryForm: FormGroup;
-  loading = false;
-  submitted = false;
-  returnUrl: string;
-  error = '';
-  token: string;
+  public recoveryForm: FormGroup;
+  public loading: boolean = false;
+  public submitted: boolean = false;
+  public returnUrl: string;
+  public error: string = '';
+  public token: string;
 
   constructor(
   	private userService: UserService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private alertService: AlertService	
-  ) {
+    private alertService: AlertService,
+    private toastr: ToastrService) {
 
   }
 
@@ -53,10 +55,9 @@ export class RecoveryPassComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // stop here if form is invalid
     if (this.recoveryForm.invalid || this.f.passwordFirst.value != 
     	this.f.passwordSecond.value) {
-    	this.alertService.error('Passwords do not match', true);
+    	this.toastr.error(`Passwords do not match`);
       return;
     }
 
@@ -65,12 +66,11 @@ export class RecoveryPassComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.alertService.success('Successful recovery pass', true);	
+          this.toastr.success(`Successful recovery pass`);	
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          this.error = error;
-          this.loading = false;
+          this.toastr.error(`${environment.errorMessage}`);
         });
   }
 

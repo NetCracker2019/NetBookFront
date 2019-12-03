@@ -5,6 +5,8 @@ import {AuthenticationService} from '../_services/authentication.service';
 import {first} from 'rxjs/operators';
 import {User} from '../_models/interface';
 import {Location} from '@angular/common';
+import { environment } from '../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-authorization',
@@ -38,7 +40,8 @@ export class AuthorizationComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private location: Location) {
+    private location: Location,
+    private toastr: ToastrService) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/homeath']);
@@ -105,6 +108,7 @@ export class AuthorizationComponent implements OnInit {
         error => {
           this.error = error;
           this.loading = false;
+          this.toastr.error(`Invalid username/password supplied`);
         });
   }
   goBack(): void {
