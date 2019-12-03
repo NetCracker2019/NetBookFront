@@ -1,3 +1,19 @@
+.book-logo{
+  border-style: solid;
+  border-color: black;
+  width: 90%;
+}
+
+.blog-item{
+  text-decoration: none;
+  background-color: #EDEDED;
+  transition: background-color .25s ease;
+  overflow: hidden;
+  color: #333;
+  /*  padding: 10px;
+    margin: 10px;*/
+}
+
 /*.addForm {
   color: #000;
   grid-column: 2 / 3;

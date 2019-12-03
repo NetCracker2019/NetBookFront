@@ -19,6 +19,10 @@
   color: white;
 }
 
+.menu-color{
+  background-color: #657387;
+}
+
 /*app-header {
   grid-column: 1 / 5;
   background-color: #1a252b;
