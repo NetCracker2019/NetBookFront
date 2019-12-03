@@ -73,7 +73,9 @@ const componentRoutes: Routes = [
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
-  { path: 'calendar', component: ContentCalendarComponent}
+  { path: 'calendar', component: ContentCalendarComponent},
+  { path: 'achievements', component: ContentAchievementsComponent}
+
 ];
 
 const componentNotAllRoutes: Routes = [
@@ -136,6 +138,7 @@ const appRoutes: Routes = [
     ContentApproveComponent,
     ContentProfileBookListComponent,
     ContentCalendarComponent,
+
 
   ],
   imports: [

@@ -11,7 +11,8 @@ import {AuthenticationService} from '../_services/authentication.service';
 export class MenuComponent implements OnInit {
 
   role: number;
-  security: boolean;
+  securityApprove: boolean;
+  securityAchievement: boolean;
 
 
 
@@ -30,16 +31,17 @@ export class MenuComponent implements OnInit {
 //   constructor(role: AuthenticationService) {
 //     this.role = role.role;
 //     if (role as any === 4) {
-//       this.security = false;
+//       this.securityApprove = false;
 //     } else {
-//       this.security = true;
+//       this.securityApprove = true;
 //     }
 //   }
 
   constructor(private authenticationService: AuthenticationService) {
     this.role = authenticationService.role;
-    this.security = this.role != 4;
-    console.log(this.security);
+    this.securityApprove = this.role != 4;
+    this.securityAchievement = this.role == 1 || this.role == 2;
+    console.log(this.securityApprove);
    }
 
 
