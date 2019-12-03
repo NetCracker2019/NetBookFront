@@ -62,6 +62,7 @@ const componentRoutes: Routes = [
   { path: 'profile/:login', component: ContentProfileComponent},
   { path: 'profile/:login/edit', component: ContentEditProfileComponent},
   { path: 'friends/:login', component: ContentFriendsComponent},
+  { path: 'profile/:login/book-list', component: ContentProfileBookListComponent},
   { path: 'recommendations', component: ContentRecommendationsComponent},
   { path: 'chat', component: ContentChatComponent},
   { path: 'achievements', component: ContentAchievementsComponent},
