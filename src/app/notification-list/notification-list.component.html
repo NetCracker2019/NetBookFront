@@ -1,7 +1,13 @@
 <div class="list-group">
-  <div class="d-flex w-100 justify-content-between alert alert-primary" *ngFor="let notification of notifications">
-    <div><h5 class="mb-1">{{notification.notifTitle}}</h5></div>
-    <div><p><a href="" >{{notification.notifText}}</a></p></div>
-    <div><small>{{notification.notifDate}}</small></div>
-  </div>
+
+  <span class="badge badge-info">
+    <div class="d-flex justify-content-between col  col-md-6 offset-md-3 alert alert-primary"
+         *ngFor="let notification of notifications">
+      <div><h5 class="m-5 "><span class="badge badge-pill badge"
+                                  *ngIf="!notification.isRead">!</span> {{notification.notifTitle}}</h5></div>
+      <div><p class="m-5 "><a href="">{{notification.notifText}}</a></p></div>
+     <div><small class="m-5 ">{{notification.notifDate}}</small></div>
+   </div>
+  </span>
+
 </div>
