@@ -52,6 +52,9 @@ import {ContentProfileBookListComponent} from './content-profile-book-list/conte
 import {ToastrModule} from 'ngx-toastr';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { ContentCalendarComponent } from './content-calendar/content-calendar.component';
+
 import {NotificationListComponent} from "./notification-list/notification-list.component";
 // const componentAnnouncement: Routes = [
 //   { path: 'newAnnouncement', component: AddAnnouncementComponent}
@@ -63,6 +66,7 @@ const componentRoutes: Routes = [
   { path: 'profile/:login', component: ContentProfileComponent},
   { path: 'profile/:login/edit', component: ContentEditProfileComponent},
   { path: 'friends/:login', component: ContentFriendsComponent},
+  { path: 'profile/:login/book-list', component: ContentProfileBookListComponent},
   { path: 'recommendations', component: ContentRecommendationsComponent},
   { path: 'chat', component: ContentChatComponent},
   { path: 'achievements', component: ContentAchievementsComponent},
@@ -74,8 +78,10 @@ const componentRoutes: Routes = [
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
+  { path: 'calendar', component: ContentCalendarComponent},
   { path: 'notifications', component: NotificationListComponent},
   { path: 'achievements', component: ContentAchievementsComponent}
+
 ];
 
 const componentNotAllRoutes: Routes = [
@@ -86,18 +92,19 @@ const componentNotAllRoutes: Routes = [
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
-  { path: 'notifications', component: NotificationListComponent}
+ // { path: 'notifications', component: NotificationListComponent}
 ];
 
 
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent, children: componentNotAllRoutes },
-  { path: 'login', component: AuthorizationComponent /*, canActivate: [AuthForAddSthGuard]*/},
+  { path: 'login', component: AuthorizationComponent , canActivate: [AuthForAddSthGuard]},
   { path: 'register', component: RegistrationComponent },
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
   { path: 'verification-account', component: VerificationAccountComponent},
   { path: 'verification-admin', component: VerificationAdminComponent },
+
   { path: 'recovery-password', component: RecoveryPassComponent },
   { path: 'recovery-password-request', component: RecoveryPassRequestComponent },
   // otherwise redirect to home
@@ -135,12 +142,14 @@ const appRoutes: Routes = [
     SearchComponent,
     ContentBookDetailsComponent,
     AddAnnouncementComponent,
-    ContentApproveComponent,
+
     NotificationListComponent,
     ContentApproveComponent,
     ContentProfileBookListComponent,
-
+    LoadingSpinnerComponent,
+    ContentCalendarComponent
   ],
+
   imports: [
     InfiniteScrollModule,
     BrowserModule,

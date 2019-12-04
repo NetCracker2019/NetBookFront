@@ -1,61 +1,81 @@
-<button (click)="advanced()">advanced search</button>
+<div class="container-fluid">
 
-<div id="collapseExample" [ngbCollapse]="isCollapsed">
-  <div class="card">
-    <div class="card-body">
-      <form>
-        <label>Genre</label>
-        <select [(ngModel)]="selectedGenre" name="genre">
-          <option value="all" selected>All</option>
-          <option *ngFor="let genre of genres" [value]="genre.genreName">
-            {{genre.genreName}}
-          </option>
-        </select>
-      </form>
+  <div class="row">
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-gray" (click)="advanced()">advanced search</button>
+    </div>
+  </div>
 
-      <form>
-        <input type="text" placeholder="author" [formControl]="control" [matAutocomplete]="auto">
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let author of filteredAuthors | async" [value]="author.fullName">
-            {{author.fullName}}
-          </mat-option>
-        </mat-autocomplete>
-      </form>
+  <div class="row">
+    <div class="col">
+      <div id="collapseExample" [ngbCollapse]="isCollapsed">
+        <div class="card">
+          <div class="card-body">
+            <form>
+              <label>Genre</label>
+              <select class="selectpicker" [(ngModel)]="selectedGenre" name="genre">
+                <option [ngValue]="-1">All</option>
+                <option *ngFor="let genre of genres" [value]="genre.genreId">
+                  {{genre.genreName}}
+                </option>
+              </select>
+            </form>
 
-      <div *ngIf="dateFrom">
-        <mat-form-field>
-          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerFrom" placeholder="Announcement date from" [formControl]="dateFrom">
-          <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-          <mat-datepicker #pickerFrom></mat-datepicker>
-        </mat-form-field>
-      </div>
+            <form>
+              <input type="text" placeholder="author" [formControl]="control" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let author of filteredAuthors | async" [value]="author.fullName">
+                  {{author.fullName}}
+                </mat-option>
+              </mat-autocomplete>
+            </form>
 
-      <div *ngIf="dateTo">
-        <mat-form-field>
-          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerTo" placeholder="Announcement date to" [formControl]="dateTo">
-          <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-          <mat-datepicker #pickerTo></mat-datepicker>
-        </mat-form-field>
+            <div *ngIf="dateFrom">
+              <mat-form-field>
+                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerFrom" placeholder="Announcement date from" [formControl]="dateFrom">
+                <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFrom></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div *ngIf="dateTo">
+              <mat-form-field>
+                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerTo" placeholder="Announcement date to" [formControl]="dateTo">
+                <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                <mat-datepicker #pickerTo></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div *ngIf="books">
-  <ul class="books">
-    <li *ngFor="let book of books" >
-      <a class="blog-item"  [routerLink]="[book.bookId]">
-        <div class="book-image-grid">
-          <img src="{{book.imagePath}}" alt="Example" class="book-logo">
-        </div>
-        <div class="book-item-content" >
-          <h3>{{book.title}} - {{book.authors}}</h3>
-          <p>Likes: {{book.likes}}</p>
-          <p>Description: {{book.description}} </p>
-        </div>
-      </a>
-    </li>
-  </ul>
-</div>
+  <app-loading-spinner *ngIf="!currentPage"></app-loading-spinner>
 
-<ngb-pagination [collectionSize]="collectionSize" [pageSize]="booksPerPage" [(page)]="page" [boundaryLinks]="true" (pageChange)="onPageChanged()"></ngb-pagination>
+  <div *ngIf="currentPage">
+    <ul class="books">
+      <li *ngFor="let book of currentPage.content" >
+        <a class="blog-item"  [routerLink]="[book.bookId]">
+          <div class="book-image-grid">
+            <img src="{{book.imagePath}}" alt="Example" class="book-logo">
+          </div>
+          <div class="book-item-content" >
+            <h3>{{book.title}} - {{book.authors}}</h3>
+            <p>Likes: {{book.likes}}</p>
+            <p>Description: {{book.description}} </p>
+          </div>
+        </a>
+      </li>
+    </ul>
+
+
+    <ngb-pagination [collectionSize]="currentPage.totalElements"
+                    [pageSize]="pageSize"
+                    [(page)]="pageNumber"
+                    [boundaryLinks]="true"
+                    (pageChange)="onPageChanged()">
+    </ngb-pagination>
+  </div>
+
+</div>
