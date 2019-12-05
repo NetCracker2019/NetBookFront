@@ -46,7 +46,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
 import { SuperadminModeratorRequest } from './superadmin-moderator-request/superadmin-moderator-request.component';
 import { ContentApproveComponent } from './content-approve/content-approve.component';
-//import {AuthForAddSthGuard}from /*'./_helpers/auth-for-add-sth.guard'*/;
+//import {AuthForAddSthGuard}from './_helpers/auth-for-add-sth.guard';
 
 import {ContentProfileBookListComponent} from './content-profile-book-list/content-profile-book-list.component';
 import {ToastrModule} from 'ngx-toastr';
@@ -99,7 +99,7 @@ const componentNotAllRoutes: Routes = [
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent, children: componentNotAllRoutes },
-  { path: 'login', component: AuthorizationComponent , canActivate: [AuthForAddSthGuard]},
+  { path: 'login', component: AuthorizationComponent /*, canActivate: [AuthForAddSthGuard]*/},
   { path: 'register', component: RegistrationComponent },
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
   { path: 'verification-account', component: VerificationAccountComponent},

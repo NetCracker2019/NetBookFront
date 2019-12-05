@@ -17,4 +17,5 @@ export class AuthForAddSthGuard implements CanActivate {
     return !currentUser;
   }
 }
+
 */
