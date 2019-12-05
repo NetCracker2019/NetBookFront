@@ -167,14 +167,17 @@ export class ContentProfileBookListComponent implements OnInit {
           this.toastr.error(`${environment.errorMessage}`);
         });
   }
-
+  onSearchChange(searchValue: string) {  ///
+    this.searchParams.sought = searchValue;///
+    this.find();///
+  }///
   find(){
     this.searchParams.page = 0;
     this.endOfBooks = false;
     this.books = [];
     this.getBookList();
   }
-
+  
   getBookList(){
   	this.userService.getBookList(this.login, this.searchParams)
       .subscribe(

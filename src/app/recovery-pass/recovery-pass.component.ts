@@ -15,12 +15,12 @@ import { ToastrService } from 'ngx-toastr';
 export class RecoveryPassComponent implements OnInit {
 
 
-  private recoveryForm: FormGroup;
-  private loading: boolean = false;
-  private submitted: boolean = false;
-  private returnUrl: string;
-  private error: string = '';
-  private token: string;
+  public recoveryForm: FormGroup;
+  public loading: boolean = false;
+  public submitted: boolean = false;
+  public returnUrl: string;
+  public error: string = '';
+  public token: string;
 
   constructor(
   	private userService: UserService,
