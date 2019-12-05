@@ -14,6 +14,13 @@ export class AuthForAddSthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authenticationService.currentUserValue;
-    return !currentUser;
-  }
+    if (currentUser) {
+      // logged in so return true
+      if(state.url.indexOf('homeath') == -1){
+        this.router.navigate(['/homeath/announcement']);
+      }
+    }
+    //this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    return true;
+	}
 }
