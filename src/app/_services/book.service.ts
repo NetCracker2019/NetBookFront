@@ -191,4 +191,7 @@ export class BookService {
   checkLikedReview(reviewId: number, userLogin: number): Observable<number> {
     return this.http.get<number>(`${environment.apiUrl}/book-service/check-liked-review?reviewId=${reviewId}&userLogin=${userLogin}`);
   }
+  getSuggestions(userName: string): Observable<NewModelBook[]> {
+    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/suggestions?user=${userName}`);
+  }
 }
