@@ -51,6 +51,9 @@ import {ContentProfileBookListComponent} from './content-profile-book-list/conte
 import {ToastrModule} from 'ngx-toastr';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { ContentCalendarComponent } from './content-calendar/content-calendar.component';
+
 // const componentAnnouncement: Routes = [
 //   { path: 'newAnnouncement', component: AddAnnouncementComponent}
 //   ];
@@ -61,6 +64,7 @@ const componentRoutes: Routes = [
   { path: 'profile/:login', component: ContentProfileComponent},
   { path: 'profile/:login/edit', component: ContentEditProfileComponent},
   { path: 'friends/:login', component: ContentFriendsComponent},
+  { path: 'profile/:login/book-list', component: ContentProfileBookListComponent},
   { path: 'recommendations', component: ContentRecommendationsComponent},
   { path: 'chat', component: ContentChatComponent},
   { path: 'achievements', component: ContentAchievementsComponent},
@@ -72,7 +76,9 @@ const componentRoutes: Routes = [
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
+  { path: 'calendar', component: ContentCalendarComponent},
   { path: 'achievements', component: ContentAchievementsComponent}
+
 ];
 
 const componentNotAllRoutes: Routes = [
@@ -88,9 +94,9 @@ const componentNotAllRoutes: Routes = [
 
 
 const appRoutes: Routes = [
-  { path: 'home', component: HomeComponent, children: componentNotAllRoutes },
-  { path: 'login', component: AuthorizationComponent , canActivate: [AuthForAddSthGuard]},
-  { path: 'register', component: RegistrationComponent },
+  { path: 'home', component: HomeComponent, children: componentNotAllRoutes, canActivate: [AuthForAddSthGuard] },
+  { path: 'login', component: AuthorizationComponent, canActivate: [AuthForAddSthGuard]},
+  { path: 'register', component: RegistrationComponent, canActivate: [AuthForAddSthGuard] },
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
   { path: 'verification-account', component: VerificationAccountComponent},
   { path: 'verification-admin', component: VerificationAdminComponent },
@@ -134,6 +140,8 @@ const appRoutes: Routes = [
     AddAnnouncementComponent,
     ContentApproveComponent,
     ContentProfileBookListComponent,
+    LoadingSpinnerComponent,
+    ContentCalendarComponent
 
   ],
   imports: [

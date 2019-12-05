@@ -41,13 +41,13 @@ export interface ViewAnnouncement {
   genres: Array<string>;
 }
 
-export class Author {
-  id: number;
-  name: string;
-}
+// export class Author {
+//   id: number;
+//   name: string;
+// }
 
 export interface Data {
-  name: string;
+  fullName: string;
 }
 
 export interface Genre {
@@ -134,9 +134,9 @@ export interface Review {
   approved: boolean;
 }
 export interface Message {
-  message: string,
-  fromName: string,
-  toName: string,
+  message: string;
+  fromName: string;
+  toName: string;
   dateTimeSend: Date;
 }
 
@@ -158,3 +158,7 @@ export interface Author {
   fullName: string;
 }
 
+export interface Page {
+  content: NewModelBook[];
+  totalElements: number;
+}

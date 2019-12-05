@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BookService} from '../_services/book.service';
-import {Author, Genre, NewModelBook} from '../_models/interface';
+import {Author, Genre, NewModelBook, Page} from '../_models/interface';
 import {Observable, Subscription} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
@@ -20,14 +20,13 @@ export class SearchComponent implements OnInit, OnDestroy {
   dateTo: FormControl;
   subscriptionOnTitle: Subscription;
   genres: Genre[];
-  selectedGenre = 'all';
+  selectedGenre: number;
   authors: Author[] = [];
   filteredAuthors: Observable<Author[]>;
-  books: NewModelBook[] = [];
+  currentPage: Page;
   title: string;
-  page = 1;
-  booksPerPage = 2;
-  collectionSize: number;
+  pageNumber: number;
+  pageSize: number;
 
   constructor(
     private bookService: BookService,
@@ -35,10 +34,13 @@ export class SearchComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.pageNumber = 1;
+    this.pageSize = 2;
+
     this.subscriptionOnTitle = this.bookService.currentTitle
       .subscribe(title => {
         this.title = title;
-        this.getBooks(title);
+        this.onPageChanged();
       });
 
     this.bookService.getMinDateRelease()
@@ -48,10 +50,10 @@ export class SearchComponent implements OnInit, OnDestroy {
       .subscribe(maxDate => { this.maxDate = new Date(maxDate); console.log(maxDate); });
 
     this.bookService.getGenres()
-      .subscribe(genres => { this.genres = genres; console.log(genres); });
+      .subscribe(genres => this.genres = genres);
 
     this.authorService.getAuthors()
-      .subscribe(authors => { this.authors = authors; console.log(authors); });
+      .subscribe(authors => this.authors = authors);
 
     this.filteredAuthors = this.control.valueChanges.pipe(
       startWith(''),
@@ -70,36 +72,21 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   advanced() {
     if (this.isCollapsed) {
+      this.selectedGenre = -1;
       this.dateFrom = new FormControl(this.minDate);
       this.dateTo = new FormControl(this.maxDate);
     }
     this.isCollapsed = !this.isCollapsed;
   }
 
-  getBooks(title: string) {
-    if (this.dateFrom === undefined || this.dateTo === undefined) {
-      this.bookService.getAmountOfSearchResult(title)
-        .subscribe(amount => { this.collectionSize = amount; console.log(amount); });
-      this.bookService.searchBookByTitle(title, this.booksPerPage, this.page)
-        .subscribe(books => { console.log(books) ; this.books = books; });
-    } else {
-      this.bookService.getAmountOfAdvancedSearchResult(title, this.selectedGenre, this.control.value, this.dateFrom.value,
-        this.dateTo.value)
-        .subscribe(amount => this.collectionSize = amount);
-      this.bookService.searchBookAdvanced(title, this.selectedGenre, this.control.value,
-        this.dateFrom.value, this.dateTo.value, this.booksPerPage, this.page)
-        .subscribe(books => { console.log(books) ; this.books = books; });
-    }
-  }
-
   onPageChanged() {
-    if (this.dateFrom === undefined || this.dateTo === undefined) {
-      this.bookService.searchBookByTitle(this.title, this.booksPerPage, this.page)
-        .subscribe(books => { console.log(books) ; this.books = books; });
+    if (this.isCollapsed) {
+      this.bookService.searchBookByTitle(this.title, this.pageSize, this.pageNumber)
+        .subscribe(page => { console.log(page) ; this.currentPage = page; });
     } else {
       this.bookService.searchBookAdvanced(this.title, this.selectedGenre, this.control.value,
-        this.dateFrom.value, this.dateTo.value, this.booksPerPage, this.page)
-        .subscribe(books => { console.log(books) ; this.books = books; });
+        this.dateFrom.value, this.dateTo.value, this.pageSize, this.pageNumber)
+        .subscribe(page => { console.log(page) ; this.currentPage = page; });
     }
   }
 }
