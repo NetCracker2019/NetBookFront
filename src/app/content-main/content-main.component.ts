@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BookService} from '../_services/book.service';
-import {Announcement, Genre} from '../_models/interface';
+import {Announcement, Book, Genre} from '../_models/interface';
 
 
 
@@ -13,7 +13,7 @@ import {Announcement, Genre} from '../_models/interface';
 
 
 export class ContentMainComponent implements OnInit {
-  books: Announcement[] = [] as Announcement[];
+  books: Book[] = [] as Book[];
   collectionSize: number;
   page: number;
   public booksPerPage = 4;

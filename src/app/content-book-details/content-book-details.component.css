@@ -4,23 +4,18 @@
   height: 450px;
 }
 .item-book{
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 5px;
-  display: grid;
-  width: 800px;
-  text-decoration: none;
-  overflow: hidden;
-  padding: 20px;
+  padding-bottom: 30px;
+  padding-top: 40px;
   margin: 10px;
 }
 
 
-.book-content{
-  grid-column: 2 / 3;
-  padding-top: 5px;
-  padding-left: 5px;
-  padding-right: 2px;
-}
+/*.book-content{*/
+/*  grid-column: 2 / 3;*/
+/*  padding-top: 5px;*/
+/*  padding-left: 5px;*/
+/*  padding-right: 2px;*/
+/*}*/
 
 .book-content h3 {
   font-size: 25px;
@@ -31,18 +26,17 @@
 /*  display: grid;*/
 /*  grid-template-columns: 40px 30px;*/
 /*}*/
-/*.like-img-book {*/
-/*  grid-column: 1;*/
-/*  height: 25px;*/
-/*  width: 35px;*/
-/*}*/
-/*.like-img-book img {*/
-/*  height: 25px;*/
-/*  width: 35px;*/
-/*}*/
-/*.like-num {*/
-/*  grid-column: 2;*/
-/*}*/
+.like-img-book {
+  height: 25px;
+  width: 35px;
+}
+.like-img-book input {
+  height: 25px;
+  width: 35px;
+}
+.like-num {
+  padding-left: 40px;
+}
 
 .button-add-book-to-profile {
   background-color: palegreen;
@@ -67,7 +61,7 @@
 
 .review-item {
   display: grid;
-  grid-template-columns: 130px 700px;
+  grid-template-columns: 130px 400px;
   padding-left: 2px;
   padding-top: 10px;
 }

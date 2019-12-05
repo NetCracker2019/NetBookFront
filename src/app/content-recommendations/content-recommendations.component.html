@@ -1,1 +1,17 @@
-<p>content-recommendations works!</p>
+<p>its works</p>
+<div *ngIf="books">
+  <ul class="books">
+    <li *ngFor="let book of books" >
+      <a class="blog-item"  [routerLink]="[book.bookId]">
+        <div class="book-image-grid">
+          <img src="{{book.imagePath}}" alt="Example" class="book-logo">
+        </div>
+        <div class="book-item-content" >
+          <h3>{{book.title}} - {{book.authors}}</h3>
+          <p>Likes: {{book.likes}}</p>
+          <p>Description: {{book.description}} </p>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>
