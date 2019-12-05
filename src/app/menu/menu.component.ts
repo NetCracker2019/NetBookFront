@@ -58,7 +58,7 @@ export class MenuComponent implements OnInit {
     {name: 'Recommendation', url: 'recommendations'},
     {name: 'Calendar', url: 'calendar'},
     {name: 'Chat', url: 'chat'},
-    {name: 'Achievements', url: 'achievements'},
+    // {name: 'Achievements', url: 'achievements'},
     {name: 'Add book/announcement', url: 'newAnnouncement'}];
 
 
