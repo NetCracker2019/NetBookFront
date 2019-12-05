@@ -177,7 +177,7 @@ export class ContentProfileBookListComponent implements OnInit {
     this.books = [];
     this.getBookList();
   }
-
+  
   getBookList(){
   	this.userService.getBookList(this.login, this.searchParams)
       .subscribe(

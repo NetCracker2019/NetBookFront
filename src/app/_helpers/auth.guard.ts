@@ -13,7 +13,10 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authenticationService.currentUserValue;
     if (currentUser) {
-      // logged in so return true
+      // logged in so return true http://localhost:4200/homeath/announcement
+      if(state.url.indexOf('homeath') == -1){
+        this.router.navigate(['/homeath/announcement']);
+      }
       return true;
     }
 
