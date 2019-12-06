@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {NotificationService} from "../_services/notification.service";
 import {Notification} from "../_models/interface";
+import {environment} from "../../environments/environment";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -14,7 +16,8 @@ export class NotificationListComponent implements OnInit {
   notifications: Notification[];
 
 
-  constructor(public notificationService: NotificationService) {
+  constructor(public notificationService: NotificationService,
+              private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -24,15 +27,37 @@ export class NotificationListComponent implements OnInit {
     })
 
   }
-
-  getNavigationLink(notification: Notification) {
+  markAllAsRead
+/*1 add to friend
+2 add book
+3 friend achiev
+4 friend add review
+5 friend add overview
+*/
+  getNavigationLink(notification: Notification): string {
     switch (notification.notifTypeId) {
       case 1 :
-        'friends';
+        return "/homeath/profile/"+notification.fromUserName.toString();
         break;
-
+      case 2 :
+        return "/homeath/profile/"+notification.fromUserName.toString();
+        break;
+      case 3 :
+        return "/homeath/profile/"+notification.fromUserName.toString();
+        break;
+      case 4 :
+        return "/homeath/profile/"+notification.fromUserName.toString();
+        break;
+      case 5 :
+        return "/homeath/profile/"+notification.fromUserName.toString();
+        break;
 
     }
 
+  }
+  AllNotifsMarkAsRead(){
+    this.notificationService.markAllAsRead(this.notifications[0].userId).subscribe(() =>{},error => {
+      this.toastr.error(`${environment.errorMessage}`);
+    });
   }
 }

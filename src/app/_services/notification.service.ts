@@ -19,8 +19,10 @@ export class NotificationService {
   getAllNotifications(): Observable<Notification[]>{
     return this.http.get<Notification[]>(`${environment.apiUrl}/notifications`);
   }
-  markAllAsRead(){
-    return this.http.get(`${environment.apiUrl}/notifications/mark`);
+  markAllAsRead(userId:number){
+    return this.http.put(`${environment.apiUrl}/notifications/mark`,userId);
+
   }
+
 
 }
