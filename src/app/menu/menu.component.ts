@@ -26,7 +26,7 @@ export class MenuComponent implements OnInit {
   //   new Menu('Ачивки', 'achievements'),
   // ];
 
-
+// <<<<<<< HEAD
 //
 //   constructor(role: AuthenticationService) {
 //     this.role = role.role;
@@ -36,7 +36,7 @@ export class MenuComponent implements OnInit {
 //       this.securityApprove = true;
 //     }
 //   }
-
+// =======
   constructor(private authenticationService: AuthenticationService) {
     this.role = authenticationService.role;
     this.securityApprove = this.role != 4;
@@ -55,6 +55,7 @@ export class MenuComponent implements OnInit {
     {name: 'Books', url: 'books'},
     {name: 'My profile', url: 'profile/' + this.authenticationService.currentUserValue.username},
     {name: 'Friends', url: 'friends/' + this.authenticationService.currentUserValue.username},
+    {name: 'Notification', url: 'notifications'},
     {name: 'Recommendation', url: 'recommendations'},
     {name: 'Calendar', url: 'calendar'},
     {name: 'Chat', url: 'chat'},

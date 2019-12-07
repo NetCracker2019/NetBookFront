@@ -108,6 +108,29 @@ export interface Menu {
   url: string;
 }
 
+export  interface Notification {
+  notificationId:number;
+  userId:number;
+  notifDate:Date;
+  isRead:boolean;
+  fromUserId:number;
+  notifTypeId:number;
+  overviewId:number;
+  reviewId:number;
+  bookId:number;
+  achievId:number;
+  overviewName:string;
+  reviewName:string;
+  fromUserName:string;
+  bookName:string;
+  achievName:string;
+  notifTitle:string;
+  notifText:string;
+}
+
+
+
+
 export interface NewModelBook {
   bookId: number;
   title: string;
