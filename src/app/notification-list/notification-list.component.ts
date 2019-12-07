@@ -14,6 +14,7 @@ import {ToastrService} from "ngx-toastr";
 export class NotificationListComponent implements OnInit {
 
   notifications: Notification[];
+  notification:Notification;
 
 
   constructor(public notificationService: NotificationService,
@@ -40,16 +41,16 @@ export class NotificationListComponent implements OnInit {
         return "/homeath/profile/"+notification.fromUserName.toString();
         break;
       case 2 :
-        return "/homeath/profile/"+notification.fromUserName.toString();
+        return "/homeath/search/"+ notification.bookId.toString();
         break;
       case 3 :
         return "/homeath/profile/"+notification.fromUserName.toString();
         break;
       case 4 :
-        return "/homeath/profile/"+notification.fromUserName.toString();
+        return "/homeath/search/"+ notification.bookId.toString();
         break;
       case 5 :
-        return "/homeath/profile/"+notification.fromUserName.toString();
+        return "/homeath/search/"+ notification.bookId.toString();
         break;
 
     }
@@ -57,6 +58,11 @@ export class NotificationListComponent implements OnInit {
   }
   AllNotifsMarkAsRead(){
     this.notificationService.markAllAsRead(this.notifications[0].userId).subscribe(() =>{},error => {
+      this.toastr.error(`${environment.errorMessage}`);
+    });
+  }
+  markOneNotifAsReadByNotifId(notification:Notification){
+    this.notificationService.markNotifAsReadByNotifId(notification).subscribe(() =>{},error => {
       this.toastr.error(`${environment.errorMessage}`);
     });
   }

@@ -23,6 +23,8 @@ export class NotificationService {
     return this.http.put(`${environment.apiUrl}/notifications/mark`,userId);
 
   }
-
+  markNotifAsReadByNotifId(notification:Notification){
+    return this.http.put(`${environment.apiUrl}/notifications/mark-one`,notification);
+  }
 
 }
