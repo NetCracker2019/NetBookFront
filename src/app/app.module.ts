@@ -98,9 +98,11 @@ const componentNotAllRoutes: Routes = [
 
 
 const appRoutes: Routes = [
-  { path: 'home', component: HomeComponent, children: componentNotAllRoutes },
-  { path: 'login', component: AuthorizationComponent /*, canActivate: [AuthForAddSthGuard]*/},
-  { path: 'register', component: RegistrationComponent },
+
+  { path: 'home', component: HomeComponent, children: componentNotAllRoutes, canActivate: [AuthForAddSthGuard] },
+  { path: 'login', component: AuthorizationComponent, canActivate: [AuthForAddSthGuard]},
+  { path: 'register', component: RegistrationComponent, canActivate: [AuthForAddSthGuard] },
+
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
   { path: 'verification-account', component: VerificationAccountComponent},
   { path: 'verification-admin', component: VerificationAdminComponent },
