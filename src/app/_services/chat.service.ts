@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 
-import {User, Message} from '../_models/interface';
+import {User, Message, Chat} from '../_models/interface';
 import {AuthenticationService} from '../_services/authentication.service';
 import { environment } from '../../environments/environment';
 
@@ -13,32 +13,26 @@ export class ChatService {
   constructor(private http: HttpClient) { }
 
   getChats(login: string) {
-    return this.http.get<string[]>(`${environment.apiUrl}/chat/${login}/chats`);
+    return this.http.get<Chat[]>(`${environment.apiUrl}/chat/${login}/chats`);
   }
 
-  getMessagesHistory(chatName: string){
-  	return this.http.get<Message[]>(`${environment.apiUrl}/chat/${chatName}`);
-  }
-
-  isExistChatName(chatName: string){
-  	return this.http.get<boolean>(`${environment.apiUrl}/chat/is-exist/${chatName}`);
+  getMessagesHistory(chatId: number){
+  	return this.http.get<Message[]>(`${environment.apiUrl}/chat/${chatId}`);
   }
 
   createNewChat(chatName: string, members: string[]){
-    return this.http.post<void>(`${environment.apiUrl}/chat/create/${chatName}`,members);
+    return this.http.post<void>(`${environment.apiUrl}/chat/create/${chatName}`, members);
   }
   
-  getChatMembers(chatName: string) {
-    return this.http.get<User[]>(`${environment.apiUrl}/chat/${chatName}/members`);
+  getChatMembers(chatId: number) {
+    return this.http.get<User[]>(`${environment.apiUrl}/chat/${chatId}/members`);
   }
 
-  changeChatName(oldChatName: string, newChatName: string){
-    return this.http.put<void>(`${environment.apiUrl}/chat/rename/${oldChatName}`, newChatName);
-  }
-
-  addFriendsToChat(chatName: string, members: string[]){
+  updateChat(chatId: number, chatName: string, addedMembers: string[], removedMembers: string[]){
     //console.log(JSON.stringify(members));
-    return this.http.put<void>(`${environment.apiUrl}/chat/${chatName}/add-members`, members);
+    console.log(`${environment.apiUrl}/chat/${chatId}/update/${chatName}?addedMembers=${addedMembers}`);
+    return this.http.put<void>(`${environment.apiUrl}/chat/${chatId}/update/${chatName}?addedMembers=${addedMembers}`, 
+      removedMembers);
   }
 }
 

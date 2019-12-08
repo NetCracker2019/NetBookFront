@@ -97,18 +97,20 @@ export class ContentEditProfileComponent implements OnInit {
     this.user.status = this.form.controls.status.value;
   
     if( this.fileToUpload != null){
-      console.log("qwe");
       this.fileName = uuid();
-      this.user.avatarFilePath = this.fileName;
-
-      this.userService.postFile(this.fileToUpload, this.fileName).subscribe(data => {
+      //this.user.avatarFilePath = this.fileName;
+      this.userService.postFile(this.fileToUpload, this.fileName).subscribe(
+        data => {
+          this.user.avatarFilePath = this.fileName;
+          this.commitEditUser();
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.info(`Picture size must be < 1 MB`);
+          this.commitEditUser();
         });
-    }
-    
-
+    }  
+  }
+  commitEditUser(){
     this.userService.edit(this.user)
       .subscribe(
         data => {
@@ -116,10 +118,9 @@ export class ContentEditProfileComponent implements OnInit {
           this.router.navigate(['/homeath/profile/' + this.login]);
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.info(`${environment.errorMessage}`);
         });
   }
-
   goBack(){
     this.router.navigate(['/homeath/profile/' + this.login]);
   }

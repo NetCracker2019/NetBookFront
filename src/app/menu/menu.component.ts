@@ -57,6 +57,7 @@ export class MenuComponent implements OnInit {
     {name: 'Friends', url: 'friends/' + this.authenticationService.currentUserValue.username},
     {name: 'Notification', url: 'notifications'},
     {name: 'Recommendation', url: 'recommendations'},
+    {name: 'My books', url: `profile/${this.authenticationService.currentUserValue.username}/book-list`},
     {name: 'Calendar', url: 'calendar'},
     {name: 'Chat', url: 'chat'},
     // {name: 'Achievements', url: 'achievements'},

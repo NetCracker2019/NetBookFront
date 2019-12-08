@@ -21,7 +21,7 @@ export class ContentProfileComponent implements OnInit {
   public favouriteBooks: ShortBookDescription[] = [];
   public readingBooks: ShortBookDescription[] = [];
   public readBooks: ShortBookDescription[] = [];
-  public achievement: Achievement = {} as Achievement;	
+  public achievements: Achievement[] = [];	
   public isFriend: number = -1;	
   public isOwnProfile: boolean = false;
   private login: string;
@@ -52,10 +52,10 @@ export class ContentProfileComponent implements OnInit {
     if(this.authenticationService.currentUserValue.username == this.login){
       this.isOwnProfile = true;
     }
-    this.userService.getAchievement(this.login)
+    this.userService.getAchievements(this.login)
       .subscribe(
-        (data: Achievement) => {
-          this.achievement = data;
+        (data: Achievement[]) => {
+          this.achievements = data;
         },
         error => {
           this.toastr.error(`${environment.errorMessage}`);

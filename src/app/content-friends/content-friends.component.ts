@@ -30,11 +30,12 @@ export class ContentFriendsComponent implements OnInit {
               private alertService: AlertService,
               private toastr: ToastrService) {
 
-    this.login = activatedRoute.snapshot.params['login'];
-    this.authenticationService.refreshToken();
+    
   }
 
   ngOnInit() {
+    this.login = this.activatedRoute.snapshot.params['login'];
+    this.authenticationService.refreshToken();
     this.getPersons();
   }
   onSearchChange(searchValue: string) {
@@ -42,26 +43,37 @@ export class ContentFriendsComponent implements OnInit {
     this.sought = searchValue;
     this.peoples = [];
     this.endOfFriends = false;
-    this.getPersons();
+    this.getPersonsNewSought();
   }
   onWhereChange(whereValue: string) {
     this.page = 1;
     this.where = whereValue;
     this.peoples = [];
     this.endOfFriends = false;
-    this.getPersons();
+    this.getPersonsNewSought();
   }
   onPageChanged() {
     this.page = this.page + 1;
     this.getPersons();
   }
-
+  //call when scrolling
   getPersons() {
     this.userService.getPersons(this.login, this.sought, this.where, this.collectionSize, this.page - 1)
       .subscribe(
         (data : User[]) => {
           if(data.length < this.collectionSize) this.endOfFriends = true;
           this.peoples = this.peoples.concat(data);
+        },
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
+        });
+  }
+  //call when changing sought
+  getPersonsNewSought() {
+    this.userService.getPersons(this.login, this.sought, this.where, this.collectionSize, this.page - 1)
+      .subscribe(
+        (data : User[]) => {
+          this.peoples = data;
         },
         error => {
           this.toastr.error(`${environment.errorMessage}`);
