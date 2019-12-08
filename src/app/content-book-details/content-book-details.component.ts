@@ -23,8 +23,8 @@ export class ContentBookDetailsComponent implements OnInit {
   currentUser: User;
   reviewText: string;
   added = false;
-  likedBook = false;
-  likedReview = false;
+  likedBook: number;
+  bookLikes: number;
 
   constructor(private route: ActivatedRoute,
               private bookService: BookService,
@@ -51,18 +51,29 @@ export class ContentBookDetailsComponent implements OnInit {
       });
       if (this.currentUser) {
         this.checkBookInProfile(this.currentUser.username, bookId);
+        this.checkLikedBook(this.currentUser.username, bookId);
       }
     });
     this.offset += this.count;
   }
+
   checkBookInProfile(userName: string, bookId: number) {
     this.bookService.checkBookInProfile(userName, bookId).subscribe(data => {
       this.added = data;
     });
   }
+
+  checkLikedBook(userLogin: string, bookId: number) {
+    this.bookService.checkLikedBook(bookId, userLogin).subscribe(data => {
+      this.likedBook = data;
+      console.log(data);
+    });
+  }
+
   getBook(id: number) {
     this.bookService.getBookById(id).subscribe(data => {
       this.book = data;
+      this.bookLikes = data.likes;
     });
     console.log('Books from det comp:', this.book);
   }
@@ -144,15 +155,49 @@ export class ContentBookDetailsComponent implements OnInit {
   }
 
   likeBook() {
-    if (!this.likedBook) {
-      this.bookService.likeBook(this.book.bookId).subscribe(data => { console.log(data); });
-      this.likedBook = true;
+    this.bookService.likeBook(this.book.bookId, this.currentUser.username).subscribe(data => {
+      console.log(data);
+    });
+    if (this.likedBook == 1) {
+      this.bookLikes--;
+      this.likedBook = 0;
+    } else if (this.likedBook == -1) {
+      this.bookLikes += 2;
+      this.likedBook = 1;
+    } else {
+      this.bookLikes++;
+      this.likedBook = 1;
+      console.log(this.bookLikes);
     }
   }
-  likeReview(reviewId: number) {
-    if (!this.likedReview) {
-      this.bookService.likeReview(reviewId).subscribe(data => { console.log(data); });
-      this.likedReview = true;
+
+  dislikeBook() {
+    this.bookService.dislikeBook(this.book.bookId, this.currentUser.username).subscribe(data => {
+      console.log(data);
+    });
+    if (this.likedBook == 1) {
+      this.bookLikes -= 2;
+      this.likedBook = -1;
+    } else if (this.likedBook == -1) {
+      this.bookLikes++;
+      this.likedBook = 0;
+    } else {
+      this.bookLikes--;
+      this.likedBook = -1;
     }
+    console.log(this.bookLikes);
+  }
+
+  likeReview(review: Review) {
+    this.bookService.likeReview(review.reviewId, this.currentUser.username).subscribe(data => {
+      review.rating = data;
+    });
+  }
+
+  dislikeReview(review: Review) {
+    console.log('Нажат диз');
+    this.bookService.dislikeReview(review.reviewId, this.currentUser.username).subscribe(data => {
+      review.rating = data;
+    });
   }
 }

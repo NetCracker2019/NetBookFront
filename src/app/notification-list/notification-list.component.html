@@ -1,0 +1,48 @@
+<div class="list-group">
+  <div class="list-group-item-text  d-flex justify-content-center">
+    <h4 class="text-primary">
+      All notifications for You!
+    </h4>
+  </div>
+  <div class="list-group-item-text d-flex justify-content-end">
+    <button type="button" class="btn btn-primary "
+            (click)="AllNotifsMarkAsRead()">Mark All As Read
+    </button>
+  </div>
+  <div class="list-group-item list-group-item-warning col-md-10 offset-md-1 rounded"
+       *ngFor="let notification of notifications">
+    <div>
+      <h4>
+        <span class="badge badge-primary " *ngIf="!notification.isRead">!</span>
+        {{notification.notifTitle}}
+      </h4>
+    </div>
+    <div>
+      <a href=routerLink [routerLink]=getNavigationLink(notification) (click)="markOneNotifAsReadByNotifId(notification)">
+        {{notification.notifText}}
+      </a>
+    </div>
+    <div>
+      <small>
+        {{notification.notifDate}}
+      </small>
+    </div>
+  </div>
+  <div class="list-group-item-text d-flex justify-content-center">
+    <h4 class="text-warning">
+      You have viewed all notifications!
+    </h4>
+  </div>
+
+</div>
+
+<!--
+<div class="d-flex justify-content-between col  col-md-6 offset-md-3 alert alert-primary"
+     *ngFor="let notification of notifications">
+  <div><h5 class="m-5 "><span class="badge badge-pill badge"
+                              *ngIf="!notification.isRead">!</span> {{notification.notifTitle}}</h5></div>
+
+  <div><p class="m-5 "><a [routerLink]="getNavigationLink(notification)">{{notification.notifText}}</a></p></div>
+
+
+-->
