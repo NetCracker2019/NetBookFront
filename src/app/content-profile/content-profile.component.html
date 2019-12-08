@@ -138,7 +138,7 @@ font-awesome.min.css">
 								</div>
 							</div>
 						</div>
-						<a *ngIf="this.favouriteBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/book-list">...all favourite books </a><i class="fa fa-arrow-right" aria-hidden="true"></i>
+						<a *ngIf="this.favouriteBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/book-list">...all favourite books </a><i *ngIf="this.favouriteBooks.length == 3" class="fa fa-arrow-right" aria-hidden="true"></i>
 					</div>		
 				</div>
 				<br><br>

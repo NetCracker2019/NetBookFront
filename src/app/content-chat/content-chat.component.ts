@@ -20,9 +20,8 @@ export class ContentChatComponent implements OnInit {
   public msg: string = "";
   public messages: Message[] = [];
   public chats: Chat[] = [];
-  private username: string = "";
-  private activeChat: number;
-  private chatNameAlreadyExistError: boolean = false;
+  public username: string = "";
+  public activeChat: number;
   public friends: User[] = [];
   public chatName: string = "";
   public editedChatName: string = "";
