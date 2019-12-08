@@ -1,53 +1,203 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FullCalendarComponent } from '@fullcalendar/angular';
-import { EventInput } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import {BookService} from "../_services/book.service";
-import {SubscriptionLike} from "rxjs";
+import { Component, OnInit, ElementRef, ViewChild, QueryList} from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
+import { environment } from '../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
+import {User, Message, Chat} from '../_models/interface';
+import {AuthenticationService} from '../_services/authentication.service';
+import {ChatService} from '../_services/chat.service';
+import {UserService} from '../_services/user.service';
 
 @Component({
   selector: 'app-content-chat',
   templateUrl: './content-chat.component.html',
   styleUrls: ['./content-chat.component.css']
 })
+export class ContentChatComponent implements OnInit {
+  private stompClient;
+  public msg: string = "";
+  public messages: Message[] = [];
+  public chats: Chat[] = [];
+  private username: string = "";
+  private activeChat: number;
+  private chatNameAlreadyExistError: boolean = false;
+  public friends: User[] = [];
+  public chatName: string = "";
+  public editedChatName: string = "";
+  public chatMembers: User[] = [];
+  //friendsWhoAbleToAddToChat
+  public friendsWhoAbleToAdd: User[] = [];
+  public editChatTab: number = 0;
 
-export class ContentChatComponent implements OnInit, OnDestroy {
+  constructor(private toastr: ToastrService,
+    private chatService: ChatService,
+    private userService: UserService,
+    private authenticationService: AuthenticationService) {  }
 
-  calendarPlugins = [dayGridPlugin];
-  calendarEvents: EventInput[] = [
-    // { title: 'Test', date: '2019-11-11', url: '/home' },
-    // { title: 'Test2', date: '2019-11-12', allDay: true }
-  ];
-  value: string;
-  subscription: SubscriptionLike;
+  ngOnInit() {
+    this.authenticationService.refreshToken();
+    this.username = this.authenticationService.currentUserValue.username;
+    this.getChats();
 
-  constructor(private bookService: BookService) {
-    // this.showAll();
+    this.userService.getFriends(this.username, 500, 0)///////TODO infinity scroll
+      .subscribe(
+        (data : User[]) => {
+          this.friends = data;
+        });
   }
-
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-      this.subscription = null;
+  ngOnDestroy(){
+    if(this.stompClient){
+      this.disconnect();
     }
   }
 
-  ngOnInit() {
-  	
+  getChats(){
+    this.chatService.getChats(this.username)
+      .subscribe(
+        (data : Chat[]) => {
+          console.log(data);
+          this.chats = data;
+        });
   }
- 
-  // showPersonalize() {
-  //   this.value = 'personalize';
-  //   this.subscription = this.bookService.getCalendarAnnouncement(this.value)
-  //     .subscribe(data => { console.log(data); this.calendarEvents = data; });
-  // }
-  //
-  // showAll() {
-  //   this.value = 'all';
-  //   this.bookService.getCalendarAnnouncement(this.value)
-  //     .subscribe(data => { console.log(data); this.calendarEvents = data; });
-  // }
 
+  clearCheckedFriendsAndName(){
+    this.chatName = "";
+    for (let friend of this.friends){
+      friend.checked = false;
+    }
+  }
+  //for add frined into new chat
+  onClickCheckBox(friend: User){
+    friend.checked = !friend.checked;
+  }
+
+  getMessagesHistory(chatId: number){
+    this.chatService.getMessagesHistory(chatId)
+      .subscribe(
+        (data : Message[]) => {
+          this.messages = data;
+        });
+  }
+
+  createNewChat(){
+    let addingFriends: string[] = [];
+    for (let friend of this.friends) {
+      if(friend.checked){
+        addingFriends.push(friend.username);
+      }
+
+    }
+    addingFriends.push(this.username);
+    this.chatService.createNewChat(this.chatName, addingFriends)
+      .subscribe((data) => {
+        this.getChats();
+        this.toastr.success(`Chat ${this.chatName} successfully created`);
+      },
+        error => {
+          this.toastr.info(`${environment.errorMessage}`);
+        });
+  }
+
+  isExistPerson(persons: User[], soughtPerson: User){
+    for(let person of persons){
+      if(person.username == soughtPerson.username){
+        return true;
+      }
+    }
+    soughtPerson.checked = false;
+    return false;
+  }
+
+  getChatMembers(chatId: number){
+    this.chatService.getChatMembers(chatId)
+      .subscribe(
+        (data : User[]) => {
+          this.chatMembers = data;
+          this.friendsWhoAbleToAdd = this.friends.filter(
+            x => !this.isExistPerson(this.chatMembers, x));
+        },
+        error => {
+          this.toastr.info(`${environment.errorMessage}`);
+        });
+  }
+
+  editChat(){ 
+    let removedMembers: string[] = [];
+    for (let friend of this.chatMembers) {
+      if(friend.checked){
+        removedMembers.push(friend.username);
+      }
+    }
+
+    let addedMembers: string[] = [];
+    for (let friend of this.friendsWhoAbleToAdd) {
+      if(friend.checked){
+        addedMembers.push(friend.username);
+      }
+    }
+    this.chatService.updateChat(this.activeChat, this.editedChatName, addedMembers, removedMembers)
+      .subscribe(
+          (data) => {
+            this.toastr.success(`Chat successfully updated`);
+          },
+          error => {
+            this.toastr.info(`${environment.errorMessage}`);
+          });
+  }
+  prepareEditMenu(){
+    this.editedChatName = this.chats.find(x => x.chatId === this.activeChat).chatName;
+    //this.editChatTab = 0;
+    this.getChatMembers(this.activeChat);
+  }
+  /*----websocket service block--------*/
+  //onClick Chat select
+  onClick(chatId: number){
+    this.activeChat = chatId;
+    this.messages = [];
+    this.chatName = this.chats.find(x => x.chatId === this.activeChat).chatName;
+    this.initializeWebSocketConnection();
+    this.getMessagesHistory(chatId);
+  }
+  sendMessage() {
+      let message: Message = { message: this.msg,
+       fromName: this.username, toId: this.activeChat, dateTimeSend: null };
+      this.stompClient.send("/socket-subscriber/send/message", {}, JSON.stringify(message));
+      this.msg = '';
+  }
+
+  initializeWebSocketConnection() {
+    //let ws = new SockJS(`${environment.apiUrl}/end-point`);
+    let socket = new WebSocket(`${environment.webSocket}`);
+    this.stompClient = Stomp.over(socket);
+    let that = this;
+    this.stompClient.connect({}, function (frame) {
+      that.openSocket()
+    });
+  }
+
+  openSocket() {
+    this.stompClient.subscribe(`/socket-publisher/${this.activeChat}`, (message) => {
+      this.handleResult(message);
+    });
+  }
+
+  handleResult(message){
+    if (message.body) {
+      let messageResult: Message = JSON.parse(message.body);
+      console.log(messageResult);
+      this.messages.push(messageResult);
+    }
+  }
+
+  disconnect(){
+    this.stompClient.ws.close();
+    console.log("disconnectttt");
+  }
+  /*------------------*/
+  getPhoto(imageName: string) {
+        //return `${environment.apiUrl}/files/download?filename=${imageName}`;
+        return 'https://ptetutorials.com/images/user-profile.png';
+  }
 }

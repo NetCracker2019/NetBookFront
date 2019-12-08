@@ -70,6 +70,8 @@ export interface User {
   avatarFilePath: string;
   role: string;
   token?: string;
+
+  checked?: boolean;
 }
 
 export interface Achievement {
@@ -136,17 +138,9 @@ export interface Review {
 export interface Message {
   message: string;
   fromName: string;
-  toName: string;
+  toId: number;
   dateTimeSend: Date;
 }
-
-export interface Message {
-  message: string;
-  fromName: string;
-  toName: string;
-  dateTimeSend: Date;
-}
-
 
 export interface Genre {
   genreId: number;
@@ -161,4 +155,10 @@ export interface Author {
 export interface Page {
   content: NewModelBook[];
   totalElements: number;
+}
+
+export interface Chat {
+  chatId: number;
+  chatName: string;
+  chatAvatar: string;
 }

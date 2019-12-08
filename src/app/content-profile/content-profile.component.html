@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/
+font-awesome.min.css">
 <div class="container emp-profile">
 	<form method="post">
 		<div class="row">
@@ -14,10 +16,14 @@
 					<h6>
 						"{{ this.user.status }}"
 					</h6>
-					<p title="{{ this.achievement.description }}" class="proile-rating">Achievements :
-						{{ this.achievement.title }}
-						<img src="{{ this.achievement.image_path }}"/>
-					</p>
+					<span class="proile-rating" >
+						Achievements :
+						<div *ngFor="let achievement of this.achievements" style="white-space: nowrap; display: inline;" title="{{ achievement.title }}
+{{ achievement.description }}">
+							<img src="{{ achievement.image_path }}"/>
+						</div>
+						
+					</span>
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
 						<li class="nav-item">
 							<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
@@ -115,7 +121,7 @@
 				</div>
 				<!-- ------------------------------------------------------------------->
 				<div class="panel">
-					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/book-list">Favourite books</a></div>
+					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/book-list">Favourite books </a><i class="fa fa-angle-double-right" aria-hidden="true"></i></div>
 					<div class="panel-body" >
 						<div class="row">	
 							<div class="col-md-4"  *ngFor="let book of this.favouriteBooks">
@@ -132,14 +138,12 @@
 								</div>
 							</div>
 						</div>
-						<a *ngIf="this.favouriteBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/book-list">...all favourite books</a>
-					</div>
-					
+						<a *ngIf="this.favouriteBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/book-list">...all favourite books </a><i class="fa fa-arrow-right" aria-hidden="true"></i>
+					</div>		
 				</div>
 				<br><br>
-
 				<div class="panel">
-					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/book-list">Read books</a></div>
+					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/book-list">Read books </a><i class="fa fa-angle-double-right" aria-hidden="true"></i></div>
 					<div class="panel-body">
 						<div class="row">	
 							<div class="col-md-4" *ngFor="let book of this.readBooks">
@@ -156,16 +160,15 @@
 								</div>
 							</div>
 						</div>
-
-					</div>
-					<a *ngIf="this.readBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/book-list">...all read books</a>	
+						<a *ngIf="this.readBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/book-list">...all read books </a><i *ngIf="this.readBooks.length == 3" class="fa fa-arrow-right" aria-hidden="true"></i>
+					</div>	
 				</div>
 				<br><br>
 
 				<div class="panel">
 					<div class="panel-heading">
-						<a href="homeath/profile/{{ this.user.username }}/book-list">Reading books</a>
-						
+						<a href="homeath/profile/{{ this.user.username }}/book-list">Reading books </a>
+						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 					</div>
 					<div class="panel-body">
 						<div class="row">	
@@ -183,8 +186,8 @@
 								</div>
 							</div>
 						</div>
+						<a *ngIf="this.readingBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/book-list">...all reading books </a><i *ngIf="this.readingBooks.length == 3" class="fa fa-arrow-right" aria-hidden="true"></i>
 					</div>
-					<a *ngIf="this.readingBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/book-list">...all reading books</a>
 				</div>
 				<br><br>
 
