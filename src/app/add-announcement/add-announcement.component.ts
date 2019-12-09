@@ -35,6 +35,9 @@ export class AddAnnouncementComponent implements OnInit {
       { type: 'minlength', message: 'Username must be at least 2 characters long' },
       { type: 'maxlength', message: 'Username cannot be more than 15 characters long' },
     ],
+    author: [
+      { type: 'required', message: 'Author is required' },
+    ],
     date: [
       { type: 'required', message: 'Date is required' },
     ],
@@ -45,9 +48,8 @@ export class AddAnnouncementComponent implements OnInit {
       { type: 'required', message: 'Image url is required' }
     ],
     pages: [
-      { type: 'required', message: 'Password is required' },
-      { type: 'minlength', message: 'Password must be at least 5 characters long' },
-      { type: 'maxlength', message: 'Your password cannot be more than 15 characters long' }
+      { type: 'required', message: 'Number of pages is required' },
+      { type: 'maxlength', message: 'Your number cannot be more than 5 characters long' }
     ],
   };
 
@@ -63,6 +65,9 @@ export class AddAnnouncementComponent implements OnInit {
         Validators.maxLength(15)
       ]),
       date: new FormControl('', [
+        Validators.required
+      ]),
+      author: new FormControl('', [
         Validators.required
       ]),
       genres: new FormControl('', [
@@ -116,7 +121,10 @@ export class AddAnnouncementComponent implements OnInit {
     return error;
   }
 
-  addContact(name) {
+  addContact(name: string) {
+    if (name.length === 0) {
+      return;
+    }
     let tmp: Author = {authorId: this.counter, fullName: name};
     this.authorsSend.push(tmp);
     this.counter = this.counter + 1;

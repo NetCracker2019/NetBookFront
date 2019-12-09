@@ -51,7 +51,6 @@ export class BookService {
     return this.http.get(`${environment.apiUrl}/book-service/amountOfBook`);
   }
 
-
   getBookList(): Observable<Book[]> {
     return this.http.get<Book[]>(`${environment.apiUrl}/book-service/books`);
   }
@@ -110,6 +109,7 @@ export class BookService {
     }
   }
 
+
   getMinDateRelease(): Observable<Date> {
     return this.http.get<Date>(`${environment.apiUrl}/book-service/min-date-release`);
   }
@@ -137,14 +137,7 @@ export class BookService {
     // return this.http.post(`${environment.apiUrl}/book-service/add-review-user-book?userId=1&bookId=4&reviewText=erge`);
     return this.http.post<Review>(`${environment.apiUrl}/book-service/add-review-user-book`, body);
   }
-  likeBook(bookId: number): Observable<boolean> {
-    const body = {bookId: bookId};
-    return this.http.put<boolean>(`${environment.apiUrl}/book-service/like-book?bookId=${bookId}`, body);
-  }
-  likeReview(reviewId: number): Observable<boolean> {
-    const body = {reviewId: reviewId};
-    return this.http.put<boolean>(`${environment.apiUrl}/book-service/like-review?reviewId=${reviewId}`, body);
-  }
+
   addBookToProfile(userName: string, bookId: number): Observable<boolean> {
     const body = {username: userName, bookId: bookId};
     return this.http.post<boolean>(
@@ -180,4 +173,28 @@ export class BookService {
   getSuggestions(userName: string, pageSize: number, page: number): Observable<Page> {
     return this.http.get<Page>(`${environment.apiUrl}/book-service/suggestions?user=${userName}&size=${pageSize}&page=${page}`);
   }
+
+  likeBook(bookId: number, userLogin: string): Observable<boolean> {
+    const body = {bookId: bookId, userLogin: userLogin};
+    return this.http.put<boolean>(`${environment.apiUrl}/book-service/like-book?bookId=${bookId}&userLogin=${userLogin}`, body);
+  }
+  likeReview(reviewId: number, userLogin: string): Observable<number> {
+    const body = {bookId: reviewId, userLogin: userLogin};
+    return this.http.put<number>(`${environment.apiUrl}/book-service/like-review?reviewId=${reviewId}&userLogin=${userLogin}`, body);
+  }
+  dislikeBook(bookId: number, userLogin: string): Observable<boolean> {
+    const body = {bookId: bookId, userLogin: userLogin};
+    return this.http.put<boolean>(`${environment.apiUrl}/book-service/dislike-book?bookId=${bookId}&userLogin=${userLogin}`, body);
+  }
+  dislikeReview(reviewId: number, userLogin: string): Observable<number> {
+    const body = {reviewId: reviewId, userLogin: userLogin};
+    return this.http.put<number>(`${environment.apiUrl}/book-service/dislike-review?reviewId=${reviewId}&userLogin=${userLogin}`, body);
+  }
+  checkLikedBook(bookId: number, userLogin: string): Observable<number> {
+    return this.http.get<number>(`${environment.apiUrl}/book-service/check-liked-book?bookId=${bookId}&userLogin=${userLogin}`);
+  }
+  checkLikedReview(reviewId: number, userLogin: number): Observable<number> {
+    return this.http.get<number>(`${environment.apiUrl}/book-service/check-liked-review?reviewId=${reviewId}&userLogin=${userLogin}`);
+  }
+ 
 }

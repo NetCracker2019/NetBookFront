@@ -1,4 +1,4 @@
-export interface  Book {
+export interface Book {
   bookId: number;
   title: string;
   authors: Array<string>;
@@ -10,11 +10,11 @@ export interface  Book {
   pages: number;
   description: string;
   approved: boolean;
-   /* public img: string;
-    public author: string;
-    public genre: string;
-    public date: string;
-    public language: string;*/
+  /* public img: string;
+   public author: string;
+   public genre: string;
+   public date: string;
+   public language: string;*/
 }
 
 export interface Event {
@@ -31,6 +31,7 @@ export interface Announcement {
   releaseDate: string;
   totalCount: number;
 }
+
 export interface ViewAnnouncement {
   announcmentId: number;
   releaseDate: string;
@@ -70,13 +71,22 @@ export interface User {
   avatarFilePath: string;
   role: string;
   token?: string;
+  checked?: boolean;
 }
 
+
 export interface Achievement {
-  cntBook: number;
+  achievementId: number;
   title: string;
   description: string;
+  amount: number;
   image_path: string;
+  achvType: string;
+  achvRuleId: number;
+  authorName: string;
+  genreName: string;
+  favourite: boolean;
+  readBook: boolean;
 }
 
 export interface ShortBookDescription {
@@ -91,6 +101,7 @@ export interface ShortBookDescription {
   read: boolean;
   checked: boolean;
 }
+
 export interface SearchParams {
   reading: boolean;
   read: boolean;
@@ -107,6 +118,27 @@ export interface Menu {
   name: string;
   url: string;
 }
+
+export interface Notification {
+  notificationId: number;
+  userId: number;
+  notifDate: Date;
+  isRead: boolean;
+  fromUserId: number;
+  notifTypeId: number;
+  overviewId: number;
+  reviewId: number;
+  bookId: number;
+  achievId: number;
+  overviewName: string;
+  reviewName: string;
+  fromUserName: string;
+  bookName: string;
+  achievName: string;
+  notifTitle: string;
+  notifText: string;
+}
+
 
 export interface NewModelBook {
   bookId: number;
@@ -133,17 +165,11 @@ export interface Review {
   rating: number;
   approved: boolean;
 }
-export interface Message {
-  message: string;
-  fromName: string;
-  toName: string;
-  dateTimeSend: Date;
-}
 
 export interface Message {
   message: string;
   fromName: string;
-  toName: string;
+  toId: number;
   dateTimeSend: Date;
 }
 
@@ -161,4 +187,10 @@ export interface Author {
 export interface Page {
   content: NewModelBook[];
   totalElements: number;
+}
+
+export interface Chat {
+  chatId: number;
+  chatName: string;
+  chatAvatar: string;
 }

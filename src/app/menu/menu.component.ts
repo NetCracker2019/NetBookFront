@@ -26,7 +26,7 @@ export class MenuComponent implements OnInit {
   //   new Menu('Ачивки', 'achievements'),
   // ];
 
-
+// <<<<<<< HEAD
 //
 //   constructor(role: AuthenticationService) {
 //     this.role = role.role;
@@ -36,12 +36,12 @@ export class MenuComponent implements OnInit {
 //       this.securityApprove = true;
 //     }
 //   }
-
+// =======
   constructor(private authenticationService: AuthenticationService) {
     this.role = authenticationService.role;
     this.securityApprove = this.role != 4;
     this.securityAchievement = this.role == 1 || this.role == 2;
-    console.log(this.securityApprove);
+    console.log(this.role);
    }
 
 
@@ -55,10 +55,12 @@ export class MenuComponent implements OnInit {
     {name: 'Books', url: 'books'},
     {name: 'My profile', url: 'profile/' + this.authenticationService.currentUserValue.username},
     {name: 'Friends', url: 'friends/' + this.authenticationService.currentUserValue.username},
+    {name: 'Notification', url: 'notifications'},
     {name: 'Recommendation', url: 'recommendations'},
+    {name: 'My books', url: `profile/${this.authenticationService.currentUserValue.username}/book-list`},
     {name: 'Calendar', url: 'calendar'},
     {name: 'Chat', url: 'chat'},
-    {name: 'Achievements', url: 'achievements'},
+    // {name: 'Achievements', url: 'achievements'},
     {name: 'Add book/announcement', url: 'newAnnouncement'}];
 
 
