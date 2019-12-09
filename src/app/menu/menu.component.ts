@@ -46,6 +46,7 @@ export class MenuComponent implements OnInit {
       this.Menu = this.Menu.filter(obj => obj.name !== 'My books' &&
         obj.name !== 'Chat');
     }
+
    }
 
 

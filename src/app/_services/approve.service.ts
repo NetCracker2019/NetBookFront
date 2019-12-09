@@ -21,8 +21,8 @@ export class ApproveService {
   }
 
 
-  getUnApproveBookList(): Observable<ViewAnnouncement[]> {
-    return this.http.get<ViewAnnouncement[]>(`${environment.apiUrl}/approve-service/books`);
+  getUnApproveAnnouncementList(page: number, offset: number): Observable<ViewAnnouncement[]> {
+    return this.http.get<ViewAnnouncement[]>(`${environment.apiUrl}/approve-service/books?page=${page}&itemPerPage=${offset}`);
   }
 
 

@@ -11,15 +11,15 @@
           <input type="radio" name="option" id="radio2" value="reviews" (click)="loadReviews(1)"/>
           <label for="radio2">Reviews</label>
         </div>
-        <div>
-          <input type="radio" name="option" id="radio3" value="overviews"/>
-          <label for="radio3">Overviews</label>
-        </div>
-        <div>
-          <input type="radio" name="option" id="radio4" value="books"/>
-          <label for="radio4">Books</label>
-        </div>
-      </div>
+        <!--<div>-->
+          <!--<input type="radio" name="option" id="radio3" value="overviews"/>-->
+          <!--<label for="radio3">Overviews</label>-->
+        <!--</div>-->
+        <!--<div>-->
+          <!--<input type="radio" name="option" id="radio4" value="books"/>-->
+          <!--<label for="radio4">Books</label>-->
+        <!--</div>-->
+      <!--</div>-->
     </div>
     <div class="col-4">
       <div class="sorting">
@@ -35,33 +35,48 @@
     </div>
   </div>
 </div>
+<!--<<<<<<< HEAD-->
+<!--=======-->
+<!--<div *ngIf="announcements" class="announcements container">-->
+  <!--<div class="row">-->
+    <!--<div class="col-md-6" *ngFor="let announce of announcements">-->
+      <!--<div class="container announcement-item">-->
+        <!--<div class="row">-->
+          <!--<div class="col-2">-->
+            <!--<img src="{{announce.imagePath}}">-->
+          <!--</div>-->
+
+          <!--<div class="col-3">-->
+            <!--<div class="announcement-item-content">-->
+              <!--<p>Title: {{announce.title}}</p>-->
+              <!--<p>Author(s): {{announce.authors}}</p>-->
+              <!--<p>Genres: {{announce.genres}}</p>-->
+              <!--<p>Release date: {{announce.releaseDate}}</p>-->
+              <!--<p>Description: {{announce.description}}</p>-->
+              <!--<button class="confirm" (click)="confirmAnnouncement(announce)">Confirm</button>-->
+              <!--<button class="cancel" (click)="cancelAnnouncement(announce)">Cancel</button>-->
+            <!--</div>-->
+          <!--</div>-->
+<!--&gt;>>>>>> dfb2f0c2f43a53dccdfd99b80f2f9175d9292fe7-->
+
+
 <div *ngIf="announcements" class="announcements container">
   <div class="row">
-    <div class="col-md-6" *ngFor="let announce of announcements">
-      <div class="container announcement-item">
-        <div class="row">
-          <div class="col-4">
-            <img src="{{announce.imagePath}}">
-          </div>
-
-          <div class="col-6">
-            <div class="announcement-item-content">
-              <p>Title: {{announce.title}}</p>
-              <p>Author(s): {{announce.authors}}</p>
-              <p>Genres: {{announce.genres}}</p>
-              <p>Release date: {{announce.releaseDate}}</p>
-              <p>Description: {{announce.description}}</p>
-              <button class="confirm" (click)="confirmAnnouncement(announce)">Confirm</button>
-              <button class="cancel" (click)="cancelAnnouncement(announce)">Cancel</button>
-            </div>
-          </div>
-
-
-        </div>
+    <div class="card test m-2 col-md-5" *ngFor="let announce of announcements">
+      <img src="{{announce.imagePath}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Title: {{announce.title}}</h5>
+        <p class="card-text">Author(s): {{announce.authors}}</p>
+        <p class="card-text">Genres: {{announce.genres}}</p>
+        <p class="card-text">Release date: {{announce.releaseDate}}</p>
+        <p class="card-text">Description: {{announce.description}}</p>
+        <button class="confirm" (click)="confirmAnnouncement(announce)">Confirm</button>
+        <button class="cancel" (click)="cancelAnnouncement(announce)">Cancel</button>
       </div>
     </div>
   </div>
 </div>
+
 <div *ngIf="reviews" class="reviews container">
   <div class="row">
     <div class="test col-md-6" *ngFor="let review of reviews">
@@ -83,4 +98,4 @@
   </div>
 </div>
 <ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [pageSize]="itemsPerPage"
-                [(page)]="reviewPage" [boundaryLinks]="true" (pageChange)="loadReviews($event)"></ngb-pagination>
+                [(page)]="reviewPage" [boundaryLinks]="true" (pageChange)="checker()"></ngb-pagination>

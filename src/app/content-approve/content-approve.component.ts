@@ -18,6 +18,9 @@ export class ContentApproveComponent implements OnInit {
   collectionSize: number;
   book: NewModelBook;
   sortingBy: string;
+  value: string;
+  counterAnon = 0;
+  counterRev = 0;
 
   constructor(private approveService: ApproveService,
               private bookService: BookService,
@@ -74,9 +77,28 @@ export class ContentApproveComponent implements OnInit {
     // window.location.reload();
   }
 
+  checker() {
+    if (this.value === 'anons') {
+      this.loadAnnouncements();
+    } else if (this.value === 'rev') {
+      this.loadReviews();
+    }
+  }
+
   loadAnnouncements() {
+    if (this.counterRev > 0) {
+      this.reviewPage = 0;
+      this.counterRev = 0;
+    }
+    // this.counterRev = 0;
+    this.counterAnon = this.counterAnon + 1;
     this.reviews = [];
-    this.approveService.getUnApproveBookList()
+    this.value = 'anons';
+    this.bookService.countAnnouncement(false).subscribe(data => {
+      console.log(data);
+      this.collectionSize = data;
+    });
+    this.approveService.getUnApproveAnnouncementList(this.reviewPage, this.itemsPerPage)
       .subscribe(books => {
         console.log(books);
         this.announcements = books;
@@ -95,11 +117,15 @@ export class ContentApproveComponent implements OnInit {
     // window.location.reload();
   }
 
-  showPersonalize() {
-  }
-
-  loadReviews(event) {
+  loadReviews() {
+    if (this.counterAnon > 0) {
+      this.reviewPage = 0;
+      this.counterAnon = 0;
+    }
+    // this.counterAnon = 0;
+    this.counterRev = this.counterRev + 1;
     this.announcements = [];
+    this.value = 'rev';
     this.bookService.countReviews(false).subscribe(data => {
       console.log(data);
       this.collectionSize = data;
@@ -121,6 +147,10 @@ export class ContentApproveComponent implements OnInit {
           this.toastr.success('Something is wrong(');
         }
       });
+    this.approveService.getReviewForApprove(this.reviewPage, this.itemsPerPage).subscribe(data => {
+      console.log(data);
+      this.reviews = data;
+    });
     // window.location.reload();
   }
 
@@ -135,6 +165,10 @@ export class ContentApproveComponent implements OnInit {
           this.toastr.success('Something is wrong(');
         }
       });
+    this.approveService.getReviewForApprove(this.reviewPage, this.itemsPerPage).subscribe(data => {
+      console.log(data);
+      this.reviews = data;
+    });
   }
 
 
