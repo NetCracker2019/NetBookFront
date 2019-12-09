@@ -171,6 +171,7 @@ export class BookService {
   }
 
   getSuggestions(userName: string, pageSize: number, page: number): Observable<Page> {
+    page = page - 1;
     return this.http.get<Page>(`${environment.apiUrl}/book-service/suggestions?user=${userName}&size=${pageSize}&page=${page}`);
   }
 
@@ -196,5 +197,4 @@ export class BookService {
   checkLikedReview(reviewId: number, userLogin: number): Observable<number> {
     return this.http.get<number>(`${environment.apiUrl}/book-service/check-liked-review?reviewId=${reviewId}&userLogin=${userLogin}`);
   }
- 
 }
