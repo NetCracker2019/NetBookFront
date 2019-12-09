@@ -177,7 +177,7 @@ export class BookService {
     return this.http.get<number>(`${environment.apiUrl}/book-service/count-reviews?approved=${approved}`);
   }
 
-  getSuggestions(userName: string): Observable<NewModelBook[]> {
-    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/suggestions?user=${userName}`);
+  getSuggestions(userName: string, pageSize: number, page: number): Observable<Page> {
+    return this.http.get<Page>(`${environment.apiUrl}/book-service/suggestions?user=${userName}&size=${pageSize}&page=${page}`);
   }
 }

@@ -1,17 +1,39 @@
-<p>its works</p>
-<div *ngIf="books">
-  <ul class="books">
-    <li *ngFor="let book of books" >
-      <a class="blog-item"  [routerLink]="[book.bookId]">
-        <div class="book-image-grid">
-          <img src="{{book.imagePath}}" alt="Example" class="book-logo">
-        </div>
-        <div class="book-item-content" >
-          <h3>{{book.title}} - {{book.authors}}</h3>
-          <p>Likes: {{book.likes}}</p>
-          <p>Description: {{book.description}} </p>
-        </div>
-      </a>
-    </li>
-  </ul>
+<div class="container p-4">
+
+  <app-loading-spinner class="d-flex justify-content-center" *ngIf="!currentPage"></app-loading-spinner>
+
+  <div *ngIf="currentPage">
+    <div class="row p-4">
+      <div class="test col-md-6" *ngFor="let book of currentPage.content" >
+        <a class="blog-item m-2"  [routerLink]="[book.bookId]">
+          <div class="container blog-item-color">
+            <div class="row">
+              <div class="col-6">
+                <div class="book-image-grid">
+                  <img src="{{book.imagePath}}" alt="Example" class="book-logo">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="book-item-content" >
+                  <h3>{{book.title}} - {{book.authors}}</h3>
+                  <p>Likes: {{book.likes}}</p>
+                  <p>Description: {{book.description}} </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <ngb-pagination class="d-flex justify-content-center"
+                    [collectionSize]="currentPage.totalElements"
+                    [pageSize]="pageSize"
+                    [(page)]="pageNumber"
+                    [boundaryLinks]="true"
+                    (pageChange)="onPageChanged()">
+    </ngb-pagination>
+  </div>
+
 </div>
+

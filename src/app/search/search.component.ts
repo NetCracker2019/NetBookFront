@@ -81,8 +81,6 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   onPageChanged() {
-    console.log(this.dateTo.value);
-    console.log(this.dateFrom.value);
     if (this.isCollapsed) {
       this.bookService.searchBookByTitle(this.title, this.pageSize, this.pageNumber)
         .subscribe(page => { console.log(page) ; this.currentPage = page; });
