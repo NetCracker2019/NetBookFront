@@ -32,10 +32,10 @@ export class UserService {
 
   confirmUserAccountRequest(token: string) {
     return this.http.put<Map<string, string>>(
-      `${environment.apiUrl}/user-service/verification/user?token=${token}`, token);//
+      `${environment.apiUrl}/user-service/verification/user?token=${token}`, token); //
   }
 
-  //change password 
+  //change password
   recoveryPass(token: string, pass: string) {
     return this.http.put<Map<string, string>>(
       `${environment.apiUrl}/user-service/change/password?token=${token}&pass=${pass}`, token);//
@@ -50,8 +50,8 @@ export class UserService {
     return this.http.get<User>(`${environment.apiUrl}/profile/${login}`);
   }
 
-  getAchievement(login: string) {
-    return this.http.get<Achievement>(`${environment.apiUrl}/profile/${login}/get-achievement`);
+  getAchievements(login: string) {
+    return this.http.get<Achievement[]>(`${environment.apiUrl}/profile/${login}/get-achievement`);
   }
 
   getFriends(login: string, cnt: number, offset: number) {
@@ -71,7 +71,7 @@ export class UserService {
   }
 
   edit(user: User) {
-    return this.http.put<User>(`${environment.apiUrl}/profile/${user.username}/edit`, user );
+    return this.http.put<User>(`${environment.apiUrl}/profile/edit`, user );
   }
 
   getPersons(login: string, sought: string, where: string, cnt: number, offset: number) {
@@ -84,7 +84,7 @@ export class UserService {
   }
   addFriend(ownLogin:string, friendLogin: string) {
     return this.http.post<void>(
-      `${environment.apiUrl}/profile/add-friend/${ownLogin}/${friendLogin}`, friendLogin);
+      `${environment.apiUrl}/profile/add-friend/${friendLogin}`, friendLogin);
   }
   isFriend(ownLogin:string, friendLogin: string) {
     return this.http.get<number>(
@@ -92,7 +92,7 @@ export class UserService {
   }
   deleteFriend(ownLogin:string, friendLogin: string) {
     return this.http.delete<void>(
-      `${environment.apiUrl}/profile/delete-friend/${ownLogin}/${friendLogin}`);
+      `${environment.apiUrl}/profile/delete-friend/${friendLogin}`);
   }
   updateUserBookList(login:string, bookId: number, reading: boolean, favourite: boolean, remove: boolean) {
     return this.http.put<void>(
@@ -114,15 +114,15 @@ export class UserService {
   }
   addBookBatchTo(login: string, shelf: string, booksId: number[]){
     return this.http.put<void>(
-      `${environment.apiUrl}/profile/${login}/${shelf}/add-books`, booksId);
+      `${environment.apiUrl}/profile/${shelf}/add-books`, booksId);
   }
   removeBookBatchFrom(login: string, shelf: string, booksId: number[]){
     return this.http.put<void>(
-      `${environment.apiUrl}/profile/${login}/${shelf}/remove-books`, booksId);
+      `${environment.apiUrl}/profile/${shelf}/remove-books`, booksId);
   }
   removeBookBatch(login: string, booksId: number[]){
     return this.http.delete<void>(
-      `${environment.apiUrl}/profile/${login}/remove-books?booksid=${booksId}`);
+      `${environment.apiUrl}/profile/remove-books?booksid=${booksId}`);
   }
 }
 

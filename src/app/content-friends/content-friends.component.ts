@@ -15,48 +15,49 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ContentFriendsComponent implements OnInit {
 
-  public peoples: User[] = [];	
+  public peoples: User[] = [];
   private login: string;
-  private sought: string = "";
+  private sought: string = '';
   public page: number = 1;
-  private where: string = "friends";
+  private where: string = 'friends';
   public collectionSize: number = 6;
   public endOfFriends: boolean = false;
 
   constructor(private userService: UserService,
-   private activatedRoute: ActivatedRoute,
-   private router: Router,
-   private authenticationService: AuthenticationService,
-   private alertService: AlertService,
-   private toastr: ToastrService) {
+              private activatedRoute: ActivatedRoute,
+              private router: Router,
+              private authenticationService: AuthenticationService,
+              private alertService: AlertService,
+              private toastr: ToastrService) {
+
     
-    this.login = activatedRoute.snapshot.params['login'];
-    this.authenticationService.refreshToken();
-	}
+  }
 
   ngOnInit() {
+    this.login = this.activatedRoute.snapshot.params['login'];
+    this.authenticationService.refreshToken();
     this.getPersons();
   }
-  onSearchChange(searchValue: string) {  
+  onSearchChange(searchValue: string) {
     this.page = 1;
     this.sought = searchValue;
     this.peoples = [];
     this.endOfFriends = false;
-    this.getPersons();
+    this.getPersonsNewSought();
   }
-  onWhereChange(whereValue: string) {  
+  onWhereChange(whereValue: string) {
     this.page = 1;
     this.where = whereValue;
     this.peoples = [];
     this.endOfFriends = false;
-    this.getPersons();
+    this.getPersonsNewSought();
   }
   onPageChanged() {
     this.page = this.page + 1;
     this.getPersons();
   }
-
-  getPersons(){
+  //call when scrolling
+  getPersons() {
     this.userService.getPersons(this.login, this.sought, this.where, this.collectionSize, this.page - 1)
       .subscribe(
         (data : User[]) => {
@@ -67,12 +68,23 @@ export class ContentFriendsComponent implements OnInit {
           this.toastr.error(`${environment.errorMessage}`);
         });
   }
-  find(){
+  //call when changing sought
+  getPersonsNewSought() {
+    this.userService.getPersons(this.login, this.sought, this.where, this.collectionSize, this.page - 1)
+      .subscribe(
+        (data : User[]) => {
+          this.peoples = data;
+        },
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
+        });
+  }
+  find() {
     this.getPersons();
   }
   getPhoto(imageName: string) {
     return `https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg`;
-    //return `${environment.apiUrl}/files/download?filename=${imageName}`;
+    // return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 
 }

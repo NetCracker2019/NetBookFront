@@ -46,11 +46,16 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
 import { SuperadminModeratorRequest } from './superadmin-moderator-request/superadmin-moderator-request.component';
 import { ContentApproveComponent } from './content-approve/content-approve.component';
-import {AuthForAddSthGuard} from './_helpers/auth-for-add-sth.guard';
+import {AuthForAddSthGuard}from './_helpers/auth-for-add-sth.guard';
+
 import {ContentProfileBookListComponent} from './content-profile-book-list/content-profile-book-list.component';
 import {ToastrModule} from 'ngx-toastr';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { ContentCalendarComponent } from './content-calendar/content-calendar.component';
+
+import {NotificationListComponent} from "./notification-list/notification-list.component";
 // const componentAnnouncement: Routes = [
 //   { path: 'newAnnouncement', component: AddAnnouncementComponent}
 //   ];
@@ -61,6 +66,7 @@ const componentRoutes: Routes = [
   { path: 'profile/:login', component: ContentProfileComponent},
   { path: 'profile/:login/edit', component: ContentEditProfileComponent},
   { path: 'friends/:login', component: ContentFriendsComponent},
+  { path: 'profile/:login/book-list', component: ContentProfileBookListComponent},
   { path: 'recommendations', component: ContentRecommendationsComponent},
   { path: 'chat', component: ContentChatComponent},
   { path: 'achievements', component: ContentAchievementsComponent},
@@ -72,7 +78,10 @@ const componentRoutes: Routes = [
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
+  { path: 'calendar', component: ContentCalendarComponent},
+  { path: 'notifications', component: NotificationListComponent},
   { path: 'achievements', component: ContentAchievementsComponent}
+
 ];
 
 const componentNotAllRoutes: Routes = [
@@ -83,14 +92,17 @@ const componentNotAllRoutes: Routes = [
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
+ // { path: 'notifications', component: NotificationListComponent}
 ];
 
 
 
 const appRoutes: Routes = [
-  { path: 'home', component: HomeComponent, children: componentNotAllRoutes },
-  { path: 'login', component: AuthorizationComponent , canActivate: [AuthForAddSthGuard]},
-  { path: 'register', component: RegistrationComponent },
+
+  { path: 'home', component: HomeComponent, children: componentNotAllRoutes, canActivate: [AuthForAddSthGuard] },
+  { path: 'login', component: AuthorizationComponent, canActivate: [AuthForAddSthGuard]},
+  { path: 'register', component: RegistrationComponent, canActivate: [AuthForAddSthGuard] },
+
   { path: 'homeath', component: HomeAuthComponent , canActivate: [AuthGuard], children: componentRoutes },
   { path: 'verification-account', component: VerificationAccountComponent},
   { path: 'verification-admin', component: VerificationAdminComponent },
@@ -132,10 +144,14 @@ const appRoutes: Routes = [
     SearchComponent,
     ContentBookDetailsComponent,
     AddAnnouncementComponent,
+
+    NotificationListComponent,
     ContentApproveComponent,
     ContentProfileBookListComponent,
-
+    LoadingSpinnerComponent,
+    ContentCalendarComponent
   ],
+
   imports: [
     InfiniteScrollModule,
     BrowserModule,
