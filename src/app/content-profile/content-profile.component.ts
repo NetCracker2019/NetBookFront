@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {User, Achievement, ShortBookDescription} from '../_models/interface';
 import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {environment} from '../../environments/environment';
+import { Router, ActivatedRoute } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 import {AuthenticationService} from '../_services/authentication.service';
-import {ToastrService} from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-content-profile',
@@ -21,18 +21,18 @@ export class ContentProfileComponent implements OnInit {
   public favouriteBooks: ShortBookDescription[] = [];
   public readingBooks: ShortBookDescription[] = [];
   public readBooks: ShortBookDescription[] = [];
-  public achievement: Achievement = {} as Achievement;
-  public isFriend: number = -1;
+  public achievements: Achievement[] = [];	
+  public isFriend: number = -1;	
   public isOwnProfile: boolean = false;
   private login: string;
 
 
   constructor(private userService: UserService,
-              private activatedRoute: ActivatedRoute,
-              private router: Router,
-              private authenticationService: AuthenticationService,
-              private alertService: AlertService,
-              private toastr: ToastrService) {
+   private activatedRoute: ActivatedRoute,
+   private router: Router,
+   private authenticationService: AuthenticationService,
+   private alertService: AlertService,
+   private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -48,14 +48,14 @@ export class ContentProfileComponent implements OnInit {
         error => {
           this.toastr.error(`${environment.errorMessage}`);
         });
-
-    if (this.authenticationService.currentUserValue.username == this.login) {
+    
+    if(this.authenticationService.currentUserValue.username == this.login){
       this.isOwnProfile = true;
     }
-    this.userService.getAchievement(this.login)
+    this.userService.getAchievements(this.login)
       .subscribe(
-        (data: Achievement) => {
-          this.achievement = data;
+        (data: Achievement[]) => {
+          this.achievements = data;
         },
         error => {
           this.toastr.error(`${environment.errorMessage}`);
@@ -70,7 +70,7 @@ export class ContentProfileComponent implements OnInit {
           this.toastr.error(`${environment.errorMessage}`);
         });
 
-    this.userService.getFavouriteBooks(this.login, '', 3, 0)
+    this.userService.getFavouriteBooks(this.login, "", 3, 0)
       .subscribe(
         (data: ShortBookDescription[]) => {
           this.favouriteBooks = data;
@@ -79,25 +79,23 @@ export class ContentProfileComponent implements OnInit {
           this.toastr.error(`${environment.errorMessage}`);
         });
 
-    this.userService.getReadingBooks(this.login, '', 3, 0)
+    this.userService.getReadingBooks(this.login, "", 3, 0)
       .subscribe(
         (data: ShortBookDescription[]) => {
           this.readingBooks = data;
         });
 
-    this.userService.getReadBooks(this.login, '', 3, 0)
+    this.userService.getReadBooks(this.login, "", 3, 0)
       .subscribe(
         (data: ShortBookDescription[]) => {
           this.readBooks = data;
         });
 
   }
-
   goEdit() {
     this.router.navigate(['/homeath/profile/' + this.login + '/edit']);
   }
-
-  addFriend() {
+  addFriend(){
     this.userService.addFriend(this.authenticationService.currentUserValue.username, this.login)
       .subscribe(
         data => {
@@ -108,8 +106,7 @@ export class ContentProfileComponent implements OnInit {
           this.toastr.error(`${environment.errorMessage}`);
         });
   }
-
-  isFriendFunction() {
+  isFriendFunction(){
     this.userService.isFriend(this.authenticationService.currentUserValue.username, this.login)
       .subscribe(
         (data: number) => {
@@ -119,8 +116,7 @@ export class ContentProfileComponent implements OnInit {
           this.toastr.error(`${environment.errorMessage}`);
         });
   }
-
-  deleteFriend() {
+  deleteFriend(){
     this.userService.deleteFriend(this.authenticationService.currentUserValue.username, this.login)
       .subscribe(
         data => {
@@ -130,7 +126,7 @@ export class ContentProfileComponent implements OnInit {
         error => {
           this.toastr.error(`${environment.errorMessage}`);
         });
-
+    
   }
 
   getPhoto(imageName: string) {

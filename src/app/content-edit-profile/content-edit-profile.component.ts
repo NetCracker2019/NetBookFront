@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {User} from '../_models/interface';
 import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
-import {Router, ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../_services/authentication.service';
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from 'uuid';
 import {Observable} from 'rxjs';
-import {environment} from '../../environments/environment';
-import {ToastrService} from 'ngx-toastr';
+import { environment } from '../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-content-edit-profile',
@@ -25,20 +25,20 @@ export class ContentEditProfileComponent implements OnInit {
   form: FormGroup;
   profileValidationMessages = {
     email: [
-      {type: 'pattern', message: 'Enter a valid email'}
+      { type: 'pattern', message: 'Enter a valid email' }
     ],
     password: [
-      {type: 'minlength', message: 'Password must be at least 5 characters long'},
-      {type: 'maxlength', message: 'Your password cannot be more than 15 characters long'}
-    ],
+      { type: 'minlength', message: 'Password must be at least 5 characters long' },
+      { type: 'maxlength', message: 'Your password cannot be more than 15 characters long' }
+    ],	
   };
 
   constructor(private userService: UserService,
-              private activatedRoute: ActivatedRoute,
-              private router: Router,
-              private authenticationService: AuthenticationService,
-              private alertService: AlertService,
-              private toastr: ToastrService) {
+   private activatedRoute: ActivatedRoute,
+   private router: Router,
+   private authenticationService: AuthenticationService,
+   private alertService: AlertService,
+   private toastr: ToastrService) { 
   }
 
   ngOnInit() {
@@ -64,12 +64,12 @@ export class ContentEditProfileComponent implements OnInit {
     });
 
     this.authenticationService.refreshToken();
-    if (this.authenticationService.currentUserValue.username != this.login) {
+  	if(this.authenticationService.currentUserValue.username != this.login){
       this.router.navigate(['/homeath/profile/' + this.login]);
     }
-    this.userService.getUser(this.login)
+  	this.userService.getUser(this.login)
       .subscribe(
-        (data: User) => {
+        (data : User) => {
           this.user = data;
         },
         error => {
@@ -95,20 +95,22 @@ export class ContentEditProfileComponent implements OnInit {
     this.user.email = this.form.controls.email.value;
     this.user.password = this.form.controls.password.value;
     this.user.status = this.form.controls.status.value;
-
-    if (this.fileToUpload != null) {
-      console.log('qwe');
+  
+    if( this.fileToUpload != null){
       this.fileName = uuid();
-      this.user.avatarFilePath = this.fileName;
-
-      this.userService.postFile(this.fileToUpload, this.fileName).subscribe(data => {
+      //this.user.avatarFilePath = this.fileName;
+      this.userService.postFile(this.fileToUpload, this.fileName).subscribe(
+        data => {
+          this.user.avatarFilePath = this.fileName;
+          this.commitEditUser();
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.info(`Picture size must be < 1 MB`);
+          this.commitEditUser();
         });
-    }
-
-
+    }  
+  }
+  commitEditUser(){
     this.userService.edit(this.user)
       .subscribe(
         data => {
@@ -116,11 +118,10 @@ export class ContentEditProfileComponent implements OnInit {
           this.router.navigate(['/homeath/profile/' + this.login]);
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.info(`${environment.errorMessage}`);
         });
   }
-
-  goBack() {
+  goBack(){
     this.router.navigate(['/homeath/profile/' + this.login]);
   }
 

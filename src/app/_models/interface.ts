@@ -70,7 +70,9 @@ export interface User {
   avatarFilePath: string;
   role: string;
   token?: string;
+  checked?: boolean;
 }
+
 
 export interface Achievement {
   achievementId: number;
@@ -114,6 +116,26 @@ export interface Menu {
   name: string;
   url: string;
 }
+export  interface Notification {
+  notificationId:number;
+  userId:number;
+  notifDate:Date;
+  isRead:boolean;
+  fromUserId:number;
+  notifTypeId:number;
+  overviewId:number;
+  reviewId:number;
+  bookId:number;
+  achievId:number;
+  overviewName:string;
+  reviewName:string;
+  fromUserName:string;
+  bookName:string;
+  achievName:string;
+  notifTitle:string;
+  notifText:string;
+}
+
 
 export interface NewModelBook {
   bookId: number;
@@ -143,7 +165,7 @@ export interface Review {
 export interface Message {
   message: string;
   fromName: string;
-  toName: string;
+  toId: number;
   dateTimeSend: Date;
 }
 
@@ -170,3 +192,8 @@ export interface Page {
   totalElements: number;
 }
 
+export interface Chat {
+  chatId: number;
+  chatName: string;
+  chatAvatar: string;
+}
