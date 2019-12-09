@@ -10,10 +10,11 @@
 </div>-->
 
 
+
 <nav class="navbar align-items-start menu-color p-0">
   <div class="container p-0">
     <ul class="navbar-nav mx-auto col-12 p-0">
-      <li *ngFor="let i of Menu" class="nav-item">
+      <li *ngFor="let i of Menu" class="nav-item" >
         <a class="nav-link link" [routerLink]="[i.url]"> {{i.name}} </a>
       </li>
       <li *ngIf="securityApprove" class="nav-item">
