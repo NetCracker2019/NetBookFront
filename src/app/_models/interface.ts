@@ -68,7 +68,7 @@ export interface User {
   status: string;
   regDate: Date;
   avatarFilePath: string;
-  role: string;
+  role: number;
   token?: string;
 
   checked?: boolean;

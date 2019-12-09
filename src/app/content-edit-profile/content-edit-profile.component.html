@@ -5,7 +5,7 @@
     <div class="col-md-4 col-sm-6 col-xs-12">
       <div class="img-container">
         <div class="profile-img">
-          <img src="{{ this.getPhoto(this.user.avatarFilePath) }}" class="avatar img-circle img-thumbnail" alt="avatar">
+          <img src="{{ this.getPhoto() }}" class="avatar img-circle img-thumbnail" alt="avatar">
         </div>
         <h6>Change photo</h6>
         <input name="changeImg" type="file" formControlName="avatarFilePath" (change)="handleFileInput($event.target.files)" style="padding-left: 5vw;">
@@ -51,10 +51,10 @@
           <label class="col-lg-3 control-label">Sex:</label>
           <div class="col-lg-8">
             <div class="ui-select">
-              <select id="user_time_zone" class="form-control" formControlName="sex">
-                <option value="M">Male</option>
-                <option value="Ж">Female</option>
-                <option value="Не визначено">Prefer not to say</option>	
+              <select class="form-control" formControlName="sex">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Prefer not to say">Prefer not to say</option>	
               </select>
             </div>
           </div>
