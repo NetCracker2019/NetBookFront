@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   // apiUrl: 'https://netbooksback.herokuapp.com'
-  apiUrl: 'http://localhost:8080',
-  webSocket: 'ws://localhost:8080/end-point',
+  apiUrl: 'http://localhost:1337',
+  webSocket: 'ws://localhost:1337/end-point',
   errorMessage: 'An unexpected error has occurred. Please contact your system administrator'
 
 };
