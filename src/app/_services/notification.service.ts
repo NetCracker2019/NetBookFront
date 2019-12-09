@@ -27,6 +27,11 @@ export class NotificationService {
   markNotifAsReadByNotifId(notification:Notification){
     return this.http.put(`${environment.apiUrl}/notifications/mark-one`,notification);
   }
+
+  getCountForNotifs(){
+    return this.http.get<number>(`${environment.apiUrl}/notifications/count`);
+  }
+
   /*deleteAllNotificationsByUserId(userId:number){
     return this.http.delete(`${environment.apiUrl}/notifications/delete-all`);
   }*/

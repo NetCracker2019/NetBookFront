@@ -26,10 +26,6 @@ export class NotificationListComponent implements OnInit {
 
       this.notifications = notifications
     })
-    this.notificationService.getAllUnreadNotifications().subscribe((notifications)=>{
-      this.unreadNotifs=notifications
-    })
-
   }
 
 
