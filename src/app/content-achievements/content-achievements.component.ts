@@ -138,8 +138,6 @@ export class ContentAchievementsComponent implements OnInit {
     console.log(this.fileToUpload);
   }
   getPhoto(imageName: string) {
-    return 'https://i.dailymail.co.uk/1s/2019/04/18/10/12427172-0-image-a-20_1555581069374.jpg';
-    //return `${environment.apiUrl}/files/download?filename=${imageName}`;
+    return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
-
 }
