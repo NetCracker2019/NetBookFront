@@ -3,7 +3,7 @@ import {BookService} from '../_services/book.service';
 import {Author, Genre, NewModelBook, Page} from '../_models/interface';
 import {Observable, Subscription} from 'rxjs';
 import {FormControl} from '@angular/forms';
-import {map, startWith} from 'rxjs/operators';
+import {map, startWith, switchMap} from 'rxjs/operators';
 import {AuthorService} from '../_services/author.service';
 
 @Component({
@@ -35,13 +35,14 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.pageNumber = 1;
-    this.pageSize = 2;
+    this.pageSize = 4;
 
-    this.subscriptionOnTitle = this.bookService.currentTitle
-      .subscribe(title => {
-        this.title = title;
-        this.onPageChanged();
-      });
+    this.subscriptionOnTitle = this.bookService.currentTitle.pipe(
+      switchMap(title => (this.title = title, this.bookService.searchBookByTitle(title, this.pageSize, this.pageNumber)))
+    ).subscribe(page => {
+      console.log(page);
+      this.currentPage = page;
+    });
 
     this.bookService.getMinDateRelease()
       .subscribe(minDate => { this.minDate = new Date(minDate); console.log(minDate); });
@@ -70,7 +71,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.subscriptionOnTitle.unsubscribe();
   }
 
-  advanced() {
+  showFilters() {
     if (this.isCollapsed) {
       this.selectedGenre = -1;
       this.dateFrom = new FormControl(this.minDate);
@@ -80,13 +81,20 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   onPageChanged() {
+    console.log(this.dateTo.value);
+    console.log(this.dateFrom.value);
     if (this.isCollapsed) {
       this.bookService.searchBookByTitle(this.title, this.pageSize, this.pageNumber)
         .subscribe(page => { console.log(page) ; this.currentPage = page; });
+    } else if (this.dateFrom.value === null || this.dateTo.value === null) {
+      return;
     } else {
       this.bookService.searchBookAdvanced(this.title, this.selectedGenre, this.control.value,
         this.dateFrom.value, this.dateTo.value, this.pageSize, this.pageNumber)
-        .subscribe(page => { console.log(page) ; this.currentPage = page; });
+        .subscribe(page => {
+          console.log(page);
+          this.currentPage = page;
+        });
     }
   }
 }

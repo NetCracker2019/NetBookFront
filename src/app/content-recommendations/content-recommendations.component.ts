@@ -18,7 +18,8 @@ export class ContentRecommendationsComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.authenticationService.currentUserValue;
 
-    this.bookService.getSuggestions(this.currentUser.username);
+    this.bookService.getSuggestions(this.currentUser.username)
+      .subscribe(books => this.books = books);
   }
 
 }

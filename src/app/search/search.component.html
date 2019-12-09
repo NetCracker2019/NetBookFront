@@ -1,35 +1,44 @@
-<div class="container-fluid">
-
-  <div class="row">
-    <div class="col-sm-2">
-      <button type="button" class="btn btn-gray" (click)="advanced()">advanced search</button>
-    </div>
-  </div>
+<div class="container p-4">
 
   <div class="row">
     <div class="col">
-      <div id="collapseExample" [ngbCollapse]="isCollapsed">
-        <div class="card">
-          <div class="card-body">
-            <form>
-              <label>Genre</label>
-              <select class="selectpicker" [(ngModel)]="selectedGenre" name="genre">
-                <option [ngValue]="-1">All</option>
-                <option *ngFor="let genre of genres" [value]="genre.genreId">
-                  {{genre.genreName}}
-                </option>
-              </select>
-            </form>
+      <button type="button" class="btn btn-gray" (click)="showFilters()">filters</button>
+    </div>
+  </div>
 
+  <div id="collapseExample" [ngbCollapse]="isCollapsed">
+    <div class="card">
+      <div class="card-body">
+        <button type="button" class="btn btn-orange" (click)="onPageChanged()">apply filters</button>
+
+        <div class="row">
+          <div class="col-md">
             <form>
-              <input type="text" placeholder="author" [formControl]="control" [matAutocomplete]="auto">
+              <label>Genre
+                <select class="selectpicker" [(ngModel)]="selectedGenre" name="genre">
+                  <option [ngValue]="-1">All</option>
+                  <option *ngFor="let genre of genres" [value]="genre.genreId">
+                    {{genre.genreName}}
+                  </option>
+                </select>
+              </label>
+            </form>
+          </div>
+
+          <div class="col-md">
+            <form>
+              <input class="form-control" type="text" placeholder="author" [formControl]="control" [matAutocomplete]="auto">
               <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let author of filteredAuthors | async" [value]="author.fullName">
                   {{author.fullName}}
                 </mat-option>
               </mat-autocomplete>
             </form>
+          </div>
+        </div>
 
+        <div class="row">
+          <div class="col-md">
             <div *ngIf="dateFrom">
               <mat-form-field>
                 <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerFrom" placeholder="Announcement date from" [formControl]="dateFrom">
@@ -37,7 +46,9 @@
                 <mat-datepicker #pickerFrom></mat-datepicker>
               </mat-form-field>
             </div>
+          </div>
 
+          <div class="col-md">
             <div *ngIf="dateTo">
               <mat-form-field>
                 <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerTo" placeholder="Announcement date to" [formControl]="dateTo">
@@ -47,30 +58,39 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 
-  <app-loading-spinner *ngIf="!currentPage"></app-loading-spinner>
+  <app-loading-spinner class="d-flex justify-content-center" *ngIf="!currentPage"></app-loading-spinner>
 
   <div *ngIf="currentPage">
-    <ul class="books">
-      <li *ngFor="let book of currentPage.content" >
-        <a class="blog-item"  [routerLink]="[book.bookId]">
-          <div class="book-image-grid">
-            <img src="{{book.imagePath}}" alt="Example" class="book-logo">
-          </div>
-          <div class="book-item-content" >
-            <h3>{{book.title}} - {{book.authors}}</h3>
-            <p>Likes: {{book.likes}}</p>
-            <p>Description: {{book.description}} </p>
+    <div class="row p-4">
+      <div class="test col-md-6" *ngFor="let book of currentPage.content" >
+        <a class="blog-item m-2"  [routerLink]="[book.bookId]">
+          <div class="container blog-item-color">
+            <div class="row">
+              <div class="col-6">
+                <div class="book-image-grid">
+                  <img src="{{book.imagePath}}" alt="Example" class="book-logo">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="book-item-content" >
+                  <h3>{{book.title}} - {{book.authors}}</h3>
+                  <p>Likes: {{book.likes}}</p>
+                  <p>Description: {{book.description}} </p>
+                </div>
+              </div>
+            </div>
           </div>
         </a>
-      </li>
-    </ul>
+      </div>
+    </div>
 
-
-    <ngb-pagination [collectionSize]="currentPage.totalElements"
+    <ngb-pagination class="d-flex justify-content-center"
+                    [collectionSize]="currentPage.totalElements"
                     [pageSize]="pageSize"
                     [(page)]="pageNumber"
                     [boundaryLinks]="true"
