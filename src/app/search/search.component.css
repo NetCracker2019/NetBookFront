@@ -1,26 +1,13 @@
-.books {
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
-  width: 50em;
+.book-logo{
+  border-style: solid;
+  border-color: black;
+  width: 90%;
 }
 
-.books li {
-  position: relative;
-  cursor: pointer;
-  background-color: #EEE;
-  margin: .5em;
-  padding: .3em 0;
-  height: 15em;
-  border-radius: 4px;
-}
-
-.books li:hover {
-  color: #646d73;
-  background-color: #DDD;
-  left: .1em;
-}
-
-mat-form-field {
-  margin-right: 20px;
+.blog-item{
+  text-decoration: none;
+  background-color: #EDEDED;
+  transition: background-color .25s ease;
+  overflow: hidden;
+  color: #333;
 }

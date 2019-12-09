@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from '../_services/authentication.service';
-import {NewModelBook, User} from '../_models/interface';
+import {Page, User} from '../_models/interface';
 import {BookService} from '../_services/book.service';
 
 @Component({
@@ -10,15 +10,25 @@ import {BookService} from '../_services/book.service';
 })
 export class ContentRecommendationsComponent implements OnInit {
   currentUser: User;
-  books: NewModelBook[];
+  currentPage: Page;
+  pageNumber: number;
+  pageSize: number;
 
   constructor(private authenticationService: AuthenticationService,
               private bookService: BookService) { }
 
   ngOnInit() {
+    this.pageNumber = 1;
+    this.pageSize = 4;
+
     this.currentUser = this.authenticationService.currentUserValue;
 
-    this.bookService.getSuggestions(this.currentUser.username);
+    this.bookService.getSuggestions(this.currentUser.username, this.pageSize, this.pageNumber)
+      .subscribe(page => this.currentPage = page);
   }
 
+  onPageChanged() {
+    this.bookService.getSuggestions(this.currentUser.username, this.pageSize, this.pageNumber)
+      .subscribe(page => this.currentPage = page);
+  }
 }
