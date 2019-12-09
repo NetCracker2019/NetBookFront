@@ -98,14 +98,14 @@
   background-color: green;
   border-radius: 10px;
   height: 40px;
-  width: 100px;
+  width: 90px;
 }
 .cancel-button {
   /*grid-column: 2;*/
   background-color: red;
   border-radius: 10px;
   height: 40px;
-  width: 100px;
+  width: 90px;
 }
 /*.review-title {*/
 /*  !*grid-column: 1;*!*/

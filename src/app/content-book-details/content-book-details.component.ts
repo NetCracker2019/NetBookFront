@@ -110,14 +110,11 @@ export class ContentBookDetailsComponent implements OnInit {
 
   addReview(reviewText: string) {
     const review: Review = {} as Review;
+    review.reviewId = null;
     review.bookId = this.book.bookId;
     review.userName = this.currentUser.username;
     review.reviewText = this.reviewText.trim();
-    if (this.authenticationService.role != 4) {
-      review.approved = true;
-    } else {
-      review.approved = false;
-    }
+    review.approved = false;
 
     this.bookService.addReviewForUserBook(review).subscribe(
       data => {
