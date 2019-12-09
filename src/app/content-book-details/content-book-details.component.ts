@@ -66,7 +66,7 @@ export class ContentBookDetailsComponent implements OnInit {
   checkLikedBook(userLogin: string, bookId: number) {
     this.bookService.checkLikedBook(bookId, userLogin).subscribe(data => {
       this.likedBook = data;
-      console.log(data);
+      console.log('Liked book: ', data);
     });
   }
 
@@ -75,7 +75,6 @@ export class ContentBookDetailsComponent implements OnInit {
       this.book = data;
       this.bookLikes = data.likes;
     });
-    console.log('Books from det comp:', this.book);
   }
 
   getNewPeaceOfReviews() {
@@ -100,7 +99,11 @@ export class ContentBookDetailsComponent implements OnInit {
   }
 
   writeReview() {
-    this.writeReviewFlag = true;
+    if (this.currentUser) {
+      this.writeReviewFlag = true;
+    } else {
+      this.toastr.error('You must be authorized in system!');
+    }
     console.log(this.currentUser);
 
   }
@@ -135,69 +138,93 @@ export class ContentBookDetailsComponent implements OnInit {
   }
 
   addBookToProfile() {
-    this.bookService.addBookToProfile(this.currentUser.username, this.book.bookId).subscribe(
-      data => {
-        if (data) {
-          this.toastr.success('The book is added to profile.');
-          this.added = true;
-        } else {
-          this.toastr.error('The book is not added to profile(');
-        }
-      });
+    if (this.currentUser) {
+      this.bookService.addBookToProfile(this.currentUser.username, this.book.bookId).subscribe(
+        data => {
+          if (data) {
+            this.toastr.success('The book is added to profile.');
+            this.added = true;
+          } else {
+            this.toastr.error('The book is not added to profile(');
+          }
+        });
+    } else {
+      this.toastr.error('You must be authorized in system!');
+    }
   }
 
   removeBookFromProfile() {
-    this.bookService.removeBookFromProfile(this.currentUser.username, this.book.bookId).subscribe(
-      data => {
-        console.log(data);
-        this.added = false;
-      });
+    if (this.currentUser) {
+      this.bookService.removeBookFromProfile(this.currentUser.username, this.book.bookId).subscribe(
+        data => {
+          console.log(data);
+          this.added = false;
+        });
+    } else {
+      this.toastr.error('You must be authorized in system!');
+    }
   }
 
   likeBook() {
-    this.bookService.likeBook(this.book.bookId, this.currentUser.username).subscribe(data => {
-      console.log(data);
-    });
-    if (this.likedBook == 1) {
-      this.bookLikes--;
-      this.likedBook = 0;
-    } else if (this.likedBook == -1) {
-      this.bookLikes += 2;
-      this.likedBook = 1;
+    if (this.currentUser){
+      this.bookService.likeBook(this.book.bookId, this.currentUser.username).subscribe(data => {
+        console.log(data);
+      });
+      if (this.likedBook == 1) {
+        this.bookLikes--;
+        this.likedBook = 0;
+      } else if (this.likedBook == -1) {
+        this.bookLikes += 2;
+        this.likedBook = 1;
+      } else {
+        this.bookLikes++;
+        this.likedBook = 1;
+        console.log(this.bookLikes);
+      }
     } else {
-      this.bookLikes++;
-      this.likedBook = 1;
-      console.log(this.bookLikes);
+      this.toastr.error('You must be authorized in system!');
     }
   }
 
   dislikeBook() {
-    this.bookService.dislikeBook(this.book.bookId, this.currentUser.username).subscribe(data => {
-      console.log(data);
-    });
-    if (this.likedBook == 1) {
-      this.bookLikes -= 2;
-      this.likedBook = -1;
-    } else if (this.likedBook == -1) {
-      this.bookLikes++;
-      this.likedBook = 0;
+    if (this.currentUser) {
+      this.bookService.dislikeBook(this.book.bookId, this.currentUser.username).subscribe(data => {
+        console.log(data);
+      });
+      if (this.likedBook == 1) {
+        this.bookLikes -= 2;
+        this.likedBook = -1;
+      } else if (this.likedBook == -1) {
+        this.bookLikes++;
+        this.likedBook = 0;
+      } else {
+        this.bookLikes--;
+        this.likedBook = -1;
+      }
+      console.log(this.bookLikes);
     } else {
-      this.bookLikes--;
-      this.likedBook = -1;
+      this.toastr.error('You must be authorized in system!');
     }
-    console.log(this.bookLikes);
+
   }
 
   likeReview(review: Review) {
-    this.bookService.likeReview(review.reviewId, this.currentUser.username).subscribe(data => {
-      review.rating = data;
-    });
+    if (this.currentUser) {
+      this.bookService.likeReview(review.reviewId, this.currentUser.username).subscribe(data => {
+        review.rating = data;
+      });
+    } else {
+      this.toastr.error('You must be authorized in system!');
+    }
   }
 
   dislikeReview(review: Review) {
-    console.log('Нажат диз');
-    this.bookService.dislikeReview(review.reviewId, this.currentUser.username).subscribe(data => {
-      review.rating = data;
-    });
+    if (this.currentUser) {
+      this.bookService.dislikeReview(review.reviewId, this.currentUser.username).subscribe(data => {
+        review.rating = data;
+      });
+    } else {
+      this.toastr.error('You must be authorized in system!');
+    }
   }
 }

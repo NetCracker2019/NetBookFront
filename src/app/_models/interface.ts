@@ -73,10 +73,17 @@ export interface User {
 }
 
 export interface Achievement {
-  cntBook: number;
+  achievementId: number;
   title: string;
   description: string;
+  amount: number;
   image_path: string;
+  achvType: string;
+  achvRuleId: number;
+  authorName: string;
+  genreName: string;
+  favourite: boolean;
+  readBook: boolean;
 }
 
 export interface ShortBookDescription {
@@ -162,3 +169,4 @@ export interface Page {
   content: NewModelBook[];
   totalElements: number;
 }
+
