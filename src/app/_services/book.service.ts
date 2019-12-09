@@ -191,4 +191,7 @@ export class BookService {
   countReviews(approved: boolean): Observable<number> {
     return this.http.get<number>(`${environment.apiUrl}/book-service/count-reviews?approved=${approved}`);
   }
+  countAnnouncement(approved: boolean): Observable<number> {
+    return this.http.get<number>(`${environment.apiUrl}/approve-service/count-announcement?approved=${approved}`);
+  }
 }

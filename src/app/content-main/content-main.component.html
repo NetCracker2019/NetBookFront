@@ -36,7 +36,7 @@
 
   <div class="row p-4">
     <div class="test col-md-6" *ngFor="let book of books">
-      <a href="#" class="blog-item m-2">
+      <a [routerLink]="[book.bookId]" class="blog-item m-2">
         <div class="container blog-item-color">
           <div class="row">
             <div class="col-6">

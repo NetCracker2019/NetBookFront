@@ -73,6 +73,7 @@ const componentRoutes: Routes = [
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
+  { path: 'book/:bookId', component: ContentBookDetailsComponent},
   { path: 'calendar', component: ContentCalendarComponent}
 ];
 
@@ -84,6 +85,7 @@ const componentNotAllRoutes: Routes = [
   { path: 'search', component: SearchComponent},
   { path: 'search/:bookId', component: ContentBookDetailsComponent},
   { path: 'announcement/:bookId', component: ContentBookDetailsComponent},
+  { path: 'book/:bookId', component: ContentBookDetailsComponent}
 ];
 
 

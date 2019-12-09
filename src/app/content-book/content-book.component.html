@@ -186,7 +186,7 @@
 
 <div class="blog-books">
   <div class="test" *ngFor="let book of books">
-    <a href="#" class="blog-item">
+    <a [routerLink]="[book.bookId]" class="blog-item">
       <div class="book-image-grid">
         <img src="{{book.imagePath}}" alt="Example" class="book-logo">
       </div>
