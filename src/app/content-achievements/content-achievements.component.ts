@@ -22,8 +22,8 @@ export class ContentAchievementsComponent implements OnInit {
   public achievement: Achievement = {} as Achievement;
   favOrRead: string;
   favOrReadGenre: string;
-  private fileToUpload: File = null;
-  private fileName: string;
+  fileToUpload: File = null;
+  fileName: string;
   genres: Genre[];
   selectedGenre: string;
   allAchievements: Achievement[];
