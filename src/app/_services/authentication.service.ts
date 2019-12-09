@@ -12,7 +12,7 @@ const headers = new HttpHeaders({'Content-Type': 'application/json'});
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-  role: number;
+  public role: number;
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();

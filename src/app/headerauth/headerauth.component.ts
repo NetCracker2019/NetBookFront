@@ -17,7 +17,7 @@ export class HeaderauthComponent implements OnInit {
 
 
   currentUser: string;
-  currentRole: string;
+  currentRole: number;
 
   constructor(private router: Router,
               private authenticationService: AuthenticationService,
