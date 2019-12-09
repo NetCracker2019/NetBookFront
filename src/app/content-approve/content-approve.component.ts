@@ -147,6 +147,10 @@ export class ContentApproveComponent implements OnInit {
           this.toastr.success('Something is wrong(');
         }
       });
+    this.approveService.getReviewForApprove(this.reviewPage, this.itemsPerPage).subscribe(data => {
+      console.log(data);
+      this.reviews = data;
+    });
     // window.location.reload();
   }
 
@@ -161,6 +165,10 @@ export class ContentApproveComponent implements OnInit {
           this.toastr.success('Something is wrong(');
         }
       });
+    this.approveService.getReviewForApprove(this.reviewPage, this.itemsPerPage).subscribe(data => {
+      console.log(data);
+      this.reviews = data;
+    });
   }
 
 

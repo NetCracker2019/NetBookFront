@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Observable, Subject, Subscription, interval, fromEvent } from 'rxjs';
+import { map, switchMap, tap, take, reduce} from 'rxjs/operators'
 import {User, ShortBookDescription, SearchParams} from '../_models/interface';
 import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
@@ -37,6 +39,10 @@ export class ContentProfileBookListComponent implements OnInit {
   public visibleDatePub: boolean = true;
   public batchEditShelf: string = "read";
   public endOfBooks: boolean = false;
+  private changeSoughtSubscription: Subscription;
+
+  @ViewChild('searchInput', {static: true}) 
+  private input: ElementRef;
 
   constructor(private userService: UserService,
    private activatedRoute: ActivatedRoute,
@@ -53,7 +59,31 @@ export class ContentProfileBookListComponent implements OnInit {
     }
    this.getBookList();
 
+   //------------------ subscribe when sought changing 
+   this.changeSoughtSubscription =  fromEvent(this.input.nativeElement, 'keyup')
+    .pipe(
+    switchMap(event => {
+      this.searchParams.page = 0;
+      this.endOfBooks = false;
+      this.books = [];
+      return this.userService.getBookList(this.login, this.searchParams);
+    })
+    )
+    .subscribe(
+      (data : ShortBookDescription[]) => {
+          this.books = data;
+        },
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
+        }
+      );
+    //------------------------
   }
+
+  ngOnDestroy(){
+    this.changeSoughtSubscription.unsubscribe();
+  }
+
   selectAll(){
     for (let book of this.books) {
       book.checked = true;
@@ -167,6 +197,11 @@ export class ContentProfileBookListComponent implements OnInit {
           this.toastr.error(`${environment.errorMessage}`);
         });
   }
+  
+
+  onSearchChange(searchValue: string) {
+    this.searchParams.sought = searchValue;
+  }
 
   find(){
     this.searchParams.page = 0;
@@ -174,7 +209,7 @@ export class ContentProfileBookListComponent implements OnInit {
     this.books = [];
     this.getBookList();
   }
-
+  
   getBookList(){
   	this.userService.getBookList(this.login, this.searchParams)
       .subscribe(

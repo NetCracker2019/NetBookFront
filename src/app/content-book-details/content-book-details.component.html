@@ -1,68 +1,106 @@
-<div class="item-book" *ngIf="book">
-  <div class="book-logo"><img src="{{book.imagePath}}" alt="Example"></div>
-  <div class="book-content">
-    <h3>{{book.title}} - {{book.authors}}</h3>
-    <div class="like-book-content">
-<!--      <div class="like-img-book"><img src="../../assets/img/like_img.jpeg"/></div>-->
-      <div class="like-num"><p>Likes: {{book.likes}}</p></div>
+<div class="card item-book" *ngIf="book">
+  <div class="row">
+    <img class="col-3 book-logo" src="{{book.imagePath}}" alt="Image">
+
+    <div class="col-3">
+      <div class="card-body book-content">
+        <h3 class="card-title">{{book.title}} - {{book.authors}}</h3>
+        <div class="container like-book-content">
+          <div class="row">
+            <div class="col-md-1">
+              <span *ngIf="!currentUser" class="glyphicon glyphicon-thumbs-up"></span>
+              <span *ngIf="likedBook == 1" class="glyphicon glyphicon-thumbs-up" ngDefaultControl
+                    (click)="likeBook()"
+                    style="color: green; "></span>
+              <span *ngIf="likedBook == 0 || likedBook == -1" class="glyphicon glyphicon-thumbs-up" ngDefaultControl
+                    (click)="likeBook()"></span>
+            </div>
+            <div class="col-md-1">
+            <span *ngIf="likedBook == 1 || likedBook == 0" class="glyphicon glyphicon-thumbs-down" ngDefaultControl
+                   (click)="dislikeBook()"></span>
+              <span *ngIf="likedBook == -1" class="glyphicon glyphicon-thumbs-down" ngDefaultControl
+                     (click)="dislikeBook()" style="color: red; "></span>
+              <span *ngIf="!currentUser" class="glyphicon glyphicon-thumbs-down"></span>
+
+            </div>
+            <div ngDefaultControl [(ngModel)]="bookLikes" class="col-md-1 like-num" ><p>{{bookLikes}}</p></div>
+          </div>
+        </div>
+
+        <p style="padding-top: 20px">Publish date: {{book.releaseDate}}</p>
+        <p>Genres: {{book.genres}}</p>
+        <!--    <p>Language: {{book.langua}}</p>-->
+        <p>Pages: {{book.pages}}</p>
+        <p>Description: {{book.description}} </p>
+        <div *ngIf="added; then remove else add"></div>
+        <ng-template #add>
+          <button class="btn btn-default button-add-book-to-profile" (click)="addBookToProfile()">Add book to profile
+          </button>
+        </ng-template>
+        <ng-template #remove>
+          <button class="btn btn-default button-remove-book-from-profile" (click)="removeBookFromProfile()">Remove book
+            from profile
+          </button>
+        </ng-template>
+      </div>
     </div>
+  </div>
+</div>
 
-    <p>Publish date: {{book.releaseDate}}</p>
-    <p>Genres: {{book.genres}}</p>
-    <p>{{book.imagePath}}</p>
-<!--    <p>Language: {{book.langua}}</p>-->
-    <p>Pages: {{book.pages}}</p>
-    <p>Description: {{book.description}} </p>
-    <div *ngIf="added; then remove else add"></div>
-    <ng-template #add><button class="button-add-book-to-profile" (click)="addBookToProfile()" >Add book to profile</button></ng-template>
-    <ng-template #remove><button class="button-remove-book-from-profile" (click)="removeBookFromProfile()" >Remove book from profile</button></ng-template>
-
+<div class="container">
+  <div class="row review-blog">
+    <div class="col-2 review-title"><h2>Reviews</h2></div>
+    <div class="col-2 button-write-review">
+      <button (click)="writeReview()" >Write review</button>
+    </div>
+  </div>
+  <div *ngIf="writeReviewFlag" class="container write-review">
+    <div class="row review-item">
+      <div class="col-1 user-image">
+        <img src="{{currentUser.avatarFilePath}}" class="user-logo" alt="{{currentUser.username[0]}}">
+      </div>
+      <div class="col-5 review-content">
+        <div class="row">
+          <div class="user-name"><h4>{{currentUser.username}}</h4></div>
+        </div>
+        <div class="row">
+          <div class="review-textarea"><textarea [(ngModel)]="reviewText" rows="4" cols="50" name="text"
+                                                 placeholder="Enter text..."></textarea></div>
+        </div>
+      </div>
+    </div>
+    <div class="row add-cancel-buttons">
+      <div class="col-1"><button class="add-button" (click)="addReview(reviewText)">Add</button></div>
+      <div class="col-1"><button class="cancel-button" (click)="cancelReview()">Cancel</button></div>
+    </div>
   </div>
 
 </div>
 
-<div class="review-blog">
-  <div class="review-title"><h2>Reviews</h2></div>
-  <div class="button-write-review" (click)="writeReview()" routerLink="/login"><button>Write review</button></div>
-</div>
-
-<div *ngIf="writeReviewFlag" class="write-review">
-  <div class="review-item">
-    <div class="user-image">
-      <img src="{{currentUser.avatarFilePath}}" class="user-logo" alt="{{currentUser.username[0]}}">
-    </div>
-    <div class="review-content">
-      <div class="user-name"><h4>{{currentUser.username}}</h4></div>
-      <div class="review-textarea"><textarea [(ngModel)]="reviewText" rows="4" cols="50" name="text" placeholder="Enter text..."></textarea></div>
-    </div>
-    <div class="add-cancel-buttons">
-      <button class="add-button" (click)="addReview(reviewText)">Add</button>
-      <button class="cancel-button" (click)="cancelReview()">Cancel</button>
-    </div>
-  </div>
-</div>
 
 <div class="reviews" *ngFor="let review of reviews">
-  <div class="review-item">
-    <div class="user-image">
-      <img src="{{review.userAvatarPath}}" class="user-logo" alt="{{review.userName[0]}}">
-    </div>
-    <div class="review-content">
-      <div class="user-name"><h4>{{review.userName}}</h4></div>
-      <div class="rating">
-        <div class="like-img-review">
-          <img src="../../assets/img/like_img.jpeg"/>
+  <div class="container review-item">
+    <div class="row">
+      <div class="col-1"><img src="{{review.userAvatarPath}}" class="user-logo" alt="{{review.userName[0]}}"></div>
+      <div class="col-5 review-content">
+        <div class="row">
+          <div class="col-md-3 user-name"><h4>{{review.userName}}</h4></div>
+          <div class="col-md-1"><span class="glyphicon glyphicon-thumbs-up" style="font-size: 20px; padding-top: 10px;"
+                                      (click)="likeReview(review)"></span>
+          </div>
+          <div class="col-md-1"><span class="glyphicon glyphicon-thumbs-down" style="font-size: 20px;padding-top: 10px;"
+                                      (click)="dislikeReview(review)"></span></div>
+          <div class="col-md-1"><h5 ngDefaultControl [(ngModel)]="review.rating"
+                                    style="font-size: 20px;">{{review.rating}}</h5></div>
         </div>
-        <h5>{{review.rating}}</h5>
+        <div class="row review-text"> {{review.reviewText}}</div>
       </div>
-      <div class="review-text"> {{review.reviewText}}</div>
     </div>
   </div>
 </div>
 <div *ngIf="finish; then up else down"></div>
-<ng-template #up><input type="image" class="paging-button" (click)="getNewPeaceOfReviews()" src="../../assets/img/upArrow.png" alt="Ще"/></ng-template>
-<ng-template #down><input type="image" class="paging-button" (click)="getNewPeaceOfReviews()" src="../../assets/img/130907.png" alt="Ще"/></ng-template>
-
-<!--<ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [pageSize]="count"-->
-<!--                [(reviewPage)]="offset" [boundaryLinks]="false" (pageChange)="getNewPeaceOfReviews($event)"></ngb-pagination>-->
+<ng-template #up><input type="image" class="paging-button" (click)="getNewPeaceOfReviews()"
+                        src="../../assets/img/upArrow.png" alt="Ще"/></ng-template>
+<ng-template #down><input type="image" class="paging-button" (click)="getNewPeaceOfReviews()"
+                          src="../../assets/img/130907.png" alt="Ще"/></ng-template>
 

@@ -5,13 +5,13 @@
 .page-header {
     padding-left: 7%;
 } 
-.profile-img{
+.achievement-img{
     display: block;
     margin-left: auto;
     margin-right: auto;  
     width: 50%;
 }
-.profile-img img{
+.achievement-img img{
     width: 30vmin;
     height: 30vmin;
     object-fit: cover;

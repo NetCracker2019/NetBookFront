@@ -1,6 +1,217 @@
+<h1>Add new achievement</h1>
+<div class="panel" style="margin: 10px">
+  <div class="panel-heading"><h4>Pattern 1. Author achievement</h4></div>
+  <div class="panel-body">
+    <form [formGroup]="form" name="form" novalidate>
+      <div class="row">
+        <div class="col-3 img-container">
 
+          <div class="achievement-img">
+            <img class="achv-img img-circle img-thumbnail" src="{{fileToUpload}}" [(ngModel)]="fileToUpload"
+                 alt="achievement img" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+          </div>
 
+          <h4>Load photo</h4>
+          <input name="loadImg" type="file" formControlName="achievementFilePath"
+                 (change)="handleFileInput($event.target.files)" style="padding-left: 3vw;">
+          <div class=" add-button">
+            <button class="btn btn-primary" (click)="addAchievement('author')">Add achievement</button>
+          </div>
+        </div>
+        <div class="col-5 achv-enter-fields">
+          <div class="row">
+            <div class="col-4 achv-title"><h4>Title: </h4></div>
+            <div class="col-6" [formGroup]="form" ><input type="text" formControlName="title" class="form-control"
+                                      placeholder="Enter achievement title">
+            </div>
+            <div *ngFor="let validation of validationMessages.title" class="error">
+              <div *ngIf="form.get('title').hasError(validation.type) && 	form.controls['title'].touched"
+                   class="help-block">{{validation.message}}</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 achv-desc"><h4>Description: </h4></div>
+            <div class="col-6" [formGroup]="form" ><textarea class="form-control" formControlName="description" rows="2" cols="30"
+                                         name="text"
+                                         placeholder="Enter description"></textarea>
+            </div>
+            <div *ngFor="let validation of validationMessages.title" class="error">
+              <div *ngIf="form.get('description').hasError(validation.type) && 	form.controls['description'].touched"
+                   class="help-block">{{validation.message}}</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 achv-n"><h4>Number of books to achieve: </h4></div>
+            <div class="col-4 achv-input-n" [formGroup]="form"><input type="text" formControlName="numberBook" class="form-control"
+                                                   placeholder="Enter number of books">
+            </div>
+            <div *ngFor="let validation of validationMessages.title" class="error">
+              <div *ngIf="form.get('numberBook').hasError(validation.type) && 	form.controls['numberBook'].touched"
+                   class="help-block">{{validation.message}}</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 achv-author"><h4>Author name: </h4></div>
+            <form class="col-4" >
+              <input type="text" class="form-control"  placeholder="Author name"
+                     [formControl]="control"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let author of filteredAuthors | async" [value]="author.fullName">
+                  {{author.fullName}}
+                </mat-option>
+              </mat-autocomplete>
+            </form>
+          </div>
+          <div class="row" style="margin-left: 1px;">
+            <h4>Books must be: </h4>
+            <label class="container">Favourite
+              <input type="radio" checked="checked" name="fav" value="fav" [(ngModel)]="favOrRead" [ngModelOptions]="{standalone: true}">
+              <span class="checkmark"></span>
+            </label>
+            <label class="container">Read
+              <input type="radio" name="read" value="read" [(ngModel)]="favOrRead" [ngModelOptions]="{standalone: true}">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 
+<div class="panel" style="margin: 10px">
+  <div class="panel-heading"><h4>Pattern 2. Genre achievement</h4></div>
+  <div class="panel-body">
+    <form [formGroup]="form" name="form" novalidate>
+      <div class="row">
+        <div class="col-3 img-container">
 
-<p>content-achievements works!</p>
-<h1>Test</h1>
+          <div class="achievement-img">
+            <img class="achv-img img-circle img-thumbnail" src="{{fileToUpload}}" [(ngModel)]="fileToUpload"
+                 alt="achievement img" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+          </div>
+
+          <h4>Load photo</h4>
+          <input name="loadImg" type="file" formControlName="achievementFilePath"
+                 (change)="handleFileInput($event.target.files)" style="padding-left: 3vw;">
+          <div class=" add-button">
+            <button class="btn btn-primary" (click)="addAchievement('genre')">Add achievement</button>
+          </div>
+        </div>
+        <div class="col-5 achv-enter-fields">
+          <div class="row">
+            <div class="col-4 achv-title"><h4>Title: </h4></div>
+            <div class="col-6" [formGroup]="form" ><input type="text" formControlName="title" class="form-control"
+                                                          placeholder="Enter achievement title">
+            </div>
+            <div *ngFor="let validation of validationMessages.title" class="error">
+              <div *ngIf="form.get('title').hasError(validation.type) && 	form.controls['title'].touched"
+                   class="help-block">{{validation.message}}</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 achv-desc"><h4>Description: </h4></div>
+            <div class="col-6" [formGroup]="form" ><textarea class="form-control" formControlName="description" rows="2" cols="30"
+                                                             name="text"
+                                                             placeholder="Enter description"></textarea>
+            </div>
+            <div *ngFor="let validation of validationMessages.title" class="error">
+              <div *ngIf="form.get('description').hasError(validation.type) && 	form.controls['description'].touched"
+                   class="help-block">{{validation.message}}</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 achv-n"><h4>Number of books to achieve: </h4></div>
+            <div class="col-4 achv-input-n" [formGroup]="form"><input type="text" formControlName="numberBook" class="form-control"
+                                                                      placeholder="Enter number of books">
+            </div>
+            <div *ngFor="let validation of validationMessages.title" class="error">
+              <div *ngIf="form.get('numberBook').hasError(validation.type) && 	form.controls['numberBook'].touched"
+                   class="help-block">{{validation.message}}</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 achv-genre"><h4>Book Genre: </h4></div>
+            <form class="col-4">
+              <select class="selectpicker form-control" [(ngModel)]="selectedGenre" name="genre">
+                <option *ngFor="let genre of genres" [value]="genre.genreName">
+                  {{genre.genreName}}
+                </option>
+              </select>
+            </form>
+          </div>
+          <div class="row" style="margin-left: 1px;">
+            <h4>Books must be: </h4>
+            <label class="container">Favourite
+              <input type="radio" checked="checked" name="favGenre" value="favGenre" [(ngModel)]="favOrReadGenre" [ngModelOptions]="{standalone: true}">
+              <span class="checkmark"></span>
+            </label>
+            <label class="container">Read
+              <input type="radio" name="readGenre" value="readGenre" [(ngModel)]="favOrReadGenre" [ngModelOptions]="{standalone: true}">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<h2>All achievements</h2>
+<table class="table">
+  <thead>
+  <tr>
+    <th  scope="col">#</th>
+    <th scope="col">Image</th>
+    <th  scope="col">Title</th>
+    <th scope="col">Description</th>
+    <th  scope="col">Amount</th>
+    <th  scope="col">Type</th>
+    <th  scope="col">Author Name</th>
+    <th  scope="col">Genre</th>
+    <th  scope="col">Favourite</th>
+    <th  scope="col">Read</th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let achiv of allAchievements; let achivIndex= index">
+    <td>
+      <div class="num">
+        <h4>{{achivIndex+1}}</h4>
+      </div>
+    </td>
+    <td>
+      <div class="coverDiv">
+        <img class="img-responsive" alt="no img" src="{{ this.getPhoto(achiv.image_path) }}">
+      </div>
+    </td>
+    <td >
+      <p>{{ achiv.title  }}</p>
+    </td>
+    <td >
+      <p>{{ achiv.description  }}</p>
+    </td>
+    <td >
+      <p>{{ achiv.amount  }}</p>
+    </td>
+    <td >
+      <p>{{ achiv.achvType  }}</p>
+    </td>
+    <td >
+      <p>{{ achiv.authorName  }}</p>
+    </td>
+    <td >
+      <p>{{ achiv.genreName  }}</p>
+    </td>
+    <td >
+      <p>{{ achiv.favourite  }}</p>
+    </td>
+    <td >
+      <p>{{ achiv.readBook  }}</p>
+    </td>
+  </tr>
+
+  </tbody>
+</table>
+

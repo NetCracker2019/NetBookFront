@@ -1,111 +1,108 @@
-
-<h1>Add Announcement</h1>
 <!--<form class="form-container" (ngSubmit)="addBookComponent()">-->
-  <!--<h2>Write your data</h2>-->
-  <!--<div class="form-group">-->
-    <!--<label for="title" class="label-group" required>Title*</label>-->
-    <!--<input type="text" class="input-group" id="title" [(ngModel)]="bookModel.title" name="title">-->
-  <!--</div>-->
+<!--<h2>Write your data</h2>-->
+<!--<div class="form-group">-->
+<!--<label for="title" class="label-group" required>Title*</label>-->
+<!--<input type="text" class="input-group" id="title" [(ngModel)]="bookModel.title" name="title">-->
+<!--</div>-->
 
-  <!--<div class="form-group">-->
-    <!--<label for="author" class="label-group" required>Author(-s)*</label>-->
-    <!--<input type="text" class="input-group" id="author" [(ngModel)]="bookModel.authors" name="author">-->
-  <!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="author" class="label-group" required>Author(-s)*</label>-->
+<!--<input type="text" class="input-group" id="author" [(ngModel)]="bookModel.authors" name="author">-->
+<!--</div>-->
 
-  <!--<div class="form-group">-->
-    <!--<label for="genre" class="label-group" required>Genre*</label>-->
-    <!--<input type="text" class="input-group" id="genre" [(ngModel)]="bookModel.genres" name="genre">-->
-  <!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="genre" class="label-group" required>Genre*</label>-->
+<!--<input type="text" class="input-group" id="genre" [(ngModel)]="bookModel.genres" name="genre">-->
+<!--</div>-->
 
-  <!--<div class="form-group">-->
-    <!--<label for="imagePath" class="label-group">Image Path</label>-->
-    <!--<input type="text" class="input-group" id="imagePath" [(ngModel)]="bookModel.imagePath" name="imagePath">-->
-  <!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="imagePath" class="label-group">Image Path</label>-->
+<!--<input type="text" class="input-group" id="imagePath" [(ngModel)]="bookModel.imagePath" name="imagePath">-->
+<!--</div>-->
 
-  <!--<div class="form-group">-->
-    <!--<label for="release_date" class="label-group" required>Date*</label>-->
-    <!--<input type="text" class="input-group" id="release_date" [(ngModel)]="bookModel.releaseDate" name="release_date">-->
-  <!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="release_date" class="label-group" required>Date*</label>-->
+<!--<input type="text" class="input-group" id="release_date" [(ngModel)]="bookModel.releaseDate" name="release_date">-->
+<!--</div>-->
 
-  <!--<div class="form-group">-->
-    <!--<label for="language" class="label-group" required>Language*</label>-->
-    <!--<input type="text" class="input-group" id="language" [(ngModel)]="bookModel.language" name="language">-->
-  <!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="language" class="label-group" required>Language*</label>-->
+<!--<input type="text" class="input-group" id="language" [(ngModel)]="bookModel.language" name="language">-->
+<!--</div>-->
 
-  <!--<div class="form-group">-->
-    <!--<label for="pages" class="label-group" required>Pages*</label>-->
-    <!--<input type="text" class="input-group" id="pages" [(ngModel)]="bookModel.pages" name="pages">-->
-  <!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="pages" class="label-group" required>Pages*</label>-->
+<!--<input type="text" class="input-group" id="pages" [(ngModel)]="bookModel.pages" name="pages">-->
+<!--</div>-->
 
-  <!--<div class="form-group">-->
-    <!--<label for="description"  class="label-group">Description</label>-->
-    <!--<input type="text" class="input-group" id="description" [(ngModel)]="bookModel.description" name="description">-->
-  <!--</div>-->
-  <!--<div class="form-group">-->
-    <!--<button type="submit" class="button">Add announcement</button>-->
-  <!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="description"  class="label-group">Description</label>-->
+<!--<input type="text" class="input-group" id="description" [(ngModel)]="bookModel.description" name="description">-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<button type="submit" class="button">Add announcement</button>-->
+<!--</div>-->
 <!--</form>-->
 
 
 <!--<form [formGroup]="form" class="form-container" (ngSubmit)="addAnnouncementComponent()">-->
-  <!--<h2>Write your data</h2>-->
-  <!--<div class="form-group">-->
-    <!--<label for="title" class="label-group" required>Title*</label>-->
-    <!--<input type="text" class="input-group" id="title" [(ngModel)]="bookModel.title" [ngModelOptions]="{standalone: true}" name="title">-->
-  <!--</div>-->
+<!--<h2>Write your data</h2>-->
+<!--<div class="form-group">-->
+<!--<label for="title" class="label-group" required>Title*</label>-->
+<!--<input type="text" class="input-group" id="title" [(ngModel)]="bookModel.title" [ngModelOptions]="{standalone: true}" name="title">-->
+<!--</div>-->
 
-  <!--<div class="form-group" *ngFor="let obj of dataarray; let i=index">-->
-    <!--<label for="author" class="label-group" required>Author*</label>-->
-    <!--<input type="text" class="input-group" id="author" [(ngModel)]="obj.name" [ngModelOptions]="{standalone: true}" name="author{{i}}">-->
-    <!--<div *ngIf="i!=0">-->
-      <!--<span (click)="removeForm(i)" class="btn btn-danger">-</span>-->
-    <!--</div>-->
-  <!--</div>-->
-  <!--<span (click)="addForm()" class="btn btn-success">+</span>-->
+<!--<div class="form-group" *ngFor="let obj of dataarray; let i=index">-->
+<!--<label for="author" class="label-group" required>Author*</label>-->
+<!--<input type="text" class="input-group" id="author" [(ngModel)]="obj.name" [ngModelOptions]="{standalone: true}" name="author{{i}}">-->
+<!--<div *ngIf="i!=0">-->
+<!--<span (click)="removeForm(i)" class="btn btn-danger">-</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--<span (click)="addForm()" class="btn btn-success">+</span>-->
 
-  <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
-    <!--&lt;!&ndash;<label formArrayName="orders" *ngFor="let order of form.controls.orders.controls; let i = index">&ndash;&gt;-->
-      <!--&lt;!&ndash;<input type="checkbox" [formControlName]="i">&ndash;&gt;-->
-      <!--&lt;!&ndash;{{ordersData[i].genreName}}&ndash;&gt;-->
-    <!--&lt;!&ndash;</label>&ndash;&gt;-->
-  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;<label formArrayName="orders" *ngFor="let order of form.controls.orders.controls; let i = index">&ndash;&gt;-->
+<!--&lt;!&ndash;<input type="checkbox" [formControlName]="i">&ndash;&gt;-->
+<!--&lt;!&ndash;{{ordersData[i].genreName}}&ndash;&gt;-->
+<!--&lt;!&ndash;</label>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-  <!--<div class="form-group">-->
-    <!--<label for="imagePath" class="label-group">Image Path</label>-->
-    <!--<input type="text" class="input-group" id="imagePath" [(ngModel)]="bookModel.imagePath" [ngModelOptions]="{standalone: true}" name="imagePath">-->
-  <!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="imagePath" class="label-group">Image Path</label>-->
+<!--<input type="text" class="input-group" id="imagePath" [(ngModel)]="bookModel.imagePath" [ngModelOptions]="{standalone: true}" name="imagePath">-->
+<!--</div>-->
 
-  <!--<div class="form-group">-->
-    <!--<label for="release_date" class="label-group" required>Date*</label>-->
-    <!--<input type="text" class="input-group" id="release_date" [(ngModel)]="bookModel.releaseDate" [ngModelOptions]="{standalone: true}" name="release_date">-->
-  <!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="release_date" class="label-group" required>Date*</label>-->
+<!--<input type="text" class="input-group" id="release_date" [(ngModel)]="bookModel.releaseDate" [ngModelOptions]="{standalone: true}" name="release_date">-->
+<!--</div>-->
 
-  <!--<div class="form-group">-->
-    <!--<label for="language" class="label-group" required>Language*</label>-->
-    <!--<input type="text" class="input-group" id="language" [(ngModel)]="bookModel.language" [ngModelOptions]="{standalone: true}" name="language">-->
-  <!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="language" class="label-group" required>Language*</label>-->
+<!--<input type="text" class="input-group" id="language" [(ngModel)]="bookModel.language" [ngModelOptions]="{standalone: true}" name="language">-->
+<!--</div>-->
 
-  <!--<div class="form-group">-->
-    <!--<label for="pages" class="label-group">Pages</label>-->
-    <!--<input type="text" class="input-group" id="pages" [(ngModel)]="bookModel.pages" [ngModelOptions]="{standalone: true}" name="pages">-->
-  <!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="pages" class="label-group">Pages</label>-->
+<!--<input type="text" class="input-group" id="pages" [(ngModel)]="bookModel.pages" [ngModelOptions]="{standalone: true}" name="pages">-->
+<!--</div>-->
 
-  <!--<div class="form-group">-->
-    <!--<label for="description"  class="label-group">Description</label>-->
-    <!--<input type="text" class="input-group" id="description" [(ngModel)]="bookModel.description" [ngModelOptions]="{standalone: true}" name="description">-->
-  <!--</div>-->
-  <!--<div class="form-group">-->
-    <!--<button type="submit" class="button">Add book</button>-->
-  <!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="description"  class="label-group">Description</label>-->
+<!--<input type="text" class="input-group" id="description" [(ngModel)]="bookModel.description" [ngModelOptions]="{standalone: true}" name="description">-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<button type="submit" class="button">Add book</button>-->
+<!--</div>-->
 <!--</form>-->
 
 
-
 <div class="register-form container">
-  <form [formGroup]="addForm" name="form" novalidate>
+  <form [formGroup]="addForm" (ngSubmit)="addAnnouncementComponent()" name="form" novalidate>
     <div class="row">
       <div class="col-sm-8 col-md-6 col-lg-4 mx-auto">
-        <h2>Add announcement</h2>
+        <h2>Add book or announcement</h2>
 
         <div class="form-group">
           <input type="text" class="form-control"
@@ -119,21 +116,32 @@
           </div>
         </div>
 
+
         <div class="form-group">
           <table>
             <tr *ngFor="let author of authorsSend">
-              <td>{{author.fullName}}</td> <td><button (click)="removeContact(author)">Delete</button></td>
+              <td>{{author.fullName}}</td>
+              <td>
+                <button type="button" (click)="removeContact(author)" class="btn btn-danger">Delete</button>
+              </td>
             </tr>
           </table>
-
-          <input type="text" #fullName placeholder="Enter Name Surname" [formControl]="control" [matAutocomplete]="auto">
+          <input type="text" #fullName placeholder="Enter Name Surname" [formControl]="control"
+                 [matAutocomplete]="auto" class="form-control" [ngClass]="{'is-invalid':  addForm.get('author').invalid && addForm.controls['author'].touched,
+                   'is-valid': addForm.get('author').valid}" name="date"
+                 formControlName="author" required>
+          <div class="invalid-feedback"
+               *ngIf="addForm.get('author').invalid && addForm.controls['author'].touched">
+            {{getValidationMessage('author').message}}
+          </div>
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let author of filteredAuthors | async" [value]="author.fullName">
               {{author.fullName}}
             </mat-option>
           </mat-autocomplete>
-          <button (click)="addContact(fullName.value)">Add author</button>
+          <button type="button" (click)="addContact(fullName.value)" class="btn btn-info">Add author</button>
         </div>
+
 
 
         <div class="form-group">
@@ -184,12 +192,15 @@
         </div>
 
         <div class="form-group">
-          <input type="text" class="form-control" name="description" placeholder="Enter description" formControlName="description"/>
+          <input type="text" class="form-control" name="description" placeholder="Enter description"
+                 formControlName="description"/>
         </div>
 
         <div class="form-row">
-          <div class="form-group mb-3 col-sm-6">
-            <button (click)="addAnnouncementComponent()" [disabled]="addForm.invalid" class="btn btn-block btn-orange">Add</button>
+          <div class="form-group mb-3 col-sm-12">
+            <button type="submit" class="btn btn-block btn-success">
+              Add
+            </button>
           </div>
         </div>
       </div>

@@ -1,4 +1,7 @@
- 
+.messaging {
+  width: 50%;
+  margin: 0 auto;
+} 
 .inbox_people {
   background: #fff;
   float: left;
@@ -6,7 +9,21 @@
   width: 30%;
   border-right: 1px solid #ddd;
 }
-
+.nav-tabs{
+    margin-bottom:5%;
+}
+.nav-item:hover {
+  background: #e8f6ff;
+  cursor: pointer;
+}
+.nav-tabs .nav-link{
+    font-weight:600;
+    border: none;
+}
+.nav-tabs .nav-link.active{
+    border: none;
+    border-bottom:2px solid #0062cc;
+}
 .inbox_msg {
   border: 1px solid #ddd;
   clear: both;

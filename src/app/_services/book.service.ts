@@ -7,7 +7,7 @@ import {environment} from '../../environments/environment';
 import {map} from 'rxjs/operators';
 
 
-import {Announcement, Author, Book, Data, Genre, NewModelBook, Review, Event} from '../_models/interface';
+import {Announcement, Book, Data, Genre, NewModelBook, Page, Review, Author, Event} from '../_models/interface';
 
 
 const httpOptions = {
@@ -51,7 +51,6 @@ export class BookService {
     return this.http.get(`${environment.apiUrl}/book-service/amountOfBook`);
   }
 
-
   getBookList(): Observable<Book[]> {
     return this.http.get<Book[]>(`${environment.apiUrl}/book-service/books`);
   }
@@ -80,58 +79,36 @@ export class BookService {
   //   return this.http.post(`${environment.apiUrl}/book-service/books/addAnnouncement`, body);
   // }
 
-  searchBookByTitle(title: string, pageSize: number, page: number): Observable<NewModelBook[]> {
-    return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/find-books?title=${title}&size=${pageSize}&page=${page}`);
+  searchBookByTitle(title: string, pageSize: number, page: number): Observable<Page> {
+    page = page - 1;
+    return this.http.get<Page>(`${environment.apiUrl}/book-service/find-books?title=${title}&size=${pageSize}&page=${page}`);
   }
 
-  getAmountOfSearchResult(title: string): Observable<number> {
-    return this.http.get<number>(`${environment.apiUrl}/book-service/amount-of-search-result?title=${title}`);
-  }
-
-  searchBookAdvanced(title: string, genre: string, author: string,
-                     dateFrom: Date, dateTo: Date, pageSize: number, page: number): Observable<NewModelBook[]> {
+  searchBookAdvanced(title: string, genre: number, author: string,
+                     dateFrom: Date, dateTo: Date, pageSize: number, page: number): Observable<Page> {
+    page = page - 1;
     if (dateFrom < dateTo) {
       const formattedDateFrom = dateFrom.toISOString().substring(0, 10);
       const formattedDateTo = dateTo.toISOString().substring(0, 10);
-      if (genre === 'all' && author === '') {
-        return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
-          `/filter-books?title=${title}&from=${formattedDateFrom}&to=${formattedDateTo}&size=${pageSize}&page=${page}`);
-      } else if (genre !== 'all' && author === '') {
-        return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
-          `/filter-books-genre?title=${title}&genre=${genre}` +
+      if (genre === -1 && author === '') {
+        return this.http.get<Page>(`${environment.apiUrl}/book-service` +
+          `/find-books?title=${title}&from=${formattedDateFrom}&to=${formattedDateTo}&size=${pageSize}&page=${page}`);
+      } else if (genre !== -1 && author === '') {
+        return this.http.get<Page>(`${environment.apiUrl}/book-service` +
+          `/find-books?title=${title}&genre=${genre}` +
           `&from=${formattedDateFrom}&to=${formattedDateTo}&size=${pageSize}&page=${page}`);
-      } else if (genre === 'all' && author !== '') {
-        return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
-          `/filter-books-author?title=${title}&author=${author}` +
+      } else if (genre === -1 && author !== '') {
+        return this.http.get<Page>(`${environment.apiUrl}/book-service` +
+          `/find-books?title=${title}&author=${author}` +
           `&from=${formattedDateFrom}&to=${formattedDateTo}&size=${pageSize}&page=${page}`);
       } else {
-        return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service` +
-          `/filter-books-author-genre?title=${title}&author=${author}&genre=${genre}` +
+        return this.http.get<Page>(`${environment.apiUrl}/book-service` +
+          `/find-books?title=${title}&author=${author}&genre=${genre}` +
           `&from=${formattedDateFrom}&to=${formattedDateTo}&size=${pageSize}&page=${page}`);
       }
     }
   }
 
-  getAmountOfAdvancedSearchResult(title: string, genre: string, author: string, dateFrom: Date, dateTo: Date): Observable<number> {
-    if (dateFrom < dateTo) {
-      const formattedDateFrom = dateFrom.toISOString().substring(0, 10);
-      const formattedDateTo = dateTo.toISOString().substring(0, 10);
-      if (genre === 'all' && author === '') {
-        return this.http.get<number>(`${environment.apiUrl}/book-service` +
-          `/amount-filter-books?title=${title}&from=${formattedDateFrom}&to=${formattedDateTo}`);
-      } else if (genre !== 'all' && author === '') {
-        return this.http.get<number>(`${environment.apiUrl}/book-service` +
-          `/amount-filter-books-genre?title=${title}&genre=${genre}&from=${formattedDateFrom}&to=${formattedDateTo}`);
-      } else if (genre === 'all' && author !== '') {
-        return this.http.get<number>(`${environment.apiUrl}/book-service` +
-          `/amount-filter-books-author?title=${title}&author=${author}&from=${formattedDateFrom}&to=${formattedDateTo}`);
-      } else {
-        return this.http.get<number>(`${environment.apiUrl}/book-service` +
-          `/amount-filter-books-author-genre?title=${title}&author=${author}&genre=${genre}` +
-          `&from=${formattedDateFrom}&to=${formattedDateTo}`);
-      }
-    }
-  }
 
   getMinDateRelease(): Observable<Date> {
     return this.http.get<Date>(`${environment.apiUrl}/book-service/min-date-release`);
@@ -160,6 +137,7 @@ export class BookService {
     // return this.http.post(`${environment.apiUrl}/book-service/add-review-user-book?userId=1&bookId=4&reviewText=erge`);
     return this.http.post<Review>(`${environment.apiUrl}/book-service/add-review-user-book`, body);
   }
+
   addBookToProfile(userName: string, bookId: number): Observable<boolean> {
     const body = {username: userName, bookId: bookId};
     return this.http.post<boolean>(
@@ -168,8 +146,8 @@ export class BookService {
   }
   removeBookFromProfile(userName: string, bookId: number): Observable<boolean> {
     const body = {username: userName, bookId: bookId};
-    return this.http.post<boolean>(
-      `${environment.apiUrl}/book-service/remove-book-profile?userName=${userName}&bookId=${bookId}`, body);
+    return this.http.delete<boolean>(
+      `${environment.apiUrl}/book-service/remove-book-profile?userName=${userName}&bookId=${bookId}`);
     // return this.http.get(`${environment.apiUrl}/book-service/add-book-profile?userName=${userName}&bookId=${bookId}`);
   }
   checkBookInProfile(userName: string, bookId: number): Observable<boolean> {
@@ -191,7 +169,37 @@ export class BookService {
   countReviews(approved: boolean): Observable<number> {
     return this.http.get<number>(`${environment.apiUrl}/book-service/count-reviews?approved=${approved}`);
   }
+
   countAnnouncement(approved: boolean): Observable<number> {
     return this.http.get<number>(`${environment.apiUrl}/approve-service/count-announcement?approved=${approved}`);
+  }
+
+
+  getSuggestions(userName: string, pageSize: number, page: number): Observable<Page> {
+    page = page - 1;
+    return this.http.get<Page>(`${environment.apiUrl}/book-service/suggestions?user=${userName}&size=${pageSize}&page=${page}`);
+  }
+
+  likeBook(bookId: number, userLogin: string): Observable<boolean> {
+    const body = {bookId: bookId, userLogin: userLogin};
+    return this.http.put<boolean>(`${environment.apiUrl}/book-service/like-book?bookId=${bookId}&userLogin=${userLogin}`, body);
+  }
+  likeReview(reviewId: number, userLogin: string): Observable<number> {
+    const body = {bookId: reviewId, userLogin: userLogin};
+    return this.http.put<number>(`${environment.apiUrl}/book-service/like-review?reviewId=${reviewId}&userLogin=${userLogin}`, body);
+  }
+  dislikeBook(bookId: number, userLogin: string): Observable<boolean> {
+    const body = {bookId: bookId, userLogin: userLogin};
+    return this.http.put<boolean>(`${environment.apiUrl}/book-service/dislike-book?bookId=${bookId}&userLogin=${userLogin}`, body);
+  }
+  dislikeReview(reviewId: number, userLogin: string): Observable<number> {
+    const body = {reviewId: reviewId, userLogin: userLogin};
+    return this.http.put<number>(`${environment.apiUrl}/book-service/dislike-review?reviewId=${reviewId}&userLogin=${userLogin}`, body);
+  }
+  checkLikedBook(bookId: number, userLogin: string): Observable<number> {
+    return this.http.get<number>(`${environment.apiUrl}/book-service/check-liked-book?bookId=${bookId}&userLogin=${userLogin}`);
+  }
+  checkLikedReview(reviewId: number, userLogin: number): Observable<number> {
+    return this.http.get<number>(`${environment.apiUrl}/book-service/check-liked-review?reviewId=${reviewId}&userLogin=${userLogin}`);
   }
 }
