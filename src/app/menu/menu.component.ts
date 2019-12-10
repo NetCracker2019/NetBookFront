@@ -15,7 +15,7 @@ export class MenuComponent implements OnInit {
   public role: number;
   public securityApprove: boolean;
   public securityAchievement: boolean;
-  securitySuperAdmin: boolean;
+  public securitySuperAdmin: boolean;
 
 
 
