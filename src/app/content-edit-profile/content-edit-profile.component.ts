@@ -109,13 +109,13 @@ export class ContentEditProfileComponent implements OnInit {
   }
 
   edit() {
-    this.user.firstName = this.form.controls.firstName.value;
-    this.user.country = this.form.controls.country.value;
-    this.user.city = this.form.controls.city.value;
-    this.user.sex = this.form.controls.sex.value;
-    this.user.email = this.form.controls.email.value;
+    this.user.firstName = this.userService.escaping(this.form.controls.firstName.value);
+    this.user.country = this.userService.escaping(this.form.controls.country.value);
+    this.user.city = this.userService.escaping(this.form.controls.city.value);
+    this.user.sex = this.userService.escaping(this.form.controls.sex.value);
+    this.user.email = this.userService.escaping(this.form.controls.email.value);
     this.user.password = this.form.controls.password.value;
-    this.user.status = this.form.controls.status.value;
+    this.user.status = this.userService.escaping(this.form.controls.status.value);
     this. user.avatarFilePath = this.fileName;
     this.commitEditUser();
   }

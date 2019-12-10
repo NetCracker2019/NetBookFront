@@ -17,6 +17,11 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  escaping(str: string){
+    if(str == null || str === undefined) return str;
+    return String(str).replace(/[&#$%~^*<>"'`=\/\\]/g, '');
+  }
+
   getAll() {
     return this.http.get<User[]>('/user-service/users');
   }

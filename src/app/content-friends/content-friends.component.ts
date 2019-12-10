@@ -40,7 +40,7 @@ export class ContentFriendsComponent implements OnInit {
   }
   onSearchChange(searchValue: string) {
     this.page = 1;
-    this.sought = searchValue;
+    this.sought = this.userService.escaping(searchValue);
     this.peoples = [];
     this.endOfFriends = false;
     this.getPersonsNewSought();
