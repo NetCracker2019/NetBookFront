@@ -200,7 +200,7 @@ export class ContentProfileBookListComponent implements OnInit {
   
 
   onSearchChange(searchValue: string) {
-    this.searchParams.sought = searchValue;
+    this.searchParams.sought = this.userService.escaping(searchValue);
   }
 
   find(){

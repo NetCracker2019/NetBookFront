@@ -88,7 +88,7 @@ export class ContentChatComponent implements OnInit {
 
     }
     addingFriends.push(this.username);
-    this.chatService.createNewChat(this.chatName, addingFriends)
+    this.chatService.createNewChat(this.userService.escaping(this.chatName), addingFriends)
       .subscribe((data) => {
         this.getChats();
         this.toastr.success(`Chat ${this.chatName} successfully created`);
@@ -142,7 +142,8 @@ export class ContentChatComponent implements OnInit {
     else this.commitEditChat(addedMembers, removedMembers);
   }
   commitEditChat(addedMembers: string[], removedMembers: string[]){
-    this.chatService.updateChat(this.activeChat, this.editedChatName, addedMembers, removedMembers)
+    this.chatService.updateChat(this.activeChat, this.userService.escaping(this.editedChatName),
+     addedMembers, removedMembers)
       .subscribe(
           (data) => {
             this.toastr.success(`Chat successfully updated`);
@@ -163,6 +164,7 @@ export class ContentChatComponent implements OnInit {
   /*----websocket service block--------*/
   //onClick Chat select
   onClick(chatId: number){
+    if(this.stompClient) this.disconnect();
     this.activeChat = chatId;
     this.messages = [];
     this.chatName = this.chats.find(x => x.chatId === this.activeChat).chatName;
@@ -171,6 +173,7 @@ export class ContentChatComponent implements OnInit {
     this.getMessagesHistory(chatId);
   }
   sendMessage() {
+      if(this.msg.length < 1) return;
       let message: Message = { message: this.msg,
        fromName: this.username, toId: this.activeChat, dateTimeSend: null };
       this.stompClient.send("/socket-subscriber/send/message", {}, JSON.stringify(message));

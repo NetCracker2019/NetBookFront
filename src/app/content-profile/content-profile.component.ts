@@ -131,9 +131,10 @@ export class ContentProfileComponent implements OnInit {
     this.userService.isEditable(this.login)
     .subscribe(
       data => {
-        if(!data){
+        if(!data && this.authenticationService.currentUserValue.role != 4){
           this.isFriend = -2; 
         }else this.isFriendFunction();
+
         this.canEditable = data;
         });
   }
