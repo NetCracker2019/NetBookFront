@@ -41,11 +41,12 @@ export class MenuComponent implements OnInit {
     this.role = this.authenticationService.currentUserValue.role;
     this.securityApprove = this.role != 4;
     this.securityAchievement = this.role == 1 || this.role == 2;
-
+    this.securitySuperAdmin = this.role == 1;
     if(this.role != 4){
       this.Menu = this.Menu.filter(obj => obj.name !== 'My books' &&
         obj.name !== 'Chat');
     }
+
 
    }
 
