@@ -11,11 +11,11 @@ import {NotificationService} from "../_services/notification.service";
 })
 export class MenuComponent implements OnInit {
 
-
   public count:number ;
   public role: number;
   public securityApprove: boolean;
   public securityAchievement: boolean;
+  public securitySuperAdmin: boolean;
 
 
 
