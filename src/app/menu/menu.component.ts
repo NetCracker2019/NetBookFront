@@ -13,7 +13,7 @@ export class MenuComponent implements OnInit {
   role: number;
   securityApprove: boolean;
   securityAchievement: boolean;
-
+  securitySuperAdmin: boolean;
 
 
   // Menu = [
