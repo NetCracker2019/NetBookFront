@@ -41,6 +41,7 @@ export class MenuComponent implements OnInit {
     this.role = authenticationService.role;
     this.securityApprove = this.role != 4;
     this.securityAchievement = this.role == 1 || this.role == 2;
+    this.securitySuperAdmin = this.role == 1;
     console.log(this.role);
    }
 
