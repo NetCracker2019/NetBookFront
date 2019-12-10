@@ -24,7 +24,7 @@ export class AuthorizationComponent implements OnInit {
   accountValidationMessages = {
     userName: [
       { type: 'required', message: 'Username is required' },
-      { type: 'minlength', message: 'Username must be at least 4 characters long' },
+      { type: 'minlength', message: 'Username must be at least 2 characters long' },
       { type: 'maxlength', message: 'Username cannot be more than 15 characters long' },
     ],
     userPassword: [
@@ -51,7 +51,7 @@ export class AuthorizationComponent implements OnInit {
 
       userName: new FormControl('', [
         Validators.required,
-        Validators.minLength(4),
+        Validators.minLength(2),
         Validators.maxLength(15)
       ]),
       userPassword: new FormControl('', [
