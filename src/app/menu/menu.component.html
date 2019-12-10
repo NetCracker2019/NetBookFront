@@ -26,6 +26,11 @@
       <li *ngIf="securityAchievement" class="nav-item">
         <a class="nav-link link" [routerLink]="['achievements']"> Achievement manager </a>
       </li>
+      <li *ngIf="securityAchievement" class="nav-item">
+        <a class="nav-link link" [routerLink]="['superadmin-request']"> Admin registration request </a>
+        <a class="nav-link link"  [routerLink]="['superadmin-moderator-request']"> 
+        Moder registration request </a>
+      </li>
     </ul>
   </div>
 </nav>

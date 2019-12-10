@@ -83,8 +83,8 @@ export class ContentFriendsComponent implements OnInit {
     this.getPersons();
   }
   getPhoto(imageName: string) {
-    return `https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg`;
-    // return `${environment.apiUrl}/files/download?filename=${imageName}`;
+    //return `https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg`;
+    return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 
 }
