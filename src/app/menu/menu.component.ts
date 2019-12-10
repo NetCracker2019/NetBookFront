@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Menu} from '../_models/interface';
 import {AuthenticationService} from '../_services/authentication.service';
+import {NotificationService} from "../_services/notification.service";
 
 
 @Component({
@@ -10,10 +11,13 @@ import {AuthenticationService} from '../_services/authentication.service';
 })
 export class MenuComponent implements OnInit {
 
-  role: number;
-  securityApprove: boolean;
-  securityAchievement: boolean;
+  public count:number ;
+  public role: number;
+  public securityApprove: boolean;
+  public securityAchievement: boolean;
   securitySuperAdmin: boolean;
+
+
 
 
   // Menu = [
@@ -37,32 +41,45 @@ export class MenuComponent implements OnInit {
 //     }
 //   }
 // =======
-  constructor(private authenticationService: AuthenticationService) {
+
+  constructor(private authenticationService: AuthenticationService,
+  public notificationService:NotificationService) {
     this.role = authenticationService.role;
+
     this.securityApprove = this.role != 4;
     this.securityAchievement = this.role == 1 || this.role == 2;
     this.securitySuperAdmin = this.role == 1;
-    console.log(this.role);
+    if(this.role != 4){
+      this.Menu = this.Menu.filter(obj => obj.name !== 'My books' &&
+        obj.name !== 'Chat');
+    }
+
+
    }
 
 
   ngOnInit() {
 
+    this.notificationService.getCountForNotifs().subscribe(data => {
+      this.count = data;
+    });
   }
 
-  Menu: Menu[] = [
+  public Menu: Menu[] = [
 
     {name: 'Main page', url: 'announcement'},
     {name: 'Books', url: 'books'},
     {name: 'My profile', url: 'profile/' + this.authenticationService.currentUserValue.username},
     {name: 'Friends', url: 'friends/' + this.authenticationService.currentUserValue.username},
-    {name: 'Notification', url: 'notifications'},
+   // {name: 'Notification', url: 'notifications'},
     {name: 'Recommendation', url: 'recommendations'},
     {name: 'My books', url: `profile/${this.authenticationService.currentUserValue.username}/book-list`},
     {name: 'Calendar', url: 'calendar'},
     {name: 'Chat', url: 'chat'},
     // {name: 'Achievements', url: 'achievements'},
     {name: 'Add book/announcement', url: 'newAnnouncement'}];
+
+    
 
 
 }

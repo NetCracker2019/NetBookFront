@@ -31,19 +31,19 @@ font-awesome.min.css">
 					</ul>
 				</div>
 			</div>
-			<div class="col-md-2" *ngIf="this.isOwnProfile">
+			<div class="col-md-2" *ngIf="this.canEditable">
 				<input  type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit"
 				(click)="goEdit()"/>
 			</div>
-			<div class="col-md-2" *ngIf="!this.isOwnProfile && this.isFriend == -1">
+			<div class="col-md-2" *ngIf="!this.canEditable && this.isFriend == -1">
 				<input  type="submit" class="profile-edit-btn" name="btnAddMore" value="Add to friend"
 				(click)="addFriend()"/>
 			</div>
-			<div class="col-md-2" *ngIf="!this.isOwnProfile && this.isFriend == 1">
+			<div class="col-md-2" *ngIf="!this.canEditable && this.isFriend == 1">
 				<input  type="submit" class="profile-edit-btn" name="btnAddMore" value="Remove from friends"
 				(click)="deleteFriend()"/>
 			</div>
-			<div class="col-md-2" *ngIf="!this.isOwnProfile && this.isFriend == 0">
+			<div class="col-md-2" *ngIf="!this.canEditable && this.isFriend == 0">
 				<input  type="submit" class="profile-edit-btn" name="btnAddMore" value="Unsubscribe"
 				(click)="deleteFriend()"/>
 			</div>
@@ -55,7 +55,7 @@ font-awesome.min.css">
 					<p>Friends</p>
 					<div *ngFor="let friend of this.friends"> 
 						<img src="{{ this.getPhoto(friend.avatarFilePath) }}" alt="no"/>
-						<a href="homeath/profile/{{ friend.username }}">
+						<a style="padding-left: 10px; font-size: 16px;" href="homeath/profile/{{ friend.username }}">
 						{{ friend.username }}</a>
 					</div><br>
 					<div class="all-friends" *ngIf="this.friends.length > 3">
@@ -128,7 +128,7 @@ font-awesome.min.css">
 								<div class="thumbnail">
 									<img alt="no img" src="{{ this.getPhoto(book.image_path) }}">
 									<div class="caption">
-										<a href="books/{{ book.title }}">
+										<a href="homeath/search/{{ book.bookId }}">
 										{{ book.title  }}</a>
 										<div class="authors" *ngFor="let author of book.authors">
 											<a href="authors/{{ author }}">
@@ -138,7 +138,7 @@ font-awesome.min.css">
 								</div>
 							</div>
 						</div>
-						<a *ngIf="this.favouriteBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/book-list">...all favourite books </a><i class="fa fa-arrow-right" aria-hidden="true"></i>
+						<a *ngIf="this.favouriteBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/book-list">...all favourite books </a><i *ngIf="this.favouriteBooks.length == 3" class="fa fa-arrow-right" aria-hidden="true"></i>
 					</div>		
 				</div>
 				<br><br>
@@ -150,7 +150,7 @@ font-awesome.min.css">
 								<div class="thumbnail">
 									<img alt="no img" src="{{ this.getPhoto(book.image_path)}}">
 									<div class="caption">
-										<a href="books/{{ book.title }}">
+										<a href="homeath/search/{{ book.bookId }}">
 										{{ book.title  }}</a>
 										<div class="authors" *ngFor="let author of book.authors">
 											<a href="authors/{{ author }}">
@@ -176,7 +176,7 @@ font-awesome.min.css">
 								<div class="thumbnail">
 									<img alt="no img" src="{{ this.getPhoto(book.image_path) }}">
 									<div class="caption">
-										<a href="books/{{ book.title }}">
+										<a href="homeath/search/{{ book.bookId }}">
 										{{ book.title  }}</a>
 										<div class="authors" *ngFor="let author of book.authors">
 											<a href="authors/{{ author }}">

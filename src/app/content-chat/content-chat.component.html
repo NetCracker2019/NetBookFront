@@ -46,11 +46,12 @@ font-awesome.min.css">
 			</div>
 			<div *ngIf="message.fromName != this.username">
 				<div class="incoming_msg">
-					<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="no"> </div>
+					<div class="incoming_msg_img"> <img src="{{ this.getAvatarPathByLogin(message.fromName) }}" alt="no"> </div>
 					<div class="received_msg">
 						<div class="received_withd_msg">
 							<p> {{message.message}} </p>
-							<span class="time_date"> {{message.fromName}} | {{message.dateTimeSend}} </span>
+							<span class="time_date"> 
+							<a href="homeath/profile/{{message.fromName}}" style="color: #646464;">{{message.fromName}}</a> | {{message.dateTimeSend}} </span>
 						</div>
 					</div>
 				</div>
@@ -90,14 +91,14 @@ font-awesome.min.css">
 						<div *ngFor="let friend of this.friends"> 
 							<div class="chat_list" tabindex="1" (click)="onClickCheckBox(friend)">
 								<div class="chat_people">
-									<div class="chat_img"> 
-										<img src="{{ this.getPhoto(friend.avatarFilePath) }}" alt="no"/>
+									<div class="chat_img" > 
+										<img style="width: 7vmin; height: 7vmin;" src="{{ this.getPhoto(friend.avatarFilePath) }}" alt="no"/>
 									</div>
-									<div class="chat_ib">
-										<h5>{{ friend.username }}</h5>
+									<div class="chat_ib" >
+										<h5 style="display: inline-block;">{{ friend.username }}  </h5>
 										<div class="round">
 											<input disabled type="checkbox" id="checkbox{{friend.username}}" name="checkbox{{friend.username}}" [(ngModel)]="friend.checked" />
-											<label for="checkbox{{friend.username}}"></label>
+											<label for="checkbox{{friend.username}}" ></label>
 										</div>
 									</div>
 								</div>
@@ -150,11 +151,11 @@ font-awesome.min.css">
 							<div class="chat_list"  tabindex="1" (click)="onClickCheckBox(member)">
 								<div class="chat_people">
 									<div class="chat_img"> 
-										<img src="{{ this.getPhoto(member.avatarFilePath) }}" alt="no"/>
+										<img style="width: 7vmin; height: 7vmin;" src="{{ this.getPhoto(member.avatarFilePath) }}" alt="no"/>
 									</div>
 									<div class="chat_ib">
-										<h5>{{ member.username }}</h5>
-										<div class="round">
+										<h5 style="display: inline-block;">{{ member.username }}</h5>
+										<div class="round" style="display: inline-block;">
 											<input disabled type="checkbox" name="checkboxEditChat{{member.username}}" [(ngModel)]="member.checked" id="checkboxEditChat{{member.username}}" />
 											<label for="checkboxEditChat{{member.username}}"></label>
 										</div>
@@ -168,11 +169,11 @@ font-awesome.min.css">
 							<div class="chat_list" tabindex="2" (click)="onClickCheckBox(friend)">
 								<div class="chat_people">
 									<div class="chat_img"> 
-										<img src="{{ this.getPhoto(friend.avatarFilePath) }}" alt="no"/>
+										<img style="width: 7vmin; height: 7vmin;" src="{{ this.getPhoto(friend.avatarFilePath) }}" alt="no"/>
 									</div>
 									<div class="chat_ib">
-										<h5>{{ friend.username }}</h5>
-										<div class="round">
+										<h5 style="display: inline-block;">{{ friend.username }}</h5>
+										<div  style="display: inline-block;"class="round">
 											<input disabled type="checkbox" id="checkboxEditChat{{friend.username}}" name="checkboxEditChat{{friend.username}}" [(ngModel)]="friend.checked"/>
 											<label for="checkboxEditChat{{friend.username}}"></label>
 										</div>

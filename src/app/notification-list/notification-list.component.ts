@@ -13,9 +13,9 @@ import {ToastrService} from "ngx-toastr";
 
 export class NotificationListComponent implements OnInit {
 
-  notifications: Notification[];
-  notification:Notification;
 
+  notifications: Notification[];
+  unreadNotifs:Notification[];
 
   constructor(public notificationService: NotificationService,
               private toastr: ToastrService) {
@@ -26,44 +26,59 @@ export class NotificationListComponent implements OnInit {
 
       this.notifications = notifications
     })
-
   }
-  markAllAsRead
-/*1 add to friend
-2 add book
-3 friend achiev
-4 friend add review
-5 friend add overview
-*/
+
+
+
+  /*1 add to friend
+  2 add book
+  3 friend achiev
+  4 friend add review
+  5 friend add overview
+  */
   getNavigationLink(notification: Notification): string {
     switch (notification.notifTypeId) {
       case 1 :
-        return "/homeath/profile/"+notification.fromUserName.toString();
+        return "/homeath/profile/" + notification.fromUserName.toString();
         break;
       case 2 :
-        return "/homeath/search/"+ notification.bookId.toString();
+        return "/homeath/search/" + notification.bookId.toString();
         break;
       case 3 :
-        return "/homeath/profile/"+notification.fromUserName.toString();
+        return "/homeath/profile/" + notification.fromUserName.toString();
         break;
       case 4 :
-        return "/homeath/search/"+ notification.bookId.toString();
+        return "/homeath/search/" + notification.bookId.toString();
         break;
       case 5 :
-        return "/homeath/search/"+ notification.bookId.toString();
+        return "/homeath/search/" + notification.bookId.toString();
         break;
 
     }
 
   }
-  AllNotifsMarkAsRead(){
-    this.notificationService.markAllAsRead(this.notifications[0].userId).subscribe(() =>{},error => {
+
+  AllNotifsMarkAsRead() {
+    this.notificationService.markAllAsRead(this.notifications[0].userId).subscribe(() => {
+    }, error => {
       this.toastr.error(`${environment.errorMessage}`);
     });
   }
-  markOneNotifAsReadByNotifId(notification:Notification){
-    this.notificationService.markNotifAsReadByNotifId(notification).subscribe(() =>{},error => {
+  /*deleteAllNotifs() {
+    this.notificationService.deleteAllNotificationsByUserId(this.notifications[0].userId).subscribe(() => {
+    }, error => {
+      this.toastr.error(`${environment.errorMessage}`);
+    });
+  }*/
+
+  markOneNotifAsReadByNotifId(notification: Notification) {
+    this.notificationService.markNotifAsReadByNotifId(notification).subscribe(() => {
+    }, error => {
       this.toastr.error(`${environment.errorMessage}`);
     });
   }
+
+
+
+
 }

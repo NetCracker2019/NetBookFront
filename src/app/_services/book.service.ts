@@ -170,6 +170,11 @@ export class BookService {
     return this.http.get<number>(`${environment.apiUrl}/book-service/count-reviews?approved=${approved}`);
   }
 
+  countAnnouncement(approved: boolean): Observable<number> {
+    return this.http.get<number>(`${environment.apiUrl}/approve-service/count-announcement?approved=${approved}`);
+  }
+
+
   getSuggestions(userName: string, pageSize: number, page: number): Observable<Page> {
     page = page - 1;
     return this.http.get<Page>(`${environment.apiUrl}/book-service/suggestions?user=${userName}&size=${pageSize}&page=${page}`);
