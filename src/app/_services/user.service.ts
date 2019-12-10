@@ -71,7 +71,7 @@ export class UserService {
   }
 
   edit(user: User) {
-    return this.http.put<User>(`${environment.apiUrl}/profile/edit`, user );
+    return this.http.put<User>(`${environment.apiUrl}/profile/${user.username}/edit`, user );
   }
 
   getPersons(login: string, sought: string, where: string, cnt: number, offset: number) {
@@ -123,6 +123,16 @@ export class UserService {
   removeBookBatch(login: string, booksId: number[]){
     return this.http.delete<void>(
       `${environment.apiUrl}/profile/remove-books?booksid=${booksId}`);
+  }
+
+  removeFile(fileName: string) {
+    return this.http.delete<void>(
+      `${environment.apiUrl}/files/remove/${fileName}`);
+  }
+
+  isEditable(login: string) {
+    return this.http.get<boolean>(
+      `${environment.apiUrl}/profile/${login}/is-editable`);
   }
 }
 

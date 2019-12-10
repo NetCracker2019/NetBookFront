@@ -23,7 +23,7 @@ export class ContentProfileComponent implements OnInit {
   public readBooks: ShortBookDescription[] = [];
   public achievements: Achievement[] = [];	
   public isFriend: number = -1;	
-  public isOwnProfile: boolean = false;
+  public canEditable: boolean = false;
   private login: string;
 
 
@@ -38,7 +38,6 @@ export class ContentProfileComponent implements OnInit {
   ngOnInit() {
     this.login = this.activatedRoute.snapshot.params['login'];
     this.authenticationService.refreshToken();
-    this.isFriendFunction();
 
     this.userService.getUser(this.login)
       .subscribe(
@@ -46,19 +45,19 @@ export class ContentProfileComponent implements OnInit {
           this.user = data;
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.info(`User not found`);
+          this.router.navigate(['/homeath/announcement']);
         });
     
-    if(this.authenticationService.currentUserValue.username == this.login){
-      this.isOwnProfile = true;
-    }
+    this.canEdit();
+
     this.userService.getAchievements(this.login)
       .subscribe(
         (data: Achievement[]) => {
           this.achievements = data;
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          //this.toastr.error(`${environment.errorMessage}`);
         });
 
     this.userService.getFriends(this.login, 4, 0)
@@ -67,7 +66,7 @@ export class ContentProfileComponent implements OnInit {
           this.friends = data;
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          //this.toastr.error(`${environment.errorMessage}`);
         });
 
     this.userService.getFavouriteBooks(this.login, "", 3, 0)
@@ -76,7 +75,7 @@ export class ContentProfileComponent implements OnInit {
           this.favouriteBooks = data;
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          //this.toastr.error(`${environment.errorMessage}`);
         });
 
     this.userService.getReadingBooks(this.login, "", 3, 0)
@@ -90,7 +89,6 @@ export class ContentProfileComponent implements OnInit {
         (data: ShortBookDescription[]) => {
           this.readBooks = data;
         });
-
   }
   goEdit() {
     this.router.navigate(['/homeath/profile/' + this.login + '/edit']);
@@ -113,7 +111,7 @@ export class ContentProfileComponent implements OnInit {
           this.isFriend = data;
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          //this.toastr.info(`${environment.errorMessage}`);
         });
   }
   deleteFriend(){
@@ -124,9 +122,20 @@ export class ContentProfileComponent implements OnInit {
           this.isFriendFunction();
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.info(`${environment.errorMessage}`);
         });
     
+  }
+
+  canEdit(){
+    this.userService.isEditable(this.login)
+    .subscribe(
+      data => {
+        if(!data){
+          this.isFriend = -2; 
+        }else this.isFriendFunction();
+        this.canEditable = data;
+        });
   }
 
   getPhoto(imageName: string) {

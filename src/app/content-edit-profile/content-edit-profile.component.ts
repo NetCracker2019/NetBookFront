@@ -20,7 +20,7 @@ export class ContentEditProfileComponent implements OnInit {
   public user: User = {} as User;
   private login: string;
   private fileToUpload: File = null;
-  private fileName: string;
+  private fileName: string = "";
 
   form: FormGroup;
   profileValidationMessages = {
@@ -64,13 +64,18 @@ export class ContentEditProfileComponent implements OnInit {
     });
 
     this.authenticationService.refreshToken();
-  	if(this.authenticationService.currentUserValue.username != this.login){
-      this.router.navigate(['/homeath/profile/' + this.login]);
-    }
+
+    this.userService.isEditable(this.login)
+    .subscribe(
+      data => {
+        if(!data) this.router.navigate(['/homeath/profile/' + this.login]);
+      });
+    
   	this.userService.getUser(this.login)
       .subscribe(
         (data : User) => {
           this.user = data;
+          this.fileName = this.user.avatarFilePath;
         },
         error => {
           this.toastr.error(`${environment.errorMessage}`);
@@ -79,12 +84,28 @@ export class ContentEditProfileComponent implements OnInit {
 
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
+
+    if( this.fileToUpload != null){
+      let newFileName: string = uuid();
+      this.userService.postFile(this.fileToUpload, newFileName).subscribe(
+        data => {
+          
+          if(this.fileName != this.user.avatarFilePath){
+            this.userService.removeFile(this.fileName)
+            .subscribe(data =>{});
+          }
+
+          this.fileName = newFileName;
+        },
+        error => {
+          this.toastr.info(`Picture size must be < 1 MB`);       
+        });
+    }  
   }
 
 
-  getPhoto(imageName: string) {
-    //return `${environment.apiUrl}/files/download?filename=${imageName}`;
-    return 'https://i.dailymail.co.uk/1s/2019/04/18/10/12427172-0-image-a-20_1555581069374.jpg';
+  getPhoto() {
+    return `${environment.apiUrl}/files/download?filename=${this.fileName}`;
   }
 
   edit() {
@@ -95,21 +116,10 @@ export class ContentEditProfileComponent implements OnInit {
     this.user.email = this.form.controls.email.value;
     this.user.password = this.form.controls.password.value;
     this.user.status = this.form.controls.status.value;
-  
-    if( this.fileToUpload != null){
-      this.fileName = uuid();
-      //this.user.avatarFilePath = this.fileName;
-      this.userService.postFile(this.fileToUpload, this.fileName).subscribe(
-        data => {
-          this.user.avatarFilePath = this.fileName;
-          this.commitEditUser();
-        },
-        error => {
-          this.toastr.info(`Picture size must be < 1 MB`);
-          this.commitEditUser();
-        });
-    }  
+    this. user.avatarFilePath = this.fileName;
+    this.commitEditUser();
   }
+  
   commitEditUser(){
     this.userService.edit(this.user)
       .subscribe(

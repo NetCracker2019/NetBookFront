@@ -10,9 +10,9 @@ import {AuthenticationService} from '../_services/authentication.service';
 })
 export class MenuComponent implements OnInit {
 
-  role: number;
-  securityApprove: boolean;
-  securityAchievement: boolean;
+  public role: number;
+  public securityApprove: boolean;
+  public securityAchievement: boolean;
 
 
 
@@ -38,11 +38,16 @@ export class MenuComponent implements OnInit {
 //   }
 // =======
   constructor(private authenticationService: AuthenticationService) {
-    this.role = authenticationService.role;
+    this.role = this.authenticationService.currentUserValue.role;
     this.securityApprove = this.role != 4;
     this.securityAchievement = this.role == 1 || this.role == 2;
     this.securitySuperAdmin = this.role == 1;
-    console.log(this.role);
+    if(this.role != 4){
+      this.Menu = this.Menu.filter(obj => obj.name !== 'My books' &&
+        obj.name !== 'Chat');
+    }
+
+
    }
 
 
@@ -50,7 +55,7 @@ export class MenuComponent implements OnInit {
 
   }
 
-  Menu: Menu[] = [
+  public Menu: Menu[] = [
 
     {name: 'Main page', url: 'announcement'},
     {name: 'Books', url: 'books'},
@@ -63,6 +68,8 @@ export class MenuComponent implements OnInit {
     {name: 'Chat', url: 'chat'},
     // {name: 'Achievements', url: 'achievements'},
     {name: 'Add book/announcement', url: 'newAnnouncement'}];
+
+    
 
 
 }

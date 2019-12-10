@@ -56,7 +56,6 @@ export class ContentChatComponent implements OnInit {
     this.chatService.getChats(this.username)
       .subscribe(
         (data : Chat[]) => {
-          console.log(data);
           this.chats = data;
         });
   }
@@ -136,10 +135,18 @@ export class ContentChatComponent implements OnInit {
         addedMembers.push(friend.username);
       }
     }
+    if(removedMembers.length > 0){
+      if(window.confirm(`This will completely remove members from ${this.chatName}.`))
+        this.commitEditChat(addedMembers, removedMembers);
+    }
+    else this.commitEditChat(addedMembers, removedMembers);
+  }
+  commitEditChat(addedMembers: string[], removedMembers: string[]){
     this.chatService.updateChat(this.activeChat, this.editedChatName, addedMembers, removedMembers)
       .subscribe(
           (data) => {
             this.toastr.success(`Chat successfully updated`);
+            this.getChats();
           },
           error => {
             this.toastr.info(`${environment.errorMessage}`);
@@ -150,12 +157,16 @@ export class ContentChatComponent implements OnInit {
     //this.editChatTab = 0;
     this.getChatMembers(this.activeChat);
   }
+  getAvatarPathByLogin(login: string){
+    return this.getPhoto(this.chatMembers.find(x => x.username === login).avatarFilePath);
+  }
   /*----websocket service block--------*/
   //onClick Chat select
   onClick(chatId: number){
     this.activeChat = chatId;
     this.messages = [];
     this.chatName = this.chats.find(x => x.chatId === this.activeChat).chatName;
+    this.getChatMembers(this.activeChat);
     this.initializeWebSocketConnection();
     this.getMessagesHistory(chatId);
   }
@@ -196,7 +207,7 @@ export class ContentChatComponent implements OnInit {
   }
   /*------------------*/
   getPhoto(imageName: string) {
-        //return `${environment.apiUrl}/files/download?filename=${imageName}`;
-        return 'https://ptetutorials.com/images/user-profile.png';
+        return `${environment.apiUrl}/files/download?filename=${imageName}`;
+        //return 'https://ptetutorials.com/images/user-profile.png';
   }
 }
