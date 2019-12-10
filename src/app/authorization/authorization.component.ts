@@ -26,6 +26,7 @@ export class AuthorizationComponent implements OnInit {
       { type: 'required', message: 'Username is required' },
       { type: 'minlength', message: 'Username must be at least 2 characters long' },
       { type: 'maxlength', message: 'Username cannot be more than 15 characters long' },
+      { type: 'pattern', message: 'Your login must contain only numbers and letters' }
     ],
     userPassword: [
       { type: 'required', message: 'Password is required' },
@@ -51,6 +52,7 @@ export class AuthorizationComponent implements OnInit {
 
       userName: new FormControl('', [
         Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_]+$'),
         Validators.minLength(2),
         Validators.maxLength(15)
       ]),
