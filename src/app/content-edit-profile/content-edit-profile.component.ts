@@ -70,20 +70,20 @@ export class ContentEditProfileComponent implements OnInit, OnDestroy {
         Validators.maxLength(25)
       ]),
       name: new FormControl('', [
-        Validators.pattern('^[a-zA-Z0-9_]+$'),
+        Validators.pattern('^[a-zA-Z0-9_ ]+$'),
         Validators.minLength(2),
         Validators.maxLength(20)
       ]),
       status: new FormControl('', [
-        Validators.pattern('^[a-zA-Z0-9_]+$'),
+        Validators.pattern('^[a-zA-Z0-9_ ]+$'),
         Validators.maxLength(20)
       ]),
       city: new FormControl('', [
-        Validators.pattern('^[a-zA-Z_]+$'),
+        Validators.pattern('^[a-zA-Z_ ]+$'),
         Validators.maxLength(20)
       ]),
       country: new FormControl('', [
-        Validators.pattern('^[a-zA-Z_]+$'),
+        Validators.pattern('^[a-zA-Z_ ]+$'),
         Validators.maxLength(20)
       ]),
       password: new FormControl('', [
@@ -148,8 +148,8 @@ export class ContentEditProfileComponent implements OnInit, OnDestroy {
         .subscribe(() => {});
     }
   }
-  getPhoto() {
-    return `${environment.apiUrl}/files/download?filename=${this.fileName}`;
+  getPhoto(imageName: string) {
+    return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 
   edit() {

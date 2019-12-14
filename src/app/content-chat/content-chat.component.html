@@ -190,7 +190,8 @@ font-awesome.min.css">
 							<div class="chat_list" tabindex="2" (click)="onClickCheckBox(friend)">
 								<div class="chat_people">
 									<div class="chat_img">
-										<img style="width: 7vmin; height: 7vmin;" src="{{ this.getPhoto(friend.avatarFilePath) }}" alt="no"/>
+										<img style="width: 7vmin; height: 7vmin;" src="{{ this.getPhoto(friend.avatarFilePath) }}"
+                         (error)="$event.target.src=getPhoto('default_avatar')" alt="no"/>
 									</div>
 									<div class="chat_ib">
 										<h5 style="display: inline-block;">{{ friend.username }}</h5>
