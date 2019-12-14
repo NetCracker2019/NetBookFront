@@ -7,7 +7,7 @@
 
           <div class="form-group">
             <input type="text" class="form-control" [ngClass]="{'is-invalid':  loginForm.get('userName').invalid && loginForm.controls['userName'].touched,
-                   'is-valid': loginForm.get('userName').valid}" name="userName" placeholder="First Name" formControlName="userName"
+                   'is-valid': loginForm.get('userName').valid}" name="userName" placeholder="Login" formControlName="userName"
                    required/>
             <div class="invalid-feedback"
                  *ngIf="loginForm.get('userName').invalid && loginForm.controls['userName'].touched">

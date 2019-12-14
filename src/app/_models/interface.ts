@@ -194,3 +194,8 @@ export interface Chat {
   chatName: string;
   chatAvatar: string;
 }
+export enum Shelf{
+  Reading,
+  Read,
+  Favourite
+}
