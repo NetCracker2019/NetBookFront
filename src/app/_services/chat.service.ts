@@ -16,23 +16,20 @@ export class ChatService {
     return this.http.get<Chat[]>(`${environment.apiUrl}/chat/${login}/chats`);
   }
 
-  getMessagesHistory(chatId: number){
-  	return this.http.get<Message[]>(`${environment.apiUrl}/chat/${chatId}`);
+  getMessagesHistory(chatId: number) {
+    return this.http.get<Message[]>(`${environment.apiUrl}/chat/${chatId}`);
   }
 
-  createNewChat(chatName: string, members: string[]){
+  createNewChat(chatName: string, members: string[]) {
     return this.http.post<void>(`${environment.apiUrl}/chat/create/${chatName}`, members);
   }
-  
   getChatMembers(chatId: number) {
     return this.http.get<User[]>(`${environment.apiUrl}/chat/${chatId}/members`);
   }
 
-  updateChat(chatId: number, chatName: string, addedMembers: string[], removedMembers: string[]){
-    //console.log(JSON.stringify(members));
-    console.log(`${environment.apiUrl}/chat/${chatId}/update/${chatName}?addedMembers=${addedMembers}`);
-    return this.http.put<void>(`${environment.apiUrl}/chat/${chatId}/update/${chatName}?addedMembers=${addedMembers}`, 
-      removedMembers);
+  updateChat(chatId: number, chatName: string, addedMembers: string[], removedMembers: string[], chatAvatar: string) {
+    return this.http.put<void>(`${environment.apiUrl}/chat/${chatId}/update/${chatName}?addedMembers=${addedMembers}` +
+      `&chatAvatar=${chatAvatar}`, removedMembers);
   }
 }
 

@@ -1,7 +1,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/
 font-awesome.min.css">
-<div class="container col-md-10">
+<div class="container col-md-11.5">
 	<h4 class="text-left pl-3 mt-3">List of books</h4><br>
 	<section class="search-sec">
 		<form action="#" method="post" novalidate="novalidate">
@@ -34,8 +34,11 @@ font-awesome.min.css">
 				<div class="collapse" id="collapseSettings">
 					<div class="card card-body">
 						<div class="row">
-							<div class="shelves col-2">
-								<p>Shelves</p>
+							<div class="shelves">
+                <div>
+                  <p>Shelves</p>
+                </div>
+
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input" id="shalvesReading" [(ngModel)]="searchParams.reading" (ngModelChange)="find()" checked>
 									<label class="custom-control-label" for="shalvesReading">
@@ -62,7 +65,7 @@ font-awesome.min.css">
 								</div>
 							</div>
 
-							<div class="visibleColumns col-2">
+							<div class="visibleColumns">
 								<p>Visible columns</p>
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input" id="visibleTitle" [(ngModel)]="visibleTitle">
@@ -105,7 +108,7 @@ font-awesome.min.css">
 								<option value="title" selected>Title</option>
 								<option value="likes">Likes</option>
 							</select>
-							
+
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="asc" [(ngModel)]="searchParams.order" (ngModelChange)="find()">
 								<label class="form-check-label" for="inlineRadio1">Asc.</label>
@@ -119,24 +122,25 @@ font-awesome.min.css">
 							Close
 						</a>
 					</div>
-					
+
 				</div>
 				<div class="collapse" id="collapseBatchEdit">
 					<div class="card card-body">
 						<div class="other">
 							<label for="dropdownMenuBatchEdit" class="labelDiv">Shelf: </label>
-							<select class="browser-default custom-select dropdown col-md-2" id="dropdownMenuBatchEdit" [(ngModel)]="batchEditShelf">
-								<option value="read" selected>Read</option>
-								<option value="reading">Reading</option>
-								<option value="favourite">Favourites</option>
+							<select class="browser-default custom-select dropdown col-md-2" id="dropdownMenuBatchEdit"
+                      [(ngModel)]="batchEditShelf">
+								<option [value]="_Shelf.Read" selected>Read</option>
+								<option [value]="_Shelf.Reading">Reading</option>
+								<option [value]="_Shelf.Favourite">Favourites</option>
 							</select>
-							
+              <div>
 							<a class="labelDiv" (click)="addBookBatchTo(batchEditShelf)">add books to this shelf </a>
 							<p class="labelDiv divider">|</p>
 							<a class="labelDiv" (click)="removeBookBatchFrom(batchEditShelf)">remove books from this shelf </a>
 							<p class="labelDiv divider" >|</p>
 							<a class="labelDiv" (click)="removeBookBatch()">remove books from all shelves </a>
-							<br><br><hr>
+              </div><br><br><br><hr>
 							<a class="select" (click)="selectAll()">select all</a>
 							<p class=" dividr" >|</p>
 							<a class="select" (click)="selectNone()">select none </a>
@@ -151,14 +155,14 @@ font-awesome.min.css">
 
 			</div>
 			<div *ngIf="books.length == 0" class="empty-result">
-				Список книг порожній.
+        List of books is empty.
 				<br>
 				<a href="homeath/recommendations">
-					Перейти в рекомендації
+          Go to recommendations
 				</a>
 			</div>
 			<div class="panel-body" *ngIf="books.length != 0">
-				<div class="row ">  
+				<div class="row ">
 					<table class="table">
 						<thead>
 							<tr>
@@ -173,7 +177,7 @@ font-awesome.min.css">
 							</tr>
 						</thead>
 						<tbody>
-							<tr *ngFor="let book of this.books; let bookIndex= index">
+							<tr *ngFor="let book of this.books">
 								<td *ngIf="enableBathEdit" style="width: 4%">
 									<div class="custom-control custom-checkbox">
 										<input type="checkbox" class="custom-control-input" id="visibleShalves{{book.bookId}}" [(ngModel)]="book.checked">
@@ -183,8 +187,8 @@ font-awesome.min.css">
 								</td>
 								<td>
 									<div class="coverDiv">
-										<img class="img-responsive" alt="no img" src="{{ this.getPhoto(book.image_path) }}">
-									</div>	
+										<img class="img-responsive" alt="no img" src="{{ this.getPhoto(book.imagePath) }}">
+									</div>
 								</td>
 								<td *ngIf="visibleTitle">
 									<a href="books/{{ book.title }}">
@@ -213,7 +217,8 @@ font-awesome.min.css">
 											<div class="dropdown-menu" aria-labelledby="dropdownMenuEdit">
 
 												<div class="custom-control custom-checkbox">
-													<input type="checkbox" class="custom-control-input" id="reading{{book.bookId}}" [(ngModel)]="book.reading" (click)="changeBookShelfReading(book)">
+													<input type="checkbox" class="custom-control-input" id="reading{{book.bookId}}"
+                                 [(ngModel)]="book.reading" (click)="changeBookShelfReading(book)">
 													<label class="custom-control-label" for="reading{{book.bookId}}">
 														Reading
 													</label>
@@ -234,7 +239,7 @@ font-awesome.min.css">
 												</div>
 
 											</div>
-										</div>	
+										</div>
 									</div>
 								</td>
 
@@ -245,7 +250,7 @@ font-awesome.min.css">
 									<i class="fa fa-times" (click)="removeBook(book.bookId)" style="cursor: pointer;"></i>
 								</td>
 							</tr>
-							
+
 						</tbody>
 					</table>
 				</div>

@@ -1,7 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import {Component, OnInit, ElementRef, ViewChild, OnDestroy} from '@angular/core';
 import { Observable, Subject, Subscription, interval, fromEvent } from 'rxjs';
-import { map, switchMap, tap, take, reduce} from 'rxjs/operators'
-import {User, ShortBookDescription, SearchParams} from '../_models/interface';
+import { map, switchMap, tap, take, reduce} from 'rxjs/operators';
+import {User, ShortBookDescription, SearchParams, Shelf} from '../_models/interface';
 import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './content-profile-book-list.component.html',
   styleUrls: ['./content-profile-book-list.component.css']
 })
-export class ContentProfileBookListComponent implements OnInit {
+export class ContentProfileBookListComponent implements OnInit, OnDestroy {
 
   private login: string;
   public searchParams: SearchParams = {
@@ -23,46 +23,46 @@ export class ContentProfileBookListComponent implements OnInit {
     read: true,
     favourite: true,
     notSet: true,
-    sortBy: "title",
-    order: "asc",
-    sought: "",
+    sortBy: 'title',
+    order: 'asc',
+    sought: '',
     page: 0,
     size: 3
   };
   public books: ShortBookDescription[] = [];
-  public disableEdit: boolean = false;
-  public enableBathEdit: boolean = false;  
-  public visibleTitle: boolean = true;
-  public visibleAuthors: boolean = true;
-  public visibleLikes: boolean = true;
-  public visibleShelves: boolean = true;
-  public visibleDatePub: boolean = true;
-  public batchEditShelf: string = "read";
-  public endOfBooks: boolean = false;
+  public disableEdit = false;
+  public enableBathEdit = false;
+  public visibleTitle = true;
+  public visibleAuthors  = true;
+  public visibleLikes = true;
+  public visibleShelves = true;
+  public visibleDatePub = true;
+  public batchEditShelf = Shelf.Read;
+  public endOfBooks = false;
   private changeSoughtSubscription: Subscription;
+  public _Shelf = Shelf;
 
-  @ViewChild('searchInput', {static: true}) 
+  @ViewChild('searchInput', {static: true})
   private input: ElementRef;
-
   constructor(private userService: UserService,
-   private activatedRoute: ActivatedRoute,
-   private router: Router,
-   private authenticationService: AuthenticationService,
-   private alertService: AlertService,
-   private toastr: ToastrService) {}
+              private activatedRoute: ActivatedRoute,
+              private router: Router,
+              private authenticationService: AuthenticationService,
+              private alertService: AlertService,
+              private toastr: ToastrService) {}
 
   ngOnInit() {
-    this.login = this.activatedRoute.snapshot.params['login'];
+    this.login = this.activatedRoute.snapshot.params.login;
     this.authenticationService.refreshToken();
-    if(this.login == this.authenticationService.currentUserValue.username){
+    if (this.login === this.authenticationService.currentUserValue.username) {
       this.disableEdit = true;
     }
-   this.getBookList();
+    this.getBookList();
 
-   //------------------ subscribe when sought changing 
-   this.changeSoughtSubscription =  fromEvent(this.input.nativeElement, 'keyup')
+    // ------------ subscribe when sought changing
+    this.changeSoughtSubscription =  fromEvent(this.input.nativeElement, 'keyup')
     .pipe(
-    switchMap(event => {
+    switchMap(() => {
       this.searchParams.page = 0;
       this.endOfBooks = false;
       this.books = [];
@@ -70,41 +70,41 @@ export class ContentProfileBookListComponent implements OnInit {
     })
     )
     .subscribe(
-      (data : ShortBookDescription[]) => {
+      (data: ShortBookDescription[]) => {
           this.books = data;
         },
         error => {
           this.toastr.error(`${environment.errorMessage}`);
         }
       );
-    //------------------------
+    // ------------------------
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.changeSoughtSubscription.unsubscribe();
   }
 
-  selectAll(){
-    for (let book of this.books) {
+  selectAll() {
+    for (const book of this.books) {
       book.checked = true;
     }
   }
-  selectNone(){
-    for (let book of this.books) {
+  selectNone() {
+    for (const book of this.books) {
       book.checked = false;
     }
   }
-  addBookBatchTo(shelf: string){
-    let booksId: number[] = [];
-    for (let book of this.books) {
-      if(book.checked){
+  addBookBatchTo(shelf: Shelf) {
+    const booksId: number[] = [];
+    for (const book of this.books) {
+      if (book.checked) {
         booksId.push(book.bookId);
       }
     }
     this.userService.addBookBatchTo(this.login, shelf, booksId)
       .subscribe(
-        data => {
-          this.toastr.success(`Books successfully added into "${shelf}" shelf`);
+        () => {
+          this.toastr.success(`Books successfully added into this shelf`);
           this.books = [];
           this.find();
         },
@@ -113,17 +113,17 @@ export class ContentProfileBookListComponent implements OnInit {
         });
 
   }
-  removeBookBatchFrom(shelf: string){
-    let booksId: number[] = [];
-    for (let book of this.books) {
-      if(book.checked){
+  removeBookBatchFrom(shelf: Shelf) {
+    const booksId: number[] = [];
+    for (const book of this.books) {
+      if (book.checked) {
         booksId.push(book.bookId);
       }
     }
     this.userService.removeBookBatchFrom(this.login, shelf, booksId)
       .subscribe(
-        data => {
-          this.toastr.success(`Books successfully removed from "${shelf}" shelf`);
+        () => {
+          this.toastr.success(`Books successfully removed from this shelf`);
           this.books = [];
           this.find();
         },
@@ -131,13 +131,13 @@ export class ContentProfileBookListComponent implements OnInit {
           this.toastr.error(`${environment.errorMessage}`);
         });
   }
-  removeBook(bookId: number){
-    if ( window.confirm("This will completely remove the selected books from your shelves.") ) {
-      let booksId: number[] = [];
+  removeBook(bookId: number) {
+    if ( window.confirm('This will completely remove the selected books from your shelves.') ) {
+      const booksId: number[] = [];
       booksId.push(bookId);
       this.userService.removeBookBatch(this.login, booksId)
         .subscribe(
-          data => {
+          () => {
             this.toastr.success(`Book successfully removed from all shelves`);
             this.books = [];
             this.find();
@@ -147,17 +147,17 @@ export class ContentProfileBookListComponent implements OnInit {
         });
     }
   }
-  removeBookBatch(){
-    if ( window.confirm("This will completely remove the selected books from your shelves.") ) {
-      let booksId: number[] = [];
-      for (let book of this.books) {
-        if(book.checked){
+  removeBookBatch() {
+    if ( window.confirm('This will completely remove the selected books from your shelves.') ) {
+      const booksId: number[] = [];
+      for (const book of this.books) {
+        if (book.checked) {
           booksId.push(book.bookId);
         }
       }
       this.userService.removeBookBatch(this.login, booksId)
         .subscribe(
-          data => {
+          () => {
             this.toastr.success(`Books successfully removed from all shelves`);
             this.books = [];
             this.find();
@@ -166,68 +166,68 @@ export class ContentProfileBookListComponent implements OnInit {
           this.toastr.error(`${environment.errorMessage}`);
         });
     }
-    
+
   }
-  changeBookShelfRead(book: ShortBookDescription){
+  changeBookShelfRead(book: ShortBookDescription) {
     book.reading = false;
-    let booksId: number[] = [];
+    const booksId: number[] = [];
     booksId.push(book.bookId);
-    this.userService.addBookBatchTo(this.login, "read", booksId)
-      .subscribe(data => {},
+    this.userService.addBookBatchTo(this.login, Shelf.Read, booksId)
+      .subscribe(() => {},
         error => {
           this.toastr.error(`${environment.errorMessage}`);
         });
   }
-  changeBookShelfReading(book: ShortBookDescription){
+  changeBookShelfReading(book: ShortBookDescription) {
     book.read = false;
-    let booksId: number[] = [];
+    const booksId: number[] = [];
     booksId.push(book.bookId);
-    this.userService.addBookBatchTo(this.login, "reading", booksId)
-      .subscribe(data => {},
+    this.userService.addBookBatchTo(this.login, Shelf.Reading, booksId)
+      .subscribe(() => {},
         error => {
           this.toastr.error(`${environment.errorMessage}`);
         });
   }
-  changeBookShelfFavourite(book: ShortBookDescription){
-    let booksId: number[] = [];
+  changeBookShelfFavourite(book: ShortBookDescription) {
+    const booksId: number[] = [];
     booksId.push(book.bookId);
-    this.userService.addBookBatchTo(this.login, "favourite", booksId)
-      .subscribe(data => {},
+    this.userService.addBookBatchTo(this.login, Shelf.Favourite, booksId)
+      .subscribe(() => {},
         error => {
           this.toastr.error(`${environment.errorMessage}`);
         });
   }
-  
+
 
   onSearchChange(searchValue: string) {
     this.searchParams.sought = this.userService.escaping(searchValue);
   }
 
-  find(){
+  find() {
     this.searchParams.page = 0;
     this.endOfBooks = false;
     this.books = [];
     this.getBookList();
   }
-  
-  getBookList(){
-  	this.userService.getBookList(this.login, this.searchParams)
+
+  getBookList() {
+    this.userService.getBookList(this.login, this.searchParams)
       .subscribe(
-        (data : ShortBookDescription[]) => {
-          if(data.length < this.searchParams.size) this.endOfBooks = true;
+        (data: ShortBookDescription[]) => {
+          if (data.length < this.searchParams.size) { this.endOfBooks = true; }
           this.books = this.books.concat(data);
         },
         error => {
           this.toastr.error(`${environment.errorMessage}`);
         });
   }
-  onPageChanged(){
+  onPageChanged() {
     this.searchParams.page++;
     this.getBookList();
   }
   getPhoto(imageName: string) {
-  		return 'https://i.dailymail.co.uk/1s/2019/04/18/10/12427172-0-image-a-20_1555581069374.jpg';
-        //return `${environment.apiUrl}/files/download?filename=${imageName}`;
+    return 'https://i.dailymail.co.uk/1s/2019/04/18/10/12427172-0-image-a-20_1555581069374.jpg';
+    // return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 
 }

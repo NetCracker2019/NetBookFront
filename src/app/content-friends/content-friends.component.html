@@ -32,7 +32,8 @@ font-awesome.min.css">
       <div class="row">
         <div class="col-md-4" *ngFor="let people of this.peoples">
           <div class="thumbnail">
-            <img alt="no img" src="{{ this.getPhoto(people.avatarFilePath) }}">
+            <img alt="no img" src="{{ this.getPhoto(people.avatarFilePath) }}"
+                 (error)="$event.target.src=getPhoto('default_avatar')">
             <div class="caption">
               <a href="homeath/profile/{{ people.username }}">
                 {{ people.username }}</a>
