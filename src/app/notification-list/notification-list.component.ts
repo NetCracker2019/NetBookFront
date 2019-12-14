@@ -13,9 +13,7 @@ import {ToastrService} from "ngx-toastr";
 
 export class NotificationListComponent implements OnInit {
 
-
   notifications: Notification[];
-  unreadNotifs:Notification[];
 
   constructor(public notificationService: NotificationService,
               private toastr: ToastrService) {
@@ -28,34 +26,25 @@ export class NotificationListComponent implements OnInit {
     })
   }
 
-
-
-  /*1 add to friend
-  2 add book
-  3 friend achiev
-  4 friend add review
-  5 friend add overview
-  */
+//getting link to go
   getNavigationLink(notification: Notification): string {
     switch (notification.notifTypeId) {
-      case 1 :
+      case NotifType.addToFriend :
         return "/homeath/profile/" + notification.fromUserName.toString();
         break;
-      case 2 :
+      case NotifType.friendAddBook :
         return "/homeath/search/" + notification.bookId.toString();
         break;
-      case 3 :
+      case NotifType.friendGetAchiev :
         return "/homeath/profile/" + notification.fromUserName.toString();
         break;
-      case 4 :
+      case NotifType.friendAddReview :
         return "/homeath/search/" + notification.bookId.toString();
         break;
-      case 5 :
+      case NotifType.friendAddOverview :
         return "/homeath/search/" + notification.bookId.toString();
         break;
-
     }
-
   }
 
   AllNotifsMarkAsRead() {
@@ -64,12 +53,6 @@ export class NotificationListComponent implements OnInit {
       this.toastr.error(`${environment.errorMessage}`);
     });
   }
-  /*deleteAllNotifs() {
-    this.notificationService.deleteAllNotificationsByUserId(this.notifications[0].userId).subscribe(() => {
-    }, error => {
-      this.toastr.error(`${environment.errorMessage}`);
-    });
-  }*/
 
   markOneNotifAsReadByNotifId(notification: Notification) {
     this.notificationService.markNotifAsReadByNotifId(notification).subscribe(() => {
@@ -78,7 +61,20 @@ export class NotificationListComponent implements OnInit {
     });
   }
 
+  deleteAllNotifs() {
+    this.notificationService.deleteAllNotificationsByUserId(this.notifications[0].userId).subscribe(() => {
+    }, error => {
+      this.toastr.error(`${environment.errorMessage}`);
+    });
+  }
 
+}
 
-
+//enum to understand what in switch-case, every case mean
+enum NotifType {
+  addToFriend = 1,
+  friendAddBook,
+  friendGetAchiev,
+  friendAddReview,
+  friendAddOverview,
 }

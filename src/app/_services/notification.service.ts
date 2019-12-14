@@ -32,8 +32,8 @@ export class NotificationService {
     return this.http.get<number>(`${environment.apiUrl}/notifications/count`);
   }
 
-  /*deleteAllNotificationsByUserId(userId:number){
+  deleteAllNotificationsByUserId(userId:number){
     return this.http.delete(`${environment.apiUrl}/notifications/delete-all`);
-  }*/
+  }
 
 }

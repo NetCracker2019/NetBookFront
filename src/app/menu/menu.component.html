@@ -17,6 +17,7 @@
       <li *ngFor="let i of Menu" class="nav-item" >
         <a class="nav-link link" [routerLink]="[i.url]"> {{i.name}} </a>
       </li>
+      <!-- Notifiication button with count badge  -->
       <li class="nav-item">
         <a class="nav-link link" [routerLink]="['notifications']"> Notifications  <span class="badge badge-primary ">{{count}}</span> </a>
       </li>
