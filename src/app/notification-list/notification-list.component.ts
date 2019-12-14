@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NotificationService} from "../_services/notification.service";
-import {Notification} from "../_models/interface";
+import {Notification, User} from "../_models/interface";
 import {environment} from "../../environments/environment";
 import {ToastrService} from "ngx-toastr";
 
@@ -14,16 +14,34 @@ import {ToastrService} from "ngx-toastr";
 export class NotificationListComponent implements OnInit {
 
   notifications: Notification[];
+  public page: number = 1;
+  public collectionSize: number = 6;
+  public endOfNotifs: boolean = false;
 
   constructor(public notificationService: NotificationService,
               private toastr: ToastrService) {
   }
 
   ngOnInit() {
-    this.notificationService.getAllNotifications().subscribe((notifications) => {
+    this.notificationService.getAllNotifications(this.collectionSize,this.page-1).subscribe((notifications) => {
 
       this.notifications = notifications
     })
+  }
+  onPageChanged() {
+    this.page = this.page + 1;
+    this.getAllNotifs();
+  }
+  //call when scrolling
+  getAllNotifs() {
+    this.notificationService.getAllNotifications(this.collectionSize,this.page-1).subscribe(
+        (notifications) => {
+          if(notifications.length < this.collectionSize) this.endOfNotifs = true;
+          this.notifications = this.notifications.concat(notifications);
+        },
+        error => {
+          this.toastr.error(`${environment.errorMessage}`);
+        });
   }
 
 //getting link to go
