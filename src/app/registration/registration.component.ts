@@ -133,13 +133,12 @@ export class RegistrationComponent implements OnInit {
     this.model.password = this.registerForm.controls.userPassword.value;
     this.userService.register(this.model)
       .subscribe(
-        data => {
+        () => {
           this.toastr.success(`Registration successful`);
           this.router.navigate(['/login']);
-          console.log(data);
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.error(error);
         });
   }
 

@@ -5,7 +5,9 @@ font-awesome.min.css">
 	<div class="inbox_people">
 	  <div class="headind_srch">
 		<div class="chats_heading">
-		  <h4>Chats <button *ngIf="activeChat" type="button" class="btn btn-light btn-settings" data-toggle="modal" data-target="#editChatModal" (click)="prepareEditMenu()"><i class="fa fa-cog"></i></button></h4> 
+		  <h4>Chats <button *ngIf="activeChat" type="button" class="btn btn-light btn-settings"
+                        data-toggle="modal" data-target="#editChatModal" (click)="prepareEditMenu()">
+        <i class="fa fa-cog"></i></button></h4>
 		</div>
 
 	  </div>
@@ -13,7 +15,8 @@ font-awesome.min.css">
 	  	<div *ngFor="let chat of chats">
 			<div class="chat_list"  (click)="onClick(chat.chatId)" tabindex="1">
 			  <div class="chat_people">
-				<div class="chat_img"> <img src="https://icon-library.net/images/avatars-icon/avatars-icon-20.jpg" alt="no"> </div>
+				<div class="chat_img"> <img src="{{this.getPhoto(chat.chatAvatar)}}"
+                        (error)="$event.target.src=getPhoto('default_chat_avatar')"alt="no"> </div>
 				<div class="chat_ib">
 				  <h5>{{ chat.chatName }}</h5>
 				</div>
@@ -22,8 +25,8 @@ font-awesome.min.css">
 		</div>
 		<div class="chat_list" data-toggle="modal" data-target="#newChatModal" tabindex="1" (click)="clearCheckedFriendsAndName()">
 			  <div class="chat_people">
-				<div class="chat_img"> 
-					<i class="fa fa-plus"></i> 
+				<div class="chat_img">
+					<i class="fa fa-plus"></i>
 				</div>
 				<div class="chat_ib">
 				  <h5>Create new chat</h5>
@@ -40,18 +43,20 @@ font-awesome.min.css">
 				<div class="outgoing_msg">
 			  		<div class="sent_msg">
 						<p> {{message.message}} </p>
-						<span class="time_date"> {{message.dateTimeSend}}</span> 
+						<span class="time_date"> {{message.dateTimeSend | date:'medium' }}</span>
 					</div>
 				</div>
 			</div>
 			<div *ngIf="message.fromName != this.username">
 				<div class="incoming_msg">
-					<div class="incoming_msg_img"> <img src="{{ this.getAvatarPathByLogin(message.fromName) }}" alt="no"> </div>
+					<div class="incoming_msg_img"> <img src="{{ this.getAvatarPathByLogin(message.fromName) }}"
+                       (error)="$event.target.src=getPhoto('default_avatar')"alt="no"> </div>
 					<div class="received_msg">
 						<div class="received_withd_msg">
 							<p> {{message.message}} </p>
-							<span class="time_date"> 
-							<a href="homeath/profile/{{message.fromName}}" style="color: #646464;">{{message.fromName}}</a> | {{message.dateTimeSend}} </span>
+							<span class="time_date">
+							<a href="homeath/profile/{{message.fromName}}" style="color: #646464;">{{message.fromName}}</a> |
+                {{message.dateTimeSend | date:'medium'}} </span>
 						</div>
 					</div>
 				</div>
@@ -88,16 +93,18 @@ font-awesome.min.css">
 						<input type="text" class="form-control" id="chat-name" [(ngModel)]="chatName" name="chat-name">
 					</div>
 						<p>Add to chat:</p>
-						<div *ngFor="let friend of this.friends"> 
+						<div *ngFor="let friend of this.friends">
 							<div class="chat_list" tabindex="1" (click)="onClickCheckBox(friend)">
 								<div class="chat_people">
-									<div class="chat_img" > 
-										<img style="width: 7vmin; height: 7vmin;" src="{{ this.getPhoto(friend.avatarFilePath) }}" alt="no"/>
+									<div class="chat_img" >
+										<img style="width: 7vmin; height: 7vmin;" src="{{ this.getPhoto(friend.avatarFilePath) }}"
+                         (error)="$event.target.src=getPhoto('default_avatar')"alt="no"/>
 									</div>
 									<div class="chat_ib" >
 										<h5 style="display: inline-block;">{{ friend.username }}  </h5>
 										<div class="round">
-											<input disabled type="checkbox" id="checkbox{{friend.username}}" name="checkbox{{friend.username}}" [(ngModel)]="friend.checked" />
+											<input disabled type="checkbox" id="checkbox{{friend.username}}"
+                             name="checkbox{{friend.username}}" [(ngModel)]="friend.checked" />
 											<label for="checkbox{{friend.username}}" ></label>
 										</div>
 									</div>
@@ -108,7 +115,8 @@ font-awesome.min.css">
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" id="closeModal" data-dismiss="modal">Back</button>
-				<button [disabled]="chatName.length < 2" type="button" class="btn btn-primary" (click)="createNewChat()" data-dismiss="modal">Create</button>
+				<button [disabled]="chatName.length < 2" type="button" class="btn btn-primary" (click)="createNewChat()"
+                data-dismiss="modal">Create</button>
 			</div>
 		</div>
 	</div>
@@ -133,30 +141,43 @@ font-awesome.min.css">
 					</div>
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
 						<li class="nav-item">
-							<a class="nav-link active" id="home-tab" data-toggle="tab" (click)="editChatTab = 0" role="tab" aria-controls="home" aria-selected="true">Add members</a>
+							<a class="nav-link active" id="home-tab" data-toggle="tab" (click)="editChatTab = 0" role="tab"
+                 aria-controls="home" aria-selected="true">Add members</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link " id="home-tab" data-toggle="tab" (click)="editChatTab = 1" role="tab" aria-controls="home" aria-selected="true">Remove members</a>
+							<a class="nav-link " id="home-tab" data-toggle="tab" (click)="editChatTab = 1" role="tab"
+                 aria-controls="home" aria-selected="true">Remove members</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link " id="home-tab" data-toggle="tab" (click)="editChatTab = 2" role="tab" aria-controls="home" aria-selected="true">Change photo</a>
+							<a class="nav-link " id="home-tab" data-toggle="tab" (click)="editChatTab = 2" role="tab"
+                 aria-controls="home" aria-selected="true">Change photo</a>
 						</li>
 					</ul>
-					
+
 						<div *ngIf="editChatTab == 2">
-							... in development, coming soon ...
+              <div class="chat-img">
+                <div>
+                  <img src="{{ this.getPhoto(this.activeChatAvatar) }}"
+                       (error)="$event.target.src=getPhoto('default_chat_avatar')" alt="img"/>
+                  <h6>Change photo</h6>
+                  <input name="changeImg" type="file"
+                         (change)="handleFileInput($event.target.files)" style="">
+                </div>
+              </div>
 						</div>
 						<div *ngIf="editChatTab == 1">
-						<div *ngFor="let member of this.chatMembers"> 
+						<div *ngFor="let member of this.chatMembers">
 							<div class="chat_list"  tabindex="1" (click)="onClickCheckBox(member)">
 								<div class="chat_people">
-									<div class="chat_img"> 
-										<img style="width: 7vmin; height: 7vmin;" src="{{ this.getPhoto(member.avatarFilePath) }}" alt="no"/>
+									<div class="chat_img">
+										<img style="width: 7vmin; height: 7vmin;" src="{{ this.getPhoto(member.avatarFilePath) }}"
+                         (error)="$event.target.src=getPhoto('default_avatar')"alt="no"/>
 									</div>
 									<div class="chat_ib">
 										<h5 style="display: inline-block;">{{ member.username }}</h5>
 										<div class="round" style="display: inline-block;">
-											<input disabled type="checkbox" name="checkboxEditChat{{member.username}}" [(ngModel)]="member.checked" id="checkboxEditChat{{member.username}}" />
+											<input disabled type="checkbox" name="checkboxEditChat{{member.username}}"
+                             [(ngModel)]="member.checked" id="checkboxEditChat{{member.username}}" />
 											<label for="checkboxEditChat{{member.username}}"></label>
 										</div>
 									</div>
@@ -165,16 +186,18 @@ font-awesome.min.css">
 						</div>
 						</div>
 						<div *ngIf="editChatTab == 0">
-						<div *ngFor="let friend of this.friendsWhoAbleToAdd"> 
+						<div *ngFor="let friend of this.friendsWhoAbleToAdd">
 							<div class="chat_list" tabindex="2" (click)="onClickCheckBox(friend)">
 								<div class="chat_people">
-									<div class="chat_img"> 
-										<img style="width: 7vmin; height: 7vmin;" src="{{ this.getPhoto(friend.avatarFilePath) }}" alt="no"/>
+									<div class="chat_img">
+										<img style="width: 7vmin; height: 7vmin;" src="{{ this.getPhoto(friend.avatarFilePath) }}"
+                         (error)="$event.target.src=getPhoto('default_avatar')" alt="no"/>
 									</div>
 									<div class="chat_ib">
 										<h5 style="display: inline-block;">{{ friend.username }}</h5>
-										<div  style="display: inline-block;"class="round">
-											<input disabled type="checkbox" id="checkboxEditChat{{friend.username}}" name="checkboxEditChat{{friend.username}}" [(ngModel)]="friend.checked"/>
+										<div  style="display: inline-block;" class="round">
+											<input disabled type="checkbox" id="checkboxEditChat{{friend.username}}"
+                             name="checkboxEditChat{{friend.username}}" [(ngModel)]="friend.checked"/>
 											<label for="checkboxEditChat{{friend.username}}"></label>
 										</div>
 									</div>
@@ -188,8 +211,10 @@ font-awesome.min.css">
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" id="closeModal2" data-dismiss="modal">Back</button>
-				<button [disabled]="editedChatName.length < 2" type="button" class="btn btn-primary" (click)="editChat()" data-dismiss="modal">Save</button>
+				<button type="button" class="btn btn-secondary" (click)="removeTempImage()"
+                id="closeModal2" data-dismiss="modal">Back</button>
+				<button [disabled]="editedChatName.length < 2" type="button" class="btn btn-primary"
+                (click)="editChat()" data-dismiss="modal">Save</button>
 			</div>
 		</div>
 	</div>

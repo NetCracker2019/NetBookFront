@@ -5,7 +5,8 @@ font-awesome.min.css">
 		<div class="row">
 			<div class="col-md-4">
 				<div class="profile-img">
-					<img src="{{ this.getPhoto(this.user.avatarFilePath) }}" alt="no image"/>
+					<img src="{{ this.getPhoto(this.user.avatarFilePath) }}"
+               (error)="$event.target.src=getPhoto('default_avatar')" alt="img"/>
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -22,7 +23,7 @@ font-awesome.min.css">
 {{ achievement.description }}">
 							<img src="{{ achievement.image_path }}"/>
 						</div>
-						
+
 					</span>
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
 						<li class="nav-item">
@@ -53,8 +54,9 @@ font-awesome.min.css">
 			<div class="col-md-4">
 				<div class="friends">
 					<p>Friends</p>
-					<div *ngFor="let friend of this.friends"> 
-						<img src="{{ this.getPhoto(friend.avatarFilePath) }}" alt="no"/>
+					<div *ngFor="let friend of this.friends">
+						<img src="{{ this.getPhoto(friend.avatarFilePath) }}"
+                 (error)="$event.target.src=getPhoto('default_avatar')" alt="no"/>
 						<a style="padding-left: 10px; font-size: 16px;" href="homeath/profile/{{ friend.username }}">
 						{{ friend.username }}</a>
 					</div><br>
@@ -123,7 +125,7 @@ font-awesome.min.css">
 				<div class="panel">
 					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/book-list">Favourite books </a><i class="fa fa-angle-double-right" aria-hidden="true"></i></div>
 					<div class="panel-body" >
-						<div class="row">	
+						<div class="row">
 							<div class="col-md-4"  *ngFor="let book of this.favouriteBooks">
 								<div class="thumbnail">
 									<img alt="no img" src="{{ this.getPhoto(book.image_path) }}">
@@ -139,13 +141,13 @@ font-awesome.min.css">
 							</div>
 						</div>
 						<a *ngIf="this.favouriteBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/book-list">...all favourite books </a><i *ngIf="this.favouriteBooks.length == 3" class="fa fa-arrow-right" aria-hidden="true"></i>
-					</div>		
+					</div>
 				</div>
 				<br><br>
 				<div class="panel">
 					<div class="panel-heading"><a href="homeath/profile/{{ this.user.username }}/book-list">Read books </a><i class="fa fa-angle-double-right" aria-hidden="true"></i></div>
 					<div class="panel-body">
-						<div class="row">	
+						<div class="row">
 							<div class="col-md-4" *ngFor="let book of this.readBooks">
 								<div class="thumbnail">
 									<img alt="no img" src="{{ this.getPhoto(book.image_path)}}">
@@ -161,7 +163,7 @@ font-awesome.min.css">
 							</div>
 						</div>
 						<a *ngIf="this.readBooks.length == 3" class="right-align" href="homeath/profile/{{ this.user.username }}/book-list">...all read books </a><i *ngIf="this.readBooks.length == 3" class="fa fa-arrow-right" aria-hidden="true"></i>
-					</div>	
+					</div>
 				</div>
 				<br><br>
 
@@ -171,7 +173,7 @@ font-awesome.min.css">
 						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 					</div>
 					<div class="panel-body">
-						<div class="row">	
+						<div class="row">
 							<div class="col-md-4" *ngFor="let book of this.readingBooks">
 								<div class="thumbnail">
 									<img alt="no img" src="{{ this.getPhoto(book.image_path) }}">
@@ -195,5 +197,5 @@ font-awesome.min.css">
 			</div>
 		</div>
 
-	</form>           
+	</form>
 </div>

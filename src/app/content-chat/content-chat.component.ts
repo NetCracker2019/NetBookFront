@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, QueryList} from '@angular/core';
+import {Component, OnInit, ElementRef, ViewChild, OnDestroy} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import * as Stomp from 'stompjs';
@@ -9,87 +9,94 @@ import {User, Message, Chat} from '../_models/interface';
 import {AuthenticationService} from '../_services/authentication.service';
 import {ChatService} from '../_services/chat.service';
 import {UserService} from '../_services/user.service';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-content-chat',
   templateUrl: './content-chat.component.html',
   styleUrls: ['./content-chat.component.css']
 })
-export class ContentChatComponent implements OnInit {
+export class ContentChatComponent implements OnInit, OnDestroy {
   private stompClient;
-  public msg: string = "";
+  public msg = '';
   public messages: Message[] = [];
   public chats: Chat[] = [];
-  public username: string = "";
+  public username = '';
   public activeChat: number;
   public friends: User[] = [];
-  public chatName: string = "";
-  public editedChatName: string = "";
+  public chatName = '';
+  public editedChatName = '';
   public chatMembers: User[] = [];
-  //friendsWhoAbleToAddToChat
+  // friendsWhoAbleToAddToChat
   public friendsWhoAbleToAdd: User[] = [];
-  public editChatTab: number = 0;
+  public editChatTab = 0;
+  public activeChatAvatar = '';
+  private headers = {
+    Authorization: this.authenticationService.currentUserValue.token};
 
   constructor(private toastr: ToastrService,
-    private chatService: ChatService,
-    private userService: UserService,
-    private authenticationService: AuthenticationService) {  }
+              private chatService: ChatService,
+              private userService: UserService,
+              private authenticationService: AuthenticationService) {  }
 
   ngOnInit() {
     this.authenticationService.refreshToken();
     this.username = this.authenticationService.currentUserValue.username;
+    this.headers = {
+      Authorization: this.authenticationService.currentUserValue.token };
     this.getChats();
-
-    this.userService.getFriends(this.username, 500, 0)///////TODO infinity scroll
+    this.userService.getFriends(this.username, 500, 0)/////// TODO infinity scroll
       .subscribe(
-        (data : User[]) => {
+        (data: User[]) => {
           this.friends = data;
         });
   }
-  ngOnDestroy(){
-    if(this.stompClient){
+
+  ngOnDestroy() {
+    if (this.stompClient) {
       this.disconnect();
     }
+    this.removeTempImage();
   }
 
-  getChats(){
+  getChats() {
     this.chatService.getChats(this.username)
       .subscribe(
-        (data : Chat[]) => {
+        (data: Chat[]) => {
           this.chats = data;
         });
   }
 
-  clearCheckedFriendsAndName(){
-    this.chatName = "";
-    for (let friend of this.friends){
+  clearCheckedFriendsAndName() {
+    this.chatName = '';
+    for (const friend of this.friends) {
       friend.checked = false;
     }
   }
-  //for add frined into new chat
-  onClickCheckBox(friend: User){
+  // for add frined into new chat
+  onClickCheckBox(friend: User) {
     friend.checked = !friend.checked;
   }
 
-  getMessagesHistory(chatId: number){
+  getMessagesHistory(chatId: number) {
     this.chatService.getMessagesHistory(chatId)
       .subscribe(
-        (data : Message[]) => {
+        (data: Message[]) => {
           this.messages = data;
         });
   }
 
-  createNewChat(){
-    let addingFriends: string[] = [];
-    for (let friend of this.friends) {
-      if(friend.checked){
+  createNewChat() {
+    const addingFriends: string[] = [];
+    for (const friend of this.friends) {
+      if (friend.checked) {
         addingFriends.push(friend.username);
       }
 
     }
     addingFriends.push(this.username);
     this.chatService.createNewChat(this.userService.escaping(this.chatName), addingFriends)
-      .subscribe((data) => {
+      .subscribe(() => {
         this.getChats();
         this.toastr.success(`Chat ${this.chatName} successfully created`);
       },
@@ -98,9 +105,9 @@ export class ContentChatComponent implements OnInit {
         });
   }
 
-  isExistPerson(persons: User[], soughtPerson: User){
-    for(let person of persons){
-      if(person.username == soughtPerson.username){
+  isExistPerson(persons: User[], soughtPerson: User) {
+    for (const person of persons) {
+      if (person.username === soughtPerson.username) {
         return true;
       }
     }
@@ -108,10 +115,10 @@ export class ContentChatComponent implements OnInit {
     return false;
   }
 
-  getChatMembers(chatId: number){
+  getChatMembers(chatId: number) {
     this.chatService.getChatMembers(chatId)
       .subscribe(
-        (data : User[]) => {
+        (data: User[]) => {
           this.chatMembers = data;
           this.friendsWhoAbleToAdd = this.friends.filter(
             x => !this.isExistPerson(this.chatMembers, x));
@@ -121,31 +128,31 @@ export class ContentChatComponent implements OnInit {
         });
   }
 
-  editChat(){ 
-    let removedMembers: string[] = [];
-    for (let friend of this.chatMembers) {
-      if(friend.checked){
+  editChat() {
+    const removedMembers: string[] = [];
+    for (const friend of this.chatMembers) {
+      if (friend.checked) {
         removedMembers.push(friend.username);
       }
     }
 
-    let addedMembers: string[] = [];
-    for (let friend of this.friendsWhoAbleToAdd) {
-      if(friend.checked){
+    const addedMembers: string[] = [];
+    for (const friend of this.friendsWhoAbleToAdd) {
+      if (friend.checked) {
         addedMembers.push(friend.username);
       }
     }
-    if(removedMembers.length > 0){
-      if(window.confirm(`This will completely remove members from ${this.chatName}.`))
+    if (removedMembers.length > 0) {
+      if (window.confirm(`This will completely remove members from ${this.chatName}.`)) {
         this.commitEditChat(addedMembers, removedMembers);
-    }
-    else this.commitEditChat(addedMembers, removedMembers);
+      }
+    } else { this.commitEditChat(addedMembers, removedMembers); }
   }
-  commitEditChat(addedMembers: string[], removedMembers: string[]){
+  commitEditChat(addedMembers: string[], removedMembers: string[]) {
     this.chatService.updateChat(this.activeChat, this.userService.escaping(this.editedChatName),
-     addedMembers, removedMembers)
+     addedMembers, removedMembers, this.activeChatAvatar)
       .subscribe(
-          (data) => {
+          () => {
             this.toastr.success(`Chat successfully updated`);
             this.getChats();
           },
@@ -153,18 +160,44 @@ export class ContentChatComponent implements OnInit {
             this.toastr.info(`${environment.errorMessage}`);
           });
   }
-  prepareEditMenu(){
-    this.editedChatName = this.chats.find(x => x.chatId === this.activeChat).chatName;
-    //this.editChatTab = 0;
-    this.getChatMembers(this.activeChat);
+
+  handleFileInput(files: FileList) {
+    const fileToUpload = files.item(0);
+
+    if ( fileToUpload != null) {
+      const newFileName: string = uuid();
+      this.userService.postFile(fileToUpload, newFileName).subscribe(
+        () => {
+          this.removeTempImage();
+          this.activeChatAvatar = newFileName;
+        },
+        error => {
+          this.toastr.info(`Picture size must be < 1 MB`);
+        });
+    }
   }
-  getAvatarPathByLogin(login: string){
+  removeTempImage() {
+    if (this.activeChat && this.activeChatAvatar !== this.getChatAvatar()) {
+      this.userService.removeFile(this.activeChatAvatar)
+        .subscribe(() => {});
+    }
+  }
+  prepareEditMenu() {
+    this.editedChatName = this.chats.find(x => x.chatId === this.activeChat).chatName;
+    this.getChatMembers(this.activeChat);
+    this.activeChatAvatar = this.getChatAvatar();
+  }
+  getAvatarPathByLogin(login: string) {
     return this.getPhoto(this.chatMembers.find(x => x.username === login).avatarFilePath);
   }
+  getChatAvatar() {
+    return this.chats.find(x => x.chatId === this.activeChat).chatAvatar;
+  }
   /*----websocket service block--------*/
-  //onClick Chat select
-  onClick(chatId: number){
-    if(this.stompClient) this.disconnect();
+  // onClick Chat select
+  onClick(chatId: number) {
+    if (this.stompClient) { this.disconnect(); }
+    this.removeTempImage();
     this.activeChat = chatId;
     this.messages = [];
     this.chatName = this.chats.find(x => x.chatId === this.activeChat).chatName;
@@ -173,44 +206,42 @@ export class ContentChatComponent implements OnInit {
     this.getMessagesHistory(chatId);
   }
   sendMessage() {
-      if(this.msg.length < 1) return;
-      let message: Message = { message: this.msg,
-       fromName: this.username, toId: this.activeChat, dateTimeSend: null };
-      this.stompClient.send("/socket-subscriber/send/message", {}, JSON.stringify(message));
-      this.msg = '';
+    if (this.msg.length < 1) { return; }
+    const message: Message = { message: this.msg,
+      fromName: this.username, toId: this.activeChat, dateTimeSend: null };
+    this.stompClient.send(`/socket-subscriber/send/message/${this.activeChat}`,
+      this.headers, JSON.stringify(message));
+    this.msg = '';
   }
 
   initializeWebSocketConnection() {
-    //let ws = new SockJS(`${environment.apiUrl}/end-point`);
-    let socket = new WebSocket(`${environment.webSocket}`);
+    const socket = new WebSocket(`${environment.webSocket}`);
     this.stompClient = Stomp.over(socket);
-    let that = this;
-    this.stompClient.connect({}, function (frame) {
-      that.openSocket()
+    const that = this;
+    this.stompClient.connect({
+      Authorization: this.authenticationService.currentUserValue.token }, frame => {
+      that.openSocket();
     });
   }
 
   openSocket() {
     this.stompClient.subscribe(`/socket-publisher/${this.activeChat}`, (message) => {
       this.handleResult(message);
-    });
+    }, this.headers);
   }
 
-  handleResult(message){
+  handleResult(message) {
     if (message.body) {
-      let messageResult: Message = JSON.parse(message.body);
-      console.log(messageResult);
+      const messageResult: Message = JSON.parse(message.body);
       this.messages.push(messageResult);
     }
   }
 
-  disconnect(){
+  disconnect() {
     this.stompClient.ws.close();
-    console.log("disconnectttt");
   }
   /*------------------*/
   getPhoto(imageName: string) {
-        return `${environment.apiUrl}/files/download?filename=${imageName}`;
-        //return 'https://ptetutorials.com/images/user-profile.png';
+    return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 }
