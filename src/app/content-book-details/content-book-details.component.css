@@ -111,9 +111,6 @@
 /*  !*grid-column: 1;*!*/
 /*  padding-left: 50px;*/
 /*}*/
-.button-write-review button{
-  margin-top: 20px;
-}
 
 .button-write-review button{
   /*grid-column: 2;*/
@@ -164,7 +161,7 @@
   height: 30px;
   width: 60px;
 }
-.glyphicon {
+.fa {
   font-size: 30px;
 }
 /*.glyphicon {*/

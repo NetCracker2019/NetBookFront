@@ -211,7 +211,16 @@
       <p>{{ achiv.readBook  }}</p>
     </td>
   </tr>
-
   </tbody>
 </table>
+<div
+  infiniteScroll
+  [infiniteScrollDistance]="4"
+  [infiniteScrollThrottle]="1000"
+  (scrolled)="getNewAchievementPeace()">
+</div>
+<div *ngIf="!endOfAchievements">
+  <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+  <span class="sr-only">Loading...</span>
+</div>
 

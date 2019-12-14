@@ -27,6 +27,9 @@ export class ContentAchievementsComponent implements OnInit {
   genres: Genre[];
   selectedGenre: string;
   allAchievements: Achievement[];
+  size = 4;
+  page = 0;
+  endOfAchievements = false;
 
 
   form: FormGroup;
@@ -61,7 +64,7 @@ export class ContentAchievementsComponent implements OnInit {
     );
     this.bookService.getGenres()
       .subscribe(genres => this.genres = genres);
-    this.getAllAchievements();
+    this.getAchievements();
     this.form = new FormGroup({
       title: new FormControl('', [
         Validators.pattern('[a-zA-Z0-9_.!(), ]+'),
@@ -84,10 +87,16 @@ export class ContentAchievementsComponent implements OnInit {
     const filterValue = value.trim().toLowerCase();
     return this.authors.filter(author => author.fullName.toLowerCase().includes(filterValue));
   }
-  getAllAchievements() {
-    this.achievementService.getAllAchievement().subscribe(data=>{
-      this.allAchievements = data;
+
+  getAchievements() {
+    this.achievementService.getAllAchievement(this.page, this.size).subscribe(data => {
+      if (data.length < this.size) { this.endOfAchievements = true; }
+      this.allAchievements = this.allAchievements.concat(data);
     });
+  }
+  getNewAchievementPeace() {
+    this.page++;
+    this.getAchievements();
   }
 
   addAchievement(type: string) {
@@ -130,13 +139,14 @@ export class ContentAchievementsComponent implements OnInit {
         this.toastr.error('The achievement is exists!');
       }
     });
-    this.getAllAchievements();
+    this.getAchievements();
   }
 
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
     console.log(this.fileToUpload);
   }
+
   getPhoto(imageName: string) {
     return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }

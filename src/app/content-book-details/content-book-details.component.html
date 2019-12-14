@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/
+font-awesome.min.css">
 <div class="card item-book" *ngIf="book">
   <div class="row">
     <img class="col-3 book-logo" src="{{book.imagePath}}" alt="Image">
@@ -8,22 +10,20 @@
         <div class="container like-book-content">
           <div class="row">
             <div class="col-md-1">
-              <span *ngIf="!currentUser" class="glyphicon glyphicon-thumbs-up"></span>
-              <span *ngIf="likedBook == 1" class="glyphicon glyphicon-thumbs-up" ngDefaultControl
-                    (click)="likeBook()"
-                    style="color: green; "></span>
-              <span *ngIf="likedBook == 0 || likedBook == -1" class="glyphicon glyphicon-thumbs-up" ngDefaultControl
-                    (click)="likeBook()"></span>
+              <i *ngIf="!currentUser" class="fa fa-thumbs-o-up" aria-hidden="true" (click)="likeBook()"></i>
+              <i *ngIf="likedBook == 1" class="fa fa-thumbs-o-up" aria-hidden="true" (click)="likeBook()" ngDefaultControl
+                 style="color: green; "></i>
+              <i *ngIf="likedBook == 0 || likedBook == -1" class="fa fa-thumbs-o-up" aria-hidden="true" (click)="likeBook()" ngDefaultControl
+                 style="color: green; "></i>
             </div>
             <div class="col-md-1">
-            <span *ngIf="likedBook == 1 || likedBook == 0" class="glyphicon glyphicon-thumbs-down" ngDefaultControl
-                   (click)="dislikeBook()"></span>
-              <span *ngIf="likedBook == -1" class="glyphicon glyphicon-thumbs-down" ngDefaultControl
-                     (click)="dislikeBook()" style="color: red; "></span>
-              <span *ngIf="!currentUser" class="glyphicon glyphicon-thumbs-down"></span>
-
+              <i *ngIf="!currentUser" class="fa fa-thumbs-o-down" aria-hidden="true" (click)="dislikeBook()"></i>
+              <i *ngIf="likedBook == 1 || likedBook == 0" class="fa fa-thumbs-o-down" aria-hidden="true" ngDefaultControl
+                   (click)="dislikeBook()"></i>
+              <i *ngIf="likedBook == -1" class="fa fa-thumbs-o-down" aria-hidden="true" ngDefaultControl
+                     (click)="dislikeBook()" style="color: red; "></i>
             </div>
-            <div ngDefaultControl [(ngModel)]="bookLikes" class="col-md-1 like-num" ><p>{{bookLikes}}</p></div>
+            <div ngDefaultControl [(ngModel)]="bookLikes" class="col-md-1 like-num" ><p style="font-size: 30px">{{bookLikes}}</p></div>
           </div>
         </div>
 
@@ -54,17 +54,18 @@
       <button (click)="writeReview()" >Write review</button>
     </div>
   </div>
+  <h5 *ngIf="collectionSize==0">No reviews</h5>
   <div *ngIf="writeReviewFlag" class="container write-review">
     <div class="row review-item">
       <div class="col-1 user-image">
         <img src="{{currentUser.avatarFilePath}}" class="user-logo" alt="{{currentUser.username[0]}}">
       </div>
-      <div class="col-5 review-content">
+      <div class="col-6 review-content">
         <div class="row">
           <div class="user-name"><h4>{{currentUser.username}}</h4></div>
         </div>
         <div class="row">
-          <div class="review-textarea"><textarea [(ngModel)]="reviewText" rows="4" cols="50" name="text"
+          <div class="review-textarea"><textarea class="form-control" [(ngModel)]="reviewText" rows="4" cols="50" name="text"
                                                  placeholder="Enter text..."></textarea></div>
         </div>
       </div>
@@ -82,14 +83,14 @@
   <div class="container review-item">
     <div class="row">
       <div class="col-1"><img src="{{review.userAvatarPath}}" class="user-logo" alt="{{review.userName[0]}}"></div>
-      <div class="col-5 review-content">
+      <div class="col-6 review-content">
         <div class="row">
-          <div class="col-md-3 user-name"><h4>{{review.userName}}</h4></div>
-          <div class="col-md-1"><span class="glyphicon glyphicon-thumbs-up" style="font-size: 20px; padding-top: 10px;"
-                                      (click)="likeReview(review)"></span>
+          <div class="col-md-4 user-name"><h4>{{review.userName}}</h4></div>
+          <div class="col-md-1"><i class="fa fa-thumbs-o-up" aria-hidden="true" style="font-size: 20px; padding-top: 10px;"
+                                      (click)="likeReview(review)"></i>
           </div>
-          <div class="col-md-1"><span class="glyphicon glyphicon-thumbs-down" style="font-size: 20px;padding-top: 10px;"
-                                      (click)="dislikeReview(review)"></span></div>
+          <div class="col-md-1"><i class="fa fa-thumbs-o-down" aria-hidden="true" style="font-size: 20px;padding-top: 10px;"
+                                      (click)="dislikeReview(review)"></i></div>
           <div class="col-md-1"><h5 ngDefaultControl [(ngModel)]="review.rating"
                                     style="font-size: 20px;">{{review.rating}}</h5></div>
         </div>
@@ -98,6 +99,11 @@
     </div>
   </div>
 </div>
+<div *ngIf="loading" class="loading-spin" style="padding-left: 200px">
+  <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+  <span class="sr-only">Loading...</span>
+</div>
+
 <div *ngIf="finish; then up else down"></div>
 <ng-template #up><input type="image" class="paging-button" (click)="getNewPeaceOfReviews()"
                         src="../../assets/img/upArrow.png" alt="Ще"/></ng-template>
