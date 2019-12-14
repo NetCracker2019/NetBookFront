@@ -29,7 +29,7 @@ export class AuthenticationService {
     return this.http.post<any>(`${environment.apiUrl}/user-service/signin`, body)
 
       .pipe(map(user => {
-        this.role = user['role']; ////////// ????????
+        this.role = user.role;
         // store user details and jwt token in local storage to keep user logged in between reviewPage refreshes
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
@@ -38,7 +38,7 @@ export class AuthenticationService {
   }
 
   refreshToken() {
-    return this.http.get<any>(`${environment.apiUrl}/user-service/refresh-token`)
+    return this.http.get<User>(`${environment.apiUrl}/user-service/refresh-token`)
       .subscribe(
         (data: User) => {
           localStorage.removeItem('currentUser');

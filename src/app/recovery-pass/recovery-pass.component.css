@@ -19,6 +19,7 @@
   opacity: .96;
 }
 
+
 .recovery-form textarea {
   border: none;
   padding: 15px 20px;
@@ -51,21 +52,13 @@
 }
 
 .recovery-form {
-  margin: 0 auto;
-  width: 25%;
   z-index: 1;
   color: #fff;
-  /*background-color: #293A43;*/
 }
 
 .recovery-form h2 {
   text-align: center;
   font-size: 40px;
-  /*margin: 20px 0;*/
-}
-
-.form-group{
-
 }
 
 .form-control{
@@ -75,52 +68,35 @@
   -webkit-border-radius: 0px 3px 3px 0px;
   color: #fff;
   padding: 0 16px;
-  width: 280px;
   height: 50px;
   border: none;
 }
 
-.button {
-  display: inline-block;
-  border: none;
-  color: #fff;
-  text-decoration: none;
+.btn-orange {
+  color:  #fff;
   background-color: #F0650D;
-  padding: 7px 50px;
-  font-size: 18px;
-  font-weight: 800;
-  border-radius: 2px;
-  text-align: center;
-  position: relative;
-  outline: none;
-  transition: background-color .1s ease;
-  cursor: pointer;
 }
 
-.button:hover{
+.btn-orange:hover{
   background-color: #f17425;
 }
 
-
-.gray{
+.btn-gray{
   background-color: #4B5A65;
-  margin: 0px 0px 0px 9px ;
+  text-decoration: none;
+  color: #fff;
 }
 
-.gray:hover{
+.btn-gray:hover{
   background-color: #3e4d55;
 }
 
 
-.gray a {
-  text-decoration: none;
-  color: #fff;
-}
 
 .help-block{
   color: #f49355;
 }
 
-/*.invalid-feedback{
-  color: #fff;
-}*/
+
+input.ng-touched.ng-invalid {border:solid #f49355 2px;}
+input.ng-touched.ng-valid {border:solid #548007 2px;}

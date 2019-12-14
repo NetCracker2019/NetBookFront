@@ -1,7 +1,7 @@
 .messaging {
   width: 50%;
   margin: 0 auto;
-} 
+}
 .inbox_people {
   background: #fff;
   float: left;
@@ -15,6 +15,21 @@
 .nav-item:hover {
   background: #e8f6ff;
   cursor: pointer;
+}
+.chat-img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+}
+.chat-img img{
+  width: 20vmin;
+  height: 20vmin;
+  object-fit: cover;
+  border-radius: 10%;
+}
+.chat-img h6 {
+  padding-top: 1vw;
 }
 .nav-tabs .nav-link{
     font-weight:600;
@@ -214,7 +229,7 @@
   border-radius: 50%;
   cursor: pointer;
   height: 28px;
-  float: right;   
+  float: right;
   top: 0;
   width: 28px;
 }

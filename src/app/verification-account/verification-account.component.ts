@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../_services/user.service";
-import {AlertService} from '../_services/alert.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UserService} from '../_services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-verification-account',
@@ -9,44 +9,28 @@ import {AlertService} from '../_services/alert.service';
   styleUrls: ['./verification-account.component.css']
 })
 export class VerificationAccountComponent implements OnInit {
-
-
-
   public token: string;
   public status: string;
 
   constructor(private activatedRoute: ActivatedRoute,
               private userService: UserService,
               private router: Router,
-              private alertService: AlertService) { }
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
-      this.token = params['token'];
+      this.token = params.token;
 
     });
-
-
     this.userService.confirmUserAccountRequest(this.token)
       .subscribe(
-        data => {
-          this.alertService.success('Registration successful', true);
+        () => {
+          this.toastr.success(`Registration successful`);
           this.router.navigate(['/login']);
-          console.log(data);
         },
         error => {
-          this.alertService.error(error);
-
-          if (error.error instanceof Error) {
-            console.log('Client-side error occured.');
-          } else {
-            console.log('Server-side error occured.');
-          }
-          console.log(error.name);
-          console.log(error.message);
-          setTimeout(() => {
-            this.router.navigate(['/']);
-          }, 3000);
+          this.router.navigate(['/login']);
+          this.toastr.error(error);
         });
   }
 

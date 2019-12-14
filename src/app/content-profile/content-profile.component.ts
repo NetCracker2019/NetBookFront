@@ -21,22 +21,22 @@ export class ContentProfileComponent implements OnInit {
   public favouriteBooks: ShortBookDescription[] = [];
   public readingBooks: ShortBookDescription[] = [];
   public readBooks: ShortBookDescription[] = [];
-  public achievements: Achievement[] = [];	
-  public isFriend: number = -1;	
-  public canEditable: boolean = false;
+  public achievements: Achievement[] = [];
+  public isFriend = -1;
+  public canEditable = false;
   private login: string;
 
 
   constructor(private userService: UserService,
-   private activatedRoute: ActivatedRoute,
-   private router: Router,
-   private authenticationService: AuthenticationService,
-   private alertService: AlertService,
-   private toastr: ToastrService) {
+              private activatedRoute: ActivatedRoute,
+              private router: Router,
+              private authenticationService: AuthenticationService,
+              private alertService: AlertService,
+              private toastr: ToastrService) {
   }
 
   ngOnInit() {
-    this.login = this.activatedRoute.snapshot.params['login'];
+    this.login = this.activatedRoute.snapshot.params.login;
     this.authenticationService.refreshToken();
 
     this.userService.getUser(this.login)
@@ -48,7 +48,7 @@ export class ContentProfileComponent implements OnInit {
           this.toastr.info(`User not found`);
           this.router.navigate(['/homeath/announcement']);
         });
-    
+
     this.canEdit();
 
     this.userService.getAchievements(this.login)
@@ -57,7 +57,7 @@ export class ContentProfileComponent implements OnInit {
           this.achievements = data;
         },
         error => {
-          //this.toastr.error(`${environment.errorMessage}`);
+          // this.toastr.error(`${environment.errorMessage}`);
         });
 
     this.userService.getFriends(this.login, 4, 0)
@@ -66,37 +66,37 @@ export class ContentProfileComponent implements OnInit {
           this.friends = data;
         },
         error => {
-          //this.toastr.error(`${environment.errorMessage}`);
+          // this.toastr.error(`${environment.errorMessage}`);
         });
 
-    this.userService.getFavouriteBooks(this.login, "", 3, 0)
+    this.userService.getFavouriteBooks(this.login, '', 3, 0)
       .subscribe(
         (data: ShortBookDescription[]) => {
           this.favouriteBooks = data;
         },
         error => {
-          //this.toastr.error(`${environment.errorMessage}`);
+          // this.toastr.error(`${environment.errorMessage}`);
         });
 
-    this.userService.getReadingBooks(this.login, "", 3, 0)
+    this.userService.getReadingBooks(this.login, '', 3, 0)
       .subscribe(
         (data: ShortBookDescription[]) => {
           this.readingBooks = data;
         });
 
-    this.userService.getReadBooks(this.login, "", 3, 0)
+    this.userService.getReadBooks(this.login, '', 3, 0)
       .subscribe(
         (data: ShortBookDescription[]) => {
           this.readBooks = data;
         });
   }
   goEdit() {
-    this.router.navigate(['/homeath/profile/' + this.login + '/edit']);
+    this.router.navigate([`/homeath/profile/${this.login}/edit`]);
   }
-  addFriend(){
+  addFriend() {
     this.userService.addFriend(this.authenticationService.currentUserValue.username, this.login)
       .subscribe(
-        data => {
+        () => {
           this.toastr.success(`${this.login} was added to friends`);
           this.isFriendFunction();
         },
@@ -104,36 +104,36 @@ export class ContentProfileComponent implements OnInit {
           this.toastr.error(`${environment.errorMessage}`);
         });
   }
-  isFriendFunction(){
+  isFriendFunction() {
     this.userService.isFriend(this.authenticationService.currentUserValue.username, this.login)
       .subscribe(
         (data: number) => {
           this.isFriend = data;
         },
         error => {
-          //this.toastr.info(`${environment.errorMessage}`);
+          // this.toastr.info(`${environment.errorMessage}`);
         });
   }
-  deleteFriend(){
+  deleteFriend() {
     this.userService.deleteFriend(this.authenticationService.currentUserValue.username, this.login)
       .subscribe(
-        data => {
+        () => {
           this.toastr.success(`${this.login} was removed from friends`);
           this.isFriendFunction();
         },
         error => {
           this.toastr.info(`${environment.errorMessage}`);
         });
-    
+
   }
 
-  canEdit(){
+  canEdit() {
     this.userService.isEditable(this.login)
     .subscribe(
       data => {
-        if(!data && this.authenticationService.currentUserValue.role != 4){
-          this.isFriend = -2; 
-        }else this.isFriendFunction();
+        if (!data && this.authenticationService.currentUserValue.role !== 4) {
+          this.isFriend = -2;
+        } else { this.isFriendFunction(); }
 
         this.canEditable = data;
         });
@@ -141,7 +141,5 @@ export class ContentProfileComponent implements OnInit {
 
   getPhoto(imageName: string) {
     return `${environment.apiUrl}/files/download?filename=${imageName}`;
-    //return 'https://ptetutorials.com/images/user-profile.png';
-    //return 'https://upload.wikimedia.org/wikipedia/commons/d/d7/F-15C_carrying_AIM-9X_maneuvers_into_a_vertical_climb.jpg';
   }
 }
