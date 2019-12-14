@@ -32,4 +32,8 @@ export class AchievementService {
   getAllAchievement(page: number, size: number): Observable<Achievement[]> {
     return this.http.get<Achievement[]>(`${environment.apiUrl}/achievement-manager/achievements?page=${page}&size=${size}`);
   }
+  removeFile(fileName: string) {
+    return this.http.delete<void>(
+      `${environment.apiUrl}/files/remove/${fileName}`);
+  }
 }

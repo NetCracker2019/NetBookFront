@@ -30,6 +30,7 @@ export class ContentAchievementsComponent implements OnInit {
   size = 4;
   page = 0;
   endOfAchievements = false;
+  defaultAchievementPhoto = '../../assets/img/depositphotos_257571074-stock-photo-achievement-icon-competition-success-bicolor.jpg';
 
 
   form: FormGroup;
@@ -64,7 +65,9 @@ export class ContentAchievementsComponent implements OnInit {
     );
     this.bookService.getGenres()
       .subscribe(genres => this.genres = genres);
-    this.getAchievements();
+    this.achievementService.getAllAchievement(this.page, this.size).subscribe(data => {
+      this.allAchievements = data;
+    });
     this.form = new FormGroup({
       title: new FormControl('', [
         Validators.pattern('[a-zA-Z0-9_.!(), ]+'),
@@ -105,16 +108,16 @@ export class ContentAchievementsComponent implements OnInit {
     this.achievement.amount = this.form.controls.numberBook.value;
     this.achievement.authorName = this.control.value;
     this.achievement.genreName = this.selectedGenre;
-    if (type == 'author') {
-      if (this.favOrRead == 'fav') {
+    if (type === 'author') {
+      if (this.favOrRead === 'fav') {
         this.achievement.favourite = true;
         this.achievement.readBook = null;
       } else {
         this.achievement.favourite = null;
         this.achievement.readBook = true;
       }
-    } else if (type == 'genre') {
-      if (this.favOrReadGenre == 'favGenre') {
+    } else if (type === 'genre') {
+      if (this.favOrReadGenre === 'favGenre') {
         this.achievement.favourite = true;
         this.achievement.readBook = null;
       } else {
@@ -131,6 +134,8 @@ export class ContentAchievementsComponent implements OnInit {
         error => {
           this.toastr.error(`${environment.errorMessage}`);
         });
+    } else {
+      this.achievement.image_path = 'default_achievement_photo';
     }
     this.achievementService.addAchievement(this.achievement).subscribe(data => {
       if (data) {
@@ -139,12 +144,28 @@ export class ContentAchievementsComponent implements OnInit {
         this.toastr.error('The achievement is exists!');
       }
     });
-    this.getAchievements();
+    this.getNewAchievementPeace();
   }
 
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
-    console.log(this.fileToUpload);
+    if ( this.fileToUpload != null) {
+      const newFileName: string = uuid();
+      this.achievementService.postFile(this.fileToUpload, newFileName).subscribe(
+        () => {
+          this.removeTempImage();
+          this.fileName = newFileName;
+        },
+        error => {
+          this.toastr.info(`Picture size must be < 1 MB`);
+        });
+    }
+  }
+  removeTempImage() {
+    if (this.fileName !== this.achievement.image_path) {
+      this.achievementService.removeFile(this.fileName)
+        .subscribe(() => {});
+    }
   }
 
   getPhoto(imageName: string) {

@@ -9,25 +9,24 @@ font-awesome.min.css">
         <h3 class="card-title">{{book.title}} - {{book.authors}}</h3>
         <div class="container like-book-content">
           <div class="row">
-            <div class="col-md-1">
+            <div class="col-2">
               <i *ngIf="!currentUser" class="fa fa-thumbs-o-up" aria-hidden="true" (click)="likeBook()"></i>
               <i *ngIf="likedBook == 1" class="fa fa-thumbs-o-up" aria-hidden="true" (click)="likeBook()" ngDefaultControl
                  style="color: green; "></i>
-              <i *ngIf="likedBook == 0 || likedBook == -1" class="fa fa-thumbs-o-up" aria-hidden="true" (click)="likeBook()" ngDefaultControl
-                 style="color: green; "></i>
+              <i *ngIf="likedBook == 0 || likedBook == -1" class="fa fa-thumbs-o-up" aria-hidden="true" (click)="likeBook()" ngDefaultControl></i>
             </div>
-            <div class="col-md-1">
+            <div class="col-2">
               <i *ngIf="!currentUser" class="fa fa-thumbs-o-down" aria-hidden="true" (click)="dislikeBook()"></i>
               <i *ngIf="likedBook == 1 || likedBook == 0" class="fa fa-thumbs-o-down" aria-hidden="true" ngDefaultControl
                    (click)="dislikeBook()"></i>
               <i *ngIf="likedBook == -1" class="fa fa-thumbs-o-down" aria-hidden="true" ngDefaultControl
                      (click)="dislikeBook()" style="color: red; "></i>
             </div>
-            <div ngDefaultControl [(ngModel)]="bookLikes" class="col-md-1 like-num" ><p style="font-size: 30px">{{bookLikes}}</p></div>
+            <div ngDefaultControl [(ngModel)]="bookLikes" class="col-2 like-num" ><p style="font-size: 26px">{{bookLikes}}</p></div>
           </div>
         </div>
 
-        <p style="padding-top: 20px">Publish date: {{book.releaseDate}}</p>
+        <p>Publish date: {{book.releaseDate}}</p>
         <p>Genres: {{book.genres}}</p>
         <!--    <p>Language: {{book.langua}}</p>-->
         <p>Pages: {{book.pages}}</p>
@@ -47,7 +46,7 @@ font-awesome.min.css">
   </div>
 </div>
 
-<div class="container">
+<div class="container" style="padding-top: 20px">
   <div class="row review-blog">
     <div class="col-2 review-title"><h2>Reviews</h2></div>
     <div class="col-2 button-write-review">
@@ -86,10 +85,10 @@ font-awesome.min.css">
       <div class="col-6 review-content">
         <div class="row">
           <div class="col-md-4 user-name"><h4>{{review.userName}}</h4></div>
-          <div class="col-md-1"><i class="fa fa-thumbs-o-up" aria-hidden="true" style="font-size: 20px; padding-top: 10px;"
+          <div class="col-md-1"><i class="fa fa-thumbs-o-up" aria-hidden="true" style="font-size: 20px;"
                                       (click)="likeReview(review)"></i>
           </div>
-          <div class="col-md-1"><i class="fa fa-thumbs-o-down" aria-hidden="true" style="font-size: 20px;padding-top: 10px;"
+          <div class="col-md-1"><i class="fa fa-thumbs-o-down" aria-hidden="true" style="font-size: 20px;"
                                       (click)="dislikeReview(review)"></i></div>
           <div class="col-md-1"><h5 ngDefaultControl [(ngModel)]="review.rating"
                                     style="font-size: 20px;">{{review.rating}}</h5></div>
@@ -99,7 +98,7 @@ font-awesome.min.css">
     </div>
   </div>
 </div>
-<div *ngIf="loading" class="loading-spin" style="padding-left: 200px">
+<div *ngIf="loading" style="padding-left: 200px">
   <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
   <span class="sr-only">Loading...</span>
 </div>

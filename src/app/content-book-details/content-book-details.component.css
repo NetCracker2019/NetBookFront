@@ -4,8 +4,8 @@
   height: 450px;
 }
 .item-book{
-  padding-bottom: 30px;
-  padding-top: 40px;
+  padding-bottom: 20px;
+  padding-top: 20px;
   margin: 10px;
 }
 
@@ -19,7 +19,7 @@
 
 .book-content h3 {
   font-size: 25px;
-  padding-bottom: 50px;
+  padding-bottom: 40px;
   margin: 0;
 }
 .book-content p {

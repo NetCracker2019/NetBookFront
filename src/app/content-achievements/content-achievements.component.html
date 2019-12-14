@@ -1,26 +1,28 @@
-<h1>Add new achievement</h1>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/
+font-awesome.min.css">
+<h2>Add new achievement</h2>
 <div class="panel" style="margin: 10px">
-  <div class="panel-heading"><h4>Pattern 1. Author achievement</h4></div>
+  <div class="panel-heading" style="padding-top: 8px; padding-left: 10px"><h4>Pattern 1. Author achievement</h4></div>
   <div class="panel-body">
     <form [formGroup]="form" name="form" novalidate>
       <div class="row">
         <div class="col-3 img-container">
 
           <div class="achievement-img">
-            <img class="achv-img img-circle img-thumbnail" src="{{fileToUpload}}" [(ngModel)]="fileToUpload"
-                 alt="achievement img" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+            <img class="achv-img img-circle img-thumbnail" src="{{this.getPhoto(this.fileName)}}"
+                 alt="achievement img" (error)="$event.target.src=getPhoto('default_achievement_photo')" ngDefaultControl>
           </div>
 
           <h4>Load photo</h4>
           <input name="loadImg" type="file" formControlName="achievementFilePath"
                  (change)="handleFileInput($event.target.files)" style="padding-left: 3vw;">
-          <div class=" add-button">
-            <button class="btn btn-primary" (click)="addAchievement('author')">Add achievement</button>
+          <div class="add-button">
+            <input class="btn btn-primary" (click)="addAchievement('author')" value="Add achievement" type="button">
           </div>
         </div>
         <div class="col-5 achv-enter-fields">
           <div class="row">
-            <div class="col-4 achv-title"><h4>Title: </h4></div>
+            <div class="col-4 achv-title"><h5>Title: </h5></div>
             <div class="col-6" [formGroup]="form" ><input type="text" formControlName="title" class="form-control"
                                       placeholder="Enter achievement title">
             </div>
@@ -30,10 +32,10 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-4 achv-desc"><h4>Description: </h4></div>
+            <div class="col-4 achv-desc"><h5>Description: </h5></div>
             <div class="col-6" [formGroup]="form" ><textarea class="form-control" formControlName="description" rows="2" cols="30"
                                          name="text"
-                                         placeholder="Enter description"></textarea>
+                                         placeholder="Enter description" style="margin-top: 5px"></textarea>
             </div>
             <div *ngFor="let validation of validationMessages.title" class="error">
               <div *ngIf="form.get('description').hasError(validation.type) && 	form.controls['description'].touched"
@@ -41,8 +43,8 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-4 achv-n"><h4>Number of books to achieve: </h4></div>
-            <div class="col-4 achv-input-n" [formGroup]="form"><input type="text" formControlName="numberBook" class="form-control"
+            <div class="col-4 achv-n"><h5>Number of books to achieve: </h5></div>
+            <div class="col-5 achv-input-n" [formGroup]="form"><input type="text" formControlName="numberBook" class="form-control"
                                                    placeholder="Enter number of books">
             </div>
             <div *ngFor="let validation of validationMessages.title" class="error">
@@ -51,8 +53,8 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-4 achv-author"><h4>Author name: </h4></div>
-            <form class="col-4" >
+            <div class="col-4 achv-author"><h5>Author name: </h5></div>
+            <form class="col-5" >
               <input type="text" class="form-control"  placeholder="Author name"
                      [formControl]="control"
                      [matAutocomplete]="auto">
@@ -64,7 +66,7 @@
             </form>
           </div>
           <div class="row" style="margin-left: 1px;">
-            <h4>Books must be: </h4>
+            <h5>Books must be: </h5>
             <label class="container">Favourite
               <input type="radio" checked="checked" name="fav" value="fav" [(ngModel)]="favOrRead" [ngModelOptions]="{standalone: true}">
               <span class="checkmark"></span>
@@ -81,27 +83,27 @@
 </div>
 
 <div class="panel" style="margin: 10px">
-  <div class="panel-heading"><h4>Pattern 2. Genre achievement</h4></div>
+  <div class="panel-heading" style="padding-top: 8px; padding-left: 10px"><h4>Pattern 2. Genre achievement</h4></div>
   <div class="panel-body">
     <form [formGroup]="form" name="form" novalidate>
       <div class="row">
         <div class="col-3 img-container">
 
           <div class="achievement-img">
-            <img class="achv-img img-circle img-thumbnail" src="{{fileToUpload}}" [(ngModel)]="fileToUpload"
-                 alt="achievement img" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+            <img class="achv-img img-circle img-thumbnail" src="{{this.getPhoto(this.fileName)}}"
+                 alt="achievement img" (error)="$event.target.src=getPhoto('default_achievement_photo')" ngDefaultControl>
           </div>
 
           <h4>Load photo</h4>
           <input name="loadImg" type="file" formControlName="achievementFilePath"
                  (change)="handleFileInput($event.target.files)" style="padding-left: 3vw;">
           <div class=" add-button">
-            <button class="btn btn-primary" (click)="addAchievement('genre')">Add achievement</button>
+            <input class="btn btn-primary" (click)="addAchievement('genre')" value="Add achievement" type="button">
           </div>
         </div>
         <div class="col-5 achv-enter-fields">
           <div class="row">
-            <div class="col-4 achv-title"><h4>Title: </h4></div>
+            <div class="col-4 achv-title"><h5>Title: </h5></div>
             <div class="col-6" [formGroup]="form" ><input type="text" formControlName="title" class="form-control"
                                                           placeholder="Enter achievement title">
             </div>
@@ -111,10 +113,10 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-4 achv-desc"><h4>Description: </h4></div>
+            <div class="col-4 achv-desc"><h5>Description: </h5></div>
             <div class="col-6" [formGroup]="form" ><textarea class="form-control" formControlName="description" rows="2" cols="30"
                                                              name="text"
-                                                             placeholder="Enter description"></textarea>
+                                                             placeholder="Enter description" style="margin-top: 5px"></textarea>
             </div>
             <div *ngFor="let validation of validationMessages.title" class="error">
               <div *ngIf="form.get('description').hasError(validation.type) && 	form.controls['description'].touched"
@@ -122,8 +124,8 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-4 achv-n"><h4>Number of books to achieve: </h4></div>
-            <div class="col-4 achv-input-n" [formGroup]="form"><input type="text" formControlName="numberBook" class="form-control"
+            <div class="col-4 achv-n"><h5>Number of books to achieve: </h5></div>
+            <div class="col-5 achv-input-n" [formGroup]="form"><input type="text" formControlName="numberBook" class="form-control"
                                                                       placeholder="Enter number of books">
             </div>
             <div *ngFor="let validation of validationMessages.title" class="error">
@@ -132,8 +134,8 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-4 achv-genre"><h4>Book Genre: </h4></div>
-            <form class="col-4">
+            <div class="col-4 achv-genre"><h5>Book Genre: </h5></div>
+            <form class="col-5">
               <select class="selectpicker form-control" [(ngModel)]="selectedGenre" name="genre">
                 <option *ngFor="let genre of genres" [value]="genre.genreName">
                   {{genre.genreName}}
@@ -142,7 +144,7 @@
             </form>
           </div>
           <div class="row" style="margin-left: 1px;">
-            <h4>Books must be: </h4>
+            <h5>Books must be: </h5>
             <label class="container">Favourite
               <input type="radio" checked="checked" name="favGenre" value="favGenre" [(ngModel)]="favOrReadGenre" [ngModelOptions]="{standalone: true}">
               <span class="checkmark"></span>
@@ -213,14 +215,19 @@
   </tr>
   </tbody>
 </table>
+
 <div
   infiniteScroll
   [infiniteScrollDistance]="4"
   [infiniteScrollThrottle]="1000"
   (scrolled)="getNewAchievementPeace()">
 </div>
-<div *ngIf="!endOfAchievements">
-  <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+<div *ngIf="!endOfAchievements" style="">
+  <i class="fa fa-refresh fa-spin fa-3x fa-fw" style="font-size: 40px; position: absolute;
+    left: 50%;
+    margin-right: -50%;"></i>
   <span class="sr-only">Loading...</span>
 </div>
+<p *ngIf="endOfAchievements">You have loaded all achievements</p>
+
 

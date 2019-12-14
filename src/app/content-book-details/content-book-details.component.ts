@@ -161,21 +161,20 @@ export class ContentBookDetailsComponent implements OnInit {
   }
 
   likeBook() {
+    if (this.likedBook === 1) {
+      this.bookLikes--;
+      this.likedBook = 0;
+    } else if (this.likedBook === -1) {
+      this.bookLikes += 2;
+      this.likedBook = 1;
+    } else {
+      this.bookLikes++;
+      this.likedBook = 1;
+      console.log(this.bookLikes);
+    }
     console.log('You want like the review');
     if (this.currentUser) {
       this.bookService.likeBook(this.book.bookId, this.currentUser.username).subscribe(data => {
-        console.log(data);
-        if (this.likedBook === 1) {
-          this.bookLikes--;
-          this.likedBook = 0;
-        } else if (this.likedBook === -1) {
-          this.bookLikes += 2;
-          this.likedBook = 1;
-        } else {
-          this.bookLikes++;
-          this.likedBook = 1;
-          console.log(this.bookLikes);
-        }
       });
     } else {
       this.toastr.error('You must be authorized in system!');
@@ -183,18 +182,18 @@ export class ContentBookDetailsComponent implements OnInit {
   }
 
   dislikeBook() {
+    if (this.likedBook === 1) {
+      this.bookLikes -= 2;
+      this.likedBook = -1;
+    } else if (this.likedBook === -1) {
+      this.bookLikes++;
+      this.likedBook = 0;
+    } else {
+      this.bookLikes--;
+      this.likedBook = -1;
+    }
     if (this.currentUser) {
       this.bookService.dislikeBook(this.book.bookId, this.currentUser.username).subscribe(data => {
-        if (this.likedBook === 1) {
-          this.bookLikes -= 2;
-          this.likedBook = -1;
-        } else if (this.likedBook === -1) {
-          this.bookLikes++;
-          this.likedBook = 0;
-        } else {
-          this.bookLikes--;
-          this.likedBook = -1;
-        }
       });
     } else {
       this.toastr.error('You must be authorized in system!');
