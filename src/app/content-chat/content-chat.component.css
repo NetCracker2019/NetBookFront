@@ -113,7 +113,7 @@
   background: #e8f6ff;
   cursor: pointer;
 }
-.chat_list:focus {
+.chat_list_focus {
   background: #e8f6ff;
 }
 

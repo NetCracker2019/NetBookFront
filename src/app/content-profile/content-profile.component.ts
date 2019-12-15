@@ -45,7 +45,7 @@ export class ContentProfileComponent implements OnInit {
           this.user = data;
         },
         error => {
-          this.toastr.info(`User not found`);
+          this.toastr.info(error);
           this.router.navigate(['/homeath/announcement']);
         });
 
@@ -55,27 +55,18 @@ export class ContentProfileComponent implements OnInit {
       .subscribe(
         (data: Achievement[]) => {
           this.achievements = data;
-        },
-        error => {
-          // this.toastr.error(`${environment.errorMessage}`);
         });
 
     this.userService.getFriends(this.login, 4, 0)
       .subscribe(
         (data: User[]) => {
           this.friends = data;
-        },
-        error => {
-          // this.toastr.error(`${environment.errorMessage}`);
         });
 
     this.userService.getFavouriteBooks(this.login, '', 3, 0)
       .subscribe(
         (data: ShortBookDescription[]) => {
           this.favouriteBooks = data;
-        },
-        error => {
-          // this.toastr.error(`${environment.errorMessage}`);
         });
 
     this.userService.getReadingBooks(this.login, '', 3, 0)
@@ -101,7 +92,7 @@ export class ContentProfileComponent implements OnInit {
           this.isFriendFunction();
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.error(error);
         });
   }
   isFriendFunction() {
@@ -109,9 +100,6 @@ export class ContentProfileComponent implements OnInit {
       .subscribe(
         (data: number) => {
           this.isFriend = data;
-        },
-        error => {
-          // this.toastr.info(`${environment.errorMessage}`);
         });
   }
   deleteFriend() {
@@ -122,7 +110,7 @@ export class ContentProfileComponent implements OnInit {
           this.isFriendFunction();
         },
         error => {
-          this.toastr.info(`${environment.errorMessage}`);
+          this.toastr.info(error);
         });
 
   }

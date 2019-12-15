@@ -5,14 +5,24 @@
     </h4>
   </div>
   <!-- Mark all notifications as read button -->
-  <div class="list-group-item-text col-md-10 offset-md-1 d-flex justify-content-end">
-    <button type="button" class="btn btn-primary "
-            (click)="AllNotifsMarkAsRead()">Mark All As Read
-    </button>
+  <div class="list-group-item-text col-md-10 offset-md-1 d-flex justify-content-between">
+    <div class="btn-group btn-group-toggle-info" data-toggle="buttons">
+      <label class="btn btn-secondary active" id="buttonAll" (click)="showAllNotifs()">
+        <input type="radio"  checked> Show All
+      </label>
+      <label class="btn btn-secondary" (click)="showUnreadNotifs()">
+        <input type="radio" > Show Only Unread
+      </label>
+    </div>
+    <div>
+      <button type="button" class="btn btn-primary "
+              (click)="AllNotifsMarkAsRead()">Mark All As Read
+      </button>
+    </div>
   </div>
   <!-- Notification div -->
   <div class="list-group-item list-group-item-success col-md-10 offset-md-1 rounded"
-       *ngFor="let notification of notifications">
+       *ngFor="let notification of currentNotifs">
     <div>
       <div>
         <h4>
@@ -33,16 +43,11 @@
       </div>
     </div>
   </div>
-
   <div
     infiniteScroll
     [infiniteScrollDistance]="collectionSize"
     [infiniteScrollThrottle]="1000"
     (scrolled)="onPageChanged()">
-  </div>
-  <div *ngIf="!endOfNotifs" style="text-align: center;">
-    <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
-    <span class="sr-only">Loading...</span>
   </div>
   <!-- Delete all notifications button -->
   <div class="list-group-item-text col-md-10 offset-md-1 d-flex justify-content-end">
@@ -53,12 +58,12 @@
     </button>
   </div>
 
+
   <div class="list-group-item-text col-md-10 offset-md-1 d-flex justify-content-center" *ngIf="endOfNotifs">
     <h4 class="text-warning">
       You have viewed all notifications!
     </h4>
   </div>
-
 
 
 </div>
@@ -78,7 +83,7 @@
       </div>
       <div class="modal-body">
         You click to delete your all notifications forever!<br>
-        (This action will delete ALL notifications,EVEN <br>
+        (This action will delete ALL notifications,EVEN UNREAD) <br>
         Are you sure?
       </div>
       <div class="modal-footer">

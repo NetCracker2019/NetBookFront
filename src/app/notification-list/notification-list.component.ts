@@ -13,7 +13,9 @@ import {ToastrService} from "ngx-toastr";
 
 export class NotificationListComponent implements OnInit {
 
+  currentNotifs:Notification[];
   notifications: Notification[];
+  unreadNotifications: Notification[];
   public page: number = 1;
   public collectionSize: number = 6;
   public endOfNotifs: boolean = false;
@@ -25,12 +27,31 @@ export class NotificationListComponent implements OnInit {
   ngOnInit() {
     this.notificationService.getAllNotifications(this.collectionSize,this.page-1).subscribe((notifications) => {
 
-      this.notifications = notifications
+      this.notifications = notifications;
+      this.currentNotifs= notifications
+    })
+    this.notificationService.getAllUnreadNotifications(this.collectionSize,this.page-1).subscribe((unreadNotifs)=>{
+      this.unreadNotifications=unreadNotifs
     })
   }
-  onPageChanged() {
+  onPageChanged(){
+    if(this.currentNotifs.length===this.notifications.length){
+      this.onPageChangedForAll();
+    }
+    if(this.currentNotifs.length===this.unreadNotifications.length){
+      this.onPageChangedForUnread();
+    }
+  }
+
+  onPageChangedForAll() {
     this.page = this.page + 1;
     this.getAllNotifs();
+
+  }
+  onPageChangedForUnread() {
+    this.page = this.page + 1;
+    this.getAllUnreadNotifs();
+
   }
   //call when scrolling
   getAllNotifs() {
@@ -38,10 +59,22 @@ export class NotificationListComponent implements OnInit {
         (notifications) => {
           if(notifications.length < this.collectionSize) this.endOfNotifs = true;
           this.notifications = this.notifications.concat(notifications);
+          this.currentNotifs = this.notifications.concat(notifications);
         },
         error => {
           this.toastr.error(`${environment.errorMessage}`);
         });
+  }
+  getAllUnreadNotifs() {
+    this.notificationService.getAllUnreadNotifications(this.collectionSize,this.page-1).subscribe(
+      (notifications) => {
+        if(notifications.length < this.collectionSize) this.endOfNotifs = true;
+        this.unreadNotifications = this.unreadNotifications.concat(notifications);
+        this.currentNotifs = this.unreadNotifications.concat(notifications);
+      },
+      error => {
+        this.toastr.error(`${environment.errorMessage}`);
+      });
   }
 
 //getting link to go
@@ -63,6 +96,13 @@ export class NotificationListComponent implements OnInit {
         return "/homeath/search/" + notification.bookId.toString();
         break;
     }
+  }
+
+  showUnreadNotifs(){
+    this.currentNotifs=this.unreadNotifications;
+  }
+  showAllNotifs(){
+    this.currentNotifs=this.notifications;
   }
 
   AllNotifsMarkAsRead() {
