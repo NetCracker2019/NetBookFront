@@ -140,11 +140,13 @@ export class ContentAchievementsComponent implements OnInit {
     this.achievementService.addAchievement(this.achievement).subscribe(data => {
       if (data) {
         this.toastr.success('Achievement is added!');
+        this.page = 0;
+        this.allAchievements = [];
+        this.getAchievements();
       } else {
         this.toastr.error('The achievement is exists!');
       }
     });
-    this.getNewAchievementPeace();
   }
 
   handleFileInput(files: FileList) {
@@ -170,5 +172,13 @@ export class ContentAchievementsComponent implements OnInit {
 
   getPhoto(imageName: string) {
     return `${environment.apiUrl}/files/download?filename=${imageName}`;
+  }
+  removeAchievement(achvId: number) {
+    this.achievementService.removeAchievement(achvId).subscribe(() => {
+      this.page = 0;
+      this.allAchievements = [];
+      this.getAchievements();
+    });
+
   }
 }

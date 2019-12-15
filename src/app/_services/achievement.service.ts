@@ -36,4 +36,7 @@ export class AchievementService {
     return this.http.delete<void>(
       `${environment.apiUrl}/files/remove/${fileName}`);
   }
+  removeAchievement(achivId: number) {
+    return this.http.delete<void>(`${environment.apiUrl}/achievement-manager/remove-achievement?achivId=${achivId}`);
+  }
 }

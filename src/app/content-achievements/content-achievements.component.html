@@ -213,6 +213,9 @@ font-awesome.min.css">
     <td >
       <p>{{ achiv.readBook  }}</p>
     </td>
+    <td >
+      <i *ngIf="achiv.achvType == 'other'" class="fa fa-times" (click)="removeAchievement(achiv.achievementId)" style="cursor: pointer;"></i>
+    </td>
   </tr>
   </tbody>
 </table>

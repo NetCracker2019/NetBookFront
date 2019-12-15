@@ -56,7 +56,7 @@ font-awesome.min.css">
   <h5 *ngIf="collectionSize==0">No reviews</h5>
   <div *ngIf="writeReviewFlag" class="container write-review">
     <div class="row review-item">
-      <div class="col-2 user-image">
+      <div class="col-1 ">
         <img src="{{getPhoto(currentUser.avatarFilePath)}}" class="user-logo" alt="User"
              (error)="$event.target.src=getPhoto('default_avatar')">
       </div>
@@ -71,8 +71,8 @@ font-awesome.min.css">
       </div>
     </div>
     <div class="row add-cancel-buttons">
-      <div class="col-1"><button class="add-button btn btn-primary" (click)="addReview(reviewText)">Add</button></div>
-      <div class="col-1"><button class="cancel-button btn btn-default" (click)="cancelReview()">Cancel</button></div>
+      <div class="col-1"><button class="add-button btn btn-success" (click)="addReview(reviewText)">Add</button></div>
+      <div class="col-1"><button class="cancel-button btn btn-danger" (click)="cancelReview()">Cancel</button></div>
     </div>
   </div>
 
