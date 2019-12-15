@@ -16,13 +16,12 @@ const httpOptions = {
 export class NotificationService {
   constructor(private http: HttpClient) {}
 
-
-  /*getPersons(login: string, sought: string, where: string, cnt: number, offset: number) {
-    return this.http.get<User[]>(`${environment.apiUrl}/find-persons/${login}?sought=${sought}&where=${
-      where}&cnt=${cnt}&offset=${offset}`);
-  }*/
   getAllNotifications(cnt: number, offset: number): Observable<Notification[]>{
-    return this.http.get<Notification[]>(`${environment.apiUrl}/notifications?cnt=${cnt}&offset=${offset}`);
+    return this.http.get<Notification[]>(`${environment.apiUrl}/notifications/all?cnt=${cnt}&offset=${offset}`);
+  }
+
+  getAllUnreadNotifications(cnt: number, offset: number): Observable<Notification[]>{
+    return this.http.get<Notification[]>(`${environment.apiUrl}/notifications/unread-only?cnt=${cnt}&offset=${offset}`);
   }
 
   markAllAsRead(userId:number){
