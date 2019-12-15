@@ -185,7 +185,8 @@ font-awesome.min.css">
     </td>
     <td>
       <div class="coverDiv">
-        <img class="img-responsive" alt="no img" src="{{ this.getPhoto(achiv.image_path) }}">
+        <img class="img-responsive" alt="no img" src="{{ this.getPhoto(achiv.image_path) }}"
+             (error)="$event.target.src=getPhoto('default_achievement_photo')">
       </div>
     </td>
     <td >

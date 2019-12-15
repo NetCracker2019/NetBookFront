@@ -3,6 +3,7 @@ import {Announcement, Book, NewModelBook, Review, ViewAnnouncement} from '../_mo
 import {ApproveService} from '../_services/approve.service';
 import {BookService} from '../_services/book.service';
 import {ToastrService} from 'ngx-toastr';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-content-approve',
@@ -169,6 +170,10 @@ export class ContentApproveComponent implements OnInit {
       console.log(data);
       this.reviews = data;
     });
+  }
+
+  getPhoto(imageName: string) {
+    return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 
 

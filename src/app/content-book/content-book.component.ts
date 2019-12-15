@@ -6,6 +6,7 @@ import {AlertService} from '../_services/alert.service';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
 
 
 
@@ -109,5 +110,8 @@ export class ContentBookComponent implements OnInit {
   // closeForm() {
   //   document.getElementById('myForm').style.display = 'none';
   // }
+  getPhoto(imageName: string) {
+    return `${environment.apiUrl}/files/download?filename=${imageName}`;
+  }
 
 }

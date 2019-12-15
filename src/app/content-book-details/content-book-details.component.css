@@ -7,6 +7,7 @@
   padding-bottom: 20px;
   padding-top: 20px;
   margin: 10px;
+  padding-left: 10px;
 }
 
 
@@ -95,14 +96,12 @@
 /*}*/
 .add-button {
   /*grid-column: 1;*/
-  background-color: green;
   border-radius: 10px;
   height: 40px;
   width: 90px;
 }
 .cancel-button {
   /*grid-column: 2;*/
-  background-color: red;
   border-radius: 10px;
   height: 40px;
   width: 90px;

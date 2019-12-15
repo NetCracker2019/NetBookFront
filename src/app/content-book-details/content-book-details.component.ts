@@ -5,6 +5,7 @@ import {Announcement, Book, NewModelBook, Review, User} from '../_models/interfa
 import {AuthenticationService} from '../_services/authentication.service';
 import {AlertService} from '../_services/alert.service';
 import {ToastrModule, ToastrService} from 'ngx-toastr';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-content-book-details',
@@ -44,7 +45,6 @@ export class ContentBookDetailsComponent implements OnInit {
       // });
       this.bookService.countReviewsForBook(bookId).subscribe(data => {
         this.collectionSize = data;
-        console.log('Collection size:' + data);
       });
       this.bookService.getPeaceOfReview(bookId, this.count, this.offset).subscribe(data => {
         this.reviews = data;
@@ -73,7 +73,7 @@ export class ContentBookDetailsComponent implements OnInit {
     this.bookService.getBookById(id).subscribe(data => {
       this.book = data;
       this.bookLikes = data.likes;
-      console.log('Book likes: ' + data.likes);
+      console.log('Book image path  ' + data.imagePath);
     });
   }
 
@@ -152,7 +152,6 @@ export class ContentBookDetailsComponent implements OnInit {
     if (this.currentUser) {
       this.bookService.removeBookFromProfile(this.currentUser.username, this.book.bookId).subscribe(
         data => {
-          console.log(data);
           this.added = false;
         });
     } else {
@@ -170,9 +169,7 @@ export class ContentBookDetailsComponent implements OnInit {
     } else {
       this.bookLikes++;
       this.likedBook = 1;
-      console.log(this.bookLikes);
     }
-    console.log('You want like the review');
     if (this.currentUser) {
       this.bookService.likeBook(this.book.bookId, this.currentUser.username).subscribe(data => {
       });
@@ -219,5 +216,9 @@ export class ContentBookDetailsComponent implements OnInit {
     } else {
       this.toastr.error('You must be authorized in system!');
     }
+  }
+
+  getPhoto(imageName: string) {
+    return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 }
