@@ -21,7 +21,7 @@ font-awesome.min.css">
 						Achievements :
 						<div *ngFor="let achievement of this.achievements" style="white-space: nowrap; display: inline;" title="{{ achievement.title }}
 {{ achievement.description }}">
-							<img src="{{ achievement.image_path }}"/>
+							<img src="{{ this.getPhoto(achievement.image_path) }}"/>
 						</div>
 
 					</span>
