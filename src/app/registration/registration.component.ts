@@ -57,7 +57,7 @@ export class RegistrationComponent implements OnInit {
       ]),
       userEmail: new FormControl('', [
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'),
+        Validators.pattern('^[_A-Za-z0-9-.]+@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$'),
         Validators.minLength(6),
         Validators.maxLength(25)
       ]),
