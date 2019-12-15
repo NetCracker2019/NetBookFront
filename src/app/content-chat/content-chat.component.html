@@ -13,7 +13,8 @@ font-awesome.min.css">
 	  </div>
 	  <div class="inbox_chat scroll">
 	  	<div *ngFor="let chat of chats">
-			<div class="chat_list"  (click)="onClick(chat.chatId)" tabindex="1">
+			<div class="chat_list"  (click)="onClick(chat.chatId)" tabindex="1"
+           [ngClass]="{ 'chat_list_focus': chat.chatId===activeChat}">
 			  <div class="chat_people">
 				<div class="chat_img"> <img src="{{this.getPhoto(chat.chatAvatar)}}"
                         (error)="$event.target.src=getPhoto('default_chat_avatar')"alt="no"> </div>
