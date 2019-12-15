@@ -31,6 +31,7 @@ export class ContentChatComponent implements OnInit, OnDestroy {
   public friendsWhoAbleToAdd: User[] = [];
   public editChatTab = 0;
   public activeChatAvatar = '';
+  public namePattern = '^[a-zA-Z0-9_ ]+$';
   private headers = {
     Authorization: this.authenticationService.currentUserValue.token};
 
@@ -101,7 +102,7 @@ export class ContentChatComponent implements OnInit, OnDestroy {
         this.toastr.success(`Chat ${this.chatName} successfully created`);
       },
         error => {
-          this.toastr.info(`${environment.errorMessage}`);
+          this.toastr.info(error);
         });
   }
 
@@ -124,7 +125,7 @@ export class ContentChatComponent implements OnInit, OnDestroy {
             x => !this.isExistPerson(this.chatMembers, x));
         },
         error => {
-          this.toastr.info(`${environment.errorMessage}`);
+          this.toastr.info(error);
         });
   }
 
@@ -155,9 +156,10 @@ export class ContentChatComponent implements OnInit, OnDestroy {
           () => {
             this.toastr.success(`Chat successfully updated`);
             this.getChats();
+            this.activeChat = null;
           },
           error => {
-            this.toastr.info(`${environment.errorMessage}`);
+            this.toastr.info(error);
           });
   }
 
@@ -177,7 +179,8 @@ export class ContentChatComponent implements OnInit, OnDestroy {
     }
   }
   removeTempImage() {
-    if (this.activeChat && this.activeChatAvatar !== this.getChatAvatar()) {
+    if (this.activeChat && this.activeChatAvatar !== '' &&
+      this.activeChatAvatar !== this.getChatAvatar()) {
       this.userService.removeFile(this.activeChatAvatar)
         .subscribe(() => {});
     }
@@ -186,6 +189,7 @@ export class ContentChatComponent implements OnInit, OnDestroy {
     this.editedChatName = this.chats.find(x => x.chatId === this.activeChat).chatName;
     this.getChatMembers(this.activeChat);
     this.activeChatAvatar = this.getChatAvatar();
+    this.editChatTab = 0;
   }
   getAvatarPathByLogin(login: string) {
     return this.getPhoto(this.chatMembers.find(x => x.username === login).avatarFilePath);

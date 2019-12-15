@@ -65,7 +65,7 @@ export class ContentEditProfileComponent implements OnInit, OnDestroy {
     this.form = new FormGroup({
 
       email: new FormControl('', [
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'),
+        Validators.pattern('^[_A-Za-z0-9-.]+@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$'),
         Validators.minLength(6),
         Validators.maxLength(25)
       ]),
@@ -118,7 +118,7 @@ export class ContentEditProfileComponent implements OnInit, OnDestroy {
           this.form.controls.sex.setValue(this.user.sex);
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.info(error);
         });
   }
 
@@ -172,7 +172,7 @@ export class ContentEditProfileComponent implements OnInit, OnDestroy {
           this.router.navigate([`/homeath/profile/${this.login}`]);
         },
         error => {
-          this.toastr.info(`${environment.errorMessage}`);
+          this.toastr.info(error);
         });
   }
   goBack() {

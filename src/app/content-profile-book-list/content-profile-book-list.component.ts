@@ -74,7 +74,7 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
           this.books = data;
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.error(error);
         }
       );
     // ------------------------
@@ -109,7 +109,7 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
           this.find();
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.error(error);
         });
 
   }
@@ -128,7 +128,7 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
           this.find();
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.error(error);
         });
   }
   removeBook(bookId: number) {
@@ -143,7 +143,7 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
             this.find();
           },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.error(error);
         });
     }
   }
@@ -163,7 +163,7 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
             this.find();
           },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.error(error);
         });
     }
 
@@ -185,7 +185,7 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
     this.userService.addBookBatchTo(this.login, Shelf.Reading, booksId)
       .subscribe(() => {},
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.error(error);
         });
   }
   changeBookShelfFavourite(book: ShortBookDescription) {
@@ -194,7 +194,7 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
     this.userService.addBookBatchTo(this.login, Shelf.Favourite, booksId)
       .subscribe(() => {},
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.error(error);
         });
   }
 
@@ -218,7 +218,7 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
           this.books = this.books.concat(data);
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          this.toastr.error(error);
         });
   }
   onPageChanged() {

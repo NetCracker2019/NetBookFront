@@ -95,7 +95,6 @@ export class RecoveryPassComponent implements OnInit {
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          //this.toastr.error(`${environment.errorMessage}`);
           this.toastr.error(error);
         });
   }

@@ -89,8 +89,18 @@ font-awesome.min.css">
 				<form>
 					<div class="form-group">
 						<label for="chat-name" class="col-form-label">Chat name*</label>
-						<label *ngIf="chatName.length == 1" for="chat-name" class="col-form-label" style="color: red;">Chat name must be at least 2 characters long</label>
-						<input type="text" class="form-control" id="chat-name" [(ngModel)]="chatName" name="chat-name">
+						<input type="text" class="form-control" id="chat-name" [(ngModel)]="chatName"
+                   [pattern]="namePattern" #uname="ngModel" name="chat-name">
+            <label *ngIf="chatName.length == 1" for="chat-name" class="col-form-label" style="color: red;">
+              Chat name must be at least 2 characters long
+            </label>
+            <label *ngIf="chatName.length >= 15" for="chat-name" class="col-form-label" style="color: red;">
+              Chat name cannot be more than 15 characters long
+            </label>
+            <label *ngIf="uname.errors?.pattern" for="chat-name" class="col-form-label" style="color: red;">
+              Chat name must contain only numbers and letters
+            </label>
+
 					</div>
 						<p>Add to chat:</p>
 						<div *ngFor="let friend of this.friends">
@@ -115,7 +125,8 @@ font-awesome.min.css">
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" id="closeModal" data-dismiss="modal">Back</button>
-				<button [disabled]="chatName.length < 2" type="button" class="btn btn-primary" (click)="createNewChat()"
+				<button [disabled]="chatName.length < 2 || chatName.length >= 15 || uname.errors?.pattern"
+                type="button" class="btn btn-primary" (click)="createNewChat()"
                 data-dismiss="modal">Create</button>
 			</div>
 		</div>
@@ -136,21 +147,30 @@ font-awesome.min.css">
 				<form>
 					<div class="form-group">
 						<label for="chat-name2" class="col-form-label">Chat name*</label>
-						<label *ngIf="editedChatName.length < 2" for="chat-name" class="col-form-label" style="color: red;">Chat name must be at least 2 characters long</label>
-						<input type="text" [(ngModel)]="editedChatName" name="chat-name" class="form-control" id="chat-name2">
+						<input type="text" [(ngModel)]="editedChatName" name="chat-name" class="form-control" id="chat-name2"
+                   [pattern]="namePattern" #unameEdit="ngModel">
+            <label *ngIf="editedChatName.length == 1" for="chat-name2" class="col-form-label" style="color: red;">
+              Chat name must be at least 2 characters long
+            </label>
+            <label *ngIf="editedChatName.length >= 15" for="chat-name2" class="col-form-label" style="color: red;">
+              Chat name cannot be more than 15 characters long
+            </label>
+            <label *ngIf="unameEdit.errors?.pattern" for="chat-name2" class="col-form-label" style="color: red;">
+              Chat name must contain only numbers and letters
+            </label>
 					</div>
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
 						<li class="nav-item">
-							<a class="nav-link active" id="home-tab" data-toggle="tab" (click)="editChatTab = 0" role="tab"
-                 aria-controls="home" aria-selected="true">Add members</a>
+							<a class="nav-link active" id="home-tab0" data-toggle="tab" (click)="editChatTab = 0" role="tab"
+                 aria-controls="home" aria-selected="true" [ngClass]="{ 'active':editChatTab===0}">Add members</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link " id="home-tab" data-toggle="tab" (click)="editChatTab = 1" role="tab"
-                 aria-controls="home" aria-selected="true">Remove members</a>
+							<a class="nav-link " id="home-tab1" data-toggle="tab" (click)="editChatTab = 1" role="tab"
+                 aria-controls="home" aria-selected="true" [ngClass]="{ 'active':editChatTab===1}">Remove members</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link " id="home-tab" data-toggle="tab" (click)="editChatTab = 2" role="tab"
-                 aria-controls="home" aria-selected="true">Change photo</a>
+							<a class="nav-link " id="home-tab2" data-toggle="tab" (click)="editChatTab = 2" role="tab"
+                 aria-controls="home" aria-selected="true" [ngClass]="{ 'active':editChatTab===2}">Change photo</a>
 						</li>
 					</ul>
 
@@ -213,7 +233,8 @@ font-awesome.min.css">
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" (click)="removeTempImage()"
                 id="closeModal2" data-dismiss="modal">Back</button>
-				<button [disabled]="editedChatName.length < 2" type="button" class="btn btn-primary"
+				<button [disabled]="editedChatName.length < 2 || editedChatName.length >= 15 || unameEdit.errors?.pattern"
+                type="button" class="btn btn-primary"
                 (click)="editChat()" data-dismiss="modal">Save</button>
 			</div>
 		</div>
