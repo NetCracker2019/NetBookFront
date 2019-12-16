@@ -1,5 +1,8 @@
-<button (click)="showPersonalize()">Персонализированный</button>
-<button (click)="showAll()">Полный</button>
+
+
+
+<button class="btn m-2 btn-orange" (click)="showPersonalize()">Personalize</button>
+<button class="btn m-2 btn-orange" (click)="showAll()">Full</button>
 <full-calendar
   defaultView="dayGridMonth"
   [header]="{
@@ -8,6 +11,6 @@
         right: 'today'
       }"
   [plugins]="calendarPlugins"
-  [weekends]="false"
+  [weekends]="true"
   [events]="calendarEvents"
 ></full-calendar>

@@ -59,6 +59,20 @@ export class ApproveService {
     return this.http.post<boolean>(`${environment.apiUrl}/approve-service/cancel-review?reviewId=${reviewId}`, body);
   }
 
+  getUnApproveBookList(page: number, offset: number): Observable<Book[]> {
+    return this.http.get<Book[]>(`${environment.apiUrl}/approve-service/books-for-approve?page=${page}&itemPerPage=${offset}`);
+  }
+
+
+  confirmBook(bookId: number): Observable<boolean> {
+    const body = {bookId: bookId};
+    return this.http.post<boolean>(`${environment.apiUrl}/approve-service/confirm-book?bookId=${bookId}`, body);
+  }
+
+  cancelBook(bookId: number): Observable<boolean> {
+    const body = {bookId: bookId};
+    return this.http.post<boolean>(`${environment.apiUrl}/approve-service/cancel-book?bookId=${bookId}`, body);
+  }
   // cancelAnnouncement(book): Observable<Book[]> {
   //   return this.http.put<Book[]>(`${environment.apiUrl}/approve/confirm?bookId=`, book.announcmentId);
   // }

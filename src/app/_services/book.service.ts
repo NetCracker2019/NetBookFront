@@ -7,7 +7,18 @@ import {environment} from '../../environments/environment';
 import {map} from 'rxjs/operators';
 
 
-import {Announcement, Book, Data, Genre, NewModelBook, Page, Review, Author, Event} from '../_models/interface';
+import {
+  Announcement,
+  Book,
+  Data,
+  Genre,
+  NewModelBook,
+  Page,
+  Review,
+  Author,
+  Event,
+  Toaster
+} from '../_models/interface';
 
 
 const httpOptions = {
@@ -62,7 +73,7 @@ export class BookService {
     return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/view-books`);
   }
 
-  addBook(book: Book, authors, userName: string) {
+  addBook(book: Book, authors, userName: string): Observable<Toaster> {
     let authorArray: Data[] = [];
     for (let i = 0; i < authors.length; i++) {
       authorArray.push(authors[i].fullName);
@@ -70,7 +81,7 @@ export class BookService {
     const body = {title: book.title, authors: authorArray, genres: book.genres, imagePath: book.imagePath,
       release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description, user: userName};
     console.log(body);
-    return this.http.post(`${environment.apiUrl}/book-service/book`, body);
+    return this.http.post<Toaster>(`${environment.apiUrl}/book-service/book`, body);
   }
 
   // addAnnouncement(book: Book) {
@@ -204,5 +215,9 @@ export class BookService {
   }
   checkLikedReview(reviewId: number, userLogin: number): Observable<number> {
     return this.http.get<number>(`${environment.apiUrl}/book-service/check-liked-review?reviewId=${reviewId}&userLogin=${userLogin}`);
+  }
+
+  countBooksUnApprove(approved: boolean): Observable<number> {
+    return this.http.get<number>(`${environment.apiUrl}/book-service/count-books-unapproved?approved=${approved}`);
   }
 }

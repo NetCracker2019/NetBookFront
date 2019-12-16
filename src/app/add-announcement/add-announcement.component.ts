@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {Author, Book, Data, Genre} from '../_models/interface';
+import {Author, Book, Data, Genre, Message, Toaster} from '../_models/interface';
 import {BookService} from '../_services/book.service';
 import {AlertService} from '../_services/alert.service';
 import {FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import {Observable} from "rxjs";
-import {map, startWith} from "rxjs/operators";
-import {AuthorService} from "../_services/author.service";
-import {AuthenticationService} from "../_services/authentication.service";
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {AuthorService} from '../_services/author.service';
+import {AuthenticationService} from '../_services/authentication.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-announcement',
@@ -25,15 +26,15 @@ export class AddAnnouncementComponent implements OnInit {
   // dataarray: Data[] = [];
   // ordersData: Genre[] = [];
   // value = 'announcement';
-
+  response: Toaster;
   addForm: FormGroup;
   control = new FormControl('');
   filteredAuthors: Observable<Author[]>;
   accountValidationMessages = {
     title: [
       { type: 'required', message: 'Title is required' },
-      { type: 'minlength', message: 'Username must be at least 2 characters long' },
-      { type: 'maxlength', message: 'Username cannot be more than 15 characters long' },
+      { type: 'minlength', message: 'Title must be at least 2 characters long' },
+      { type: 'maxlength', message: 'Title cannot be more than 15 characters long' },
     ],
     author: [
       { type: 'required', message: 'Author is required' },
@@ -49,13 +50,15 @@ export class AddAnnouncementComponent implements OnInit {
     ],
     pages: [
       { type: 'required', message: 'Number of pages is required' },
-      { type: 'maxlength', message: 'Your number cannot be more than 5 characters long' }
+      { type: 'pattern', message: 'Number of pages cannot be negative or more than 6 characters long' },
+      { type: 'maxlength', message: 'Your number cannot be more than 6 characters long' }
     ],
   };
 
   constructor(private authorService: AuthorService,
               private bookService: BookService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private toastr: ToastrService) {
     this.authorsSend = [];
     this.addForm = new FormGroup({
 
@@ -79,7 +82,8 @@ export class AddAnnouncementComponent implements OnInit {
       pages: new FormControl('', [
         Validators.required,
         Validators.minLength(1),
-        Validators.maxLength(5)
+        Validators.maxLength(5),
+        Validators.pattern('[0-9]{1,6}')
       ]),
       description: new FormControl(''),
     });
@@ -125,13 +129,13 @@ export class AddAnnouncementComponent implements OnInit {
     if (name.length === 0) {
       return;
     }
-    let tmp: Author = {authorId: this.counter, fullName: name};
+    const tmp: Author = {authorId: this.counter, fullName: name};
     this.authorsSend.push(tmp);
     this.counter = this.counter + 1;
   }
 
   removeContact(name) {
-    let index = this.authors.indexOf(name);
+    const index = this.authors.indexOf(name);
     this.authorsSend.splice(index, 1);
   }
 
@@ -146,8 +150,13 @@ export class AddAnnouncementComponent implements OnInit {
 
     this.bookService.addBook(this.bookModel, this.authorsSend, this.currentUser)
       .subscribe(
-        data => {
-          console.log(data);
+        (data) => {
+          this.response = data;
+          if (this.response.status === 'ok') {
+            this.toastr.success(this.response.message);
+          } else if (this.response.status === 'error') {
+            this.toastr.error(this.response.message);
+          }
         });
   }
 
