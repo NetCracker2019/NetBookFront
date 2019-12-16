@@ -134,7 +134,7 @@ export class RegistrationComponent implements OnInit {
     this.userService.register(this.model)
       .subscribe(
         () => {
-          this.toastr.success(`Registration successful`);
+          this.toastr.success(`Registration successful! Check your email`);
           this.router.navigate(['/login']);
         },
         error => {

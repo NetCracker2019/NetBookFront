@@ -93,10 +93,13 @@ export class ContentAchievementsComponent implements OnInit {
 
   getAchievements() {
     this.achievementService.getAllAchievement(this.page, this.size).subscribe(data => {
-      if (data.length < this.size) { this.endOfAchievements = true; }
+      if (data.length < this.size) {
+        this.endOfAchievements = true;
+      }
       this.allAchievements = this.allAchievements.concat(data);
     });
   }
+
   getNewAchievementPeace() {
     this.page++;
     this.getAchievements();
@@ -151,7 +154,7 @@ export class ContentAchievementsComponent implements OnInit {
 
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
-    if ( this.fileToUpload != null) {
+    if (this.fileToUpload != null) {
       const newFileName: string = uuid();
       this.achievementService.postFile(this.fileToUpload, newFileName).subscribe(
         () => {
@@ -163,22 +166,26 @@ export class ContentAchievementsComponent implements OnInit {
         });
     }
   }
+
   removeTempImage() {
     if (this.fileName !== this.achievement.image_path) {
       this.achievementService.removeFile(this.fileName)
-        .subscribe(() => {});
+        .subscribe(() => {
+        });
     }
   }
 
   getPhoto(imageName: string) {
     return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
-  removeAchievement(achvId: number) {
-    this.achievementService.removeAchievement(achvId).subscribe(() => {
-      this.page = 0;
-      this.allAchievements = [];
-      this.getAchievements();
-    });
 
+  removeAchievement(achvId: number) {
+    if (window.confirm('Are you sure you want delete this achievement?')) {
+      this.achievementService.removeAchievement(achvId).subscribe(() => {
+        this.page = 0;
+        this.allAchievements = [];
+        this.getAchievements();
+      });
+    }
   }
 }

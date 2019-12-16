@@ -1,7 +1,7 @@
 
 .book-logo {
-  width: 300px;
-  height: 450px;
+  width: 90%;
+  height: 90%;
 }
 .item-book{
   padding-bottom: 20px;
@@ -31,14 +31,12 @@
   background-color: palegreen;
   border-radius: 10px;
   height: 60px;
-  width: 250px;
 
 }
 .button-remove-book-from-profile {
   background-color: tomato;
   border-radius: 10px;
   height: 60px;
-  width: 250px;
 
 }
 .review-item {
@@ -46,6 +44,7 @@
   /*grid-template-columns: 130px 400px;*/
   padding-left: 2px;
   padding-top: 10px;
+  /*max-width: 400px;*/
 }
 .user-logo {
   border-radius: 80%;
@@ -68,6 +67,14 @@
   width: 190px;
 
 }
+.add-button {
+  height: 40px;
+  width: 90px;
+}
+.cancel-button {
+  height: 40px;
+  width: 90px;
+}
 .review-text {
   font-size: 15px;
   color: #4B5A65;
@@ -85,6 +92,7 @@
 }
 .review-content {
   padding-left: 30px;
+  max-width: 400px;
 }
 .add-cancel-buttons {
   padding-top: 10px;

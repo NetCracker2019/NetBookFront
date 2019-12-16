@@ -46,10 +46,9 @@ font-awesome.min.css">
       </div>
     </div>
   </div>
-  <br><br>
   <div
     infiniteScroll
-    [infiniteScrollDistance]="collectionSize"
+    [infiniteScrollDistance]="2"
     [infiniteScrollThrottle]="1000"
     (scrolled)="onPageChanged()">
   </div>
@@ -57,8 +56,6 @@ font-awesome.min.css">
     <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
     <span class="sr-only">Loading...</span>
   </div>
-
-
   <div *ngIf="endOfFriends">
     <hr>
   </div>
