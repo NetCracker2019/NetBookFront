@@ -6,6 +6,7 @@ import {FormControl} from '@angular/forms';
 import {distinctUntilChanged, map, startWith, switchMap} from 'rxjs/operators';
 import {AuthorService} from '../_services/author.service';
 import {environment} from '../../environments/environment';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-search',
@@ -32,7 +33,8 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   constructor(
     private bookService: BookService,
-    private authorService: AuthorService
+    private authorService: AuthorService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -90,7 +92,9 @@ export class SearchComponent implements OnInit, OnDestroy {
           this.currentPage = page;
         });
     } else if (this.dateFrom.value === null || this.dateTo.value === null) {
-      return;
+      this.toastr.error('Wrong date');
+    } else if (this.dateFrom.value > this.dateTo.value) {
+      this.toastr.error('Date from must be less than date to');
     } else {
       this.bookService.searchBookAdvanced(this.title, this.selectedGenre, this.control.value,
         this.dateFrom.value, this.dateTo.value, this.pageSize, this.pageNumber)

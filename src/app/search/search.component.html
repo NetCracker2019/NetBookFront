@@ -79,9 +79,9 @@
               </div>
               <div class="col-6">
                 <div class="book-item-content" >
-                  <h3>{{book.title}} - {{book.authors}}</h3>
+                  <h3>{{book.title}} - {{book.authors.join(', ')}}</h3>
                   <p>Likes: {{book.likes}}</p>
-                  <p>Genres: {{book.genres}}</p>
+                  <p>Genres: {{book.genres.join(', ')}}</p>
                 </div>
               </div>
             </div>
