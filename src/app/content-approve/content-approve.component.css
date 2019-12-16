@@ -72,14 +72,12 @@
 
 .confirm {
   grid-column: 1;
-  background-color: green;
   border-radius: 10px;
   height: 40px;
   width: 100px;
 }
 .cancel {
   grid-column: 2;
-  background-color: red;
   border-radius: 10px;
   height: 40px;
   width: 100px;

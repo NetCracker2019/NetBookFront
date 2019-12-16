@@ -5,6 +5,7 @@ import {Announcement, Book, NewModelBook, Review, User} from '../_models/interfa
 import {AuthenticationService} from '../_services/authentication.service';
 import {AlertService} from '../_services/alert.service';
 import {ToastrModule, ToastrService} from 'ngx-toastr';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-content-book-details',
@@ -25,6 +26,7 @@ export class ContentBookDetailsComponent implements OnInit {
   added = false;
   likedBook: number;
   bookLikes: number;
+  loading = false;
 
   constructor(private route: ActivatedRoute,
               private bookService: BookService,
@@ -35,19 +37,17 @@ export class ContentBookDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.authenticationService.currentUserValue;
-    // this.bookService.transferBookList$.subscribe((data: NewModelBook[]) => { this.announcements = data; });
     this.route.paramMap.subscribe(params => {
       const bookId = +params.get('bookId');
-      console.log(bookId);
       this.getBook(bookId);
-      this.bookService.countBooks().subscribe(data => {
+      // this.bookService.countBooks().subscribe(data => {
+      //   this.collectionSize = data;
+      // });
+      this.bookService.countReviewsForBook(bookId).subscribe(data => {
         this.collectionSize = data;
       });
       this.bookService.getPeaceOfReview(bookId, this.count, this.offset).subscribe(data => {
         this.reviews = data;
-      });
-      this.bookService.countReviews(true).subscribe(data => {
-        this.collectionSize = data;
       });
       if (this.currentUser) {
         this.checkBookInProfile(this.currentUser.username, bookId);
@@ -66,7 +66,6 @@ export class ContentBookDetailsComponent implements OnInit {
   checkLikedBook(userLogin: string, bookId: number) {
     this.bookService.checkLikedBook(bookId, userLogin).subscribe(data => {
       this.likedBook = data;
-      console.log('Liked book: ', data);
     });
   }
 
@@ -74,16 +73,18 @@ export class ContentBookDetailsComponent implements OnInit {
     this.bookService.getBookById(id).subscribe(data => {
       this.book = data;
       this.bookLikes = data.likes;
+      console.log('Book image path  ' + data.imagePath);
     });
   }
 
   getNewPeaceOfReviews() {
+    this.loading = true;
     if (!this.finish) {
       this.bookService.getPeaceOfReview(this.book.bookId, this.count, this.offset).subscribe(data => {
         console.log(data);
         this.reviews = this.reviews.concat(data);
       });
-      if (this.offset < this.collectionSize) {
+      if (this.offset < this.collectionSize - this.count) {
         this.offset += this.count;
       } else {
         this.finish = true;
@@ -96,6 +97,7 @@ export class ContentBookDetailsComponent implements OnInit {
       this.offset = 2;
       this.finish = false;
     }
+    this.loading = false;
   }
 
   writeReview() {
@@ -104,8 +106,6 @@ export class ContentBookDetailsComponent implements OnInit {
     } else {
       this.toastr.error('You must be authorized in system!');
     }
-    console.log(this.currentUser);
-
   }
 
   addReview(reviewText: string) {
@@ -120,8 +120,6 @@ export class ContentBookDetailsComponent implements OnInit {
       data => {
         if (data) {
           this.toastr.success('The review is sent to moderator confirmation.');
-          // this.alertService.success('Рецензія відправлена на підтвердження модератору.', true);
-          console.log(data);
         } else {
           this.toastr.success('The review can not be added(');
         }
@@ -154,7 +152,6 @@ export class ContentBookDetailsComponent implements OnInit {
     if (this.currentUser) {
       this.bookService.removeBookFromProfile(this.currentUser.username, this.book.bookId).subscribe(
         data => {
-          console.log(data);
           this.added = false;
         });
     } else {
@@ -163,42 +160,38 @@ export class ContentBookDetailsComponent implements OnInit {
   }
 
   likeBook() {
-    if (this.currentUser){
+    if (this.likedBook === 1) {
+      this.bookLikes--;
+      this.likedBook = 0;
+    } else if (this.likedBook === -1) {
+      this.bookLikes += 2;
+      this.likedBook = 1;
+    } else {
+      this.bookLikes++;
+      this.likedBook = 1;
+    }
+    if (this.currentUser) {
       this.bookService.likeBook(this.book.bookId, this.currentUser.username).subscribe(data => {
-        console.log(data);
       });
-      if (this.likedBook == 1) {
-        this.bookLikes--;
-        this.likedBook = 0;
-      } else if (this.likedBook == -1) {
-        this.bookLikes += 2;
-        this.likedBook = 1;
-      } else {
-        this.bookLikes++;
-        this.likedBook = 1;
-        console.log(this.bookLikes);
-      }
     } else {
       this.toastr.error('You must be authorized in system!');
     }
   }
 
   dislikeBook() {
+    if (this.likedBook === 1) {
+      this.bookLikes -= 2;
+      this.likedBook = -1;
+    } else if (this.likedBook === -1) {
+      this.bookLikes++;
+      this.likedBook = 0;
+    } else {
+      this.bookLikes--;
+      this.likedBook = -1;
+    }
     if (this.currentUser) {
       this.bookService.dislikeBook(this.book.bookId, this.currentUser.username).subscribe(data => {
-        console.log(data);
       });
-      if (this.likedBook == 1) {
-        this.bookLikes -= 2;
-        this.likedBook = -1;
-      } else if (this.likedBook == -1) {
-        this.bookLikes++;
-        this.likedBook = 0;
-      } else {
-        this.bookLikes--;
-        this.likedBook = -1;
-      }
-      console.log(this.bookLikes);
     } else {
       this.toastr.error('You must be authorized in system!');
     }
@@ -223,5 +216,9 @@ export class ContentBookDetailsComponent implements OnInit {
     } else {
       this.toastr.error('You must be authorized in system!');
     }
+  }
+
+  getPhoto(imageName: string) {
+    return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 }

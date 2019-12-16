@@ -19,17 +19,6 @@ export class AchievementService {
   constructor(private http: HttpClient) {}
 
   addAchievement(achievement: Achievement): Observable<boolean> {
-    // const body = {achievementId: null,
-    // title: achievement.title,
-    // description: achievement.description,
-    // amount: achievement.amount,
-    // image_path: achievement.image_path;
-    // achvType: string;
-    // achvRuleId: number;
-    // authorName: string;
-    // genreName: string;
-    // favourite: boolean;
-    // readBook: boolean;};
     console.log('Achievement: ', achievement);
     return this.http.post<boolean>(
       `${environment.apiUrl}/achievement-manager/add-achievement`, achievement);
@@ -40,7 +29,14 @@ export class AchievementService {
     formData.append('name', fileName);
     return this.http.post<boolean>(`${environment.apiUrl}/files/upload/`, formData);
   }
-  getAllAchievement(): Observable<Achievement[]> {
-    return this.http.get<Achievement[]>(`${environment.apiUrl}/achievement-manager/achievements`);
+  getAllAchievement(page: number, size: number): Observable<Achievement[]> {
+    return this.http.get<Achievement[]>(`${environment.apiUrl}/achievement-manager/achievements?page=${page}&size=${size}`);
+  }
+  removeFile(fileName: string) {
+    return this.http.delete<void>(
+      `${environment.apiUrl}/files/remove/${fileName}`);
+  }
+  removeAchievement(achivId: number) {
+    return this.http.delete<void>(`${environment.apiUrl}/achievement-manager/remove-achievement?achivId=${achivId}`);
   }
 }

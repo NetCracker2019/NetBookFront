@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {BookService} from '../_services/book.service';
 import {Announcement, Book, Genre} from '../_models/interface';
+import {environment} from '../../environments/environment';
 
 
 
@@ -10,7 +11,6 @@ import {Announcement, Book, Genre} from '../_models/interface';
   templateUrl: './content-main.component.html',
   styleUrls: ['./content-main.component.css']
 })
-
 
 export class ContentMainComponent implements OnInit {
   books: Book[] = [] as Book[];
@@ -61,5 +61,8 @@ export class ContentMainComponent implements OnInit {
   //   this.bookService.getAnnouncementListPeace(this.reviewPage, this.booksPerPage).subscribe(data => { this.announcements = data; });
   //
   // }
+  getPhoto(imageName: string) {
+    return `${environment.apiUrl}/files/download?filename=${imageName}`;
+  }
 
 }

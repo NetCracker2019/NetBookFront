@@ -20,7 +20,7 @@ export class ContentEditProfileComponent implements OnInit, OnDestroy {
   public user: User = {} as User;
   private login: string;
   private fileToUpload: File = null;
-  private fileName = '';
+  public fileName = '';
 
   form: FormGroup;
   profileValidationMessages = {

@@ -5,17 +5,18 @@
         <div class="container blog-item-color">
           <div class="row">
             <div class="col-3 p-0">
-              <img src="{{book.imagePath}}" alt="Example" class="book-logo">
+              <img src="{{book.imagePath}}" alt="Example" class="book-logo"
+                   (error)="$event.target.src=getPhoto('default_book_photo')">
             </div>
-            <div class="col-3 p-0">
+            <div class="col-4 p-0">
               <div class="book-item-content" >
                 <h3>{{book.title}}</h3>
-                <p>Author: {{book.authors}}</p>
+                <p>Author(s): {{book.authors}}</p>
                 <p>Genre: {{book.genres}}</p>
-                <p>Date: {{book.releaseDate}}</p>
-                <p>Language: {{book.language}}</p>
-                <p>Pages: {{book.pages}}</p>
-                <p>Description: {{book.description}}</p>
+                <p>Publish Date: {{book.releaseDate}}</p>
+<!--                <p>Language: {{book.language}}</p>-->
+<!--                <p>Pages: {{book.pages}}</p>-->
+<!--                <p>Description: {{book.description}}</p>-->
               </div>
             </div>
           </div>

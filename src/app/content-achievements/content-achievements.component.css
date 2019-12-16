@@ -1,7 +1,6 @@
 .panel{
   border: 1px solid #DCDCDC;
   border-radius: 1%;
-
 }
 .panel-heading{
   color: #333;
@@ -20,13 +19,17 @@
   padding: 15px;
   text-align: right;
 }
-
-
+.achievement-img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
 .achievement-img img{
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 40%;
+  border-radius: 80%;
+  -moz-border-radius: 80%;
+  -webkit-border-radius: 80%;
+  border-style: solid;
 }
 .img-container {
   text-align: center;
@@ -43,8 +46,9 @@
 /*.achv-author {*/
 /*  text-align: left;*/
 /*}*/
-.achv-enter-fields h4{
+.achv-enter-fields h5{
   text-align: left;
+  padding-top: 8px;
 }
 .achv-enter-fields input {
   alignment: left;
@@ -53,7 +57,6 @@
   margin-top: 20px;
 }
 .selectpicker {
-  margin-top: 10px;
   -webkit-appearance: menulist-button;
   height: 50px;
 }
@@ -70,7 +73,7 @@
   position: relative;
   alignment: left;
   text-align: left;
-  padding-left: 35px;
+  padding-left: 45px;
   margin-bottom: 12px;
   cursor: pointer;
   font-size: 19px;

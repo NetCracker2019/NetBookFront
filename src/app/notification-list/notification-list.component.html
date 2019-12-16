@@ -4,21 +4,30 @@
       All notifications for You!
     </h4>
   </div>
-  <div class="list-group-item-text col-md-10 offset-md-1 d-flex justify-content-end">
-    <button type="button" class="btn btn-primary "
-            (click)="AllNotifsMarkAsRead()">Mark All As Read
-    </button>
+  <!-- Mark all notifications as read button -->
+  <div class="list-group-item-text col-md-10 offset-md-1 d-flex justify-content-between">
+    <div class="btn-group btn-group-toggle-info" data-toggle="buttons">
+      <label class="btn btn-secondary active" id="buttonAll" (click)="showAllNotifs()">
+        <input type="radio"  checked> Show All
+      </label>
+      <label class="btn btn-secondary" (click)="showUnreadNotifs()">
+        <input type="radio" > Show Only Unread
+      </label>
+    </div>
+    <div>
+      <button type="button" class="btn btn-primary "
+              (click)="AllNotifsMarkAsRead()">Mark All As Read
+      </button>
+    </div>
   </div>
-  <div class="list-group-item list-group-item-warning col-md-10 offset-md-1 rounded"
-       *ngFor="let notification of notifications">
+  <!-- Notification div -->
+  <div class="list-group-item list-group-item-success col-md-10 offset-md-1 rounded"
+       *ngFor="let notification of currentNotifs">
     <div>
       <div>
         <h4>
           <span class="badge badge-primary " *ngIf="!notification.isRead">!</span>
           {{notification.notifTitle}}
-          <!--<i class="material-icons">
-            delete_sweep
-          </i>-->
         </h4>
       </div>
       <div>
@@ -34,22 +43,33 @@
       </div>
     </div>
   </div>
-  <div class="list-group-item-text d-flex justify-content-center">
+  <div
+    infiniteScroll
+    [infiniteScrollDistance]="collectionSize"
+    [infiniteScrollThrottle]="1000"
+    (scrolled)="onPageChanged()">
+  </div>
+  <!-- Delete all notifications button -->
+  <div class="list-group-item-text col-md-10 offset-md-1 d-flex justify-content-end">
+    <button type="button"
+            class="btn btn-danger "
+            data-toggle="modal"
+            data-target="#deleteAll">Delete All Notifications
+    </button>
+  </div>
+
+
+  <div class="list-group-item-text col-md-10 offset-md-1 d-flex justify-content-center" *ngIf="endOfNotifs">
     <h4 class="text-warning">
       You have viewed all notifications!
     </h4>
   </div>
-  <!-- <div class="list-group-item-text d-flex justify-content-end">
-     <button type="button"
-             class="btn btn-danger "
-             data-toggle="modal"
-             data-target="#deleteAll">Delete All Notifications
-     </button>
-   </div>-->
+
+
 </div>
 
 
-<!-- Modal
+<!-- Modal window to confirm deleting -->
 
 <div class="modal fade" id="deleteAll" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -62,7 +82,9 @@
         </button>
       </div>
       <div class="modal-body">
-        You click to delete your all notifications forever!Are you sure?
+        You click to delete your all notifications forever!<br>
+        (This action will delete ALL notifications,EVEN UNREAD) <br>
+        Are you sure?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -72,4 +94,4 @@
     </div>
   </div>
 </div>
- -->
+

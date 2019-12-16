@@ -85,14 +85,16 @@
                 <h3>{{book.title}}</h3>
               </div>-->
               <div class="col-2 p-0">
-                <img src="../../assets/img/{{book.imagePath}}" alt="Example" class="book-logo">
+                <img src="../../assets/img/{{book.imagePath}}" alt="Example" class="book-logo"
+                     (error)="$event.target.src=getPhoto('default_book_photo')">
               </div>
-              <div class="col-3">
+              <div class="col-4">
                 <div class="book-item-content">
                   <h3>{{book.title}}</h3>
-                  <p>Описание: {{book.description}} </p>
-                  <p>Жанр: {{book.genres}}</p>
-                  <p>Автор: {{book.authors}}</p>
+                  <p>Author(s): {{book.authors}} </p>
+                  <p>Genres: {{book.genres}}</p>
+                  <p>Publish date: {{book.releaseDate}}</p>
+<!--                 <p>Description: {{book.description}}</p>-->
                 </div>
               </div>
             </div>

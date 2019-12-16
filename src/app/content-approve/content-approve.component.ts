@@ -3,6 +3,7 @@ import {Announcement, Book, NewModelBook, Review, ViewAnnouncement} from '../_mo
 import {ApproveService} from '../_services/approve.service';
 import {BookService} from '../_services/book.service';
 import {ToastrService} from 'ngx-toastr';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-content-approve',
@@ -141,16 +142,14 @@ export class ContentApproveComponent implements OnInit {
       .subscribe(data => {
         if (data) {
           this.toastr.success('The review is confirmed.');
-          // this.alertService.success('Рецензія відправлена на підтвердження модератору.', true);
-          console.log(data);
+          this.approveService.getReviewForApprove(this.reviewPage, this.itemsPerPage).subscribe(data2 => {
+            console.log(data2);
+            this.reviews = data2;
+          });
         } else {
           this.toastr.success('Something is wrong(');
         }
       });
-    this.approveService.getReviewForApprove(this.reviewPage, this.itemsPerPage).subscribe(data => {
-      console.log(data);
-      this.reviews = data;
-    });
     // window.location.reload();
   }
 
@@ -169,6 +168,10 @@ export class ContentApproveComponent implements OnInit {
       console.log(data);
       this.reviews = data;
     });
+  }
+
+  getPhoto(imageName: string) {
+    return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 
 
