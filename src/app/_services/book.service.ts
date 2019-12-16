@@ -26,18 +26,22 @@ const httpOptions = {
     'Content-Type':  'application/json'
   })
 };
+interface Params {
+  title: string;
+  author: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
-  private titleSource = new BehaviorSubject<string>('');
-  currentTitle = this.titleSource.asObservable();
+  private source = new BehaviorSubject<Params>({title: '', author: ''});
+  currentParams = this.source.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  changeTitle(title: string) {
-    this.titleSource.next(title);
+  changeTitle(title: string, author: string) {
+    this.source.next({title, author});
   }
 
   getCalendarAnnouncement(value: string, userName: string): Observable<Event[]> {
@@ -118,6 +122,12 @@ export class BookService {
           `&from=${formattedDateFrom}&to=${formattedDateTo}&size=${pageSize}&page=${page}`);
       }
     }
+  }
+  searchBookByAuthor(author: string,
+                     pageSize: number, page: number): Observable<Page> {
+    page = page - 1;
+    return this.http.get<Page>(`${environment.apiUrl}/book-service` +
+      `/find-books?title=&author=${author}&size=${pageSize}&page=${page}`);
   }
 
 
