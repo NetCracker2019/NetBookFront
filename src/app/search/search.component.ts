@@ -5,6 +5,7 @@ import {Observable, Subscription} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {distinctUntilChanged, map, startWith, switchMap} from 'rxjs/operators';
 import {AuthorService} from '../_services/author.service';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-search',
@@ -13,6 +14,7 @@ import {AuthorService} from '../_services/author.service';
 })
 export class SearchComponent implements OnInit, OnDestroy {
   isCollapsed = true;
+  isFiltered = false;
   control = new FormControl('');
   minDate: Date;
   maxDate: Date;
@@ -41,15 +43,14 @@ export class SearchComponent implements OnInit, OnDestroy {
       distinctUntilChanged(),
       switchMap(title => (this.title = title, this.bookService.searchBookByTitle(title, this.pageSize, this.pageNumber)))
     ).subscribe(page => {
-      console.log(page);
       this.currentPage = page;
     });
 
     this.bookService.getMinDateRelease()
-      .subscribe(minDate => { this.minDate = new Date(minDate); console.log(minDate); });
+      .subscribe(minDate => this.minDate = new Date(minDate));
 
     this.bookService.getMaxDateRelease()
-      .subscribe(maxDate => { this.maxDate = new Date(maxDate); console.log(maxDate); });
+      .subscribe(maxDate => this.maxDate = new Date(maxDate));
 
     this.bookService.getGenres()
       .subscribe(genres => this.genres = genres);
@@ -75,6 +76,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   showFilters() {
     if (this.isCollapsed) {
       this.selectedGenre = -1;
+      this.control.setValue('');
       this.dateFrom = new FormControl(this.minDate);
       this.dateTo = new FormControl(this.maxDate);
     }
@@ -82,18 +84,28 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   onPageChanged() {
-    if (this.isCollapsed) {
+    if (!this.isFiltered) {
       this.bookService.searchBookByTitle(this.title, this.pageSize, this.pageNumber)
-        .subscribe(page => { console.log(page) ; this.currentPage = page; });
+        .subscribe(page => {
+          this.currentPage = page;
+        });
     } else if (this.dateFrom.value === null || this.dateTo.value === null) {
       return;
     } else {
       this.bookService.searchBookAdvanced(this.title, this.selectedGenre, this.control.value,
         this.dateFrom.value, this.dateTo.value, this.pageSize, this.pageNumber)
         .subscribe(page => {
-          console.log(page);
           this.currentPage = page;
         });
     }
+  }
+
+  setFiltered() {
+    this.isFiltered = true;
+    this.onPageChanged();
+  }
+
+  getPhoto(imageName: string) {
+    return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 }
