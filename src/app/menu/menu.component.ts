@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Menu} from '../_models/interface';
 import {AuthenticationService} from '../_services/authentication.service';
-import {NotificationService} from "../_services/notification.service";
+import {NotificationService} from '../_services/notification.service';
+import { interval } from 'rxjs';
 
 
 @Component({
