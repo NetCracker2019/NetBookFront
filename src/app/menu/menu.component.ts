@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Menu} from '../_models/interface';
 import {AuthenticationService} from '../_services/authentication.service';
-import {NotificationService} from "../_services/notification.service";
-import {interval} from "rxjs";
+import {NotificationService} from '../_services/notification.service';
+import {interval} from 'rxjs';
 
 
 @Component({
@@ -12,7 +12,7 @@ import {interval} from "rxjs";
 })
 export class MenuComponent implements OnInit {
 
-  public count: number ;
+  public count: number;
   public role: number;
   public securityApprove: boolean;
   public securityAchievement: boolean;
@@ -41,12 +41,11 @@ export class MenuComponent implements OnInit {
 //   }
 // =======
 
-  constructor(private authenticationService: AuthenticationService,
-  public notificationService: NotificationService) {
+  constructor(private authenticationService: AuthenticationService, public notificationService: NotificationService) {
     this.role = authenticationService.currentUserValue.role;
-    this.securityApprove = this.role !== 4;
-    this.securityAchievement = this.role === 1 || this.role === 2;
-    this.securitySuperAdmin = this.role === 1;
+    this.securityApprove = this.role != 4;
+    this.securityAchievement = this.role == 1 || this.role == 2;
+    this.securitySuperAdmin = this.role == 1;
     if (this.authenticationService.currentUserValue.role !== 4) {
       this.Menu = this.Menu.filter(obj => obj.name !== 'My books' &&
         obj.name !== 'Chat');
