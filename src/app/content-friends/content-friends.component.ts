@@ -17,24 +17,21 @@ export class ContentFriendsComponent implements OnInit {
 
   public peoples: User[] = [];
   private login: string;
-  private sought: string = '';
-  public page: number = 1;
-  private where: string = 'friends';
-  public collectionSize: number = 6;
-  public endOfFriends: boolean = false;
+  private sought = '';
+  public page = 1;
+  private where = 'friends';
+  public collectionSize = 6;
+  public endOfFriends = false;
 
   constructor(private userService: UserService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private authenticationService: AuthenticationService,
               private alertService: AlertService,
-              private toastr: ToastrService) {
-
-    
-  }
+              private toastr: ToastrService) {}
 
   ngOnInit() {
-    this.login = this.activatedRoute.snapshot.params['login'];
+    this.login = this.activatedRoute.snapshot.params.login;
     this.authenticationService.refreshToken();
     this.getPersons();
   }
@@ -50,29 +47,29 @@ export class ContentFriendsComponent implements OnInit {
     this.where = whereValue;
     this.peoples = [];
     this.endOfFriends = false;
-    this.getPersonsNewSought();
-  }
-  onPageChanged() {
-    this.page = this.page + 1;
     this.getPersons();
   }
-  //call when scrolling
+  onPageChanged() {
+    this.page++;
+    this.getPersons();
+  }
+  // call when scrolling
   getPersons() {
     this.userService.getPersons(this.login, this.sought, this.where, this.collectionSize, this.page - 1)
       .subscribe(
-        (data : User[]) => {
-          if(data.length < this.collectionSize) this.endOfFriends = true;
+        (data: User[]) => {
+          if (data.length < this.collectionSize) { this.endOfFriends = true; }
           this.peoples = this.peoples.concat(data);
         },
         error => {
           this.toastr.error(`${environment.errorMessage}`);
         });
   }
-  //call when changing sought
+  // call when changing sought
   getPersonsNewSought() {
     this.userService.getPersons(this.login, this.sought, this.where, this.collectionSize, this.page - 1)
       .subscribe(
-        (data : User[]) => {
+        (data: User[]) => {
           this.peoples = data;
         },
         error => {
@@ -80,10 +77,10 @@ export class ContentFriendsComponent implements OnInit {
         });
   }
   find() {
-    this.getPersons();
+    this.page = 1;
+    this.getPersonsNewSought();
   }
   getPhoto(imageName: string) {
-    //return `https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg`;
     return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 

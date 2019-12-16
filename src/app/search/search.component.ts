@@ -18,7 +18,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   maxDate: Date;
   dateFrom: FormControl;
   dateTo: FormControl;
-  subscriptionOnTitle: Subscription;
+  subscriptionOnChanges: Subscription;
   genres: Genre[];
   selectedGenre: number;
   authors: Author[] = [];
@@ -37,10 +37,17 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.pageNumber = 1;
     this.pageSize = 4;
 
-    this.subscriptionOnTitle = this.bookService.currentTitle.pipe(
-      switchMap(title => (this.title = title, this.bookService.searchBookByTitle(title, this.pageSize, this.pageNumber)))
+    this.subscriptionOnChanges = this.bookService.currentParams.pipe(
+      switchMap(params => {
+        this.title = params.title;
+        this.control.setValue(params.author);
+        if (params.title) {
+          return this.bookService.searchBookByTitle(params.title, this.pageSize, this.pageNumber);
+        } else {
+        return this.bookService.searchBookByAuthor(params.author, this.pageSize, this.pageNumber);
+        }
+      })
     ).subscribe(page => {
-      console.log(page);
       this.currentPage = page;
     });
 
@@ -68,7 +75,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptionOnTitle.unsubscribe();
+    this.subscriptionOnChanges.unsubscribe();
   }
 
   showFilters() {

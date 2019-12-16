@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {User, Achievement, ShortBookDescription} from '../_models/interface';
 import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {BehaviorSubject, Observable, Subscribable, Subscription} from 'rxjs';
 import { environment } from '../../environments/environment';
 import {AuthenticationService} from '../_services/authentication.service';
 import { ToastrService } from 'ngx-toastr';
+import {BookService} from '../_services/book.service';
 
 @Component({
   selector: 'app-content-profile',
   templateUrl: './content-profile.component.html',
   styleUrls: ['./content-profile.component.css']
 })
-export class ContentProfileComponent implements OnInit {
+export class ContentProfileComponent implements OnInit, OnDestroy {
 
 
   public user: User = {} as User;
@@ -25,20 +26,29 @@ export class ContentProfileComponent implements OnInit {
   public isFriend = -1;
   public canEditable = false;
   private login: string;
-
+  private paramsSubscribe: Subscription;
 
   constructor(private userService: UserService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private authenticationService: AuthenticationService,
               private alertService: AlertService,
+              private bookService: BookService,
               private toastr: ToastrService) {
   }
 
   ngOnInit() {
-    this.login = this.activatedRoute.snapshot.params.login;
-    this.authenticationService.refreshToken();
+    this.paramsSubscribe = this.activatedRoute.params.subscribe(params => {
+      this.login = params.login;
+      this.loadUserProfile();
+    });
+  }
+  ngOnDestroy() {
+    this.paramsSubscribe.unsubscribe();
+  }
 
+  loadUserProfile() {
+    this.authenticationService.refreshToken();
     this.userService.getUser(this.login)
       .subscribe(
         (data: User) => {
@@ -129,5 +139,10 @@ export class ContentProfileComponent implements OnInit {
 
   getPhoto(imageName: string) {
     return `${environment.apiUrl}/files/download?filename=${imageName}`;
+  }
+
+  navigateToAuthor(author: string) {
+    this.router.navigate(['/homeath/search']);
+    this.bookService.changeTitle('', author);
   }
 }
