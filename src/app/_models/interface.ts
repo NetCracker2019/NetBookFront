@@ -107,8 +107,8 @@ export interface SearchParams {
   read: boolean;
   favourite: boolean;
   notSet: boolean;
-  sortBy: string;
-  order: string;
+  sortBy: BookParam;
+  order: Order;
   sought: string;
   page: number;
   size: number;
@@ -194,8 +194,16 @@ export interface Chat {
   chatName: string;
   chatAvatar: string;
 }
-export enum Shelf{
-  Reading,
-  Read,
-  Favourite
+export enum Shelf {
+  READING,
+  READ,
+  FAVOURITE
+}
+export enum Order {
+  ASC,
+  DESC
+}
+export enum BookParam {
+  TITLE,
+  LIKES
 }

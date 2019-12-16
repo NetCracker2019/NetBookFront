@@ -1,6 +1,6 @@
 .messaging {
-  width: 50%;
   margin: 0 auto;
+  width: 95%;
 }
 .inbox_people {
   background: #fff;
@@ -153,7 +153,9 @@
 }
 
 .received_withd_msg {
-  width: 57%;
+  float: left;
+  max-width: 75%;
+  word-wrap: break-word;
 }
 
 .mesgs{
@@ -179,7 +181,8 @@
 
 .sent_msg {
   float: right;
-  width: 46%;
+  max-width: 75%;
+  word-wrap: break-word;
 }
 
 .input_msg_write input {
@@ -209,10 +212,6 @@
   right: 0;
   top: 11px;
   width: 33px;
-}
-
-.messaging {
-  width: 75vw;
 }
 .msg_history {
   height: 516px;
@@ -262,3 +261,11 @@
   opacity: 1;
 }
 /*----------------------------*/
+.not-selected {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+}
+.not-selected h6{
+  color: #4c4c4c;
+}

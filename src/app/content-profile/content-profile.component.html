@@ -5,8 +5,11 @@ font-awesome.min.css">
 		<div class="row">
 			<div class="col-md-4">
 				<div class="profile-img">
-					<img src="{{ this.getPhoto(this.user.avatarFilePath) }}"
-               (error)="$event.target.src=getPhoto('default_avatar')" alt="img"/>
+          <a>
+            <img src="{{ this.getPhoto(this.user.avatarFilePath) }}" data-toggle="modal" data-target="#imageModal"
+                 (error)="$event.target.src=getPhoto('default_avatar')" alt="img"/>
+          </a>
+
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -14,8 +17,8 @@ font-awesome.min.css">
 					<h5>
 						{{ this.user.username }}
 					</h5>
-					<h6>
-						"{{ this.user.status }}"
+					<h6 style="padding-bottom: 15px;">
+						{{ this.user.status }}
 					</h6>
 					<span class="proile-rating" >
 						Achievements :
@@ -128,7 +131,7 @@ font-awesome.min.css">
 						<div class="row">
 							<div class="col-md-4"  *ngFor="let book of this.favouriteBooks">
 								<div class="thumbnail">
-									<img alt="no img" src="{{ this.getPhoto(book.image_path) }}">
+									<img alt="no img" src="{{ this.getPhoto(book.imagePath) }}">
 									<div class="caption">
 										<a href="homeath/search/{{ book.bookId }}">
 										{{ book.title  }}</a>
@@ -150,7 +153,7 @@ font-awesome.min.css">
 						<div class="row">
 							<div class="col-md-4" *ngFor="let book of this.readBooks">
 								<div class="thumbnail">
-									<img alt="no img" src="{{ this.getPhoto(book.image_path)}}">
+									<img alt="no img" src="{{ this.getPhoto(book.imagePath)}}">
 									<div class="caption">
 										<a href="homeath/search/{{ book.bookId }}">
 										{{ book.title  }}</a>
@@ -176,7 +179,7 @@ font-awesome.min.css">
 						<div class="row">
 							<div class="col-md-4" *ngFor="let book of this.readingBooks">
 								<div class="thumbnail">
-									<img alt="no img" src="{{ this.getPhoto(book.image_path) }}">
+									<img alt="no img" src="{{ this.getPhoto(book.imagePath) }}">
 									<div class="caption">
 										<a href="homeath/search/{{ book.bookId }}">
 										{{ book.title  }}</a>
@@ -198,4 +201,19 @@ font-awesome.min.css">
 		</div>
 
 	</form>
+</div>
+
+<!-- modal where the image will appear -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="imageModal" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body mb-0 p-0">
+        <img src="{{ this.getPhoto(this.user.avatarFilePath) }}"
+             (error)="$event.target.src=getPhoto('default_avatar')"alt="" style="width:100%">
+        <button type="button" class="btn" data-dismiss="modal">
+          <i class="fa fa-times" aria-hidden="true" style="font-size: 30px; color: whitesmoke"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
