@@ -3,7 +3,7 @@ import {BookService} from '../_services/book.service';
 import {Author, Genre, NewModelBook, Page} from '../_models/interface';
 import {Observable, Subscription} from 'rxjs';
 import {FormControl} from '@angular/forms';
-import {map, startWith, switchMap} from 'rxjs/operators';
+import {distinctUntilChanged, map, startWith, switchMap} from 'rxjs/operators';
 import {AuthorService} from '../_services/author.service';
 
 @Component({
@@ -38,6 +38,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.pageSize = 4;
 
     this.subscriptionOnTitle = this.bookService.currentTitle.pipe(
+      distinctUntilChanged(),
       switchMap(title => (this.title = title, this.bookService.searchBookByTitle(title, this.pageSize, this.pageNumber)))
     ).subscribe(page => {
       console.log(page);
