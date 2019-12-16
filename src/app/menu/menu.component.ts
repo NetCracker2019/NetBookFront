@@ -12,7 +12,7 @@ import { interval } from 'rxjs';
 })
 export class MenuComponent implements OnInit {
 
-  public count: number;
+  public count: number ;
   public role: number;
   public securityApprove: boolean;
   public securityAchievement: boolean;
@@ -55,7 +55,13 @@ export class MenuComponent implements OnInit {
 
 
   ngOnInit() {
-    /*getting count for notifications*/
+    interval(10000)
+      .subscribe(() => {
+        this.getNotification();
+      });
+  }
+
+  getNotification() {
     this.notificationService.getCountForNotifs().subscribe(data => {
       this.count = data;
     });
