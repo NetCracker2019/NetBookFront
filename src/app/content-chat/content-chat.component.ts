@@ -31,7 +31,7 @@ export class ContentChatComponent implements OnInit, OnDestroy {
   public friendsWhoAbleToAdd: User[] = [];
   public editChatTab = 0;
   public activeChatAvatar = '';
-  public namePattern = '^[a-zA-Z0-9_ ]+$';
+  public namePattern = '^\\s*[a-zA-Z0-9а-яёАЯЁ_]+(?:\\s*[a-zA-Z0-9а-яёАЯЁ_]+)*\\s*$';
   private headers = {
     Authorization: this.authenticationService.currentUserValue.token};
 

@@ -9,9 +9,10 @@ body{
     background: #fff;
 }
 .profile-img{
+    cursor: pointer;
     display: block;
     margin-left: auto;
-    margin-right: auto;  
+    margin-right: auto;
     width: 50%;
 }
 .profile-img img{
@@ -22,7 +23,7 @@ body{
 }
 .profile-head img{
     width: 9%;
-    height: 9%;  
+    height: 9%;
 }
 
 .profile-head h5{
@@ -70,7 +71,7 @@ body{
     border-left-width: 1px;
     padding-right: 30%;
     padding-left: 14%;
-     
+
 }
 .friends p{
     font-size: 16px;
@@ -108,7 +109,7 @@ body{
 .panel{
     border: 1px solid #DCDCDC;
     border-radius: 1%;
-    
+
 }
 .panel-heading{
     color: #333;
@@ -122,7 +123,7 @@ body{
 }
 .right-align{
     color: #333;
-     
+
 }
 .panel-body{
     padding: 15px;
@@ -146,10 +147,14 @@ body{
     padding: 2%;
     color: #333;
 }
-.authors a{ 
+.authors a{
     color: #818182;
 }
 
 .container {
     width: 100vw
-} 
+}
+.modal-body .btn {
+  position: absolute;
+  left: 100%;
+}

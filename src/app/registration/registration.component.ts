@@ -37,7 +37,7 @@ export class RegistrationComponent implements OnInit {
     ],
     userPassword: [
       { type: 'required', message: 'Password is required' },
-      { type: 'minlength', message: 'Password must be at least 5 characters long' },
+      { type: 'minlength', message: 'Password must be at least 6 characters long' },
       { type: 'maxlength', message: 'Your password cannot be more than 15 characters long' }
     ],
   };

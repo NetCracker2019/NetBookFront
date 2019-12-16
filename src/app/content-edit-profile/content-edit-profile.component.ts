@@ -26,8 +26,8 @@ export class ContentEditProfileComponent implements OnInit, OnDestroy {
   profileValidationMessages = {
     email: [
       { type: 'pattern', message: 'Enter a valid email' },
-      { type: 'minlength', message: 'Password must be at least 5 characters long' },
-      { type: 'maxlength', message: 'Your password cannot be more than 15 characters long' }
+      { type: 'minlength', message: 'Email must be at least 5 characters long' },
+      { type: 'maxlength', message: 'Your email cannot be more than 15 characters long' }
     ],
     name: [
       { type: 'pattern', message: 'Your name must contain only numbers and letters' },
@@ -36,7 +36,7 @@ export class ContentEditProfileComponent implements OnInit, OnDestroy {
     ],
     status: [
       { type: 'pattern', message: 'Your status must contain only numbers and letters' },
-      { type: 'maxlength', message: 'Your status cannot be more than 20 characters long' }
+      { type: 'maxlength', message: 'Your status cannot be more than 50 characters long' }
     ],
     country: [
       { type: 'pattern', message: 'Country must contain only letters' },
@@ -67,23 +67,25 @@ export class ContentEditProfileComponent implements OnInit, OnDestroy {
       email: new FormControl('', [
         Validators.pattern('^[_A-Za-z0-9-.]+@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$'),
         Validators.minLength(6),
+        Validators.required,
         Validators.maxLength(25)
       ]),
       name: new FormControl('', [
-        Validators.pattern('^[a-zA-Z0-9_ ]+$'),
+        Validators.pattern('^\\s*[a-zA-Z0-9а-яёАЯЁ_]+(?:\\s*[a-zA-Z0-9а-яёАЯЁ_]+)*\\s*$'),
+        Validators.required,
         Validators.minLength(2),
         Validators.maxLength(20)
       ]),
       status: new FormControl('', [
-        Validators.pattern('^[a-zA-Z0-9_ ]+$'),
-        Validators.maxLength(20)
+        Validators.pattern('^\\s*[a-zA-Z0-9а-яёАЯЁ_]+(?:\\s*[a-zA-Z0-9а-яёАЯЁ_]+)*\\s*$'),
+        Validators.maxLength(50)
       ]),
       city: new FormControl('', [
-        Validators.pattern('^[a-zA-Z_ ]+$'),
+        Validators.pattern('^\\s*[a-zA-Zа-яёАЯЁ_]+(?:\\s*[a-zA-Zа-яёАЯЁ_]+)*\\s*$'),
         Validators.maxLength(20)
       ]),
       country: new FormControl('', [
-        Validators.pattern('^[a-zA-Z_ ]+$'),
+        Validators.pattern('^\\s*[a-zA-Zа-яёАЯЁ_]+(?:\\s*[a-zA-Zа-яёАЯЁ_]+)*\\s*$'),
         Validators.maxLength(20)
       ]),
       password: new FormControl('', [

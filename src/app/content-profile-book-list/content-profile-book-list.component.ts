@@ -1,7 +1,7 @@
 import {Component, OnInit, ElementRef, ViewChild, OnDestroy} from '@angular/core';
 import { Observable, Subject, Subscription, interval, fromEvent } from 'rxjs';
 import { map, switchMap, tap, take, reduce} from 'rxjs/operators';
-import {User, ShortBookDescription, SearchParams, Shelf} from '../_models/interface';
+import {User, ShortBookDescription, SearchParams, Shelf, Order, BookParam} from '../_models/interface';
 import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -23,8 +23,8 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
     read: true,
     favourite: true,
     notSet: true,
-    sortBy: 'title',
-    order: 'asc',
+    sortBy: BookParam.TITLE,
+    order: Order.ASC,
     sought: '',
     page: 0,
     size: 3
@@ -37,10 +37,13 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
   public visibleLikes = true;
   public visibleShelves = true;
   public visibleDatePub = true;
-  public batchEditShelf = Shelf.Read;
+  public batchEditShelf = Shelf.READ;
   public endOfBooks = false;
   private changeSoughtSubscription: Subscription;
+
   public _Shelf = Shelf;
+  public _Order = Order;
+  public _BookParam = BookParam;
 
   @ViewChild('searchInput', {static: true})
   private input: ElementRef;
@@ -172,7 +175,7 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
     book.reading = false;
     const booksId: number[] = [];
     booksId.push(book.bookId);
-    this.userService.addBookBatchTo(this.login, Shelf.Read, booksId)
+    this.userService.addBookBatchTo(this.login, Shelf.READ, booksId)
       .subscribe(() => {},
         error => {
           this.toastr.error(`${environment.errorMessage}`);
@@ -182,7 +185,7 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
     book.read = false;
     const booksId: number[] = [];
     booksId.push(book.bookId);
-    this.userService.addBookBatchTo(this.login, Shelf.Reading, booksId)
+    this.userService.addBookBatchTo(this.login, Shelf.READING, booksId)
       .subscribe(() => {},
         error => {
           this.toastr.error(error);
@@ -191,7 +194,7 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
   changeBookShelfFavourite(book: ShortBookDescription) {
     const booksId: number[] = [];
     booksId.push(book.bookId);
-    this.userService.addBookBatchTo(this.login, Shelf.Favourite, booksId)
+    this.userService.addBookBatchTo(this.login, Shelf.FAVOURITE, booksId)
       .subscribe(() => {},
         error => {
           this.toastr.error(error);

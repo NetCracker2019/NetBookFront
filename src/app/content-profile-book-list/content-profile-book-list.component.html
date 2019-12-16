@@ -104,17 +104,20 @@ font-awesome.min.css">
 						<p> Other </p>
 						<div class="other">
 							<label for="dropdownMenuSort" class="labelDiv">Sort by: </label>
-							<select class="browser-default custom-select dropdown col-md-2" id="dropdownMenuSort" [(ngModel)]="searchParams.sortBy" (ngModelChange)="find()">
-								<option value="title" selected>Title</option>
-								<option value="likes">Likes</option>
+							<select class="browser-default custom-select dropdown col-md-2" id="dropdownMenuSort"
+                      [(ngModel)]="searchParams.sortBy" (ngModelChange)="find()">
+								<option [value]="_BookParam.TITLE" selected>Title</option>
+								<option [value]="_BookParam.LIKES">Likes</option>
 							</select>
 
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="asc" [(ngModel)]="searchParams.order" (ngModelChange)="find()">
+								<input class="form-check-input" type="radio" name="inlineRadioOptions"
+                       id="inlineRadio1" [value]="_Order.ASC" [(ngModel)]="searchParams.order" (ngModelChange)="find()">
 								<label class="form-check-label" for="inlineRadio1">Asc.</label>
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="desc" [(ngModel)]="searchParams.order" (ngModelChange)="find()">
+								<input class="form-check-input" type="radio" name="inlineRadioOptions"
+                       id="inlineRadio2" [value]="_Order.DESC" [(ngModel)]="searchParams.order" (ngModelChange)="find()">
 								<label class="form-check-label" for="inlineRadio2">Desc.</label>
 							</div>
 						</div>
@@ -130,9 +133,9 @@ font-awesome.min.css">
 							<label for="dropdownMenuBatchEdit" class="labelDiv">Shelf: </label>
 							<select class="browser-default custom-select dropdown col-md-2" id="dropdownMenuBatchEdit"
                       [(ngModel)]="batchEditShelf">
-								<option [value]="_Shelf.Read" selected>Read</option>
-								<option [value]="_Shelf.Reading">Reading</option>
-								<option [value]="_Shelf.Favourite">Favourites</option>
+								<option [value]="_Shelf.READ" selected>Read</option>
+								<option [value]="_Shelf.READING">Reading</option>
+								<option [value]="_Shelf.FAVOURITE">Favourites</option>
 							</select>
               <div>
 							<a class="labelDiv" (click)="addBookBatchTo(batchEditShelf)">add books to this shelf </a>
@@ -191,7 +194,7 @@ font-awesome.min.css">
 									</div>
 								</td>
 								<td *ngIf="visibleTitle">
-									<a href="books/{{ book.title }}">
+									<a href="homeath/books/{{ book.bookId }}">
 										{{ book.title  }}
 									</a>
 								</td>
