@@ -57,8 +57,14 @@ export class MenuComponent implements OnInit {
    }
 
 
-  ngOnInit() {
+ ngOnInit() {
+    interval(10000)
+      .subscribe(() => {
+        this.getNotification();
+      });
+  }
 
+  getNotification() {
     this.notificationService.getCountForNotifs().subscribe(data => {
       this.count = data;
     });
