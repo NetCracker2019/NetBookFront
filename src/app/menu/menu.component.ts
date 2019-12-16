@@ -43,7 +43,6 @@ export class MenuComponent implements OnInit {
 // =======
 
   constructor(private authenticationService: AuthenticationService,
-
   public notificationService: NotificationService) {
     this.role = authenticationService.currentUserValue.role;
     this.securityApprove = this.role != 4;
