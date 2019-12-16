@@ -42,7 +42,7 @@
 .thumbnail {
   display: block;
   padding: 2% 2%;
-  margin-bottom: 8%;
+
   border: 1px solid #ddd;
   border-radius: 1%;
   width: 100%;
@@ -56,4 +56,5 @@
 .thumbnail .caption {
   padding: 2%;
   color: #333;
+  font-weight: 600;
 }
