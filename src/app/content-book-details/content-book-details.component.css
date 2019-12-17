@@ -44,7 +44,7 @@
   /*grid-template-columns: 130px 400px;*/
   padding-left: 2px;
   padding-top: 10px;
-  /*max-width: 400px;*/
+
 }
 .user-logo {
   border-radius: 80%;
@@ -92,7 +92,7 @@
 }
 .review-content {
   padding-left: 30px;
-  max-width: 400px;
+  max-width: 500px;
 }
 .add-cancel-buttons {
   padding-top: 10px;
@@ -106,7 +106,7 @@
 }
 .paging-button {
   outline: none;
-  margin-left: 350px;
+  margin-left: 10vw;
   height: 30px;
   width: 60px;
 }

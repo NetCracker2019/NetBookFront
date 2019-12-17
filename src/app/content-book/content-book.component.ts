@@ -61,8 +61,8 @@ export class ContentBookComponent implements OnInit {
 
   // private addCheckboxes() {
   //     this.ordersData.forEach((o, i) => {
-  //       const control = new FormControl(i === 0); // if first item set to true, else false
-  //       (this.form.controls.orders as FormArray).push(control);
+  //       const authorControl = new FormControl(i === 0); // if first item set to true, else false
+  //       (this.formAuthor.controls.orders as FormArray).push(authorControl);
   //     });
   // }
 
@@ -86,7 +86,7 @@ export class ContentBookComponent implements OnInit {
     });
   }
   // addBookComponent() {
-  //   const selectedOrderIds = this.form.value.orders
+  //   const selectedOrderIds = this.formAuthor.value.orders
   //     .map((v, i) => v ? this.ordersData[i].genreName : null)
   //     .filter(v => v !== null);
   //   console.log(selectedOrderIds);

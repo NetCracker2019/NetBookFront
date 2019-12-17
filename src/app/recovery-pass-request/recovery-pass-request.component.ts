@@ -47,7 +47,7 @@ export class RecoveryPassRequestComponent implements OnInit {
   }
 
 
-  // convenience getter for easy access to form fields
+  // convenience getter for easy access to formAuthor fields
   get f() { return this.recoveryForm.controls; }
   getValidationMessage(controlName: string) {
     const controlErrors: ValidationErrors = this.recoveryForm.get(controlName).errors;
@@ -68,7 +68,7 @@ export class RecoveryPassRequestComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // stop here if form is invalid
+    // stop here if formAuthor is invalid
     if (this.recoveryForm.invalid) {
       return;
     }

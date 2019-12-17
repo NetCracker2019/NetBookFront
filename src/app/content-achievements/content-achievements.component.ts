@@ -16,24 +16,26 @@ import {environment} from '../../environments/environment';
   styleUrls: ['./content-achievements.component.css']
 })
 export class ContentAchievementsComponent implements OnInit {
-  control = new FormControl('');
+  authorControl = new FormControl('', Validators.minLength(5));
   authors: Author[] = [];
   filteredAuthors: Observable<Author[]>;
-  public achievement: Achievement = {} as Achievement;
-  favOrRead: string;
+  public achievementAuthor: Achievement = {} as Achievement;
+  public achievementGenre: Achievement = {} as Achievement;
+  favOrReadAuthor: string;
   favOrReadGenre: string;
-  fileToUpload: File = null;
-  fileName: string;
+  fileToUploadAuthor: File = null;
+  fileNameAuthor: string;
+  fileToUploadGenre: File = null;
+  fileNameGenre: string;
   genres: Genre[];
-  selectedGenre: string;
+  selectedGenre = '';
   allAchievements: Achievement[];
   size = 4;
   page = 0;
   endOfAchievements = false;
-  defaultAchievementPhoto = '../../assets/img/depositphotos_257571074-stock-photo-achievement-icon-competition-success-bicolor.jpg';
 
-
-  form: FormGroup;
+  formGenre: FormGroup;
+  formAuthor: FormGroup;
   validationMessages = {
     title: [
       {type: 'pattern', message: 'Title can not be empty or contain forbidden symbol!'},
@@ -48,6 +50,45 @@ export class ContentAchievementsComponent implements OnInit {
       {type: 'min', message: 'The number must be more then 0!'}
     ]
   };
+  formControlAuthor = {
+    title: new FormControl('', [
+      Validators.pattern('^[a-zA-Z0-9_.?!(),]+[a-zA-Z0-9_.?!(), ]+$'),
+      Validators.required,
+      Validators.minLength(2)
+    ]),
+    description: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[a-zA-Z0-9_.?!(),]+[a-zA-Z0-9_.?!(), ]+$'),
+      Validators.minLength(5)
+    ]),
+    numberBook: new FormControl('', [
+      Validators.pattern('^[0-9]+$'),
+      Validators.required,
+      Validators.min(0)
+    ]),
+    // author: new FormControl(),
+    achievementFilePath: new FormControl()
+  };
+  formControlGenre = {
+    title: new FormControl('', [
+      Validators.pattern('^[a-zA-Z0-9_.?!(),]+[a-zA-Z0-9_.?!(), ]+$'),
+      Validators.required,
+      Validators.minLength(2)
+    ]),
+    description: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[a-zA-Z0-9_.?!(),]+[a-zA-Z0-9_.?!(), ]+$'),
+      Validators.minLength(5)
+    ]),
+    numberBook: new FormControl('', [
+      Validators.pattern('^[0-9]+$'),
+      Validators.required,
+      Validators.min(0)
+    ]),
+    // author: new FormControl(),
+    achievementFilePath: new FormControl()
+  };
+
 
   constructor(private bookService: BookService,
               private authorService: AuthorService,
@@ -59,7 +100,7 @@ export class ContentAchievementsComponent implements OnInit {
     this.authorService.getAuthors()
       .subscribe(authors => this.authors = authors);
 
-    this.filteredAuthors = this.control.valueChanges.pipe(
+    this.filteredAuthors = this.authorControl.valueChanges.pipe(
       startWith(''),
       map(value => this.filterString(value))
     );
@@ -68,22 +109,8 @@ export class ContentAchievementsComponent implements OnInit {
     this.achievementService.getAllAchievement(this.page, this.size).subscribe(data => {
       this.allAchievements = data;
     });
-    this.form = new FormGroup({
-      title: new FormControl('', [
-        Validators.pattern('[a-zA-Z0-9_.!(), ]+'),
-        Validators.minLength(2)
-      ]),
-      description: new FormControl('', [
-        Validators.pattern('[a-zA-Z0-9_.!(), ]+'),
-        Validators.minLength(5),
-      ]),
-      numberBook: new FormControl('', [
-        Validators.pattern('^[0-9]+$'),
-        Validators.min(0)
-      ]),
-      // author: new FormControl(),
-      achievementFilePath: new FormControl()
-    });
+    this.formAuthor = new FormGroup(this.formControlAuthor);
+    this.formGenre = new FormGroup(this.formControlGenre);
   }
 
   filterString(value: string): Author[] {
@@ -105,73 +132,115 @@ export class ContentAchievementsComponent implements OnInit {
     this.getAchievements();
   }
 
-  addAchievement(type: string) {
-    this.achievement.title = this.form.controls.title.value;
-    this.achievement.description = this.form.controls.description.value;
-    this.achievement.amount = this.form.controls.numberBook.value;
-    this.achievement.authorName = this.control.value;
-    this.achievement.genreName = this.selectedGenre;
-    if (type === 'author') {
-      if (this.favOrRead === 'fav') {
-        this.achievement.favourite = true;
-        this.achievement.readBook = null;
-      } else {
-        this.achievement.favourite = null;
-        this.achievement.readBook = true;
-      }
-    } else if (type === 'genre') {
-      if (this.favOrReadGenre === 'favGenre') {
-        this.achievement.favourite = true;
-        this.achievement.readBook = null;
-      } else {
-        this.achievement.favourite = null;
-        this.achievement.readBook = true;
-      }
-    }
-    if (this.fileToUpload != null) {
-      this.fileName = uuid();
-      this.achievement.image_path = this.fileName;
+  addAchievement(achievement: Achievement) {
+            this.achievementService.addAchievement(achievement).subscribe(data => {
+        if (data) {
+          this.toastr.success('Achievement is added!');
+          this.page = 0;
+          this.allAchievements = [];
+          this.getAchievements();
+        } else {
+          this.toastr.error('The achievement is exists!');
+        }
+      });
+  }
 
-      this.achievementService.postFile(this.fileToUpload, this.fileName).subscribe(data => {
+  addAchievementAuthor() {
+    this.achievementAuthor.title = this.formAuthor.controls.title.value;
+    this.achievementAuthor.description = this.formAuthor.controls.description.value;
+    this.achievementAuthor.amount = this.formAuthor.controls.numberBook.value;
+    this.achievementAuthor.authorName = this.authorControl.value;
+    if (this.favOrReadAuthor === 'favAuthor') {
+      this.achievementAuthor.favourite = true;
+      this.achievementAuthor.readBook = null;
+    } else {
+      this.achievementAuthor.favourite = null;
+      this.achievementAuthor.readBook = true;
+    }
+    if (this.fileToUploadAuthor != null) {
+      this.fileNameAuthor = uuid();
+      this.achievementAuthor.image_path = this.fileNameAuthor;
+
+      this.achievementService.postFile(this.fileToUploadAuthor, this.fileNameAuthor).subscribe(data => {
         },
         error => {
           this.toastr.error(`${environment.errorMessage}`);
         });
     } else {
-      this.achievement.image_path = 'default_achievement_photo';
+      this.achievementAuthor.image_path = 'default_achievement_photo';
     }
-    this.achievementService.addAchievement(this.achievement).subscribe(data => {
-      if (data) {
-        this.toastr.success('Achievement is added!');
-        this.page = 0;
-        this.allAchievements = [];
-        this.getAchievements();
-      } else {
-        this.toastr.error('The achievement is exists!');
-      }
-    });
+    this.addAchievement(this.achievementAuthor);
   }
 
-  handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
-    if (this.fileToUpload != null) {
-      const newFileName: string = uuid();
-      this.achievementService.postFile(this.fileToUpload, newFileName).subscribe(
-        () => {
-          this.removeTempImage();
-          this.fileName = newFileName;
-        },
+  addAchievementGenre() {
+    this.achievementGenre.title = this.formGenre.controls.title.value;
+    this.achievementGenre.description = this.formGenre.controls.description.value;
+    this.achievementGenre.amount = this.formGenre.controls.numberBook.value;
+    this.achievementGenre.genreName = this.selectedGenre;
+    if (this.favOrReadGenre === 'favGenre') {
+      this.achievementAuthor.favourite = true;
+      this.achievementAuthor.readBook = null;
+    } else {
+      this.achievementAuthor.favourite = null;
+      this.achievementAuthor.readBook = true;
+    }
+    if (this.fileToUploadGenre != null) {
+      this.fileNameGenre = uuid();
+      this.achievementAuthor.image_path = this.fileNameGenre;
+
+      this.achievementService.postFile(this.fileToUploadGenre, this.fileNameGenre).subscribe(data => {},
         error => {
-          this.toastr.info(`Picture size must be < 1 MB`);
+          this.toastr.error(`${environment.errorMessage}`);
         });
+    } else {
+      this.achievementAuthor.image_path = 'default_achievement_photo';
+    }
+    this.addAchievement(this.achievementGenre);
+  }
+
+  handleFileInput(files: FileList, authorOrGenre: string) {
+    if (authorOrGenre === 'author') {
+      this.fileToUploadAuthor = files.item(0);
+      if (this.fileToUploadAuthor != null) {
+        const newFileName: string = uuid();
+        this.achievementService.postFile(this.fileToUploadAuthor, newFileName).subscribe(
+          () => {
+            this.removeTempImage(this.fileNameAuthor, authorOrGenre);
+            this.fileNameAuthor = newFileName;
+          },
+          error => {
+            this.toastr.info(`Picture size must be < 1 MB`);
+          });
+      }
+    } else {
+      this.fileToUploadGenre = files.item(0);
+      if (this.fileToUploadGenre != null) {
+        const newFileName: string = uuid();
+        this.achievementService.postFile(this.fileToUploadGenre, newFileName).subscribe(
+          () => {
+            this.removeTempImage(this.fileNameGenre, authorOrGenre);
+            this.fileNameGenre = newFileName;
+          },
+          error => {
+            this.toastr.info(`Picture size must be < 1 MB`);
+          });
+      }
     }
   }
 
-  removeTempImage() {
-    if (this.fileName !== this.achievement.image_path) {
-      this.achievementService.removeFile(this.fileName)
-        .subscribe(() => {
-        });
+  removeTempImage(fileName: string, authorOrGenre: string) {
+    if (authorOrGenre === 'author') {
+      if (fileName !== this.achievementAuthor.image_path) {
+        this.achievementService.removeFile(fileName)
+          .subscribe(() => {
+          });
+      }
+    } else {
+      if (fileName !== this.achievementGenre.image_path) {
+        this.achievementService.removeFile(fileName)
+          .subscribe(() => {
+          });
+      }
     }
   }
 
@@ -180,7 +249,7 @@ export class ContentAchievementsComponent implements OnInit {
   }
 
   removeAchievement(achvId: number) {
-    if (window.confirm('Are you sure you want delete this achievement?')) {
+    if (window.confirm('Are you sure you want delete this achievementAuthor?')) {
       this.achievementService.removeAchievement(achvId).subscribe(() => {
         this.page = 0;
         this.allAchievements = [];
