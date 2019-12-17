@@ -96,7 +96,19 @@ export class SearchComponent implements OnInit, OnDestroy {
     } else if (this.dateFrom.value > this.dateTo.value) {
       this.toastr.error('Date from must be less than date to');
     } else {
-      this.bookService.searchBookAdvanced(this.title, this.selectedGenre, this.control.value,
+      let selectedAuthorId;
+      if (this.control.value) {
+        const selectedAuthor = this.authors.find(author => author.fullName === this.control.value);
+        if (selectedAuthor) {
+          selectedAuthorId = selectedAuthor.authorId;
+        } else {
+          this.toastr.error('Please, choose the author from list');
+          return;
+        }
+      } else {
+        selectedAuthorId = -1;
+      }
+      this.bookService.searchBookAdvanced(this.title, this.selectedGenre, selectedAuthorId,
         this.dateFrom.value, this.dateTo.value, this.pageSize, this.pageNumber)
         .subscribe(page => {
           this.currentPage = page;
