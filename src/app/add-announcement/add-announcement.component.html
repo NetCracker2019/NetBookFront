@@ -97,6 +97,107 @@
 <!--</div>-->
 <!--</form>-->
 
+<!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+<!--<div class="login-form container">-->
+  <!--<form [formGroup]="loginForm" (ngSubmit)="addAnnouncementComponent()" novalidate>-->
+    <!--<div class="row">-->
+      <!--<div class="col-sm-8 col-md-6 col-lg-4 mx-auto">-->
+        <!--<h2>Authorization</h2>-->
+
+        <!--<div class="form-group">-->
+          <!--<input type="text" class="form-control" [ngClass]="{'is-invalid':  loginForm.get('title').invalid && loginForm.controls['title'].touched,-->
+                   <!--'is-valid': loginForm.get('title').valid}" name="title" placeholder="Enter title"-->
+                 <!--formControlName="title"-->
+                 <!--required/>-->
+          <!--<div class="invalid-feedback"-->
+               <!--*ngIf="loginForm.get('title').invalid && loginForm.controls['title'].touched">-->
+            <!--{{getValidationMessage('title').message}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+        <!--<div class="form-group">-->
+          <!--<table>-->
+            <!--<tr *ngFor="let author of authorsSend">-->
+              <!--<td>{{author.fullName}}</td>-->
+              <!--<td>-->
+                <!--<button type="button" (click)="removeContact(author)" class="btn btn-danger">Delete</button>-->
+              <!--</td>-->
+            <!--</tr>-->
+          <!--</table>-->
+          <!--<input type="text" #fullName placeholder="Enter Name Surname" [formControl]="control"-->
+                 <!--[matAutocomplete]="auto" class="form-control" name="author">-->
+          <!--<mat-autocomplete #auto="matAutocomplete">-->
+            <!--<mat-option *ngFor="let author of filteredAuthors | async" [value]="author.fullName">-->
+              <!--{{author.fullName}}-->
+            <!--</mat-option>-->
+          <!--</mat-autocomplete>-->
+          <!--<button type="button" (click)="addContact(fullName.value)" class="btn btn-info">Add author</button>-->
+        <!--</div>-->
+
+
+        <!--<div class="form-group">-->
+          <!--<select class="custom-select" multiple formControlName="genres" name="genres" [ngClass]="{'is-invalid':  loginForm.get('genres').invalid && loginForm.controls['genres'].touched,-->
+        <!--'is-valid': loginForm.get('genres').valid}" required>-->
+            <!--<option *ngFor="let i of optionsSelect" value={{i.genreId}}>{{i.genreName}}</option>-->
+          <!--</select>-->
+          <!--<div class="invalid-feedback"-->
+               <!--*ngIf="loginForm.get('genres').invalid && loginForm.controls['genres'].touched">-->
+            <!--{{getValidationMessage('genres').message}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+        <!--<div class="form-group">-->
+          <!--<input type="date" class="form-control" [ngClass]="{'is-invalid':  loginForm.get('date').invalid && loginForm.controls['date'].touched,-->
+        <!--'is-valid': loginForm.get('date').valid}" name="date"-->
+                 <!--formControlName="date" required/>-->
+          <!--<div class="invalid-feedback"-->
+               <!--*ngIf="loginForm.get('date').invalid && loginForm.controls['date'].touched">-->
+            <!--{{getValidationMessage('date').message}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+        <!--<div class="form-group">-->
+          <!--<input type="text" class="form-control"-->
+                 <!--[ngClass]="{'is-invalid':  loginForm.get('imagePath').invalid && loginForm.controls['imagePath'].touched,-->
+        <!--'is-valid': loginForm.get('imagePath').valid}"-->
+                 <!--name="imagePath" placeholder="Enter image url" formControlName="imagePath"-->
+                 <!--required/>-->
+          <!--<div class="invalid-feedback"-->
+               <!--*ngIf="loginForm.get('imagePath').invalid && loginForm.controls['imagePath'].touched">-->
+            <!--{{getValidationMessage('imagePath').message}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="form-group">-->
+          <!--<input type="number" min="1" class="form-control"-->
+                 <!--[ngClass]="{'is-invalid':  loginForm.get('pages').invalid && loginForm.controls['pages'].touched,-->
+        <!--'is-valid': loginForm.get('pages').valid}"-->
+                 <!--name="imgPath" placeholder="Number of pages" formControlName="pages"-->
+                 <!--required/>-->
+          <!--<div class="invalid-feedback"-->
+               <!--*ngIf="loginForm.get('pages').invalid && loginForm.controls['pages'].touched">-->
+            <!--{{getValidationMessage('pages').message}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="form-group">-->
+          <!--<input type="text" class="form-control" name="description" placeholder="Enter description"/>-->
+        <!--</div>-->
+
+
+        <!--<div class="form-row">-->
+          <!--<div class="form-group mb-3 col-sm-6">-->
+            <!--<button [disabled]="loginForm.invalid" class="btn btn-block btn-orange">Login</button>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</form>-->
+<!--</div>-->
+
 
 <div class="register-form container">
   <form [formGroup]="addForm" (ngSubmit)="addAnnouncementComponent()" name="form" novalidate>
@@ -107,7 +208,7 @@
         <div class="form-group">
           <input type="text" class="form-control"
                  [ngClass]="{'is-invalid':  addForm.get('title').invalid && addForm.controls['title'].touched,
-                   'is-valid': addForm.get('title').valid}"
+'is-valid': addForm.get('title').valid}"
                  name="title" placeholder="Enter title" formControlName="title"
                  required/>
           <div class="invalid-feedback"
@@ -127,13 +228,8 @@
             </tr>
           </table>
           <input type="text" #fullName placeholder="Enter Name Surname" [formControl]="control"
-                 [matAutocomplete]="auto" class="form-control" [ngClass]="{'is-invalid':  addForm.get('author').invalid && addForm.controls['author'].touched,
-                   'is-valid': addForm.get('author').valid}" name="date"
-                 formControlName="author" required>
-          <div class="invalid-feedback"
-               *ngIf="addForm.get('author').invalid && addForm.controls['author'].touched">
-            {{getValidationMessage('author').message}}
-          </div>
+                 [matAutocomplete]="auto" class="form-control"  name="date">
+
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let author of filteredAuthors | async" [value]="author.fullName">
               {{author.fullName}}
@@ -143,10 +239,9 @@
         </div>
 
 
-
         <div class="form-group">
           <select class="custom-select" multiple formControlName="genres" name="genres" [ngClass]="{'is-invalid':  addForm.get('genres').invalid && addForm.controls['genres'].touched,
-                   'is-valid': addForm.get('genres').valid}" required>
+'is-valid': addForm.get('genres').valid}" required>
             <option *ngFor="let i of optionsSelect" value={{i.genreId}}>{{i.genreName}}</option>
           </select>
           <div class="invalid-feedback"
@@ -158,7 +253,7 @@
 
         <div class="form-group">
           <input type="date" class="form-control" [ngClass]="{'is-invalid':  addForm.get('date').invalid && addForm.controls['date'].touched,
-                   'is-valid': addForm.get('date').valid}" name="date"
+'is-valid': addForm.get('date').valid}" name="date"
                  formControlName="date" required/>
           <div class="invalid-feedback"
                *ngIf="addForm.get('date').invalid && addForm.controls['date'].touched">
@@ -170,7 +265,7 @@
         <div class="form-group">
           <input type="text" class="form-control"
                  [ngClass]="{'is-invalid':  addForm.get('imagePath').invalid && addForm.controls['imagePath'].touched,
-                   'is-valid': addForm.get('imagePath').valid}"
+'is-valid': addForm.get('imagePath').valid}"
                  name="imagePath" placeholder="Enter image url" formControlName="imagePath"
                  required/>
           <div class="invalid-feedback"
@@ -182,7 +277,7 @@
         <div class="form-group">
           <input type="number" min="1" class="form-control"
                  [ngClass]="{'is-invalid':  addForm.get('pages').invalid && addForm.controls['pages'].touched,
-                   'is-valid': addForm.get('pages').valid}"
+'is-valid': addForm.get('pages').valid}"
                  name="imgPath" placeholder="Number of pages" formControlName="pages"
                  required/>
           <div class="invalid-feedback"
@@ -193,12 +288,12 @@
 
         <div class="form-group">
           <input type="text" class="form-control" name="description" placeholder="Enter description"
-                 formControlName="description"/>
+                 formControlName="description"   />
         </div>
 
         <div class="form-row">
           <div class="form-group mb-3 col-sm-12">
-            <button type="submit" class="btn btn-block btn-success" >
+            <button type="submit" class="btn btn-block btn-success" [disabled]="addForm.invalid">
               Add
             </button>
           </div>
