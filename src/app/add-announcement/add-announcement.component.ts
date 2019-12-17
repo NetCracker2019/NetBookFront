@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {Author, Book, Data, Genre} from '../_models/interface';
+import {Author, Book, Data, Genre, Message, Toaster} from '../_models/interface';
 import {BookService} from '../_services/book.service';
 import {AlertService} from '../_services/alert.service';
 import {FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import {Observable} from "rxjs";
-import {map, startWith} from "rxjs/operators";
-import {AuthorService} from "../_services/author.service";
-import {AuthenticationService} from "../_services/authentication.service";
+import {Observable} from 'rxjs';
+import {first, map, startWith} from 'rxjs/operators';
+import {AuthorService} from '../_services/author.service';
+import {AuthenticationService} from '../_services/authentication.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-announcement',
@@ -21,22 +22,15 @@ export class AddAnnouncementComponent implements OnInit {
   authorsSend: Array<Author>;
   counter = 0;
   currentUser: string;
-  // author: Author = new Author();
-  // dataarray: Data[] = [];
-  // ordersData: Genre[] = [];
-  // value = 'announcement';
-
+  response: Toaster;
   addForm: FormGroup;
   control = new FormControl('');
   filteredAuthors: Observable<Author[]>;
   accountValidationMessages = {
     title: [
       { type: 'required', message: 'Title is required' },
-      { type: 'minlength', message: 'Username must be at least 2 characters long' },
-      { type: 'maxlength', message: 'Username cannot be more than 15 characters long' },
-    ],
-    author: [
-      { type: 'required', message: 'Author is required' },
+      { type: 'minlength', message: 'Title must be at least 2 characters long' },
+      { type: 'maxlength', message: 'Title cannot be more than 15 characters long' },
     ],
     date: [
       { type: 'required', message: 'Date is required' },
@@ -49,13 +43,15 @@ export class AddAnnouncementComponent implements OnInit {
     ],
     pages: [
       { type: 'required', message: 'Number of pages is required' },
-      { type: 'maxlength', message: 'Your number cannot be more than 5 characters long' }
+      { type: 'pattern', message: 'Number of pages cannot be negative or more than 6 characters long' },
+      { type: 'maxlength', message: 'Your number cannot be more than 6 characters long' }
     ],
   };
 
   constructor(private authorService: AuthorService,
               private bookService: BookService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private toastr: ToastrService) {
     this.authorsSend = [];
     this.addForm = new FormGroup({
 
@@ -67,9 +63,6 @@ export class AddAnnouncementComponent implements OnInit {
       date: new FormControl('', [
         Validators.required
       ]),
-      author: new FormControl('', [
-        Validators.required
-      ]),
       genres: new FormControl('', [
         Validators.required
       ]),
@@ -79,17 +72,16 @@ export class AddAnnouncementComponent implements OnInit {
       pages: new FormControl('', [
         Validators.required,
         Validators.minLength(1),
-        Validators.maxLength(5)
+        Validators.maxLength(5),
+        Validators.pattern('[0-9]{1,6}')
       ]),
-      description: new FormControl(''),
+      description: new FormControl('')
     });
     bookService.getGenreList().subscribe(genres => {console.log(genres); this.optionsSelect = genres; });
     this.currentUser = this.authenticationService.currentUserValue.username;
   }
 
   ngOnInit() {
-    // this.reloadData();
-    // this.dataarray.push(this.author);
     this.optionsSelect = [];
     this.authorService.getAuthors()
       .subscribe(authors => { this.authors = authors; console.log(authors); });
@@ -125,18 +117,24 @@ export class AddAnnouncementComponent implements OnInit {
     if (name.length === 0) {
       return;
     }
-    let tmp: Author = {authorId: this.counter, fullName: name};
+    const tmp: Author = {authorId: this.counter, fullName: name};
     this.authorsSend.push(tmp);
     this.counter = this.counter + 1;
   }
 
   removeContact(name) {
-    let index = this.authors.indexOf(name);
+    const index = this.authors.indexOf(name);
     this.authorsSend.splice(index, 1);
   }
 
 
   addAnnouncementComponent() {
+
+    if (this.authorsSend.length === 0) {
+      this.toastr.error('Author is required')
+      return;
+    }
+
     this.bookModel.title = this.addForm.controls.title.value;
     this.bookModel.releaseDate = this.addForm.controls.date.value;
     this.bookModel.genres = this.addForm.controls.genres.value;
@@ -146,8 +144,13 @@ export class AddAnnouncementComponent implements OnInit {
 
     this.bookService.addBook(this.bookModel, this.authorsSend, this.currentUser)
       .subscribe(
-        data => {
-          console.log(data);
+        (data) => {
+          this.response = data;
+          if (this.response.status === 'ok') {
+            this.toastr.success(this.response.message);
+          } else if (this.response.status === 'error') {
+            this.toastr.error(this.response.message);
+          }
         });
   }
 

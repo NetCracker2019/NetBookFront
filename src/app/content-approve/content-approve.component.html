@@ -11,6 +11,10 @@
           <input type="radio" name="option" id="radio2" value="reviews" (click)="loadReviews()"/>
           <label for="radio2">Reviews</label>
         </div>
+        <div>
+          <input type="radio" name="option" id="radio3" value="books" (click)="loadBookConfirm()"/>
+          <label for="radio3">Books</label>
+        </div>
         <!--<div>-->
         <!--<input type="radio" name="option" id="radio3" value="overviews"/>-->
         <!--<label for="radio3">Overviews</label>-->
@@ -99,5 +103,23 @@
     </div>
   </div>
 </div>
+
+<div *ngIf="bookConfirm" class="book container">
+  <div class="row">
+    <div class="card test m-2 col-md-5" *ngFor="let book of bookConfirm">
+      <img src="{{book.imagePath}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Title: {{book.title}}</h5>
+        <p class="card-text">Author(s): {{book.authors}}</p>
+        <p class="card-text">Genres: {{book.genres}}</p>
+        <p class="card-text">Release date: {{book.releaseDate}}</p>
+        <p class="card-text">Description: {{book.description}}</p>
+        <button class="confirm m-1 btn btn-success" (click)="confirmBook(book.bookId)">Confirm</button>
+        <button class="cancel m-1 btn btn-danger" (click)="cancelBook(book.bookId)">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [pageSize]="itemsPerPage"
                 [(page)]="reviewPage" [boundaryLinks]="true" (pageChange)="checker()"></ngb-pagination>
