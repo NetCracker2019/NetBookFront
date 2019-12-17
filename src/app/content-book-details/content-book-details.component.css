@@ -10,14 +10,6 @@
   padding-left: 10px;
 }
 
-
-/*.book-content{*/
-/*  grid-column: 2 / 3;*/
-/*  padding-top: 5px;*/
-/*  padding-left: 5px;*/
-/*  padding-right: 2px;*/
-/*}*/
-
 .book-content h3 {
   font-size: 25px;
   padding-bottom: 40px;
@@ -40,8 +32,6 @@
 
 }
 .review-item {
-  /*display: grid;*/
-  /*grid-template-columns: 130px 400px;*/
   padding-left: 2px;
   padding-top: 10px;
 
@@ -60,7 +50,6 @@
 }
 
 .button-write-review button{
-  /*grid-column: 2;*/
   border-radius: 10px;
   background-color: skyblue;
   height: 40px;
@@ -87,8 +76,6 @@
 }
 .rating {
   grid-column: 2;
-  /*display: grid;*/
-  /*grid-template-columns: 40px 20px;*/
 }
 .review-content {
   padding-left: 30px;

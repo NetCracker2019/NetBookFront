@@ -41,12 +41,6 @@
   border-bottom-right-radius: 4px;
 }
 
-/*.reviews {*/
-/*  display: grid;*/
-/*  padding-left: 100px;*/
-/*  grid-template-columns: 1fr 1fr;*/
-
-/*}*/
 
 .review-item {
   display: grid;

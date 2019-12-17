@@ -13,7 +13,6 @@ import {environment} from '../../environments/environment';
   styleUrls: ['./content-book-details.component.css']
 })
 export class ContentBookDetailsComponent implements OnInit {
-  // announcements: NewModelBook[];
   book: NewModelBook;
   reviews: Review[];
   collectionSize;
@@ -40,9 +39,6 @@ export class ContentBookDetailsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const bookId = +params.get('bookId');
       this.getBook(bookId);
-      // this.bookService.countBooks().subscribe(data => {
-      //   this.collectionSize = data;
-      // });
       this.bookService.countReviewsForBook(bookId).subscribe(data => {
         this.collectionSize = data;
       });
@@ -72,8 +68,6 @@ export class ContentBookDetailsComponent implements OnInit {
   getBook(id: number) {
     this.bookService.getBookById(id).subscribe(data => {
       this.book = data;
-      this.bookLikes = data.likes;
-      console.log('Book image path  ' + data.imagePath);
     });
   }
 
@@ -81,7 +75,6 @@ export class ContentBookDetailsComponent implements OnInit {
     this.loading = true;
     if (!this.finish) {
       this.bookService.getPeaceOfReview(this.book.bookId, this.count, this.offset).subscribe(data => {
-        console.log(data);
         this.reviews = this.reviews.concat(data);
       });
       if (this.offset < this.collectionSize - this.count) {
@@ -91,7 +84,6 @@ export class ContentBookDetailsComponent implements OnInit {
       }
     } else {
       this.bookService.getPeaceOfReview(this.book.bookId, this.count, 0).subscribe(data => {
-        console.log(data);
         this.reviews = data;
       });
       this.offset = 2;
