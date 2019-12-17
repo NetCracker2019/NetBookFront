@@ -178,22 +178,22 @@ export class ContentAchievementsComponent implements OnInit {
     this.achievementGenre.amount = this.formGenre.controls.numberBook.value;
     this.achievementGenre.genreName = this.selectedGenre;
     if (this.favOrReadGenre === 'favGenre') {
-      this.achievementAuthor.favourite = true;
-      this.achievementAuthor.readBook = null;
+      this.achievementGenre.favourite = true;
+      this.achievementGenre.readBook = null;
     } else {
-      this.achievementAuthor.favourite = null;
-      this.achievementAuthor.readBook = true;
+      this.achievementGenre.favourite = null;
+      this.achievementGenre.readBook = true;
     }
     if (this.fileToUploadGenre != null) {
       this.fileNameGenre = uuid();
-      this.achievementAuthor.image_path = this.fileNameGenre;
+      this.achievementGenre.image_path = this.fileNameGenre;
 
       this.achievementService.postFile(this.fileToUploadGenre, this.fileNameGenre).subscribe(data => {},
         error => {
           this.toastr.error(`${environment.errorMessage}`);
         });
     } else {
-      this.achievementAuthor.image_path = 'default_achievement_photo';
+      this.achievementGenre.image_path = 'default_achievement_photo';
     }
     this.addAchievement(this.achievementGenre);
   }
