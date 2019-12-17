@@ -4,7 +4,7 @@ import {BookService} from '../_services/book.service';
 import {AlertService} from '../_services/alert.service';
 import {FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {first, map, startWith} from 'rxjs/operators';
 import {AuthorService} from '../_services/author.service';
 import {AuthenticationService} from '../_services/authentication.service';
 import {ToastrService} from 'ngx-toastr';
@@ -22,10 +22,6 @@ export class AddAnnouncementComponent implements OnInit {
   authorsSend: Array<Author>;
   counter = 0;
   currentUser: string;
-  // author: Author = new Author();
-  // dataarray: Data[] = [];
-  // ordersData: Genre[] = [];
-  // value = 'announcement';
   response: Toaster;
   addForm: FormGroup;
   control = new FormControl('');
@@ -35,9 +31,6 @@ export class AddAnnouncementComponent implements OnInit {
       { type: 'required', message: 'Title is required' },
       { type: 'minlength', message: 'Title must be at least 2 characters long' },
       { type: 'maxlength', message: 'Title cannot be more than 15 characters long' },
-    ],
-    author: [
-      { type: 'required', message: 'Author is required' },
     ],
     date: [
       { type: 'required', message: 'Date is required' },
@@ -70,9 +63,6 @@ export class AddAnnouncementComponent implements OnInit {
       date: new FormControl('', [
         Validators.required
       ]),
-      author: new FormControl('', [
-        Validators.required
-      ]),
       genres: new FormControl('', [
         Validators.required
       ]),
@@ -85,15 +75,13 @@ export class AddAnnouncementComponent implements OnInit {
         Validators.maxLength(5),
         Validators.pattern('[0-9]{1,6}')
       ]),
-      description: new FormControl(''),
+      description: new FormControl('')
     });
     bookService.getGenreList().subscribe(genres => {console.log(genres); this.optionsSelect = genres; });
     this.currentUser = this.authenticationService.currentUserValue.username;
   }
 
   ngOnInit() {
-    // this.reloadData();
-    // this.dataarray.push(this.author);
     this.optionsSelect = [];
     this.authorService.getAuthors()
       .subscribe(authors => { this.authors = authors; console.log(authors); });
@@ -141,6 +129,12 @@ export class AddAnnouncementComponent implements OnInit {
 
 
   addAnnouncementComponent() {
+
+    if (this.authorsSend.length === 0) {
+      this.toastr.error('Author is required')
+      return;
+    }
+
     this.bookModel.title = this.addForm.controls.title.value;
     this.bookModel.releaseDate = this.addForm.controls.date.value;
     this.bookModel.genres = this.addForm.controls.genres.value;
