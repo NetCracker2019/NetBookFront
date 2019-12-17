@@ -77,14 +77,14 @@ export class AddAnnouncementComponent implements OnInit {
       ]),
       description: new FormControl('')
     });
-    bookService.getGenreList().subscribe(genres => {console.log(genres); this.optionsSelect = genres; });
+    bookService.getGenreList().subscribe(genres => { this.optionsSelect = genres; });
     this.currentUser = this.authenticationService.currentUserValue.username;
   }
 
   ngOnInit() {
     this.optionsSelect = [];
     this.authorService.getAuthors()
-      .subscribe(authors => { this.authors = authors; console.log(authors); });
+      .subscribe(authors => { this.authors = authors; });
 
     this.filteredAuthors = this.control.valueChanges.pipe(
       startWith(''),
