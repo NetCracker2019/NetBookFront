@@ -207,3 +207,8 @@ export enum BookParam {
   TITLE,
   LIKES
 }
+
+export interface Toaster {
+  status: string;
+  message: string;
+}

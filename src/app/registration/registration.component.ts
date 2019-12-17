@@ -15,8 +15,6 @@ import { ToastrService } from 'ngx-toastr';
 export class RegistrationComponent implements OnInit {
 
   registerForm: FormGroup;
-  // model: User = {password: '', email: '', lastName: '', firstName: '', id: 0, status: '', sex: '', role: '',
-  // country: '', city: '', username: '', token: ''};
   model: User = {} as User;
   accountValidationMessages = {
     userName: [
