@@ -70,7 +70,7 @@ export class AuthorizationComponent implements OnInit {
   }
 
 
-  // convenience getter for easy access to form fields
+  // convenience getter for easy access to formAuthor fields
   get f() { return this.loginForm.controls; }
 
   getValidationMessage(controlName: string) {
@@ -94,7 +94,7 @@ export class AuthorizationComponent implements OnInit {
 
     this.submitted = true;
 
-    // stop here if form is invalid
+    // stop here if formAuthor is invalid
     if (this.loginForm.invalid) {
       return;
     }

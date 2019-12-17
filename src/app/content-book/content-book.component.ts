@@ -55,6 +55,7 @@ export class ContentBookComponent implements OnInit {
         this.books = data;
       });
   }
+
   ngOnInit() {
     this.reloadData();
   }
@@ -63,6 +64,7 @@ export class ContentBookComponent implements OnInit {
     this.bookService.getGenreList().subscribe(genres => { this.ordersData = genres;
     });
   }
+
   getPhoto(imageName: string) {
     return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
