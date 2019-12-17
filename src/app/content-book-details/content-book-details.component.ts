@@ -68,6 +68,7 @@ export class ContentBookDetailsComponent implements OnInit {
   getBook(id: number) {
     this.bookService.getBookById(id).subscribe(data => {
       this.book = data;
+      this.bookLikes = data.likes;
     });
   }
 

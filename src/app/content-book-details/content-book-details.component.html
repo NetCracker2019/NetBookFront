@@ -8,7 +8,7 @@ font-awesome.min.css">
       <div class="card-body book-content">
         <h3 class="card-title">{{book.title}} - {{book.authors.join(', ')}}</h3>
         <div class="container like-book-content">
-          <div class="row" style="min-width: 100px">
+          <div class="row">
             <div class="col-1" style="min-width: 30px">
               <i *ngIf="!currentUser" class="fa fa-thumbs-o-up" aria-hidden="true" (click)="likeBook()"></i>
               <i *ngIf="likedBook == 1" class="fa fa-thumbs-o-up" aria-hidden="true" (click)="likeBook()" ngDefaultControl
@@ -100,7 +100,7 @@ font-awesome.min.css">
     </div>
   </div>
 </div>
-<div *ngIf="loading" style="padding-left: 1vw">
+<div *ngIf="loading" >
   <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
   <span class="sr-only">Loading...</span>
 </div>
