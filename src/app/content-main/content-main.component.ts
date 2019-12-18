@@ -27,7 +27,7 @@ export class ContentMainComponent implements OnInit {
 
   ngOnInit() {
     this.bookService.getGenres()
-      .subscribe(genres => { this.genres = genres; console.log(genres); });
+      .subscribe(genres => { this.genres = genres; });
 
    // this.reloadData();
   }
@@ -38,7 +38,6 @@ export class ContentMainComponent implements OnInit {
   loadPage() {
     this.bookService.getAmountOfAnnouncement()
       .subscribe(data => {
-        console.log(data);
         this.collectionSize = data as number;
       });
     // this.bookService.getAnnouncementList(this.reviewPage, this.booksPerPage)
@@ -48,13 +47,8 @@ export class ContentMainComponent implements OnInit {
     //   });
     this.bookService.getAnnouncementListPeace(this.page, this.booksPerPage)
       .subscribe(data => {
-        console.log(data);
         this.books = data;
-        // this.collectionSize = data.length;
       });
-
-    // this.reloadData();
-    console.log(this.books);
   }
 
   // reloadData() {

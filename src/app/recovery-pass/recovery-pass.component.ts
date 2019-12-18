@@ -75,7 +75,7 @@ export class RecoveryPassComponent implements OnInit {
     return error;
   }
 
-  // convenience getter for easy access to form fields
+  // convenience getter for easy access to formAuthor fields
   get f() { return this.recoveryForm.controls; }
 
   onSubmit() {

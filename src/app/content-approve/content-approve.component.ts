@@ -77,7 +77,6 @@ export class ContentApproveComponent implements OnInit {
         return 0;
       });
     }
-    // window.location.reload();
   }
 
   checker() {
@@ -140,17 +139,14 @@ export class ContentApproveComponent implements OnInit {
       this.counterAnon = 0;
       this.counterBook = 0;
     }
-    // this.counterAnon = 0;
     this.counterRev = this.counterRev + 1;
     this.announcements = [];
     this.bookConfirm = [];
     this.value = 'rev';
     this.bookService.countReviews(false).subscribe(data => {
-      console.log(data);
       this.collectionSize = data;
     });
     this.approveService.getReviewForApprove(this.reviewPage, this.itemsPerPage).subscribe(data => {
-      console.log(data);
       this.reviews = data;
     });
   }
@@ -161,14 +157,12 @@ export class ContentApproveComponent implements OnInit {
         if (data) {
           this.toastr.success('The review is confirmed.');
           this.approveService.getReviewForApprove(this.reviewPage, this.itemsPerPage).subscribe(data2 => {
-            console.log(data2);
             this.reviews = data2;
           });
         } else {
           this.toastr.success('Something is wrong(');
         }
       });
-    // window.location.reload();
   }
 
   cancelReview(review) {
@@ -176,8 +170,6 @@ export class ContentApproveComponent implements OnInit {
       .subscribe(data => {
         if (data) {
           this.toastr.success('The review is canceled.');
-          // this.alertService.success('Рецензія відправлена на підтвердження модератору.', true);
-          console.log(data);
         } else {
           this.toastr.success('Something is wrong(');
         }
@@ -204,12 +196,10 @@ export class ContentApproveComponent implements OnInit {
     this.announcements = [];
     this.value = 'book';
     this.bookService.countBooksUnApprove(false).subscribe(data => {
-      console.log(data);
       this.collectionSize = data;
     });
     this.approveService.getUnApproveBookList(this.reviewPage, this.itemsPerPage)
       .subscribe(books => {
-        console.log(books);
         this.bookConfirm = books;
       });
   }
