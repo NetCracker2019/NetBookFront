@@ -5,11 +5,12 @@
     <div class="col-md-4 col-sm-6 col-xs-12">
       <div class="img-container">
         <div class="profile-img">
-          <img src="{{ this.getPhoto(this.fileName) }}" class="avatar img-circle img-thumbnail"
+          <img src="{{ this.imagePath }}" class="avatar img-circle img-thumbnail"
                (error)="$event.target.src=getPhoto('default_avatar')" alt="avatar">
         </div>
         <h6>Change photo</h6>
-        <input name="changeImg" type="file" formControlName="avatarFilePath" (change)="handleFileInput($event.target.files)" style="padding-left: 5vw;">
+        <input name="changeImg" type="file" formControlName="avatarFilePath"
+               (change)="handleFileInput($event.target.files)" style="padding-left: 5vw;">
       </div>
     </div>
     <div class="col-md-8 col-sm-6 col-xs-12 personal-info">

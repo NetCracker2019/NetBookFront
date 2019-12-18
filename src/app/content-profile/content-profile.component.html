@@ -65,7 +65,7 @@ font-awesome.min.css">
 						{{ friend.username }}</a>
 					</div><br>
 					<div class="all-friends" *ngIf="this.friends.length > 3">
-						<a routerLink="/homeath/profile/{{ this.user.username }}/friends">
+						<a routerLink="/homeath/friends/{{ this.user.username }}">
 							...all friends
 						</a>
 					</div>
@@ -188,15 +188,18 @@ font-awesome.min.css">
 						<div class="row">
 							<div class="col-md-4" *ngFor="let book of this.readingBooks">
 								<div class="thumbnail">
-									<img alt="no img" src="{{ this.getPhoto(book.imagePath) }}">
-									<div class="caption">
-										<a routerLink="/homeath/search/{{ book.bookId }}">
-										{{ book.title  }}</a>
-										<div class="authors" *ngFor="let author of book.authors">
-                      <a (click)="navigateToAuthor(author)" style="cursor: pointer">
-                        {{ author  }}</a>
-										</div>
-									</div>
+                  <a routerLink="/homeath/search/{{ book.bookId }}">
+                    <img alt="no img" src="{{ this.getPhoto(book.imagePath) }}">
+                    <div class="caption">
+                      <a routerLink="/homeath/search/{{ book.bookId }}">
+                        {{ book.title  }}</a>
+                      <div class="authors" *ngFor="let author of book.authors">
+                        <a (click)="navigateToAuthor(author)" style="cursor: pointer">
+                          {{ author  }}</a>
+                      </div>
+                    </div>
+                  </a>
+
 								</div>
 							</div>
 						</div>

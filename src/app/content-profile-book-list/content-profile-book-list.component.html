@@ -190,18 +190,19 @@ font-awesome.min.css">
 								</td>
 								<td>
 									<div class="coverDiv">
-										<img class="img-responsive" alt="no img" src="{{ this.getPhoto(book.imagePath) }}">
+										<img class="img-responsive" alt="no img" src="{{ this.getPhoto(book.imagePath) }}"
+                         (error)="$event.target.src=getPhoto('default_book_photo')">
 									</div>
 								</td>
 								<td *ngIf="visibleTitle">
-									<a href="homeath/books/{{ book.bookId }}">
+									<a routerLink="/homeath/books/{{ book.bookId }}">
 										{{ book.title  }}
 									</a>
 								</td>
 								<td *ngIf="visibleAuthors">
 									<div class="authors" *ngFor="let author of book.authors">
-										<a href="authors/{{ author }}">
-										{{ author  }}</a>
+                    <a (click)="navigateToAuthor(author)" style="cursor: pointer">
+                      {{ author  }}</a>
 									</div>
 								</td>
 

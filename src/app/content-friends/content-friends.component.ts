@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {User, Achievement} from '../_models/interface';
+import {User, Achievement, SearchIn} from '../_models/interface';
 import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -19,9 +19,10 @@ export class ContentFriendsComponent implements OnInit {
   private login: string;
   private sought = '';
   public page = 1;
-  private where = 'friends';
-  public collectionSize = 6;
+  private where = SearchIn.FRIENDS;
+  public collectionSize = 9;
   public endOfFriends = false;
+  public _SearchIn = SearchIn;
 
   constructor(private userService: UserService,
               private activatedRoute: ActivatedRoute,
@@ -31,6 +32,7 @@ export class ContentFriendsComponent implements OnInit {
               private toastr: ToastrService) {}
 
   ngOnInit() {
+    window.scroll(0, 0);
     this.login = this.activatedRoute.snapshot.params.login;
     this.authenticationService.refreshToken();
     this.getPersons();
@@ -42,7 +44,7 @@ export class ContentFriendsComponent implements OnInit {
     this.endOfFriends = false;
     this.getPersonsNewSought();
   }
-  onWhereChange(whereValue: string) {
+  onWhereChange(whereValue: SearchIn) {
     this.page = 1;
     this.where = whereValue;
     this.peoples = [];

@@ -5,10 +5,10 @@ import {User, ShortBookDescription, SearchParams, Shelf, Order, BookParam} from 
 import {UserService} from '../_services/user.service';
 import {AlertService} from '../_services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import {FormControl, FormGroup} from '@angular/forms';
 import {AuthenticationService} from '../_services/authentication.service';
 import { environment } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import {BookService} from '../_services/book.service';
 
 @Component({
   selector: 'app-content-profile-book-list',
@@ -27,7 +27,7 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
     order: Order.ASC,
     sought: '',
     page: 0,
-    size: 3
+    size: 6
   };
   public books: ShortBookDescription[] = [];
   public disableEdit = false;
@@ -52,9 +52,11 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
               private router: Router,
               private authenticationService: AuthenticationService,
               private alertService: AlertService,
+              private bookService: BookService,
               private toastr: ToastrService) {}
 
   ngOnInit() {
+    window.scroll(0, 0);
     this.login = this.activatedRoute.snapshot.params.login;
     this.authenticationService.refreshToken();
     if (this.login === this.authenticationService.currentUserValue.username) {
@@ -227,6 +229,10 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
   onPageChanged() {
     this.searchParams.page++;
     this.getBookList();
+  }
+  navigateToAuthor(author: string) {
+    this.router.navigate(['/homeath/search']);
+    this.bookService.changeTitle('', author);
   }
   getPhoto(imageName: string) {
     return `${environment.apiUrl}/files/download?filename=${imageName}`;
