@@ -68,7 +68,8 @@
 <div *ngIf="announcements" class="announcements container">
   <div class="row">
     <div class="card test m-2 col-md-5" *ngFor="let announce of announcements">
-      <img src="{{announce.imagePath}}" class="card-img-top" alt="...">
+      <img src="{{getPhoto(announce.imagePath)}}" class="card-img-top"
+           (error)="$event.target.src=getPhoto('default_book_photo')" alt="Image">
       <div class="card-body">
         <h5 class="card-title">Title: {{announce.title}}</h5>
         <p class="card-text">Author(s): {{announce.authors}}</p>
@@ -107,7 +108,8 @@
 <div *ngIf="bookConfirm" class="book container">
   <div class="row">
     <div class="card test m-2 col-md-5" *ngFor="let book of bookConfirm">
-      <img src="{{book.imagePath}}" class="card-img-top" alt="...">
+      <img src="{{getPhoto(book.imagePath)}}" class="card-img-top"
+           (error)="$event.target.src=getPhoto('default_book_photo')" alt="Image">
       <div class="card-body">
         <h5 class="card-title">Title: {{book.title}}</h5>
         <p class="card-text">Author(s): {{book.authors}}</p>

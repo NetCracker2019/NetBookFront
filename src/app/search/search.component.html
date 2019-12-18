@@ -74,7 +74,8 @@
             <div class="row">
               <div class="col-6">
                 <div class="book-image-grid">
-                  <img src="{{book.imagePath}}" alt="Example" class="book-logo">
+                  <img src="{{ this.getPhoto(book.imagePath) }}"
+                       (error)="$event.target.src=getPhoto('default_book_photo')" alt="img" class="book-logo"/>
                 </div>
               </div>
               <div class="col-6">
