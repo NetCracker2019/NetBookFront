@@ -10,15 +10,14 @@ font-awesome.min.css">
         <div class="container like-book-content">
           <div class="row">
             <div class="col-1" style="min-width: 30px">
-              <i *ngIf="!currentUser" class="fa fa-thumbs-o-up" aria-hidden="true" (click)="likeBook()"></i>
               <i *ngIf="likedBook == 1" class="fa fa-thumbs-o-up" aria-hidden="true" (click)="likeBook()" ngDefaultControl
                  style="color: green; "></i>
-              <i *ngIf="likedBook == 0 || likedBook == -1" class="fa fa-thumbs-o-up" aria-hidden="true" (click)="likeBook()" ngDefaultControl></i>
+              <i *ngIf="likedBook == 0 || likedBook == -1 || !currentUser" class="fa fa-thumbs-o-up"
+                 aria-hidden="true" (click)="likeBook()" ngDefaultControl></i>
             </div>
             <div class="col-1" style="min-width: 30px">
-              <i *ngIf="!currentUser" class="fa fa-thumbs-o-down" aria-hidden="true" (click)="dislikeBook()"></i>
-              <i *ngIf="likedBook == 1 || likedBook == 0" class="fa fa-thumbs-o-down" aria-hidden="true" ngDefaultControl
-                   (click)="dislikeBook()"></i>
+              <i *ngIf="likedBook == 1 || likedBook == 0 || !currentUser" class="fa fa-thumbs-o-down"
+                 aria-hidden="true" ngDefaultControl (click)="dislikeBook()"></i>
               <i *ngIf="likedBook == -1" class="fa fa-thumbs-o-down" aria-hidden="true" ngDefaultControl
                      (click)="dislikeBook()" style="color: red; "></i>
             </div>

@@ -153,17 +153,17 @@ export class ContentBookDetailsComponent implements OnInit {
   }
 
   likeBook() {
-    if (this.likedBook === 1) {
-      this.bookLikes--;
-      this.likedBook = 0;
-    } else if (this.likedBook === -1) {
-      this.bookLikes += 2;
-      this.likedBook = 1;
-    } else {
-      this.bookLikes++;
-      this.likedBook = 1;
-    }
     if (this.currentUser) {
+      if (this.likedBook === 1) {
+        this.bookLikes--;
+        this.likedBook = 0;
+      } else if (this.likedBook === -1) {
+        this.bookLikes += 2;
+        this.likedBook = 1;
+      } else {
+        this.bookLikes++;
+        this.likedBook = 1;
+      }
       this.bookService.likeBook(this.book.bookId, this.currentUser.username).subscribe(data => {
       });
     } else {
@@ -172,17 +172,17 @@ export class ContentBookDetailsComponent implements OnInit {
   }
 
   dislikeBook() {
-    if (this.likedBook === 1) {
-      this.bookLikes -= 2;
-      this.likedBook = -1;
-    } else if (this.likedBook === -1) {
-      this.bookLikes++;
-      this.likedBook = 0;
-    } else {
-      this.bookLikes--;
-      this.likedBook = -1;
-    }
     if (this.currentUser) {
+      if (this.likedBook === 1) {
+        this.bookLikes -= 2;
+        this.likedBook = -1;
+      } else if (this.likedBook === -1) {
+        this.bookLikes++;
+        this.likedBook = 0;
+      } else {
+        this.bookLikes--;
+        this.likedBook = -1;
+      }
       this.bookService.dislikeBook(this.book.bookId, this.currentUser.username).subscribe(data => {
       });
     } else {
