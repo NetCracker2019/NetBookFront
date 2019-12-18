@@ -230,4 +230,10 @@ export class BookService {
   countBooksUnApprove(approved: boolean): Observable<number> {
     return this.http.get<number>(`${environment.apiUrl}/book-service/count-books-unapproved?approved=${approved}`);
   }
+  postFile(fileToUpload: File, fileName: string): Observable<boolean> {
+    const formData: FormData = new FormData();
+    formData.append('file', fileToUpload);
+    formData.append('name', fileName);
+    return this.http.post<boolean>(`${environment.apiUrl}/files/upload/`, formData);
+  }
 }

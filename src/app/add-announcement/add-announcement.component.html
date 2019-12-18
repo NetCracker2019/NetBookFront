@@ -63,14 +63,18 @@
 
 
         <div class="form-group">
-          <input type="text" class="form-control"
-                 [ngClass]="{'is-invalid':  addForm.get('imagePath').invalid && addForm.controls['imagePath'].touched,
+          <div class="img-container">
+            <div class="profile-img" *ngIf="this.imagePath">
+              <img src="{{ this.imagePath }}" class="avatar img-circle img-thumbnail">
+            </div>
+            <div class="custom-file">
+              <input type="file" formControlName="imagePath" class="form-control" [ngClass]="{'is-invalid':  addForm.get('imagePath').invalid && addForm.controls['imagePath'].touched,
 'is-valid': addForm.get('imagePath').valid}"
-                 name="imagePath" placeholder="Enter image url" formControlName="imagePath"
-                 required/>
-          <div class="invalid-feedback"
-               *ngIf="addForm.get('imagePath').invalid && addForm.controls['imagePath'].touched">
-            {{getValidationMessage('imagePath').message}}
+                     class="custom-file-input" id="validatedCustomFile"
+                     required (change)="handleFileInput($event.target.files)">
+              <label class="custom-file-label" for="validatedCustomFile">Choose book image...</label>
+              <div class="invalid-feedback">Image is required</div>
+            </div>
           </div>
         </div>
 

@@ -5,6 +5,7 @@ import {Observable, Subscription} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {map, startWith, switchMap} from 'rxjs/operators';
 import {AuthorService} from '../_services/author.service';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-search',
@@ -101,5 +102,8 @@ export class SearchComponent implements OnInit, OnDestroy {
           this.currentPage = page;
         });
     }
+  }
+  getPhoto(imageName: string) {
+    return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 }
