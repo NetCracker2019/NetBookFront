@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 
-import {User, Achievement, ShortBookDescription, Message, SearchParams, Shelf} from '../_models/interface';
+import {User, Achievement, ShortBookDescription, Message, SearchParams, Shelf, SearchIn} from '../_models/interface';
 import {AuthenticationService} from '../_services/authentication.service';
 
 import { environment } from '../../environments/environment';
@@ -37,7 +37,7 @@ export class UserService {
 
   confirmUserAccountRequest(token: string) {
     return this.http.put<Map<string, string>>(
-      `${environment.apiUrl}/user-service/verification/user?token=${token}`, token); //
+      `${environment.apiUrl}/user-service/verification/user?token=${token}`, token);
   }
 
   // change password
@@ -75,10 +75,20 @@ export class UserService {
       `${environment.apiUrl}/profile/${login}/read-books?cnt=${cnt}&offset=${offset}&sought=${sought}`);
   }
 
-  edit(user: User) {
-    return this.http.put<User>(`${environment.apiUrl}/profile/${user.username}/edit`, user );
+  edit(user: User, fileToUpload: File) {
+    const formData: FormData = new FormData();
+    formData.append('file', fileToUpload);
+    formData.append('login', user.username);
+    formData.append('name', user.firstName);
+    formData.append('sex', user.sex);
+    formData.append('city', user.city);
+    formData.append('country', user.country);
+    formData.append('email', user.email);
+    formData.append('status', user.status);
+    formData.append('password', user.password);
+    return this.http.put<User>(`${environment.apiUrl}/profile/${user.username}/edit`, formData);
   }
-  getPersons(login: string, sought: string, where: string, cnt: number, offset: number) {
+  getPersons(login: string, sought: string, where: SearchIn, cnt: number, offset: number) {
      return this.http.get<User[]>(`${environment.apiUrl}/find-persons/${login}?sought=${sought}&where=${
      where}&cnt=${cnt}&offset=${offset}`);
   }

@@ -44,8 +44,6 @@ export class ContentCalendarComponent implements OnInit {
     for (let i = 0; i < this.calendarEvents.length; i++) {
       if (this.calendarEvents[i].date > this.today) {
         this.calendarEvents[i].color = '#378006';
-        // console.log('Current date: ' + this.today);
-        console.log(this.calendarEvents[i].date);
       }else {
         this.calendarEvents[i].color = '#d40006';
       }
@@ -55,7 +53,6 @@ export class ContentCalendarComponent implements OnInit {
     for (let i = 0; i < this.calendarEvents.length; i++) {
       let url = 'homeath/search/' + data[i].id;
       this.calendarEvents[i].url =  url;
-      console.log(this.calendarEvents[i].url);
     }
   }
 
@@ -63,7 +60,6 @@ export class ContentCalendarComponent implements OnInit {
     this.value = 'personalize';
     this.subscription = this.bookService.getCalendarAnnouncement(this.value, this.currentUser)
       .subscribe(data => {
-        console.log(data);
         this.calendarEvents = data;
         this.addColor();
         this.addURL(data);
@@ -74,7 +70,6 @@ export class ContentCalendarComponent implements OnInit {
     this.value = 'all';
     this.bookService.getCalendarAnnouncement(this.value, this.currentUser)
       .subscribe(data => {
-        console.log(data);
         this.calendarEvents = data;
         this.addColor();
         this.addURL(data);

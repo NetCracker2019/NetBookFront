@@ -184,7 +184,7 @@ font-awesome.min.css">
 						<div *ngIf="editChatTab == 2">
               <div class="chat-img">
                 <div>
-                  <img src="{{ this.getPhoto(this.activeChatAvatar) }}"
+                  <img src="{{ this.activeChatAvatar }}"
                        (error)="$event.target.src=getPhoto('default_chat_avatar')" alt="img"/>
                   <h6>Change photo</h6>
                   <input name="changeImg" type="file"
@@ -238,7 +238,7 @@ font-awesome.min.css">
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" (click)="removeTempImage()"
+				<button type="button" class="btn btn-secondary"
                 id="closeModal2" data-dismiss="modal">Back</button>
 				<button [disabled]="editedChatName.length < 2 || editedChatName.length >= 15 || unameEdit.errors?.pattern"
                 type="button" class="btn btn-primary"

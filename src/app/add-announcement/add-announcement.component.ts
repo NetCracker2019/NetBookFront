@@ -8,6 +8,8 @@ import {first, map, startWith} from 'rxjs/operators';
 import {AuthorService} from '../_services/author.service';
 import {AuthenticationService} from '../_services/authentication.service';
 import {ToastrService} from 'ngx-toastr';
+import {v4 as uuid} from 'uuid';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-add-announcement',
@@ -26,6 +28,8 @@ export class AddAnnouncementComponent implements OnInit {
   addForm: FormGroup;
   control = new FormControl('');
   filteredAuthors: Observable<Author[]>;
+  private fileToUpload: File = null;
+  public imagePath = '';
   accountValidationMessages = {
     title: [
       { type: 'required', message: 'Title is required' },
@@ -77,14 +81,14 @@ export class AddAnnouncementComponent implements OnInit {
       ]),
       description: new FormControl('')
     });
-    bookService.getGenreList().subscribe(genres => {console.log(genres); this.optionsSelect = genres; });
+    bookService.getGenreList().subscribe(genres => { this.optionsSelect = genres; });
     this.currentUser = this.authenticationService.currentUserValue.username;
   }
 
   ngOnInit() {
     this.optionsSelect = [];
     this.authorService.getAuthors()
-      .subscribe(authors => { this.authors = authors; console.log(authors); });
+      .subscribe(authors => { this.authors = authors; });
 
     this.filteredAuthors = this.control.valueChanges.pipe(
       startWith(''),
@@ -127,6 +131,21 @@ export class AddAnnouncementComponent implements OnInit {
     this.authorsSend.splice(index, 1);
   }
 
+  handleFileInput(files: FileList) {
+    if (files.item(0).size / 1024 / 1024 > 1) {
+      this.toastr.info(`Picture size must be < 1 MB`);
+      return;
+    } else if (files.item(0).type.match(/image\/*/) == null) {
+      this.toastr.info(`Its not an image, please select image`);
+      return;
+    }
+    this.fileToUpload = files.item(0);
+    const reader = new FileReader();
+    reader.readAsDataURL(this.fileToUpload);
+    reader.onload = () => {
+      this.imagePath = reader.result.toString();
+    };
+  }
 
   addAnnouncementComponent() {
 
@@ -140,8 +159,18 @@ export class AddAnnouncementComponent implements OnInit {
     this.bookModel.genres = this.addForm.controls.genres.value;
     this.bookModel.description = this.addForm.controls.description.value;
     this.bookModel.pages = this.addForm.controls.pages.value;
-    this.bookModel.imagePath = this.addForm.controls.imagePath.value;
 
+    const fileName: string = uuid();
+    this.bookService.postFile(this.fileToUpload, fileName).subscribe(
+      () => {
+        this.bookModel.imagePath = fileName;
+        this.addBook();
+      },
+      error => {
+        this.toastr.info(error);
+      });
+  }
+  addBook() {
     this.bookService.addBook(this.bookModel, this.authorsSend, this.currentUser)
       .subscribe(
         (data) => {
@@ -152,6 +181,10 @@ export class AddAnnouncementComponent implements OnInit {
             this.toastr.error(this.response.message);
           }
         });
+  }
+
+  getPhoto(imageName: string) {
+    return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
 
 }

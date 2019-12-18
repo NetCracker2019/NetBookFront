@@ -27,9 +27,12 @@ export class ChatService {
     return this.http.get<User[]>(`${environment.apiUrl}/chat/${chatId}/members`);
   }
 
-  updateChat(chatId: number, chatName: string, addedMembers: string[], removedMembers: string[], chatAvatar: string) {
+  updateChat(chatId: number, chatName: string, addedMembers: string[], removedMembers: string[], file: File,
+             oldChatAvatar) {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
     return this.http.put<void>(`${environment.apiUrl}/chat/${chatId}/update/${chatName}?addedMembers=${addedMembers}` +
-      `&chatAvatar=${chatAvatar}`, removedMembers);
+      `&removedMembers=${removedMembers}&oldChatAvatar=${oldChatAvatar}`, formData);
   }
 }
 

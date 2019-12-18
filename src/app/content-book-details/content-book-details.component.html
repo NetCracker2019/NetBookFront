@@ -30,6 +30,7 @@ font-awesome.min.css">
         <!--    <p>Language: {{book.langua}}</p>-->
         <p>Pages: {{book.pages}}</p>
         <p>Description: {{book.description}} </p>
+        <div *ngIf="!announcement">
         <div *ngIf="added; then remove else add"></div>
         <ng-template #add>
           <button class="btn btn-default button-add-book-to-profile" (click)="addBookToProfile()">Add book to profile
@@ -40,6 +41,7 @@ font-awesome.min.css">
             from profile
           </button>
         </ng-template>
+      </div>
       </div>
     </div>
   </div>

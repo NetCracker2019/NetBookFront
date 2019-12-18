@@ -207,6 +207,10 @@ export enum BookParam {
   TITLE,
   LIKES
 }
+export enum SearchIn {
+  FRIENDS,
+  ALL_USERS
+}
 
 export interface Toaster {
   status: string;
