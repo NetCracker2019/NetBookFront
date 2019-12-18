@@ -40,7 +40,7 @@ import { SuperadminRequest } from './superadmin-request/superadmin-request.compo
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { SearchComponent } from './search/search.component';
 import {ContentBookDetailsComponent} from './content-book-details/content-book-details.component';
-import {MatAutocompleteModule, MatDatepickerModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {MatAutocompleteModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatSelectModule} from '@angular/material';
 import {MatNativeDateModule} from '@angular/material/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
@@ -155,31 +155,32 @@ const appRoutes: Routes = [
     ContentCalendarComponent
   ],
 
-  imports: [
-    InfiniteScrollModule,
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgbModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatAutocompleteModule,
-    FullCalendarModule, // for FullCalendar!
-    BsDropdownModule.forRoot(),
-    TooltipModule.forRoot(),
-    ModalModule.forRoot(),
-    HttpClientModule,
-    ToastrModule.forRoot(),
-    RouterModule.forRoot(
-      appRoutes),
-    MatAutocompleteModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatInputModule,
-    MatNativeDateModule,
-    BrowserAnimationsModule
-  ],
+    imports: [
+        InfiniteScrollModule,
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgbModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatAutocompleteModule,
+        FullCalendarModule, // for FullCalendar!
+        BsDropdownModule.forRoot(),
+        TooltipModule.forRoot(),
+        ModalModule.forRoot(),
+        HttpClientModule,
+        ToastrModule.forRoot(),
+        RouterModule.forRoot(
+            appRoutes),
+        MatAutocompleteModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatInputModule,
+        MatNativeDateModule,
+        BrowserAnimationsModule,
+        MatSelectModule
+    ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
