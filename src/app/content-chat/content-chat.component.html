@@ -184,7 +184,7 @@ font-awesome.min.css">
 						<div *ngIf="editChatTab == 2">
               <div class="chat-img">
                 <div>
-                  <img src="{{ this.getPhoto(this.activeChatAvatar) }}"
+                  <img src="{{ this.activeChatAvatar }}"
                        (error)="$event.target.src=getPhoto('default_chat_avatar')" alt="img"/>
                   <h6>Change photo</h6>
                   <input name="changeImg" type="file"
