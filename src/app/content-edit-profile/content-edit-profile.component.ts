@@ -15,12 +15,12 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './content-edit-profile.component.html',
   styleUrls: ['./content-edit-profile.component.css']
 })
-export class ContentEditProfileComponent implements OnInit, OnDestroy {
+export class ContentEditProfileComponent implements OnInit {
 
   public user: User = {} as User;
   private login: string;
   private fileToUpload: File = null;
-  public fileName = '';
+  public imagePath = '';
 
   form: FormGroup;
   profileValidationMessages = {
@@ -96,9 +96,6 @@ export class ContentEditProfileComponent implements OnInit, OnDestroy {
       avatarFilePath: new FormControl(),
       sex: new FormControl()
     });
-
-
-
     this.authenticationService.refreshToken();
 
     this.userService.isEditable(this.login)
@@ -111,45 +108,36 @@ export class ContentEditProfileComponent implements OnInit, OnDestroy {
       .subscribe(
         (data: User) => {
           this.user = data;
-          this.fileName = this.user.avatarFilePath;
           this.form.controls.status.setValue(this.user.status);
           this.form.controls.name.setValue(this.user.firstName);
           this.form.controls.email.setValue(this.user.email);
           this.form.controls.country.setValue(this.user.country);
           this.form.controls.city.setValue(this.user.city);
           this.form.controls.sex.setValue(this.user.sex);
+          this.imagePath = this.getPhoto(data.avatarFilePath);
         },
         error => {
           this.toastr.info(error);
         });
   }
 
-  ngOnDestroy() {
-    this.removeTempImage();
-  }
-
   handleFileInput(files: FileList) {
+    const fileType = files.item(0).type;
+    if (files.item(0).size / 1024 / 1024 > 1) {
+      this.toastr.info(`Picture size must be < 1 MB`);
+      return;
+    } else if (fileType.match(/image\/*/) == null) {
+      this.toastr.info(`Its not an image, please select image`);
+      return;
+    }
     this.fileToUpload = files.item(0);
-
-    if ( this.fileToUpload != null) {
-      const newFileName: string = uuid();
-      this.userService.postFile(this.fileToUpload, newFileName).subscribe(
-        () => {
-          this.removeTempImage();
-          this.fileName = newFileName;
-        },
-        error => {
-          this.toastr.info(`Picture size must be < 1 MB`);
-        });
-    }
+    const reader = new FileReader();
+    reader.readAsDataURL(this.fileToUpload);
+    reader.onload = (event) => {
+      this.imagePath = reader.result.toString();
+    };
   }
 
-  removeTempImage() {
-    if (this.fileName !== this.user.avatarFilePath) {
-      this.userService.removeFile(this.fileName)
-        .subscribe(() => {});
-    }
-  }
   getPhoto(imageName: string) {
     return `${environment.apiUrl}/files/download?filename=${imageName}`;
   }
@@ -162,12 +150,11 @@ export class ContentEditProfileComponent implements OnInit, OnDestroy {
     this.user.email = this.form.controls.email.value;
     this.user.password = this.form.controls.password.value;
     this.user.status = this.form.controls.status.value;
-    this. user.avatarFilePath = this.fileName;
     this.commitEditUser();
   }
 
   commitEditUser() {
-    this.userService.edit(this.user)
+    this.userService.edit(this.user, this.fileToUpload)
       .subscribe(
         () => {
           this.toastr.success(`Profile successfully updated`);

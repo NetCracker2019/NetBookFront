@@ -7,7 +7,18 @@ import {environment} from '../../environments/environment';
 import {map} from 'rxjs/operators';
 
 
-import {Announcement, Book, Data, Genre, NewModelBook, Page, Review, Author, Event} from '../_models/interface';
+import {
+  Announcement,
+  Book,
+  Data,
+  Genre,
+  NewModelBook,
+  Page,
+  Review,
+  Author,
+  Event,
+  Toaster
+} from '../_models/interface';
 
 
 const httpOptions = {
@@ -15,18 +26,22 @@ const httpOptions = {
     'Content-Type':  'application/json'
   })
 };
+interface Params {
+  title: string;
+  author: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
-  private titleSource = new BehaviorSubject<string>('');
-  currentTitle = this.titleSource.asObservable();
+  private source = new BehaviorSubject<Params>({title: '', author: ''});
+  currentParams = this.source.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  changeTitle(title: string) {
-    this.titleSource.next(title);
+  changeTitle(title: string, author: string) {
+    this.source.next({title, author});
   }
 
   getCalendarAnnouncement(value: string, userName: string): Observable<Event[]> {
@@ -62,7 +77,7 @@ export class BookService {
     return this.http.get<NewModelBook[]>(`${environment.apiUrl}/book-service/view-books`);
   }
 
-  addBook(book: Book, authors, userName: string) {
+  addBook(book: Book, authors, userName: string): Observable<Toaster> {
     let authorArray: Data[] = [];
     for (let i = 0; i < authors.length; i++) {
       authorArray.push(authors[i].fullName);
@@ -70,7 +85,7 @@ export class BookService {
     const body = {title: book.title, authors: authorArray, genres: book.genres, imagePath: book.imagePath,
       release_date: book.releaseDate, language: book.language, pages: book.pages, description: book.description, user: userName};
     console.log(body);
-    return this.http.post(`${environment.apiUrl}/book-service/book`, body);
+    return this.http.post<Toaster>(`${environment.apiUrl}/book-service/book`, body);
   }
 
   // addAnnouncement(book: Book) {
@@ -120,6 +135,12 @@ export class BookService {
         return this.http.get<Page>(`${environment.apiUrl}/book-service/find-books`, {params});
       }
     }
+  }
+  searchBookByAuthor(author: string,
+                     pageSize: number, page: number): Observable<Page> {
+    page = page - 1;
+    return this.http.get<Page>(`${environment.apiUrl}/book-service` +
+      `/find-books?title=&author=${author}&size=${pageSize}&page=${page}`);
   }
 
 
@@ -217,5 +238,15 @@ export class BookService {
   }
   checkLikedReview(reviewId: number, userLogin: number): Observable<number> {
     return this.http.get<number>(`${environment.apiUrl}/book-service/check-liked-review?reviewId=${reviewId}&userLogin=${userLogin}`);
+  }
+
+  countBooksUnApprove(approved: boolean): Observable<number> {
+    return this.http.get<number>(`${environment.apiUrl}/book-service/count-books-unapproved?approved=${approved}`);
+  }
+  postFile(fileToUpload: File, fileName: string): Observable<boolean> {
+    const formData: FormData = new FormData();
+    formData.append('file', fileToUpload);
+    formData.append('name', fileName);
+    return this.http.post<boolean>(`${environment.apiUrl}/files/upload/`, formData);
   }
 }

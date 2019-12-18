@@ -19,7 +19,7 @@
       </li>
       <!-- Notifiication button with count badge  -->
       <li class="nav-item">
-        <a class="nav-link link" n [routerLink]="['notifications']"> Notifications  <span class="badge badge-primary ">{{count}}</span> </a>
+        <a class="nav-link link" [routerLink]="['notifications']"> Notifications  <span class="badge badge-primary ">{{count}}</span> </a>
       </li>
       <li *ngIf="securityApprove" class="nav-item">
         <a class="nav-link link" [routerLink]="['approve']"> Confirmations </a>
@@ -27,10 +27,10 @@
       <li *ngIf="securityAchievement" class="nav-item">
         <a class="nav-link link" [routerLink]="['achievements']"> Achievement manager </a>
       </li>
-      <li *ngIf="securityAchievement" class="nav-item">
+      <li *ngIf="securitySuperAdmin" class="nav-item">
         <a class="nav-link link" [routerLink]="['superadmin-request']"> Admin registration request </a>
         <a class="nav-link link"  [routerLink]="['superadmin-moderator-request']"> 
-        Moder registration request </a>
+        Moderator registration request </a>
       </li>
     </ul>
   </div>

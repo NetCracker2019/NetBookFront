@@ -1,7 +1,7 @@
 
 .book-logo {
-  width: 300px;
-  height: 450px;
+  width: 90%;
+  height: 90%;
 }
 .item-book{
   padding-bottom: 20px;
@@ -9,14 +9,6 @@
   margin: 10px;
   padding-left: 10px;
 }
-
-
-/*.book-content{*/
-/*  grid-column: 2 / 3;*/
-/*  padding-top: 5px;*/
-/*  padding-left: 5px;*/
-/*  padding-right: 2px;*/
-/*}*/
 
 .book-content h3 {
   font-size: 25px;
@@ -31,21 +23,18 @@
   background-color: palegreen;
   border-radius: 10px;
   height: 60px;
-  width: 250px;
 
 }
 .button-remove-book-from-profile {
   background-color: tomato;
   border-radius: 10px;
   height: 60px;
-  width: 250px;
 
 }
 .review-item {
-  /*display: grid;*/
-  /*grid-template-columns: 130px 400px;*/
   padding-left: 2px;
   padding-top: 10px;
+
 }
 .user-logo {
   border-radius: 80%;
@@ -61,12 +50,19 @@
 }
 
 .button-write-review button{
-  /*grid-column: 2;*/
   border-radius: 10px;
   background-color: skyblue;
   height: 40px;
   width: 190px;
 
+}
+.add-button {
+  height: 40px;
+  width: 90px;
+}
+.cancel-button {
+  height: 40px;
+  width: 90px;
 }
 .review-text {
   font-size: 15px;
@@ -80,11 +76,10 @@
 }
 .rating {
   grid-column: 2;
-  /*display: grid;*/
-  /*grid-template-columns: 40px 20px;*/
 }
 .review-content {
   padding-left: 30px;
+  max-width: 500px;
 }
 .add-cancel-buttons {
   padding-top: 10px;
@@ -98,7 +93,7 @@
 }
 .paging-button {
   outline: none;
-  margin-left: 350px;
+  margin-left: 21vw;
   height: 30px;
   width: 60px;
 }

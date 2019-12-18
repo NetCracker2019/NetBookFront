@@ -31,6 +31,7 @@ export class ContentChatComponent implements OnInit, OnDestroy {
   public friendsWhoAbleToAdd: User[] = [];
   public editChatTab = 0;
   public activeChatAvatar = '';
+  private fileToUpload: File = null;
   public namePattern = '^\\s*[a-zA-Z0-9а-яёАЯЁ_]+(?:\\s*[a-zA-Z0-9а-яёАЯЁ_]+)*\\s*$';
   private headers = {
     Authorization: this.authenticationService.currentUserValue.token};
@@ -41,12 +42,13 @@ export class ContentChatComponent implements OnInit, OnDestroy {
               private authenticationService: AuthenticationService) {  }
 
   ngOnInit() {
+    window.scroll(0, 0);
     this.authenticationService.refreshToken();
     this.username = this.authenticationService.currentUserValue.username;
     this.headers = {
       Authorization: this.authenticationService.currentUserValue.token };
     this.getChats();
-    this.userService.getFriends(this.username, 500, 0)/////// TODO infinity scroll
+    this.userService.getFriends(this.username, 500, 0)
       .subscribe(
         (data: User[]) => {
           this.friends = data;
@@ -57,7 +59,6 @@ export class ContentChatComponent implements OnInit, OnDestroy {
     if (this.stompClient) {
       this.disconnect();
     }
-    this.removeTempImage();
   }
 
   getChats() {
@@ -150,8 +151,8 @@ export class ContentChatComponent implements OnInit, OnDestroy {
     } else { this.commitEditChat(addedMembers, removedMembers); }
   }
   commitEditChat(addedMembers: string[], removedMembers: string[]) {
-    this.chatService.updateChat(this.activeChat, this.userService.escaping(this.editedChatName),
-     addedMembers, removedMembers, this.activeChatAvatar)
+    this.chatService.updateChat(this.activeChat, this.editedChatName,
+     addedMembers, removedMembers, this.fileToUpload, this.getChatAvatar())
       .subscribe(
           () => {
             this.toastr.success(`Chat successfully updated`);
@@ -164,31 +165,27 @@ export class ContentChatComponent implements OnInit, OnDestroy {
   }
 
   handleFileInput(files: FileList) {
-    const fileToUpload = files.item(0);
+    const fileType = files.item(0).type;
+    if (files.item(0).size / 1024 / 1024 > 1) {
+      this.toastr.info(`Picture size must be < 1 MB`);
+      return;
+    } else if (fileType.match(/image\/*/) == null) {
+      this.toastr.info(`Its not an image, please select image`);
+      return;
+    }
+    this.fileToUpload = files.item(0);
+    const reader = new FileReader();
+    reader.readAsDataURL(this.fileToUpload);
+    reader.onload = (event) => {
+      this.activeChatAvatar = reader.result.toString();
+    };
+  }
 
-    if ( fileToUpload != null) {
-      const newFileName: string = uuid();
-      this.userService.postFile(fileToUpload, newFileName).subscribe(
-        () => {
-          this.removeTempImage();
-          this.activeChatAvatar = newFileName;
-        },
-        error => {
-          this.toastr.info(`Picture size must be < 1 MB`);
-        });
-    }
-  }
-  removeTempImage() {
-    if (this.activeChat && this.activeChatAvatar !== '' &&
-      this.activeChatAvatar !== this.getChatAvatar()) {
-      this.userService.removeFile(this.activeChatAvatar)
-        .subscribe(() => {});
-    }
-  }
   prepareEditMenu() {
     this.editedChatName = this.chats.find(x => x.chatId === this.activeChat).chatName;
     this.getChatMembers(this.activeChat);
-    this.activeChatAvatar = this.getChatAvatar();
+    this.activeChatAvatar = this.getPhoto(this.getChatAvatar());
+    this.fileToUpload = null;
     this.editChatTab = 0;
   }
   getAvatarPathByLogin(login: string) {
@@ -201,7 +198,6 @@ export class ContentChatComponent implements OnInit, OnDestroy {
   // onClick Chat select
   onClick(chatId: number) {
     if (this.stompClient) { this.disconnect(); }
-    this.removeTempImage();
     this.activeChat = chatId;
     this.messages = [];
     this.chatName = this.chats.find(x => x.chatId === this.activeChat).chatName;

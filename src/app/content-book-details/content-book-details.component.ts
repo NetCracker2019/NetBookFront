@@ -6,14 +6,15 @@ import {AuthenticationService} from '../_services/authentication.service';
 import {AlertService} from '../_services/alert.service';
 import {ToastrModule, ToastrService} from 'ngx-toastr';
 import {environment} from '../../environments/environment';
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-content-book-details',
   templateUrl: './content-book-details.component.html',
-  styleUrls: ['./content-book-details.component.css']
+  styleUrls: ['./content-book-details.component.css'],
+  providers: [DatePipe]
 })
 export class ContentBookDetailsComponent implements OnInit {
-  // announcements: NewModelBook[];
   book: NewModelBook;
   reviews: Review[];
   collectionSize;
@@ -27,12 +28,16 @@ export class ContentBookDetailsComponent implements OnInit {
   likedBook: number;
   bookLikes: number;
   loading = false;
+  today: string = Date.now().toString();
+  announcement = false;
 
   constructor(private route: ActivatedRoute,
               private bookService: BookService,
               private authenticationService: AuthenticationService,
               private alertService: AlertService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private datePipe: DatePipe) {
+    this.today = this.datePipe.transform(this.today, 'yyyy-MM-dd');
   }
 
   ngOnInit() {
@@ -40,9 +45,6 @@ export class ContentBookDetailsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const bookId = +params.get('bookId');
       this.getBook(bookId);
-      // this.bookService.countBooks().subscribe(data => {
-      //   this.collectionSize = data;
-      // });
       this.bookService.countReviewsForBook(bookId).subscribe(data => {
         this.collectionSize = data;
       });
@@ -73,6 +75,12 @@ export class ContentBookDetailsComponent implements OnInit {
     this.bookService.getBookById(id).subscribe(data => {
       this.book = data;
       this.bookLikes = data.likes;
+
+      if (this.book.releaseDate > this.today) {
+        this.announcement = true;
+      } else {
+        this.announcement = false;
+      }
       console.log('Book image path  ' + data.imagePath);
     });
   }
@@ -81,7 +89,6 @@ export class ContentBookDetailsComponent implements OnInit {
     this.loading = true;
     if (!this.finish) {
       this.bookService.getPeaceOfReview(this.book.bookId, this.count, this.offset).subscribe(data => {
-        console.log(data);
         this.reviews = this.reviews.concat(data);
       });
       if (this.offset < this.collectionSize - this.count) {
@@ -91,7 +98,6 @@ export class ContentBookDetailsComponent implements OnInit {
       }
     } else {
       this.bookService.getPeaceOfReview(this.book.bookId, this.count, 0).subscribe(data => {
-        console.log(data);
         this.reviews = data;
       });
       this.offset = 2;
@@ -160,17 +166,17 @@ export class ContentBookDetailsComponent implements OnInit {
   }
 
   likeBook() {
-    if (this.likedBook === 1) {
-      this.bookLikes--;
-      this.likedBook = 0;
-    } else if (this.likedBook === -1) {
-      this.bookLikes += 2;
-      this.likedBook = 1;
-    } else {
-      this.bookLikes++;
-      this.likedBook = 1;
-    }
     if (this.currentUser) {
+      if (this.likedBook === 1) {
+        this.bookLikes--;
+        this.likedBook = 0;
+      } else if (this.likedBook === -1) {
+        this.bookLikes += 2;
+        this.likedBook = 1;
+      } else {
+        this.bookLikes++;
+        this.likedBook = 1;
+      }
       this.bookService.likeBook(this.book.bookId, this.currentUser.username).subscribe(data => {
       });
     } else {
@@ -179,17 +185,17 @@ export class ContentBookDetailsComponent implements OnInit {
   }
 
   dislikeBook() {
-    if (this.likedBook === 1) {
-      this.bookLikes -= 2;
-      this.likedBook = -1;
-    } else if (this.likedBook === -1) {
-      this.bookLikes++;
-      this.likedBook = 0;
-    } else {
-      this.bookLikes--;
-      this.likedBook = -1;
-    }
     if (this.currentUser) {
+      if (this.likedBook === 1) {
+        this.bookLikes -= 2;
+        this.likedBook = -1;
+      } else if (this.likedBook === -1) {
+        this.bookLikes++;
+        this.likedBook = 0;
+      } else {
+        this.bookLikes--;
+        this.likedBook = -1;
+      }
       this.bookService.dislikeBook(this.book.bookId, this.currentUser.username).subscribe(data => {
       });
     } else {

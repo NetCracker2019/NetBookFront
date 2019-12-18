@@ -17,7 +17,7 @@ export class NotificationListComponent implements OnInit {
   notifications: Notification[];
   unreadNotifications: Notification[];
   public page: number = 1;
-  public collectionSize: number = 6;
+  public collectionSize: number = 8;
   public endOfNotifs: boolean = false;
 
   constructor(public notificationService: NotificationService,

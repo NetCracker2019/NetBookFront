@@ -13,6 +13,7 @@ import {environment} from '../../environments/environment';
 export class ContentApproveComponent implements OnInit {
   announcements: ViewAnnouncement[];
   reviews: Review[];
+  bookConfirm: NewModelBook[];
   text: any;
   itemsPerPage = 4;
   reviewPage = 0;
@@ -22,6 +23,7 @@ export class ContentApproveComponent implements OnInit {
   value: string;
   counterAnon = 0;
   counterRev = 0;
+  counterBook = 0;
 
   constructor(private approveService: ApproveService,
               private bookService: BookService,
@@ -75,7 +77,6 @@ export class ContentApproveComponent implements OnInit {
         return 0;
       });
     }
-    // window.location.reload();
   }
 
   checker() {
@@ -83,17 +84,21 @@ export class ContentApproveComponent implements OnInit {
       this.loadAnnouncements();
     } else if (this.value === 'rev') {
       this.loadReviews();
+    } else if (this.value === 'book') {
+      this.loadBookConfirm();
     }
   }
 
   loadAnnouncements() {
-    if (this.counterRev > 0) {
+    if (this.counterRev > 0 || this.counterBook > 0) {
       this.reviewPage = 0;
       this.counterRev = 0;
+      this.counterBook = 0;
     }
     // this.counterRev = 0;
     this.counterAnon = this.counterAnon + 1;
     this.reviews = [];
+    this.bookConfirm = [];
     this.value = 'anons';
     this.bookService.countAnnouncement(false).subscribe(data => {
       console.log(data);
@@ -108,31 +113,40 @@ export class ContentApproveComponent implements OnInit {
 
   confirmAnnouncement(book) {
     this.approveService.confirmAnnouncement(book)
-      .subscribe(text => this.text = text);
-    // window.location.reload();
+      .subscribe(text => {
+        if (text) {
+          this.toastr.success('The announcement is confirmed.');
+        } else {
+          this.toastr.error('Something is wrong');
+        }
+      });
   }
 
   cancelAnnouncement(book) {
     this.approveService.cancelAnnouncement(book)
-      .subscribe(text => this.text = text);
-    // window.location.reload();
+      .subscribe(text => {
+        if (text) {
+          this.toastr.success('The announcement is canceled.');
+        } else {
+          this.toastr.error('Something is wrong');
+        }
+      });
   }
 
   loadReviews() {
-    if (this.counterAnon > 0) {
+    if (this.counterAnon > 0 || this.counterBook > 0) {
       this.reviewPage = 0;
       this.counterAnon = 0;
+      this.counterBook = 0;
     }
-    // this.counterAnon = 0;
     this.counterRev = this.counterRev + 1;
     this.announcements = [];
+    this.bookConfirm = [];
     this.value = 'rev';
     this.bookService.countReviews(false).subscribe(data => {
-      console.log(data);
       this.collectionSize = data;
     });
     this.approveService.getReviewForApprove(this.reviewPage, this.itemsPerPage).subscribe(data => {
-      console.log(data);
       this.reviews = data;
     });
   }
@@ -143,14 +157,12 @@ export class ContentApproveComponent implements OnInit {
         if (data) {
           this.toastr.success('The review is confirmed.');
           this.approveService.getReviewForApprove(this.reviewPage, this.itemsPerPage).subscribe(data2 => {
-            console.log(data2);
             this.reviews = data2;
           });
         } else {
           this.toastr.success('Something is wrong(');
         }
       });
-    // window.location.reload();
   }
 
   cancelReview(review) {
@@ -158,8 +170,6 @@ export class ContentApproveComponent implements OnInit {
       .subscribe(data => {
         if (data) {
           this.toastr.success('The review is canceled.');
-          // this.alertService.success('Рецензія відправлена на підтвердження модератору.', true);
-          console.log(data);
         } else {
           this.toastr.success('Something is wrong(');
         }
@@ -175,4 +185,44 @@ export class ContentApproveComponent implements OnInit {
   }
 
 
+  loadBookConfirm() {
+    if (this.counterAnon > 0 || this.counterRev > 0) {
+      this.reviewPage = 0;
+      this.counterAnon = 0;
+      this.counterRev = 0;
+    }
+    this.counterBook = this.counterRev + 1;
+    this.reviews = [];
+    this.announcements = [];
+    this.value = 'book';
+    this.bookService.countBooksUnApprove(false).subscribe(data => {
+      this.collectionSize = data;
+    });
+    this.approveService.getUnApproveBookList(this.reviewPage, this.itemsPerPage)
+      .subscribe(books => {
+        this.bookConfirm = books;
+      });
+  }
+
+  confirmBook(book) {
+    this.approveService.confirmBook(book)
+      .subscribe(text => {
+        if (text) {
+          this.toastr.success('The book is confirmed.');
+        } else {
+          this.toastr.error('Something is wrong');
+        }
+      });
+  }
+
+  cancelBook(book) {
+    this.approveService.cancelBook(book)
+      .subscribe(text => {
+        if (text) {
+          this.toastr.success('The book is canceled.');
+        } else {
+          this.toastr.error('Something is wrong');
+        }
+      });
+  }
 }

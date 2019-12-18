@@ -36,7 +36,7 @@ export class HeaderauthComponent implements OnInit {
       return;
     }
     this.router.navigate(['/homeath/search']);
-    this.bookService.changeTitle(title);
+    this.bookService.changeTitle(title, '');
   }
 
   logout() {

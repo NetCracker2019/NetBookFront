@@ -6,9 +6,9 @@
   </div>
   <!-- Mark all notifications as read button -->
   <div class="list-group-item-text col-md-10 offset-md-1 d-flex justify-content-between">
-    <div class="btn-group btn-group-toggle-info" data-toggle="buttons">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
       <label class="btn btn-secondary active" id="buttonAll" (click)="showAllNotifs()">
-        <input type="radio"  checked> Show All
+        <input type="radio"  > Show All
       </label>
       <label class="btn btn-secondary" (click)="showUnreadNotifs()">
         <input type="radio" > Show Only Unread
@@ -49,6 +49,7 @@
     [infiniteScrollThrottle]="1000"
     (scrolled)="onPageChanged()">
   </div>
+
   <!-- Delete all notifications button -->
   <div class="list-group-item-text col-md-10 offset-md-1 d-flex justify-content-end">
     <button type="button"
