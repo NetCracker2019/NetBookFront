@@ -232,7 +232,7 @@ export class ContentProfileBookListComponent implements OnInit, OnDestroy {
   }
   navigateToAuthor(author: string) {
     this.router.navigate(['/homeath/search']);
-    this.bookService.changeTitle('', author);
+    // this.bookService.changeTitle('', author);
   }
   getPhoto(imageName: string) {
     return `${environment.apiUrl}/files/download?filename=${imageName}`;

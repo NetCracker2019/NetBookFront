@@ -143,6 +143,6 @@ export class ContentProfileComponent implements OnInit, OnDestroy {
 
   navigateToAuthor(author: string) {
     this.router.navigate(['/homeath/search']);
-    this.bookService.changeTitle('', author);
+    // this.bookService.changeTitle('', author);
   }
 }

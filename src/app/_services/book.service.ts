@@ -35,13 +35,13 @@ interface Params {
   providedIn: 'root'
 })
 export class BookService {
-  private source = new BehaviorSubject<Params>({title: '', author: ''});
-  currentParams = this.source.asObservable();
+  private titleSource = new BehaviorSubject<string>('');
+  currentTitle = this.titleSource.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  changeTitle(title: string, author: string) {
-    this.source.next({title, author});
+  changeTitle(title: string) {
+    this.titleSource.next(title);
   }
 
   getCalendarAnnouncement(value: string, userName: string): Observable<Event[]> {
