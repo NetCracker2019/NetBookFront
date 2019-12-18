@@ -6,11 +6,13 @@ import {AuthenticationService} from '../_services/authentication.service';
 import {AlertService} from '../_services/alert.service';
 import {ToastrModule, ToastrService} from 'ngx-toastr';
 import {environment} from '../../environments/environment';
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-content-book-details',
   templateUrl: './content-book-details.component.html',
-  styleUrls: ['./content-book-details.component.css']
+  styleUrls: ['./content-book-details.component.css'],
+  providers: [DatePipe]
 })
 export class ContentBookDetailsComponent implements OnInit {
   book: NewModelBook;
@@ -26,12 +28,16 @@ export class ContentBookDetailsComponent implements OnInit {
   likedBook: number;
   bookLikes: number;
   loading = false;
+  today: string = Date.now().toString();
+  announcement = false;
 
   constructor(private route: ActivatedRoute,
               private bookService: BookService,
               private authenticationService: AuthenticationService,
               private alertService: AlertService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private datePipe: DatePipe) {
+    this.today = this.datePipe.transform(this.today, 'yyyy-MM-dd');
   }
 
   ngOnInit() {
@@ -69,6 +75,13 @@ export class ContentBookDetailsComponent implements OnInit {
     this.bookService.getBookById(id).subscribe(data => {
       this.book = data;
       this.bookLikes = data.likes;
+
+      if (this.book.releaseDate > this.today) {
+        this.announcement = true;
+      } else {
+        this.announcement = false;
+      }
+      console.log('Book image path  ' + data.imagePath);
     });
   }
 
