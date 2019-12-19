@@ -37,7 +37,7 @@ font-awesome.min.css">
 	  </div>
 	</div>
 	<div class="mesgs">
-	  <div class="msg_history">
+	  <div class="msg_history" #msg_history [scrollTop]="msg_history.scrollHeight">
 	  	<!--------------------------->
       <div *ngIf="!activeChat" class="not-selected">
         <h6>Please select a chat to start messaging</h6>
