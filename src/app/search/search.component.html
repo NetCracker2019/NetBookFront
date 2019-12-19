@@ -12,16 +12,15 @@
 
         <div class="row">
           <div class="col-md">
-            <form>
-              <label>Genre
-                <select class="selectpicker" [(ngModel)]="selectedGenre" name="genre">
-                  <option [ngValue]="-1">All</option>
-                  <option *ngFor="let genre of genres" [value]="genre.genreId">
-                    {{genre.genreName}}
-                  </option>
-                </select>
-              </label>
-            </form>
+            <mat-form-field>
+              <mat-label>Genre</mat-label>
+              <mat-select [(value)]="selectedGenre">
+                <mat-option [value]="-1">All</mat-option>
+                <mat-option *ngFor="let genre of genres" [value]="genre.genreId">
+                  {{genre.genreName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
 
           <div class="col-md">
@@ -58,7 +57,7 @@
           </div>
         </div>
 
-        <button type="button" class="btn btn-orange" (click)="onPageChanged()">apply filters</button>
+        <button type="button" class="btn btn-orange" (click)="setFiltered()">apply filters</button>
 
       </div>
     </div>
@@ -74,16 +73,15 @@
             <div class="row">
               <div class="col-6">
                 <div class="book-image-grid">
-                  <img src="{{ this.getPhoto(book.imagePath) }}"
-                       (error)="$event.target.src=getPhoto('default_book_photo')" alt="img" class="book-logo"/>
+                  <img src="{{getPhoto(book.imagePath)}}" alt="Image" class="book-logo"
+                       (error)="$event.target.src=getPhoto('default_book_photo')">
                 </div>
               </div>
               <div class="col-6">
                 <div class="book-item-content" >
-                  <h3>{{book.title}} - {{book.authors}}</h3>
+                  <h3>{{book.title}} - {{book.authors.join(', ')}}</h3>
                   <p>Likes: {{book.likes}}</p>
-                  <p>Genres: {{book.genres}}</p>
-<!--                  <p>Description: {{book.description}} </p>-->
+                  <p>Genres: {{book.genres.join(', ')}}</p>
                 </div>
               </div>
             </div>

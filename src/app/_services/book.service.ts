@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 
@@ -26,22 +26,18 @@ const httpOptions = {
     'Content-Type':  'application/json'
   })
 };
-interface Params {
-  title: string;
-  author: string;
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
-  private source = new BehaviorSubject<Params>({title: '', author: ''});
-  currentParams = this.source.asObservable();
+  private titleSource = new BehaviorSubject<string>('');
+  currentTitle = this.titleSource.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  changeTitle(title: string, author: string) {
-    this.source.next({title, author});
+  changeTitle(title: string) {
+    this.titleSource.next(title);
   }
 
   getCalendarAnnouncement(value: string, userName: string): Observable<Event[]> {
@@ -96,30 +92,43 @@ export class BookService {
 
   searchBookByTitle(title: string, pageSize: number, page: number): Observable<Page> {
     page = page - 1;
-    return this.http.get<Page>(`${environment.apiUrl}/book-service/find-books?title=${title}&size=${pageSize}&page=${page}`);
+
+    let params = new HttpParams();
+    params = params.set('title', title);
+    params = params.set('size', String(pageSize));
+    params = params.set('page', String(page));
+
+    return this.http.get<Page>(`${environment.apiUrl}/book-service/find-books`, {params});
   }
 
-  searchBookAdvanced(title: string, genre: number, author: string,
+  searchBookAdvanced(title: string, genre: number, author: number,
                      dateFrom: Date, dateTo: Date, pageSize: number, page: number): Observable<Page> {
     page = page - 1;
+
+    let params = new HttpParams();
+    params = params.set('title', title);
+
     if (dateFrom < dateTo) {
       const formattedDateFrom = dateFrom.toISOString().substring(0, 10);
       const formattedDateTo = dateTo.toISOString().substring(0, 10);
-      if (genre === -1 && author === '') {
-        return this.http.get<Page>(`${environment.apiUrl}/book-service` +
-          `/find-books?title=${title}&from=${formattedDateFrom}&to=${formattedDateTo}&size=${pageSize}&page=${page}`);
-      } else if (genre !== -1 && author === '') {
-        return this.http.get<Page>(`${environment.apiUrl}/book-service` +
-          `/find-books?title=${title}&genre=${genre}` +
-          `&from=${formattedDateFrom}&to=${formattedDateTo}&size=${pageSize}&page=${page}`);
-      } else if (genre === -1 && author !== '') {
-        return this.http.get<Page>(`${environment.apiUrl}/book-service` +
-          `/find-books?title=${title}&author=${author}` +
-          `&from=${formattedDateFrom}&to=${formattedDateTo}&size=${pageSize}&page=${page}`);
+
+      params = params.set('from', formattedDateFrom);
+      params = params.set('to', formattedDateTo);
+      params = params.set('size', String(pageSize));
+      params = params.set('page', String(page));
+
+      if (genre === -1 && author === -1) {
+        return this.http.get<Page>(`${environment.apiUrl}/book-service/find-books`, {params});
+      } else if (genre !== -1 && author === -1) {
+        params = params.set('genre', String(genre));
+        return this.http.get<Page>(`${environment.apiUrl}/book-service/find-books`, {params});
+      } else if (genre === -1 && author !== -1) {
+        params = params.set('author', String(author));
+        return this.http.get<Page>(`${environment.apiUrl}/book-service/find-books`, {params});
       } else {
-        return this.http.get<Page>(`${environment.apiUrl}/book-service` +
-          `/find-books?title=${title}&author=${author}&genre=${genre}` +
-          `&from=${formattedDateFrom}&to=${formattedDateTo}&size=${pageSize}&page=${page}`);
+        params = params.set('genre', String(genre));
+        params = params.set('author', String(author));
+        return this.http.get<Page>(`${environment.apiUrl}/book-service/find-books`, {params});
       }
     }
   }

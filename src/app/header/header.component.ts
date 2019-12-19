@@ -23,6 +23,6 @@ export class HeaderComponent implements OnInit {
       return;
     }
     this.router.navigate(['/home/search']);
-    this.bookService.changeTitle(title, '');
+    this.bookService.changeTitle(title);
   }
 }
