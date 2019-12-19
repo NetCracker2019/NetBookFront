@@ -22,8 +22,11 @@ body{
     border-radius: 10%;
 }
 .profile-head img{
-    width: 9%;
-    height: 9%;
+    object-fit: cover;
+    border-radius: 50%;
+    width: 2vw;
+    height: 2vw;
+    margin-left: 1vmin;
 }
 
 .profile-head h5{
