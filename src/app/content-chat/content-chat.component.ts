@@ -32,7 +32,8 @@ export class ContentChatComponent implements OnInit, OnDestroy {
   public namePattern = '^\\s*[a-zA-Z0-9а-яёАЯЁ_]+(?:\\s*[a-zA-Z0-9а-яёАЯЁ_]+)*\\s*$';
   private headers = {
     Authorization: this.authenticationService.currentUserValue.token};
-
+  public localTimeZone = (new Date().getTimezoneOffset() / 60 * (-1)).toString();
+  
   constructor(private toastr: ToastrService,
               private chatService: ChatService,
               private userService: UserService,
