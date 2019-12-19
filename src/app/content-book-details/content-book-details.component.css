@@ -59,10 +59,12 @@
 .add-button {
   height: 40px;
   width: 90px;
+  border-radius: 10px;
 }
 .cancel-button {
   height: 40px;
   width: 90px;
+  border-radius: 10px;
 }
 .review-text {
   font-size: 15px;

@@ -85,21 +85,25 @@
 
 <div *ngIf="reviews" class="reviews container">
   <div class="row">
-    <div class="test col-md-6" *ngFor="let review of reviews">
-      <div class="review-item">
-        <div class="user-image">
-          <img src="{{getPhoto(review.userAvatarPath)}}" class="user-logo" alt="User"
-               (error)="$event.target.src=getPhoto('default_avatar')">
+    <div class="test col-6" *ngFor="let review of reviews">
+      <div class="review-item card container">
+        <div class="row" style="padding-left: 15px">
+          <div class="user-image col-3" >
+            <img src="{{getPhoto(review.userAvatarPath)}}" class="user-logo" alt="User"
+                 (error)="$event.target.src=getPhoto('default_avatar')" >
+          </div>
+          <div class="review-content col-9">
+            <h5>Review </h5>
+            <p>Book: {{review.title}}</p>
+            <p>Author(s): {{review.authors}}</p>
+            <p>User: {{review.userName}}</p>
+            <p>Text: {{review.reviewText}}</p>
+          </div>
         </div>
-        <div class="review-content">
-          <h5>Review </h5>
-          <p>Book: {{review.title}}</p>
-          <p>Author(s): {{review.authors}}</p>
-          <p>User: {{review.userName}}</p>
-          <p>Text: {{review.reviewText}}</p>
+        <div class="row" style="padding-left: 15px">
+          <div class="col-md-3"><button class="confirm btn btn-success" (click)="confirmReview(review)">Confirm</button></div>
+          <div class="col-2"><button class="cancel btn btn-danger" (click)="cancelReview(review)">Cancel</button></div>
         </div>
-        <button class="confirm btn btn-success" (click)="confirmReview(review)">Confirm</button>
-        <button class="cancel btn btn-danger" (click)="cancelReview(review)">Cancel</button>
       </div>
     </div>
   </div>
