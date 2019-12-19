@@ -26,10 +26,6 @@ const httpOptions = {
     'Content-Type':  'application/json'
   })
 };
-interface Params {
-  title: string;
-  author: string;
-}
 
 @Injectable({
   providedIn: 'root'

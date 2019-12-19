@@ -78,14 +78,7 @@ export class UserService {
   edit(user: User, fileToUpload: File) {
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload);
-    formData.append('login', user.username);
-    formData.append('name', user.firstName);
-    formData.append('sex', user.sex);
-    formData.append('city', user.city);
-    formData.append('country', user.country);
-    formData.append('email', user.email);
-    formData.append('status', user.status);
-    formData.append('password', user.password);
+    formData.append('user', JSON.stringify(user));
     return this.http.put<User>(`${environment.apiUrl}/profile/${user.username}/edit`, formData);
   }
   getPersons(login: string, sought: string, where: SearchIn, cnt: number, offset: number) {
