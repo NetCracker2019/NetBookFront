@@ -91,7 +91,7 @@ export class ContentApproveComponent implements OnInit {
 
   loadAnnouncements() {
     if (this.counterRev > 0 || this.counterBook > 0) {
-      this.reviewPage = 0;
+      this.reviewPage = 1;
       this.counterRev = 0;
       this.counterBook = 0;
     }
@@ -135,7 +135,7 @@ export class ContentApproveComponent implements OnInit {
 
   loadReviews() {
     if (this.counterAnon > 0 || this.counterBook > 0) {
-      this.reviewPage = 0;
+      this.reviewPage = 1;
       this.counterAnon = 0;
       this.counterBook = 0;
     }
@@ -187,7 +187,7 @@ export class ContentApproveComponent implements OnInit {
 
   loadBookConfirm() {
     if (this.counterAnon > 0 || this.counterRev > 0) {
-      this.reviewPage = 0;
+      this.reviewPage = 1;
       this.counterAnon = 0;
       this.counterRev = 0;
     }
