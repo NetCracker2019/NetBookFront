@@ -1,15 +1,12 @@
-import {Component, OnInit, ElementRef, ViewChild, OnDestroy} from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 
 import * as Stomp from 'stompjs';
-import * as SockJS from 'sockjs-client';
 import { environment } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import {User, Message, Chat} from '../_models/interface';
 import {AuthenticationService} from '../_services/authentication.service';
 import {ChatService} from '../_services/chat.service';
 import {UserService} from '../_services/user.service';
-import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-content-chat',
@@ -165,18 +162,17 @@ export class ContentChatComponent implements OnInit, OnDestroy {
   }
 
   handleFileInput(files: FileList) {
-    const fileType = files.item(0).type;
     if (files.item(0).size / 1024 / 1024 > 1) {
       this.toastr.info(`Picture size must be < 1 MB`);
       return;
-    } else if (fileType.match(/image\/*/) == null) {
+    } else if (files.item(0).type.match(/image\/*/) == null) {
       this.toastr.info(`Its not an image, please select image`);
       return;
     }
     this.fileToUpload = files.item(0);
     const reader = new FileReader();
     reader.readAsDataURL(this.fileToUpload);
-    reader.onload = (event) => {
+    reader.onload = () => {
       this.activeChatAvatar = reader.result.toString();
     };
   }
