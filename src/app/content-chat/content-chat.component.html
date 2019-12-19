@@ -50,7 +50,7 @@ font-awesome.min.css">
 				<div class="outgoing_msg">
 			  		<div class="sent_msg">
 						<p> {{message.message}} </p>
-						<span class="time_date"> {{message.dateTimeSend | date:'medium' }}</span>
+						<span class="time_date"> {{message.dateTimeSend | date:'medium': '+0' + localTimeZone + '00' }}</span>
 					</div>
 				</div>
 			</div>
@@ -63,7 +63,7 @@ font-awesome.min.css">
 							<p> {{message.message}} </p>
 							<span class="time_date">
 							<a href="homeath/profile/{{message.fromName}}" style="color: #646464;">{{message.fromName}}</a> |
-                {{message.dateTimeSend | date:'medium'}} </span>
+                {{message.dateTimeSend | date:'medium': '+0' + localTimeZone + '00'}} </span>
 						</div>
 					</div>
 				</div>

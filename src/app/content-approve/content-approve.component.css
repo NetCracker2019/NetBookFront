@@ -43,17 +43,13 @@
 
 
 .review-item {
-  display: grid;
-  grid-template-columns: 130px 400px;
   padding-left: 2px;
   padding-top: 10px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
   /*background-color: #F9F0DA;*/
 }
 .user-logo {
-  grid-column-start: 1;
-  grid-column-end: 1;
-  grid-row-start: 1;
-  grid-row-end: 2;
   border-radius: 80%;
   -moz-border-radius: 80%;
   -webkit-border-radius: 80%;
@@ -65,13 +61,11 @@
 
 
 .confirm {
-  grid-column: 1;
   border-radius: 10px;
   height: 40px;
   width: 100px;
 }
 .cancel {
-  grid-column: 2;
   border-radius: 10px;
   height: 40px;
   width: 100px;
