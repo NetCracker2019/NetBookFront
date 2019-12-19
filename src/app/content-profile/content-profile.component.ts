@@ -16,7 +16,6 @@ import {BookService} from '../_services/book.service';
 })
 export class ContentProfileComponent implements OnInit, OnDestroy {
 
-
   public user: User = {} as User;
   public friends: User[] = [];
   public favouriteBooks: ShortBookDescription[] = [];
@@ -41,6 +40,7 @@ export class ContentProfileComponent implements OnInit, OnDestroy {
     this.paramsSubscribe = this.activatedRoute.params.subscribe(params => {
       this.login = params.login;
       this.loadUserProfile();
+      window.scroll(0, 0);
     });
   }
   ngOnDestroy() {

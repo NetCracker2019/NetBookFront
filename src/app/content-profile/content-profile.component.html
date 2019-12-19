@@ -58,16 +58,18 @@ font-awesome.min.css">
 				<div class="friends">
 					<p>Friends</p>
 					<div *ngFor="let friend of this.friends">
-						<img src="{{ this.getPhoto(friend.avatarFilePath) }}"
-                 (error)="$event.target.src=getPhoto('default_avatar')" alt="no"/>
-						<a style="padding-left: 10px; font-size: 16px;" routerLink="/homeath/profile/{{ friend.username }}">
-						{{ friend.username }}</a>
+            <a routerLink="/homeath/profile/{{ friend.username }}">
+              <img src="{{ this.getPhoto(friend.avatarFilePath) }}"
+                   (error)="$event.target.src=getPhoto('default_avatar')" alt="no"/>
+              <a style="padding-left: 10px; font-size: 16px;" routerLink="/homeath/profile/{{ friend.username }}">
+              {{ friend.username }}</a>
+            </a>
 					</div><br>
+          <a routerLink="/homeath/friends/{{ this.user.username }}">
 					<div class="all-friends" *ngIf="this.friends.length > 3">
-						<a routerLink="/homeath/friends/{{ this.user.username }}">
 							...all friends
-						</a>
 					</div>
+          </a>
 				</div>
 			</div>
 			<div class="col-md-8">
@@ -132,9 +134,10 @@ font-awesome.min.css">
 						<div class="row">
 							<div class="col-md-4"  *ngFor="let book of this.favouriteBooks">
 								<div class="thumbnail">
-									<img alt="no img" src="{{ this.getPhoto(book.imagePath) }}">
+                  <a routerLink="/homeath/books/{{ book.bookId }}">
+                    <img alt="no img" src="{{ this.getPhoto(book.imagePath) }}"></a>
 									<div class="caption">
-										<a routerLink="/homeath/search/{{ book.bookId }}">
+										<a routerLink="/homeath/books/{{ book.bookId }}">
 										{{ book.title  }}</a>
 										<div class="authors" *ngFor="let author of book.authors">
 											<a (click)="navigateToAuthor(author)" style="cursor: pointer">
@@ -159,9 +162,10 @@ font-awesome.min.css">
 						<div class="row">
 							<div class="col-md-4" *ngFor="let book of this.readBooks">
 								<div class="thumbnail">
-									<img alt="no img" src="{{ this.getPhoto(book.imagePath)}}">
+                  <a routerLink="/homeath/books/{{ book.bookId }}">
+                    <img alt="no img" src="{{ this.getPhoto(book.imagePath) }}"></a>
 									<div class="caption">
-										<a routerLink="/homeath/search/{{ book.bookId }}">
+										<a routerLink="/homeath/books/{{ book.bookId }}">
 										{{ book.title  }}</a>
 										<div class="authors" *ngFor="let author of book.authors">
                       <a (click)="navigateToAuthor(author)" style="cursor: pointer">
@@ -187,17 +191,17 @@ font-awesome.min.css">
 						<div class="row">
 							<div class="col-md-4" *ngFor="let book of this.readingBooks">
 								<div class="thumbnail">
-                  <a routerLink="/homeath/search/{{ book.bookId }}">
-                    <img alt="no img" src="{{ this.getPhoto(book.imagePath) }}">
+                  <a routerLink="/homeath/books/{{ book.bookId }}">
+                    <img alt="no img" src="{{ this.getPhoto(book.imagePath) }}"></a>
                     <div class="caption">
-                      <a routerLink="/homeath/search/{{ book.bookId }}">
+                      <a routerLink="/homeath/books/{{ book.bookId }}">
                         {{ book.title  }}</a>
                       <div class="authors" *ngFor="let author of book.authors">
                         <a (click)="navigateToAuthor(author)" style="cursor: pointer">
                           {{ author  }}</a>
                       </div>
                     </div>
-                  </a>
+
 
 								</div>
 							</div>
@@ -222,11 +226,73 @@ font-awesome.min.css">
     <div class="modal-content">
       <div class="modal-body mb-0 p-0">
         <img src="{{ this.getPhoto(this.user.avatarFilePath) }}"
-             (error)="$event.target.src=getPhoto('default_avatar')"alt="" style="width:100%">
+             (error)="$event.target.src=getPhoto('default_avatar')" alt="" style="width:100%">
         <button type="button" class="btn" data-dismiss="modal">
           <i class="fa fa-times" aria-hidden="true" style="font-size: 30px; color: whitesmoke"></i>
         </button>
       </div>
     </div>
+  </div>
+</div>
+
+
+<div class="form-check" style="float: right">
+  <input hidden type="checkbox" #snow class="form-check-input" id="exampleCheck">
+  <label class="form-check-label" for="exampleCheck"><i class="fa fa-smile-o" aria-hidden="true"></i>
+    Happy new year!!!</label>
+</div>
+<style>
+  /* customizable snowflake styling */
+  .snowflake {
+    color: #fff;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    text-shadow: 0 0 5px #000;
+  }
+
+  @-webkit-keyframes snowflakes-fall{0%{top:-10%}100%{top:100%}}
+  @-webkit-keyframes snowflakes-shake{
+    0%,100%{-webkit-transform:translateX(0);
+    transform:translateX(0)}50%{-webkit-transform:translateX(80px);
+    transform:translateX(80px)}
+  }
+  @keyframes snowflakes-fall{0%{top:-10%}100%{top:100%}}@keyframes snowflakes-shake{0%,100%{transform:translateX(0)}50%{transform:translateX(80px)}}.snowflake{position:fixed;top:-10%;z-index:9999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:default;-webkit-animation-name:snowflakes-fall,snowflakes-shake;-webkit-animation-duration:10s,3s;-webkit-animation-timing-function:linear,ease-in-out;-webkit-animation-iteration-count:infinite,infinite;-webkit-animation-play-state:running,running;animation-name:snowflakes-fall,snowflakes-shake;animation-duration:10s,3s;animation-timing-function:linear,ease-in-out;animation-iteration-count:infinite,infinite;animation-play-state:running,running}.snowflake:nth-of-type(0){left:1%;-webkit-animation-delay:0s,0s;animation-delay:0s,0s}.snowflake:nth-of-type(1){left:10%;-webkit-animation-delay:1s,1s;animation-delay:1s,1s}.snowflake:nth-of-type(2){left:20%;-webkit-animation-delay:6s,.5s;animation-delay:6s,.5s}.snowflake:nth-of-type(3){left:30%;-webkit-animation-delay:4s,2s;animation-delay:4s,2s}.snowflake:nth-of-type(4){left:40%;-webkit-animation-delay:2s,2s;animation-delay:2s,2s}.snowflake:nth-of-type(5){left:50%;-webkit-animation-delay:8s,3s;animation-delay:8s,3s}.snowflake:nth-of-type(6){left:60%;-webkit-animation-delay:6s,2s;animation-delay:6s,2s}.snowflake:nth-of-type(7){left:70%;-webkit-animation-delay:2.5s,1s;animation-delay:2.5s,1s}.snowflake:nth-of-type(8){left:80%;-webkit-animation-delay:1s,0s;animation-delay:1s,0s}.snowflake:nth-of-type(9){left:90%;-webkit-animation-delay:3s,1.5s;animation-delay:3s,1.5s}.snowflake:nth-of-type(10){left:25%;-webkit-animation-delay:2s,0s;animation-delay:2s,0s}.snowflake:nth-of-type(11){left:65%;-webkit-animation-delay:4s,2.5s;animation-delay:4s,2.5s}
+</style>
+<div *ngIf="snow.checked" class="snowflakes" aria-hidden="true">
+  <div class="snowflake">
+    ❅
+  </div>
+  <div class="snowflake">
+    ❆
+  </div>
+  <div class="snowflake">
+    ❅
+  </div>
+  <div class="snowflake">
+    ❆
+  </div>
+  <div class="snowflake">
+    ❅
+  </div>
+  <div class="snowflake">
+    ❆
+  </div>
+  <div class="snowflake">
+    ❅
+  </div>
+  <div class="snowflake">
+    ❆
+  </div>
+  <div class="snowflake">
+    ❅
+  </div>
+  <div class="snowflake">
+    ❆
+  </div>
+  <div class="snowflake">
+    ❅
+  </div>
+  <div class="snowflake">
+    ❆
   </div>
 </div>
