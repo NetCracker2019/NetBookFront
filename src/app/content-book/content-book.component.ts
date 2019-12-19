@@ -57,7 +57,6 @@ export class ContentBookComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.reloadData();
   }
   reloadData() {
     this.bookService.getBookList().subscribe(book => { this.books = book; });
