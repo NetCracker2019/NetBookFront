@@ -29,7 +29,7 @@ export class NotificationListComponent implements OnInit {
 
       //this.notifications = notifications;
       this.currentNotifs= notifications;
-    })
+    });
     //this.notificationService.getAllUnreadNotifications(this.collectionSize,this.page-1).subscribe((unreadNotifs)=>{
     //  this.unreadNotifications=unreadNotifs
     //})
@@ -59,7 +59,7 @@ export class NotificationListComponent implements OnInit {
         (notifications) => {
           if(notifications.length < this.collectionSize) this.endOfNotifs = true;
           //this.notifications = this.notifications.concat(notifications);
-          this.currentNotifs = this.notifications.concat(notifications);
+          this.currentNotifs = this.currentNotifs.concat(notifications);
         },
         error => {
           //this.toastr.error(`${environment.errorMessage}`);
@@ -70,7 +70,7 @@ export class NotificationListComponent implements OnInit {
       (notifications) => {
         if(notifications.length < this.collectionSize) this.endOfNotifs = true;
         //this.unreadNotifications = this.unreadNotifications.concat(notifications);
-        this.currentNotifs = this.unreadNotifications.concat(notifications);
+        this.currentNotifs = this.currentNotifs.concat(notifications);
       },
       error => {
         //this.toastr.error(`${environment.errorMessage}`);
