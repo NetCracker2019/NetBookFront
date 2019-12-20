@@ -19,6 +19,7 @@ export class NotificationListComponent implements OnInit {
   public page: number = 1;
   public collectionSize: number = 8;
   public endOfNotifs: boolean = false;
+  private showAll = true;
 
   constructor(public notificationService: NotificationService,
               private toastr: ToastrService) {
@@ -35,10 +36,11 @@ export class NotificationListComponent implements OnInit {
     //})
   }
   onPageChanged(){
-    if(this.currentNotifs.length===this.notifications.length){
+    //if(this.currentNotifs.length===this.notifications.length){
+    if (this.showAll) {
       this.onPageChangedForAll();
-    }
-    if(this.currentNotifs.length===this.unreadNotifications.length){
+    } else {
+    //if(this.currentNotifs.length===this.unreadNotifications.length){
       this.onPageChangedForUnread();
     }
   }
@@ -103,14 +105,16 @@ export class NotificationListComponent implements OnInit {
     this.page = 1;
     this.endOfNotifs = false;
     this.currentNotifs = [];
-    this.getAllNotifs();
+    this.showAll = false;
+    this.getAllUnreadNotifs();
   }
   showAllNotifs(){
     // this.currentNotifs=this.notifications;
     this.page = 1;
     this.endOfNotifs = false;
     this.currentNotifs = [];
-    this.getAllUnreadNotifs();
+    this.showAll = true;
+    this.getAllNotifs();
   }
 
   AllNotifsMarkAsRead() {
