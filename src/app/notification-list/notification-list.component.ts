@@ -58,7 +58,7 @@ export class NotificationListComponent implements OnInit {
     this.notificationService.getAllNotifications(this.collectionSize,this.page-1).subscribe(
         (notifications) => {
           if(notifications.length < this.collectionSize) this.endOfNotifs = true;
-          this.notifications = this.notifications.concat(notifications);
+          //this.notifications = this.notifications.concat(notifications);
           this.currentNotifs = this.notifications.concat(notifications);
         },
         error => {
@@ -69,7 +69,7 @@ export class NotificationListComponent implements OnInit {
     this.notificationService.getAllUnreadNotifications(this.collectionSize,this.page-1).subscribe(
       (notifications) => {
         if(notifications.length < this.collectionSize) this.endOfNotifs = true;
-        this.unreadNotifications = this.unreadNotifications.concat(notifications);
+        //this.unreadNotifications = this.unreadNotifications.concat(notifications);
         this.currentNotifs = this.unreadNotifications.concat(notifications);
       },
       error => {
