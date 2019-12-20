@@ -27,12 +27,12 @@ export class NotificationListComponent implements OnInit {
   ngOnInit() {
     this.notificationService.getAllNotifications(this.collectionSize,this.page-1).subscribe((notifications) => {
 
-      this.notifications = notifications;
-      this.currentNotifs= notifications
+      //this.notifications = notifications;
+      this.currentNotifs= notifications;
     })
-    this.notificationService.getAllUnreadNotifications(this.collectionSize,this.page-1).subscribe((unreadNotifs)=>{
-      this.unreadNotifications=unreadNotifs
-    })
+    //this.notificationService.getAllUnreadNotifications(this.collectionSize,this.page-1).subscribe((unreadNotifs)=>{
+    //  this.unreadNotifications=unreadNotifs
+    //})
   }
   onPageChanged(){
     if(this.currentNotifs.length===this.notifications.length){
@@ -62,7 +62,7 @@ export class NotificationListComponent implements OnInit {
           this.currentNotifs = this.notifications.concat(notifications);
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          //this.toastr.error(`${environment.errorMessage}`);
         });
   }
   getAllUnreadNotifs() {
@@ -73,7 +73,7 @@ export class NotificationListComponent implements OnInit {
         this.currentNotifs = this.unreadNotifications.concat(notifications);
       },
       error => {
-        this.toastr.error(`${environment.errorMessage}`);
+        //this.toastr.error(`${environment.errorMessage}`);
       });
   }
 
@@ -99,10 +99,18 @@ export class NotificationListComponent implements OnInit {
   }
 
   showUnreadNotifs(){
-    this.currentNotifs=this.unreadNotifications;
+    // this.currentNotifs=this.unreadNotifications;
+    this.page = 1;
+    this.endOfNotifs = false;
+    this.currentNotifs = [];
+    this.getAllNotifs();
   }
   showAllNotifs(){
-    this.currentNotifs=this.notifications;
+    // this.currentNotifs=this.notifications;
+    this.page = 1;
+    this.endOfNotifs = false;
+    this.currentNotifs = [];
+    this.getAllUnreadNotifs();
   }
 
   AllNotifsMarkAsRead() {
