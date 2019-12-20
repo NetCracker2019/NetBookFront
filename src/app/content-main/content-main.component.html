@@ -9,7 +9,7 @@
                 <h3>{{book.title}}</h3>
               </div>-->
               <div class="col-2 p-0">
-                <img src="../../assets/img/{{book.imagePath}}" alt="Example" class="book-logo"
+                <img src="{{ this.getPhoto(getPhotobook.imagePath) }}" alt="Example" class="book-logo"
                      (error)="$event.target.src=getPhoto('default_book_photo')">
               </div>
               <div class="col-4">
