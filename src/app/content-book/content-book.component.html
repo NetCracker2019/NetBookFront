@@ -5,7 +5,7 @@
         <div class="container blog-item-color">
           <div class="row">
             <div class="col-3 p-0">
-              <img src="{{book.imagePath}}" alt="Example" class="book-logo"
+              <img src="{{getPhoto(book.imagePath)}}" alt="Example" class="book-logo"
                    (error)="$event.target.src=getPhoto('default_book_photo')">
             </div>
             <div class="col-4 p-0">
