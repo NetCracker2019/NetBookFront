@@ -60,6 +60,7 @@ export class ApproveService {
   }
 
   getUnApproveBookList(page: number, offset: number): Observable<Book[]> {
+    console.log(page);
     return this.http.get<Book[]>(`${environment.apiUrl}/approve-service/books-for-approve?page=${page}&itemPerPage=${offset}`);
   }
 

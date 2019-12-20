@@ -16,7 +16,7 @@ export class ContentApproveComponent implements OnInit {
   bookConfirm: NewModelBook[];
   text: any;
   itemsPerPage = 4;
-  reviewPage = 0;
+  reviewPage: number;
   collectionSize: number;
   book: NewModelBook;
   sortingBy: string;
@@ -28,6 +28,7 @@ export class ContentApproveComponent implements OnInit {
   constructor(private approveService: ApproveService,
               private bookService: BookService,
               private toastr: ToastrService) {
+    this.reviewPage = 1;
   }
 
   ngOnInit() {
@@ -187,7 +188,7 @@ export class ContentApproveComponent implements OnInit {
 
   loadBookConfirm() {
     if (this.counterAnon > 0 || this.counterRev > 0) {
-      this.reviewPage = 0;
+      this.reviewPage = 1;
       this.counterAnon = 0;
       this.counterRev = 0;
     }
