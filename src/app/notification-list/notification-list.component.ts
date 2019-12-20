@@ -19,6 +19,7 @@ export class NotificationListComponent implements OnInit {
   public page: number = 1;
   public collectionSize: number = 8;
   public endOfNotifs: boolean = false;
+  private showAll = true;
 
   constructor(public notificationService: NotificationService,
               private toastr: ToastrService) {
@@ -27,18 +28,19 @@ export class NotificationListComponent implements OnInit {
   ngOnInit() {
     this.notificationService.getAllNotifications(this.collectionSize,this.page-1).subscribe((notifications) => {
 
-      this.notifications = notifications;
-      this.currentNotifs= notifications
-    })
-    this.notificationService.getAllUnreadNotifications(this.collectionSize,this.page-1).subscribe((unreadNotifs)=>{
-      this.unreadNotifications=unreadNotifs
-    })
+      //this.notifications = notifications;
+      this.currentNotifs= notifications;
+    });
+    //this.notificationService.getAllUnreadNotifications(this.collectionSize,this.page-1).subscribe((unreadNotifs)=>{
+    //  this.unreadNotifications=unreadNotifs
+    //})
   }
   onPageChanged(){
-    if(this.currentNotifs.length===this.notifications.length){
+    //if(this.currentNotifs.length===this.notifications.length){
+    if (this.showAll) {
       this.onPageChangedForAll();
-    }
-    if(this.currentNotifs.length===this.unreadNotifications.length){
+    } else {
+    //if(this.currentNotifs.length===this.unreadNotifications.length){
       this.onPageChangedForUnread();
     }
   }
@@ -58,22 +60,22 @@ export class NotificationListComponent implements OnInit {
     this.notificationService.getAllNotifications(this.collectionSize,this.page-1).subscribe(
         (notifications) => {
           if(notifications.length < this.collectionSize) this.endOfNotifs = true;
-          this.notifications = this.notifications.concat(notifications);
-          this.currentNotifs = this.notifications.concat(notifications);
+          //this.notifications = this.notifications.concat(notifications);
+          this.currentNotifs = this.currentNotifs.concat(notifications);
         },
         error => {
-          this.toastr.error(`${environment.errorMessage}`);
+          //this.toastr.error(`${environment.errorMessage}`);
         });
   }
   getAllUnreadNotifs() {
     this.notificationService.getAllUnreadNotifications(this.collectionSize,this.page-1).subscribe(
       (notifications) => {
         if(notifications.length < this.collectionSize) this.endOfNotifs = true;
-        this.unreadNotifications = this.unreadNotifications.concat(notifications);
-        this.currentNotifs = this.unreadNotifications.concat(notifications);
+        //this.unreadNotifications = this.unreadNotifications.concat(notifications);
+        this.currentNotifs = this.currentNotifs.concat(notifications);
       },
       error => {
-        this.toastr.error(`${environment.errorMessage}`);
+        //this.toastr.error(`${environment.errorMessage}`);
       });
   }
 
@@ -99,10 +101,20 @@ export class NotificationListComponent implements OnInit {
   }
 
   showUnreadNotifs(){
-    this.currentNotifs=this.unreadNotifications;
+    // this.currentNotifs=this.unreadNotifications;
+    this.page = 1;
+    this.endOfNotifs = false;
+    this.currentNotifs = [];
+    this.showAll = false;
+    this.getAllUnreadNotifs();
   }
   showAllNotifs(){
-    this.currentNotifs=this.notifications;
+    // this.currentNotifs=this.notifications;
+    this.page = 1;
+    this.endOfNotifs = false;
+    this.currentNotifs = [];
+    this.showAll = true;
+    this.getAllNotifs();
   }
 
   AllNotifsMarkAsRead() {
